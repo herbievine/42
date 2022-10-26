@@ -1,6 +1,0 @@
-{
-	"files.associations": {
-		"*.sh": "shellscript",
-		"libft.h": "c"
-	}
-}
