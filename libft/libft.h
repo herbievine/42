@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/10/23 15:18:48 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/07 11:36:31 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-// TODO REMOVE WHEN DONE
-#include <stdio.h>
 
 // Memory stuff
 void *ft_memset(void *b, int c, size_t len);
@@ -32,5 +30,14 @@ void *ft_calloc(size_t count, size_t size);
 size_t ft_strlen(const char *s);
 size_t ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t ft_strlcat(char *dst, const char *src, size_t dstsize);
+
+// Char stuff
+int ft_isalpha(int c);
+int ft_isdigit(int c);
+int ft_isalnum(int c);
+int ft_isascii(int c);
+int ft_isprint(int c);
+int ft_tolower(int c);
+int ft_toupper(int c);
 
 #endif
