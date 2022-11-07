@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 11:47:27 by herbie            #+#    #+#             */
-/*   Updated: 2022/10/23 11:51:47 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/07 15:38:03 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *ft_memmove(void *dst, const void *src, size_t len)
+void *ft_memmove(void *dest, const void *src, size_t len)
 {
-	return ft_memcpy(dst, src, len);
+	return ft_memcpy(dest, src, len);
 }
