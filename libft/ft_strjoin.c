@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/23 13:10:04 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/08 15:16:24 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/08 14:59:14 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/08 15:14:52 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t ft_strlcat(char *dst, const char *src, size_t size)
+char *ft_strjoin(char const *s1, char const *s2)
 {
-	size_t i;
-	size_t dest_len;
-	size_t src_len;
+	char *dup;
 
-	i = -1;
-	dest_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	if (size <= dest_len)
-		return (size + src_len);
-	while (src[++i] && i + 1 < (size - dest_len))
-		dst[dest_len + i] = src[i];
-	dst[dest_len + i] = '\0';
-	return (dest_len + src_len);
+	dup = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
+	if (!dup)
+		return (0);
+	ft_strlcpy(dup, s1, ft_strlen(s1) + 1);
+	ft_strlcat(dup + ft_strlen(s1), s2, ft_strlen(s2) + 1);
+	return (dup);
 }
