@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:38:15 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/07 15:47:26 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/08 08:00:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,11 @@
 
 char *ft_strdup(const char *s)
 {
+	char *dup;
 
+	dup = (char *)ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!dup)
+		return (0);
+	ft_strlcpy(dup, s, ft_strlen(s) + 1);
+	return (dup);
 }

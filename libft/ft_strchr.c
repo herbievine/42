@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 11:48:24 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/07 15:19:20 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/08 07:51:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 char *ft_strchr(const char *s, int c)
 {
-	write(1, "testing::", 9);
-	if (*(s + ft_strlen(s)) == c)
-		return (char *)(s + ft_strlen(s));
-	write(1, "\n\nnothing found\n\n", 17);
-	while (*s != c)
-		s++;
-	if (*s == 0)
-		return (0);
-	return (char *)(s);
+	int i;
+
+	i = -1;
+	while (++i < ft_strlen(s))
+		if (s[i] == (char)c)
+			return (char *)(s + i);
+	return (0);
 }

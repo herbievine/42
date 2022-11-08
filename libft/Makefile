@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/10/23 13:05:37 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/08 08:31:16 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ RMFLAG = -f
 
 INCLUDES = ./libft.h
 
-SRC_PART1 = \
+SRCS = \
 	./ft_memset.c	\
 	./ft_bzero.c	\
 	./ft_memcpy.c	\
@@ -47,9 +47,7 @@ SRC_PART1 = \
 	./ft_isascii.c	\
 	./ft_isprint.c	\
 	./ft_toupper.c	\
-	./ft_tolower.c
-	
-SRC_PART2 = \
+	./ft_tolower.c	\
 	# ./ft_substr.c	\
 	# ./ft_strjoin.c	\
 	# ./ft_strtrim.c	\
@@ -60,10 +58,6 @@ SRC_PART2 = \
 	# ./ft_putstr_fd.c	\
 	# ./ft_putendl_fd.c	\
 	# ./ft_putnbr_fd.c
-
-SRCS = \
-	$(SRC_PART1)	\
-	$(SRC_PART2)
 	
 OBJS = $(SRCS:.c=.o)
 

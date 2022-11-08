@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/07 15:46:55 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/08 08:21:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+// TODO REMOVE
 #include <stdio.h>
+#include <string.h>
 
 // Memory stuff
 void *ft_memset(void *b, int c, size_t len);
@@ -29,6 +31,7 @@ void *ft_calloc(size_t nmemb, size_t size);
 
 // String stuff
 size_t ft_strlen(const char *s);
+int ft_atoi(const char *nptr);
 char *ft_strdup(const char *s);
 char *ft_strchr(const char *s, int c);
 char *ft_strrchr(const char *s, int c);
