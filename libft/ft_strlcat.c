@@ -6,7 +6,7 @@
 /*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 13:10:04 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/07 15:39:02 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/08 11:21:24 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,12 @@ size_t ft_strlcat(char *dst, const char *src, size_t size)
 	dst[dest_len + i] = '\0';
 	return (dest_len + src_len);
 }
+
+// int main()
+// {
+//     char src[] = "abcdef";
+//     char dst[50] = "0123456789";
+//     printf("%ld \n", ft_strlcat(dst, src, 25));
+//     ft_strlcat(dst, src, 25);
+//     printf("%s \n", dst);
+// }

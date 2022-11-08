@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/08 08:21:11 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/08 10:33:21 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char *ft_strdup(const char *s);
 char *ft_strchr(const char *s, int c);
 char *ft_strrchr(const char *s, int c);
 char *ft_strnstr(const char *big, const char *little, size_t len);
+char *ft_substr(char const *s, unsigned int start, size_t len);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t ft_strlcat(char *dst, const char *src, size_t dstsize);

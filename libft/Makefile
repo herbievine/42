@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/08 08:31:16 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/08 10:39:23 by hvine            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SRCS = \
 	./ft_isprint.c	\
 	./ft_toupper.c	\
 	./ft_tolower.c	\
-	# ./ft_substr.c	\
+	./ft_substr.c	\
 	# ./ft_strjoin.c	\
 	# ./ft_strtrim.c	\
 	# ./ft_split.c	\
