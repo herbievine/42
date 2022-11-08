@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/08 14:59:45 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/08 15:18:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char *ft_strchr(const char *s, int c);
 char *ft_strrchr(const char *s, int c);
 char *ft_strnstr(const char *big, const char *little, size_t len);
 char *ft_substr(char const *s, unsigned int start, size_t len);
+char *ft_strtrim(char const *s1, char const *set);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t ft_strlcat(char *dst, const char *src, size_t dstsize);

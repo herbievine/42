@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/08 14:51:51 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/08 15:37:07 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ SRCS = \
 	./ft_tolower.c	\
 	./ft_substr.c	\
 	./ft_strjoin.c	\
-	# ./ft_strtrim.c	\
+	./ft_strtrim.c	\
 	# ./ft_split.c	\
 	# ./ft_itoa.c		\
 	# ./ft_strmapi.c	\
