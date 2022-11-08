@@ -6,7 +6,7 @@
 /*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:30:40 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/08 11:47:25 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/08 18:36:49 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (ft_strlen(s) < start)
 		return (ft_strdup(""));
-	if (len > ft_strlen(s) - start)
+	if (ft_strlen(s) < len + start)
 		str = (char *)ft_calloc(ft_strlen(s) - start + 1, sizeof(char));
 	else 
 		str = (char *)ft_calloc(len + 1, sizeof(char));	

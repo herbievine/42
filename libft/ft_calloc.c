@@ -6,7 +6,7 @@
 /*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:54:21 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/07 15:47:03 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/08 18:38:47 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void *ft_calloc(size_t nmemb, size_t size)
 {
 	void *space;
 
+	if (nmemb * size < size)
+		return (NULL);
 	space = malloc(nmemb * size);
 	if (!space)
 		return NULL;
