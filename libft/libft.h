@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/08 19:00:23 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/09 09:33:37 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void *ft_calloc(size_t nmemb, size_t size);
 // String stuff
 size_t ft_strlen(const char *s);
 int ft_atoi(const char *nptr);
+char *ft_itoa(int n);
 char *ft_strjoin(char const *s1, char const *s2);
 char **ft_split(char const *s, char c);
 char *ft_strdup(const char *s);
