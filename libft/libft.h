@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/09 09:33:37 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/09 14:39:49 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char *ft_strtrim(char const *s1, char const *set);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t ft_strlcat(char *dst, const char *src, size_t dstsize);
+char *ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 // Char stuff
 int ft_isalpha(int c);
