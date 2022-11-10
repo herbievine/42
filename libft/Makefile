@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/09 14:39:54 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/10 10:07:00 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,10 +54,10 @@ SRCS = \
 	./ft_split.c	\
 	./ft_itoa.c		\
 	./ft_strmapi.c	\
-	# ./ft_putchar_fd.c	\
-	# ./ft_putstr_fd.c	\
-	# ./ft_putendl_fd.c	\
-	# ./ft_putnbr_fd.c
+	./ft_putchar_fd.c	\
+	./ft_putstr_fd.c	\
+	./ft_putendl_fd.c	\
+	./ft_putnbr_fd.c
 	
 OBJS = $(SRCS:.c=.o)
 
