@@ -6,16 +6,15 @@
 /*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 12:08:36 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/07 14:35:37 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/10 14:51:11 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *s, int c, size_t n)
 {
 	while (n-- > 0)
 		((char *)s)[n] = c;
-
-	return s;
+	return (s);
 }

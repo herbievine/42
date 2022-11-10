@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 11:51:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/10/23 11:59:48 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/10 15:19:02 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void *ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < n)
 		if (((char *)s)[i] == (char)c)
-			return (void *)(s + i);
-	return 0;
+			return ((void *)(s + i));
+	return (0);
 }

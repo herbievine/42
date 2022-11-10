@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/10 11:48:28 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/10 15:17:20 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char **ft_init_list(char const *s, char c)
+char	**ft_init_list(char const *s, char c)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (*++s)
@@ -22,14 +22,13 @@ char **ft_init_list(char const *s, char c)
 			i++;
 	if (*--s != c)
 		i++;
-
 	return (ft_calloc(i + 1, sizeof(char *)));
 }
 
-int ft_insert_word_at_idx(char **list, char const *s, char c, size_t idx)
+int	ft_insert_word_at_idx(char **list, char const *s, char c, size_t idx)
 {
-	size_t i;
-	size_t len;
+	size_t	i;
+	size_t	len;
 
 	i = 0;
 	len = 0;
@@ -41,23 +40,18 @@ int ft_insert_word_at_idx(char **list, char const *s, char c, size_t idx)
 		list[idx++] = ft_substr(s, i - len, len);
 		len = 0;
 	}
-
 	return (len);
 }
 
-char **ft_split(char const *s, char c)
+void	ft_put_str_into_list(char **list, char const *s, char c)
 {
-	size_t i;
-	size_t idx;
-	size_t len;
-	char **list;
+	size_t	i;
+	size_t	idx;
+	size_t	len;
 
 	i = 0;
 	idx = 0;
 	len = 0;
-	if (!s)
-		return (0);
-	list = ft_init_list(s, c);
 	while (s[i])
 	{
 		if (s[i] != c)
@@ -71,9 +65,18 @@ char **ft_split(char const *s, char c)
 				len = 0;
 			}
 		}
-		if (s[i])	
+		if (s[i])
 			i++;
 	}
+}
 
+char	**ft_split(char const *s, char c)
+{
+	char	**list;
+
+	if (!s)
+		return (0);
+	list = ft_init_list(s, c);
+	ft_put_str_into_list(list, s, c);
 	return (list);
 }

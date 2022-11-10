@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:20:16 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/10 13:30:53 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/10 15:18:23 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list *new_head;
-	t_list *el;
+	t_list	*new_head;
+	t_list	*el;
 
 	if (!lst || !f || !del)
 		return (0);
@@ -36,6 +36,5 @@ t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		lst = lst->next;
 	}
 	el->next = NULL;
-
-	return new_head;
+	return (new_head);
 }
