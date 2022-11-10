@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/10 11:52:00 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/10 13:20:38 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,16 @@ SRCS = \
 	./ft_putchar_fd.c	\
 	./ft_putstr_fd.c	\
 	./ft_putendl_fd.c	\
-	./ft_putnbr_fd.c
+	./ft_putnbr_fd.c \
+	./ft_lstnew.c \
+	./ft_lstadd_front.c \
+	./ft_lstsize.c \
+	./ft_lstlast.c \
+	./ft_lstadd_back.c \
+	./ft_lstdelone.c \
+	./ft_lstclear.c \
+	./ft_lstiter.c \
+	./ft_lstmap.c
 	
 OBJS = $(SRCS:.c=.o)
 
