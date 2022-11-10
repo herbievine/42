@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/10 10:06:58 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/10 11:35:23 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 // TODO REMOVE
 #include <stdio.h>
 #include <string.h>
+
+typedef struct s_list
+{
+	void *content;
+	struct s_list *next;
+} t_list;
 
 // Memory stuff
 void *ft_memset(void *b, int c, size_t len);

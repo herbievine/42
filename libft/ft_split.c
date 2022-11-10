@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/09 08:10:33 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/10 11:48:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char **ft_split(char const *s, char c)
 	i = 0;
 	idx = 0;
 	len = 0;
+	if (!s)
+		return (0);
 	list = ft_init_list(s, c);
 	while (s[i])
 	{
