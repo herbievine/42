@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:30:40 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/10 11:46:49 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 15:32:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char *ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int i;
+	size_t i;
 	char *str;
 
 	if (!s)
