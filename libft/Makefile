@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/10 13:20:38 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/11 10:15:42 by hvine            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ SRCS = \
 	./ft_putchar_fd.c	\
 	./ft_putstr_fd.c	\
 	./ft_putendl_fd.c	\
-	./ft_putnbr_fd.c \
+	./ft_putnbr_fd.c
+
+BONUS_SRC = \
 	./ft_lstnew.c \
 	./ft_lstadd_front.c \
 	./ft_lstsize.c \
@@ -69,13 +71,18 @@ SRCS = \
 	
 OBJS = $(SRCS:.c=.o)
 
+BONUS_OBJS = $(BONUS_SRC:.c=.o)
+
 all: $(NAME)
+
+bonus: $(OBJS) $(BONUS_OBJS)
+	ar -rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
 .c.o: $(SRCS) $(INCLUDES)
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 clean:
-	$(RM) $(RMFLAG) $(OBJS)
+	$(RM) $(RMFLAG) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
 	$(RM) $(RMFLAG) $(NAME)
@@ -85,4 +92,4 @@ re: fclean all
 $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

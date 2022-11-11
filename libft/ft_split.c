@@ -6,7 +6,7 @@
 /*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/10 15:17:20 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/11 10:50:15 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	**ft_init_list(char const *s, char c)
 	size_t	i;
 
 	i = 0;
+	if (!*s)
+		return (ft_calloc(1, sizeof(char *)));
 	while (*++s)
 		if (*s == c && *(s - 1) != c && *(s - 1) != '\0')
 			i++;
