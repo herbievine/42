@@ -6,15 +6,15 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:16:23 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 21:13:23 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:22:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_strncmp() function lexicographically compares the null-terminated
- * strings s1 and s2.
+ * @brief The ft_strncmp() function lexicographically compares the
+ * null-terminated strings s1 and s2.
  * 
  * @param s1 
  * @param s2 

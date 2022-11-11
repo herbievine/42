@@ -6,15 +6,15 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 21:09:29 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:23:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char **ft_init_list(char const *s, char c)
+static char	**ft_init_list(char const *s, char c)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (*++s)
@@ -22,7 +22,6 @@ static char **ft_init_list(char const *s, char c)
 			i++;
 	if (*--s != c)
 		i++;
-
 	return (ft_calloc(i + 1, sizeof(char *)));
 }
 
@@ -57,7 +56,7 @@ static void	ft_fill_list_with_strs(char **list, char const *s, char c)
 			}
 			len = 0;
 		}
-		if (s[i])	
+		if (s[i])
 			i++;
 	}
 }
@@ -70,9 +69,9 @@ static void	ft_fill_list_with_strs(char **list, char const *s, char c)
  * @param c 
  * @return char** 
  */
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	char **list;
+	char	**list;
 
 	if (!s)
 		return (0);
