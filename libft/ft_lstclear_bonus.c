@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:30:27 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 15:56:43 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 17:31:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list *head;
-	t_list *tmp;
+	t_list	*head;
+	t_list	*tmp;
 	
 	if (!lst || !del)
-		return;
+		return ;
 	head = *lst;
 	while (head)
 	{
@@ -26,6 +26,5 @@ void ft_lstclear(t_list **lst, void (*del)(void *))
 		ft_lstdelone(head, del);
 		head = tmp;
 	}
-
 	*lst = 0;
 }

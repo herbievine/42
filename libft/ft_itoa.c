@@ -6,15 +6,15 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 09:33:09 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 16:26:58 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 17:30:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_intlen(int n)
+int	ft_intlen(int n)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (n < 0)
@@ -24,15 +24,14 @@ int ft_intlen(int n)
 		len++;
 		n /= 10;
 	}
-
 	return (len);
 }
 
-char *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
-	int len;
-	int i;
-	char *str;
+	int		len;
+	int		i;
+	char	*str;
 
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
@@ -53,6 +52,5 @@ char *ft_itoa(int n)
 		str[len] = n % 10 + 48;
 		n /= 10;
 	}
-
 	return (str);
 }
