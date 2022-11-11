@@ -6,18 +6,18 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:53:05 by herbie            #+#    #+#             */
-/*   Updated: 2022/10/23 13:09:10 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 17:47:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	int i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
 		i++;
-	return i;
+	return (i);
 }

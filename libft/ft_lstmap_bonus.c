@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:20:16 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:33:05 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 17:48:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		lst = lst->next;
 	}
 	el->next = 0;
-	return new_head;
+	return (new_head);
 }

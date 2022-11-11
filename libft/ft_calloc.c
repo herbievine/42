@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:54:21 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:29:31 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 17:51:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	if (!space)
 		return (NULL);
 	ft_bzero(space, nmemb * size);
-	return space;
+	return (space);
 }

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 11:57:05 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:36:49 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 17:42:14 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,14 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	const unsigned char	*s1_cpy;
-	const unsigned char	*s2_cpy;
-
-	s1_cpy = (const unsigned char *)s1;
-	s2_cpy = (const unsigned char *)s2;
-
 	if (n == 0)
 		return (0);
 	while (n-- > 0)
 	{
-		if (*s1_cpy != *s2_cpy)
-			return (*s1_cpy - *s2_cpy);
-		s1_cpy++;
-		s2_cpy++;
+		if (*(unsigned char *)s1 != *(unsigned char *)s2)
+			return (*(unsigned char *)s1 - *(unsigned char *)s2);
+		s1++;
+		s2++;
 	}
 	return (0);
 }
