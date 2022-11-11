@@ -6,13 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 09:33:09 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:30:48 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:18:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_intlen(int n)
+static int	ft_intlen(int n)
 {
 	int	len;
 
@@ -27,10 +27,16 @@ int	ft_intlen(int n)
 	return (len);
 }
 
+/**
+ * @brief The ft_itoa() function allocates (with malloc(3)) and returns a
+ * string representing the integer received as an argument.
+ * 
+ * @param n 
+ * @return char* 
+ */
 char	*ft_itoa(int n)
 {
 	int		len;
-	int		i;
 	char	*str;
 
 	if (n == -2147483648)

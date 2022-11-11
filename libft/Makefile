@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/11 16:29:05 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/11 20:24:13 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME = libft.a
 AR = ar
 ARFLAGS = crs
 
-CC = gcc
-CFLAG = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -59,7 +59,7 @@ SRCS = \
 	./ft_putendl_fd.c \
 	./ft_putnbr_fd.c
 
-BONUS_SRC = \
+BONUS_SRCS = \
 	./ft_lstnew_bonus.c \
 	./ft_lstadd_front_bonus.c \
 	./ft_lstsize_bonus.c \
@@ -69,9 +69,12 @@ BONUS_SRC = \
 	./ft_lstclear_bonus.c \
 	./ft_lstiter_bonus.c \
 	./ft_lstmap_bonus.c
+
+#EXTRA_SRCS = \
+#	./ft_test_malloc.c
 	
-OBJS = $(SRCS:.c=.o)
-BONUS_OBJS = $(BONUS_SRC:.c=.o)
+OBJS = $(SRCS:.c=.o) #$(EXTRA_SRCS:.c=.o)
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 all: $(NAME)
 

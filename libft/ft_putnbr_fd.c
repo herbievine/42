@@ -6,12 +6,19 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:06:32 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:38:05 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:09:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief The ft_putnbr_fd() function outputs the integer 'n' to the given file
+ * descriptor.
+ * 
+ * @param n 
+ * @param fd 
+ */
 void	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)

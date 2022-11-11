@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:44:53 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:20:05 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 int		ft_lstsize(t_list *lst);
+
+// Extra stuff
+// void	*ft_test_malloc(size_t s);
 
 #endif

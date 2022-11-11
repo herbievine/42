@@ -6,12 +6,21 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 13:09:20 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:47:27 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:11:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief The ft_strlcpy() function copies up to 'size' - 1 characters from the
+ * NUL-terminated string 'src' to 'dst', NUL-terminating the result.
+ * 
+ * @param dst 
+ * @param src 
+ * @param size 
+ * @return size_t 
+ */
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;

@@ -2,3 +2,7 @@
 .vscode
 **/tester
 **/**.o
+**/**.a
+
+# Temp
+libft/ft_test_malloc.c

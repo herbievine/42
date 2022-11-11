@@ -6,12 +6,19 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:34:36 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 17:28:30 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:19:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief The ft_atoi() function converts the initial portion of the string
+ * pointed to by str to int representation.
+ * 
+ * @param nptr 
+ * @return int 
+ */
 int	ft_atoi(const char *nptr)
 {
 	int	i;

@@ -6,12 +6,18 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:02:07 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 17:52:30 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:17:54 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief The ft_lstsize() function counts the number of elements in a list.
+ * 
+ * @param lst 
+ * @return int 
+ */
 int	ft_lstsize(t_list *lst)
 {
 	int	i;
