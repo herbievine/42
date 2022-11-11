@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 21:23:12 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:27:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	ft_fill_list_with_strs(char **list, char const *s, char c)
 
 /**
  * @brief The ft_split() function allocates (with malloc(3)) and returns an array
- * of strings obtained by splitting ’s’ using the character ’c’ as a delimiter.
+ * of strings obtained by splitting 's' using the character 'c' as a delimiter.
  * 
  * @param s 
  * @param c 

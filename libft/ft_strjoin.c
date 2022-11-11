@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:59:14 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:10:49 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 21:27:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief The ft_strjoin() function allocates (with malloc(3)) and returns a new
- * string, which is the result of the concatenation of ’s1’ and ’s2’.
+ * string, which is the result of the concatenation of 's1' and 's2'.
  * 
  * @param s1 
  * @param s2 
