@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 11:51:57 by herbie            #+#    #+#             */
-/*   Updated: 2022/10/23 11:59:48 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/11 15:30:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void *ft_memchr(const void *s, int c, size_t n)
 {
-	int i;
+	size_t i;
 
 	i = -1;
 	while (++i < n)
