@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2022/11/11 21:45:07 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/12 10:04:40 by hvine            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,14 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm
 RMFLAG = -f
 
-INCLUDES = ./libft.h
+INCLUDES = ./ft_printf.h
 
 SRCS = \
-	./ft_printf.c
+	./ft_printf.c \
+	./ft_putchar_fd.c \
+	./ft_putnbr_fd.c \
+	./ft_putstr_fd.c \
+	./ft_strlen.c
 
 # BONUS_SRCS = \
 # 	./ft_lstnew_bonus.c \
@@ -49,14 +53,14 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 clean:
-	$(RM) $(RMFLAG) $(OBJS) $(BONUS_OBJS)
+	$(RM) $(RMFLAG) $(OBJS) $(LIBFT_DIR)/$(LIBFT_SRCS:.c=.o) #$(BONUS_OBJS)
 
 fclean: clean
 	$(RM) $(RMFLAG) $(NAME)
 
 re: fclean all
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	$(AR) $(ARFLAGS) $@ $^
 
 .PHONY: all clean fclean re

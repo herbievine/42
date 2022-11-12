@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/11 20:24:13 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/12 15:40:45 by hvine            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,5 +94,9 @@ re: fclean all
 
 $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
+
+so:
+	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRCS) $(BONUS_SRCS)
+	gcc -nostartfiles -shared -o libft.so $(OBJS) $(BONUS_OBJS)
 
 .PHONY: all clean fclean re

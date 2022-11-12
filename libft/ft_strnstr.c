@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:39:32 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 21:12:52 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/12 15:49:24 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	if (!*little)
 		return ((char *)big);
+	if (!len)
+		return (0);
 	while (*big && len--)
 	{
 		if (
