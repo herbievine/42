@@ -6,6 +6,6 @@ This is a list of projects that I have worked on. I have tried to include as man
 
 ## Score
 
-| Project Name  | Score         |
+| Project Name  | Score         | 
 | ------------- | ------------- |
-| libft         | TBD           |
+| libft         | 19%           |
