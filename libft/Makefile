@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/22 11:57:59 by herbie            #+#    #+#              #
-#    Updated: 2022/11/12 15:40:45 by hvine            ###   ########.fr        #
+#    Updated: 2022/11/14 08:45:42 by hvine            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,15 +60,15 @@ SRCS = \
 	./ft_putnbr_fd.c
 
 BONUS_SRCS = \
-	./ft_lstnew_bonus.c \
-	./ft_lstadd_front_bonus.c \
-	./ft_lstsize_bonus.c \
-	./ft_lstlast_bonus.c \
-	./ft_lstadd_back_bonus.c \
-	./ft_lstdelone_bonus.c \
-	./ft_lstclear_bonus.c \
-	./ft_lstiter_bonus.c \
-	./ft_lstmap_bonus.c
+	./ft_lstnew.c \
+	./ft_lstadd_front.c \
+	./ft_lstsize.c \
+	./ft_lstlast.c \
+	./ft_lstadd_back.c \
+	./ft_lstdelone.c \
+	./ft_lstclear.c \
+	./ft_lstiter.c \
+	./ft_lstmap.c
 
 #EXTRA_SRCS = \
 #	./ft_test_malloc.c
