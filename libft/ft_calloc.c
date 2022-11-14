@@ -25,9 +25,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*space;
 
-	if (!nmemb || !size)
-		return (ft_calloc(1, 1));
-	if (nmemb > SIZE_MAX / size)
+	if (size && nmemb > SIZE_MAX / size)
 		return (0);
 	space = malloc(nmemb * size);
 	if (!space)
