@@ -8,4 +8,6 @@ This is a list of projects that I have worked on. I have tried to include as man
 
 | Project Name  | Score         | 
 | ------------- | ------------- |
-| libft         | 19%           |
+| libft         | 125/125       |
+| ft_printf     | TBD/125       |
+| born2beroot   | TBD/125       |

@@ -3,6 +3,7 @@
 **/tester
 **/**.o
 **/**.a
+**/a.out
 
 # Temp
 libft/ft_test_malloc.c
