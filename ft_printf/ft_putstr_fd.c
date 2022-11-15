@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:27 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/12 10:03:57 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/15 08:42:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 /**
  * @brief The ft_putstr_fd() function outputs the string 's' to the given file
- * descriptor.
+ * descriptor and returns the number of bytes written. If 's' is NULL, the
+ * function writes "(null)" to the file descriptor and returns 6.
  * 
  * @param s 
  * @param fd 
+ * @return int 
  */
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
 	if (!s)
-		return ;
+		return (ft_putstr_fd("(null)", fd));
 	write(fd, s, ft_strlen(s));
+	return (ft_strlen(s));
 }

@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_puthex_fr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 10:06:32 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 16:48:40 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/14 16:50:33 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/15 08:14:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/**
- * @brief The ft_putnbr_fd() function outputs the integer 'n' to the given
- * file descriptor and returns the number of bytes written.
- * 
- * @param n 
- * @param fd 
- * @return int 
- */
-int	ft_putnbr_fd(int n, int fd)
+int	ft_puthex_fd(long long int n, int fd)
 {
-	long int num;
-
-	num = n;
-	if (num < 0)
+	if (n == 0)
+		return (ft_putstr_fd("0", fd));
+	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);
-		num *= -1;
+		n *= -1;
+		return (ft_putnbr_base_fd(n, "0123456789abcdef", fd) + 1);
 	}
-	if (num > 9)
-	{
-		ft_putnbr_fd(num / 10, fd);
-		ft_putchar_fd(num % 10 + 48, fd);
-	}
-	else
-		ft_putchar_fd(num + 48, fd);
-
-	return (ft_intlen(n));
+	return (ft_putnbr_base_fd(n, "0123456789abcdef", fd));
 }

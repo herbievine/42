@@ -1,42 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putnbr_base_fd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:06:32 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 16:48:40 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/15 08:47:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/**
- * @brief The ft_putnbr_fd() function outputs the integer 'n' to the given
- * file descriptor and returns the number of bytes written.
- * 
- * @param n 
- * @param fd 
- * @return int 
- */
-int	ft_putnbr_fd(int n, int fd)
-{
-	long int num;
+static int	ft_print_recursive(long long int n, char *base, int fd);
 
-	num = n;
-	if (num < 0)
+int	ft_putnbr_base_fd(long long int n, char *base, int fd)
+{
+	if (n == 0)
+		return (ft_putchar_fd(base[0], fd));
+	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);
-		num *= -1;
+		n *= -1;
+		return (ft_print_recursive(n, base, fd) - 1);
 	}
-	if (num > 9)
-	{
-		ft_putnbr_fd(num / 10, fd);
-		ft_putchar_fd(num % 10 + 48, fd);
-	}
-	else
-		ft_putchar_fd(num + 48, fd);
+	return (ft_print_recursive(n, base, fd) - 1);
+}
 
-	return (ft_intlen(n));
+static int	ft_print_recursive(long long int n, char *base, int fd)
+{
+	int bytes;
+	
+	bytes = 1;
+	if (n)
+	{
+		bytes += ft_print_recursive(n / ft_strlen(base), base, fd);
+		ft_putchar_fd(base[n % ft_strlen(base)], fd);
+	}
+	return (bytes);
 }

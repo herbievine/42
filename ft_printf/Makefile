@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2022/11/12 10:04:40 by hvine            ###   ########.fr        #
+#    Updated: 2022/11/15 08:20:05 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ AR = ar
 ARFLAGS = crs
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -27,8 +27,15 @@ SRCS = \
 	./ft_printf.c \
 	./ft_putchar_fd.c \
 	./ft_putnbr_fd.c \
+	./ft_putunbr_fd.c \
+	./ft_puthex_fd.c \
+	./ft_puthex_up_fd.c \
+	./ft_putptr_fd.c \
 	./ft_putstr_fd.c \
-	./ft_strlen.c
+	./ft_putnbr_base_fd.c \
+	./ft_strchr.c \
+	./ft_strlen.c \
+	./ft_intlen.c
 
 # BONUS_SRCS = \
 # 	./ft_lstnew_bonus.c \

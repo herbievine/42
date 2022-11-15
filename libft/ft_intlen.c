@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 10:06:32 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 16:48:40 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 /**
- * @brief The ft_putnbr_fd() function outputs the integer 'n' to the given
- * file descriptor and returns the number of bytes written.
+ * @brief The ft_intlen() function returns the number of digits in the integer
+ * received as an argument.
  * 
  * @param n 
- * @param fd 
  * @return int 
  */
-int	ft_putnbr_fd(int n, int fd)
+int	ft_intlen(int n)
 {
-	long int num;
+	int	len;
 
-	num = n;
-	if (num < 0)
+	len = 0;
+	if (n < 0)
+		len++;
+	while (n)
 	{
-		ft_putchar_fd('-', fd);
-		num *= -1;
+		len++;
+		n /= 10;
 	}
-	if (num > 9)
-	{
-		ft_putnbr_fd(num / 10, fd);
-		ft_putchar_fd(num % 10 + 48, fd);
-	}
-	else
-		ft_putchar_fd(num + 48, fd);
-
-	return (ft_intlen(n));
+	return (len);
 }

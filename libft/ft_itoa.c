@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 09:33:09 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/12 08:56:01 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/14 15:58:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_intlen(int n);
 
 /**
  * @brief The ft_itoa() function allocates (with malloc(3)) and returns a
@@ -46,19 +44,4 @@ char	*ft_itoa(int n)
 		n /= 10;
 	}
 	return (str);
-}
-
-static int	ft_intlen(int n)
-{
-	int	len;
-
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
 }
