@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex_fr.c                                     :+:      :+:    :+:   */
+/*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:50:33 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/15 08:14:24 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/15 19:00:50 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_puthex_fd(long long int n, int fd)
+int	ft_puthex_fd(long n, int fd)
 {
-	if (n == 0)
-		return (ft_putstr_fd("0", fd));
 	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);

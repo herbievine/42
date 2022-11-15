@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:06:32 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 16:48:40 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/15 12:08:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,14 @@
  */
 int	ft_putnbr_fd(int n, int fd)
 {
-	long int num;
+	long long num;
 
 	num = n;
 	if (num < 0)
 	{
 		ft_putchar_fd('-', fd);
 		num *= -1;
+		return (ft_putnbr_base_fd(num, "0123456789", fd) + 1);
 	}
-	if (num > 9)
-	{
-		ft_putnbr_fd(num / 10, fd);
-		ft_putchar_fd(num % 10 + 48, fd);
-	}
-	else
-		ft_putchar_fd(num + 48, fd);
-
-	return (ft_intlen(n));
+	return (ft_putnbr_base_fd(num, "0123456789", fd));
 }
