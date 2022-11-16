@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:18:08 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/16 11:35:58 by codespace        ###   ########.fr       */
+/*   Updated: 2022/11/16 16:07:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 static int	ft_determine_num_args(const char *str);
 static int ft_parse_special_chars(char c, void *arg);
 
+/**
+ * @brief The ft_printf() function formats and prints data. It returns the
+ * number of characters printed (excluding the null byte used to end output to
+ * strings).
+ * 
+ * @param format 
+ * @param ... 
+ * @return int 
+ */
 int	ft_printf(const char *format, ...)
 {
 	int bytes;
