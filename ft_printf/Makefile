@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2022/11/15 08:20:05 by herbie           ###   ########.fr        #
+#    Updated: 2022/11/16 10:34:41 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 clean:
-	$(RM) $(RMFLAG) $(OBJS) $(LIBFT_DIR)/$(LIBFT_SRCS:.c=.o) #$(BONUS_OBJS)
+	$(RM) $(RMFLAG) $(OBJS) #$(BONUS_OBJS)
 
 fclean: clean
 	$(RM) $(RMFLAG) $(NAME)
