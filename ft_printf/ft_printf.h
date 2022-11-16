@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 21:47:58 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/16 10:11:28 by codespace        ###   ########.fr       */
+/*   Updated: 2022/11/16 10:28:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # ifndef __linux__
 # define __linux__ 0
-# endif
+# endif /* __linux__ */
 
 int	ft_printf(const char *, ...);
 
