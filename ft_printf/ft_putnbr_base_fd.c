@@ -6,22 +6,22 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:06:32 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/15 18:47:54 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/16 09:59:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_print_recursive(unsigned long long n, char *base, int fd);
+static int	ft_print_recursive(unsigned long n, char *base, int fd);
 
-int	ft_putnbr_base_fd(unsigned long long n, char *base, int fd)
+int	ft_putnbr_base_fd(unsigned long n, char *base, int fd)
 {
 	if (n == 0)
 		return (ft_putchar_fd(base[0], fd));
 	return (ft_print_recursive(n, base, fd) - 1);
 }
 
-static int	ft_print_recursive(unsigned long long n, char *base, int fd)
+static int	ft_print_recursive(unsigned long n, char *base, int fd)
 {
 	int bytes;
 	

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:18:08 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/15 18:59:40 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/16 10:05:31 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,47 +39,50 @@ int	ft_printf(const char *format, ...)
 	return (bytes);
 }
 
-// int main()
-// {
-// 	int i = 42;
-// 	void *p = &i;
+int main()
+{
+	ft_printf("\n\nLONG_MAX: %x\n", LONG_MAX);
+	printf("ACTUAL: %x\n", LONG_MAX);
 
-// 	// printf("====================\n");
+	// int i = 42;
+	// void *p = &i;
 
-// 	// // int a_char = printf("printing char: %c\n", 'a');
-// 	// // printf("wrote %d bytes of data\n", a_char);
-// 	// // int a_string = printf("printing string: %s\n", 0);
-// 	// // printf("wrote %d bytes of data\n", a_string);
-// 	// int a_pointer = printf("printing pointer: %p\n", p);
-// 	// printf("wrote %d bytes of data\n", a_pointer);
-// 	// // int a_decimal = printf("printing decimal: %d\n", 42);
-// 	// // printf("wrote %d bytes of data\n", a_decimal);
-// 	// // int a_unsigned_decimal = printf("printing unsigned decimal: %u\n", 42);
-// 	// // printf("wrote %d bytes of data\n", a_unsigned_decimal);
-// 	// int a_hex = printf("printing hex: %x\n", 42);
-// 	// printf("wrote %d bytes of data\n", a_hex);
-// 	// // int a_hex_upper = printf("printing hex upper: %X\n", 42);
-// 	// // printf("wrote %d bytes of data\n", a_hex_upper);
+	// printf("====================\n");
 
-// 	// printf("====================\n");
+	// // int a_char = printf("printing char: %c\n", 'a');
+	// // printf("wrote %d bytes of data\n", a_char);
+	// // int a_string = printf("printing string: %s\n", 0);
+	// // printf("wrote %d bytes of data\n", a_string);
+	// int a_pointer = printf("printing pointer: %p\n", p);
+	// printf("wrote %d bytes of data\n", a_pointer);
+	// // int a_decimal = printf("printing decimal: %d\n", 42);
+	// // printf("wrote %d bytes of data\n", a_decimal);
+	// // int a_unsigned_decimal = printf("printing unsigned decimal: %u\n", 42);
+	// // printf("wrote %d bytes of data\n", a_unsigned_decimal);
+	// int a_hex = printf("printing hex: %x\n", 42);
+	// printf("wrote %d bytes of data\n", a_hex);
+	// // int a_hex_upper = printf("printing hex upper: %X\n", 42);
+	// // printf("wrote %d bytes of data\n", a_hex_upper);
+
+	// printf("====================\n");
 	
-// 	// // int b_char = ft_printf("printing char: %c\n", 'a');
-// 	// // printf("wrote %d bytes of data\n", b_char);
-// 	// // int b_string = ft_printf("printing string: %s\n", 0);
-// 	// // printf("wrote %d bytes of data\n", b_string);
-// 	// int b_pointer = ft_printf("printing pointer: %p\n", p);
-// 	// printf("wrote %d bytes of data\n", b_pointer);
-// 	// // int b_decimal = ft_printf("printing decimal: %d\n", 42);
-// 	// // printf("wrote %d bytes of data\n", b_decimal);
-// 	// // int b_unsigned_decimal = ft_printf("printing unsigned decimal: %u\n", 42);
-// 	// // printf("wrote %d bytes of data\n", b_unsigned_decimal);
-// 	// int b_hex = ft_printf("printing hex: %x\n", 42);
-// 	// printf("wrote %d bytes of data\n", b_hex);
-// 	// // int b_hex_upper = ft_printf("printing hex upper: %X\n", 42);
-// 	// // printf("wrote %d bytes of data\n", b_hex_upper);
+	// // int b_char = ft_printf("printing char: %c\n", 'a');
+	// // printf("wrote %d bytes of data\n", b_char);
+	// // int b_string = ft_printf("printing string: %s\n", 0);
+	// // printf("wrote %d bytes of data\n", b_string);
+	// int b_pointer = ft_printf("printing pointer: %p\n", p);
+	// printf("wrote %d bytes of data\n", b_pointer);
+	// // int b_decimal = ft_printf("printing decimal: %d\n", 42);
+	// // printf("wrote %d bytes of data\n", b_decimal);
+	// // int b_unsigned_decimal = ft_printf("printing unsigned decimal: %u\n", 42);
+	// // printf("wrote %d bytes of data\n", b_unsigned_decimal);
+	// int b_hex = ft_printf("printing hex: %x\n", 42);
+	// printf("wrote %d bytes of data\n", b_hex);
+	// // int b_hex_upper = ft_printf("printing hex upper: %X\n", 42);
+	// // printf("wrote %d bytes of data\n", b_hex_upper);
 	
-// 	// printf("====================\n");
-// }
+	// printf("====================\n");
+}
 
 static int	ft_determine_num_args(const char *str)
 {
@@ -110,9 +113,9 @@ static int ft_parse_special_chars(char c, void *arg)
 	if (c == 'u')
 		return (ft_putunbr_fd((unsigned int)arg, 1));
 	if (c == 'x')
-		return (ft_puthex_fd((long long)arg, 1));
-	if (c == 'X')
-		return (ft_puthex_up_fd((long long)arg, 1));
+		return (ft_puthex_fd((unsigned long)arg, 1));
+	// if (c == 'X')
+	// 	return (ft_puthex_up_fd((long long)arg, 1));
 	if (c == '%')	
 		return (ft_putchar_fd('%', 1));
 	return (0);

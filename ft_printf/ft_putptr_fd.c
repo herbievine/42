@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 08:10:44 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/15 18:55:37 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/16 09:59:23 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param fd 
  * @return int 
  */
-int ft_putptr_fd(unsigned long long n, int fd)
+int ft_putptr_fd(unsigned long n, int fd)
 {
 	if (n == 0)
 		return (ft_putstr_fd("0x0", fd));
