@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:18:08 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/17 15:06:54 by hvine            ###   ########.fr       */
+/*   Updated: 2022/11/17 17:19:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_is_legal_flag(char *str);
-static int	ft_determine_num_args(const char *str);
-static int	ft_parse_special_chars(char c, void *arg);
+static int	ft_is_legal_flag(const char *str);
+static int	ft_parse_special_chars(char c, va_list *ap);
 
 /**
  * @brief The ft_printf() function formats and prints data. It returns the
@@ -27,81 +26,55 @@ static int	ft_parse_special_chars(char c, void *arg);
  */
 int	ft_printf(const char *format, ...)
 {
-	int bytes;
-	char legal_flags;
-	va_list ap;
+	int	bytes;
+	va_list	ap;
 
 	bytes = 0;
-	legal_flags = "cspdiuxX";
-	va_start(ap, ft_determine_num_args(format));
+	va_start(ap, format);
 	while (*format)
 	{
 		if (ft_is_legal_flag(format))
 		{
-			bytes += ft_parse_special_chars(*++format, va_arg(ap, void *));
+			bytes += ft_parse_special_chars(*++format, &ap);
+			format++;
+		}
+		else if (*format == '%' && *(format + 1) == '%')
+		{
+			bytes += ft_putchar_fd(*format++, 1);
 			format++;
 		}
 		else
-		{
-			write(1, format++, 1);
-			bytes++;
-		}
-		// else if (*(++format) == '%')
-		// {
-		// 	write(1, format++, 1);
-		// 	bytes++;
-		// }
-		// else
-		// {
-		// 	bytes += ft_parse_special_chars(*format, va_arg(ap, void *));
-		// 	format++;
-		// }
+			bytes += ft_putchar_fd(*format++, 1);
 	}
 	va_end(ap);
 	return (bytes);
 }
 
-static int ft_is_legal_flag(char *str)
+static int	ft_is_legal_flag(const char *str)
 {
-	const char *legal_flags = "cspdiuxX%";
+	const char	*legal_flags = "cspdiuxX";
 
 	if (*str == '%' && *(str + 1) && ft_strchr(legal_flags, *(str + 1)))
 		return (1);
 	return (0);
 }
 
-static int	ft_determine_num_args(const char *str)
-{
-	int  acc;
-	const char *set = "cspdiuxX%";
-
-	acc = 0;
-	while (*str)
-	{
-		if (*str == '%' && *(str + 1) && ft_strchr(set, *(str + 1)))
-			acc++;
-		str++;
-	}
-
-	return (acc);
-}
-
-static int ft_parse_special_chars(char c, void *arg)
+static int	ft_parse_special_chars(char c, va_list *ap)
 {
 	if (c == 'c')
-		return (ft_putchar_fd((int)arg, 1));
+		return (ft_putchar_fd(va_arg(*ap, int), 1));
 	if (c == 's')
-		return (ft_putstr_fd((char *)arg, 1));
+		return (ft_putstr_fd(va_arg(*ap, char *), 1));
 	if (c == 'p')
-		return (ft_putptr_fd((unsigned long)arg, 1));
+		return (ft_putptr_fd((unsigned long)va_arg(*ap, void *), 1));
 	if (c == 'd' || c == 'i')
-		return (ft_putnbr_fd((int)arg, 1));
+		return (ft_putnbr_fd(va_arg(*ap, int), 1));
 	if (c == 'u')
-		return (ft_putunbr_fd((unsigned int)arg, 1));
+		return (ft_putunbr_fd(va_arg(*ap, unsigned int), 1));
 	if (c == 'x')
-		return (ft_puthex_fd((unsigned int)arg, 1));
+		return (ft_puthex_fd(va_arg(*ap, unsigned int), 1));
 	if (c == 'X')
-		return (ft_puthex_up_fd((unsigned int)arg, 1));
+		return (ft_puthex_up_fd(va_arg(*ap, unsigned int), 1));
 	if (c == '%')
 		return (ft_putchar_fd('%', 1));
 	return (0);
