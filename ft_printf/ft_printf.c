@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:18:08 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/17 17:19:09 by codespace        ###   ########.fr       */
+/*   Updated: 2022/11/17 17:34:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_parse_special_chars(char c, va_list *ap);
  */
 int	ft_printf(const char *format, ...)
 {
-	int	bytes;
+	int		bytes;
 	va_list	ap;
 
 	bytes = 0;
@@ -66,7 +66,7 @@ static int	ft_parse_special_chars(char c, va_list *ap)
 	if (c == 's')
 		return (ft_putstr_fd(va_arg(*ap, char *), 1));
 	if (c == 'p')
-		return (ft_putptr_fd((unsigned long)va_arg(*ap, void *), 1));
+		return (ft_putptr_fd(va_arg(*ap, void *), 1));
 	if (c == 'd' || c == 'i')
 		return (ft_putnbr_fd(va_arg(*ap, int), 1));
 	if (c == 'u')

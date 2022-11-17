@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:06:32 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/15 12:08:47 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/17 17:35:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  */
 int	ft_putnbr_fd(int n, int fd)
 {
-	long long num;
+	long long	num;
 
 	num = n;
 	if (num < 0)
