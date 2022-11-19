@@ -71,10 +71,7 @@ BONUS_SRCS = \
 	./ft_lstiter.c \
 	./ft_lstmap.c
 
-#EXTRA_SRCS = \
-#	./ft_test_malloc.c
-	
-OBJS = $(SRCS:.c=.o) #$(EXTRA_SRCS:.c=.o)
+OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 all: $(NAME)
