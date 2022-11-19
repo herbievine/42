@@ -6,8 +6,9 @@ This is a list of projects that I have worked on. I have tried to include as man
 
 ## Score
 
-| Project Name  | Score         | 
-| ------------- | ------------- |
-| libft         | 125/125       |
-| ft_printf     | TBD/125       |
-| born2beroot   | TBD/125       |
+| Level         | Project Name  | Score         | 
+| ------------- | ------------- | ------------- |
+| 0             | libft         | 125/100       |
+| 1             | ft_printf     | 100/100       |
+| 1             | get_next_line | TBD/100       |
+| 1             | born2beroot   | TBD/100       |
