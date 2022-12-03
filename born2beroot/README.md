@@ -2,12 +2,24 @@
 
 ### Groups & Users
 
-###### Check all the users
+###### Check groups
 
 Format can be read like so: `<group>:<password>:<id>:<users>`
 
 ```bash
-getent group <group>
+getent group <?group>
+```
+
+###### Add a new user
+
+```bash
+sudo adduser <username>
+```
+
+###### Add user to a group
+
+```bash
+sudo adduser <username> <group>
 ```
 
 ### Password Policy
@@ -22,6 +34,12 @@ sudo vi /etc/pam.d/common-password
 
 ```bash 
 sudo vi /etc/login.defs
+```
+
+###### Check if password policy is applied
+
+```bash
+chage -l <username>
 ```
 
 ### Firewall
