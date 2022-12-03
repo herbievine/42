@@ -32,7 +32,7 @@ sudo vi /etc/pam.d/common-password
 
 ###### Check the password expiry
 
-```bash 
+```bash
 sudo vi /etc/login.defs
 ```
 
@@ -44,13 +44,13 @@ chage -l <username>
 
 ### Firewall
 
-###### Check that the UFW service is started
+###### Check that the UFW service has started
 
 ```bash
 sudo systemctl status ufw
 ```
 
-###### Check the open ports 
+###### Check the open ports
 
 ```bash
 sudo ufw status numbered
@@ -58,7 +58,7 @@ sudo ufw status numbered
 
 ### SSH
 
-###### Check that the SSH service is started
+###### Check that the SSH service has started
 
 ```bash
 sudo systemctl status ssh
@@ -76,4 +76,10 @@ sudo ssh <username>@127.0.0.1 -p 4242
 
 ```bash
 cat /etc/os-release
+```
+
+###### Check the OS hostname
+
+```bash
+hostname
 ```
