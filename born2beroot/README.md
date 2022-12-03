@@ -2,18 +2,30 @@
 
 ### Groups & Users
 
-###### Check groups
+> Group format can be read like so: `<group>:<password>:<id>:<users>`
 
-Format can be read like so: `<group>:<password>:<id>:<users>`
+###### Check groups
 
 ```bash
 getent group <?group>
+```
+
+###### Check users
+
+```bash
+cut -d: -f1 /etc/passwd
 ```
 
 ###### Add a new user
 
 ```bash
 sudo adduser <username>
+```
+
+###### Add a new group
+
+```bash
+sudo addgroup <newgroup>
 ```
 
 ###### Add user to a group
@@ -40,6 +52,14 @@ sudo vi /etc/login.defs
 
 ```bash
 chage -l <username>
+```
+
+### Sudo
+
+###### Check sudoers
+
+```bash
+sudo visudo
 ```
 
 ### Firewall
@@ -82,4 +102,10 @@ cat /etc/os-release
 
 ```bash
 hostname
+```
+
+###### Check the running CRON jobs
+
+```bash
+sudo crontab -l
 ```
