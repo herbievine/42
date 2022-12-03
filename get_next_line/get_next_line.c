@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:30 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/29 10:06:44 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/30 15:52:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,38 @@ int ft_contains_newline(char *str)
 	return (0);
 }
 
-char *ft_get_line(char *prev_cursor, int fd)
+char *ft_get_line(char *buffer, int fd)
 {
 	char *tmp;
+	int bytes_out;
 
-	while (*prev_cursor)
+	bytes_out = 1;
+	while (buffer && bytes_out != -1)
 	{
-		tmp = read(fd, prev_cursor, BUFFER_SIZE);
+		bytes_out = read(fd, tmp, BUFFER_SIZE);
 		if (!tmp)
 			return (0);
 		if (ft_contains_newline(tmp))
 		{
+			char *cpy = tmp[ft_strnlen(tmp, '\n')];
+			ft_strjoin(buffer, cpy);
+			return (tmp + ft_strnlen(tmp, '\n'));
 		}
+		else
+			ft_strjoin(buffer, tmp);
 	}
 }
 
 char *get_next_line(int fd)
 {
-	static char *cursor;
-	char *buffer;
+	static char *buffer;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	cursor = malloc((BUFFER_SIZE - 1) * sizeof(char));
 	buffer = malloc((BUFFER_SIZE - 1) * sizeof(char));
-	if (!cursor || !buffer)
+	if (!buffer)
 		return (0);
-	ft_get_line(cursor, fd);
-	return (buffer);
+	ft_get_line(buffer, fd);
 }
 
 int main()

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:48 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/29 10:17:32 by herbie           ###   ########.fr       */
+/*   Updated: 2022/11/30 15:34:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ char *ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	i = 0;
+	i = -1;
 	dup = (char *)malloc((ft_strnlen(s1, 0) + ft_strnlen(s2, 0) + 1) * sizeof(char));
 	if (!dup)
 		return (0);
-	while (*s1)
-		dup[i++] = *s1++;
-	while (*s2)
-		dup[i++] = *s2++;
 	dup[i] = 0;
+	while (*s1)
+		dup[++i] = *s1++;
+	while (*s2)
+		dup[++i] = *s2++;
 	return (dup);
 }
