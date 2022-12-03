@@ -10,6 +10,20 @@ Format can be read like so: `<group>:<password>:<id>:<users>`
 getent group <group>
 ```
 
+### Password Policy
+
+###### Check the password prerequisites
+
+```bash
+sudo vi /etc/pam.d/common-password
+```
+
+###### Check the password expiry
+
+```bash 
+sudo vi /etc/login.defs
+```
+
 ### Firewall
 
 ###### Check that the UFW service is started
