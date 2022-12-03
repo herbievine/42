@@ -1,5 +1,15 @@
 # Born2beroot Handbook
 
+### Groups & Users
+
+###### Check all the users
+
+Format can be read like so: `<group>:<password>:<id>:<users>`
+
+```bash
+getent group <group>
+```
+
 ### Firewall
 
 ###### Check that the UFW service is started
@@ -14,7 +24,7 @@ sudo systemctl status ufw
 sudo ufw status numbered
 ```
 
-###### SSH
+### SSH
 
 ###### Check that the SSH service is started
 
