@@ -6,100 +6,82 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:30 by herbie            #+#    #+#             */
-/*   Updated: 2022/12/06 11:33:37 by herbie           ###   ########.fr       */
+/*   Updated: 2022/12/06 11:35:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
-#define BUFFER_SIZE 1024
+// char *get_next_line(int fd)
+// {
+// 	static char *buffer;
 
-char *get_line(int fd)
+// 	if (fd < 0 || BUFFER_SIZE <= 0)
+// 		return (0);
+// }
+
+char *ft_get_line(char *buffer, int fd)
 {
-	char *buffer = malloc(BUFFER_SIZE + 1);
+	char *tmp;
+	int bytes_out;
+
+	bytes_out = 1;
 	if (!buffer)
-		return NULL;
-
-	int bytes_read = 0;
-	int pos = 0;
-	int line_len = 0;
-
-	while (1)
 	{
-		bytes_read = read(fd, buffer + pos, BUFFER_SIZE - pos);
-		if (bytes_read == -1)
-		{
-			free(buffer);
-			return NULL;
-		}
-
-		pos += bytes_read;
-		buffer[pos] = '\0';
-
-		char *newline = strchr(buffer, '\n');
-		if (newline)
-		{
-			line_len = newline - buffer;
-			char *line = malloc(line_len + 1);
-			if (!line)
-			{
-				free(buffer);
-				return NULL;
-			}
-			strncpy(line, buffer, line_len);
-			line[line_len] = '\0';
-
-			memmove(buffer, newline + 1, pos - line_len - 1);
-			pos -= line_len + 1;
-
-			return line;
-		}
-
-		if (bytes_read == 0)
-		{
-			if (pos == 0)
-			{
-				free(buffer);
-				return NULL;
-			}
-			else
-			{
-				char *line = malloc(pos + 1);
-				if (!line)
-				{
-					free(buffer);
-					return NULL;
-				}
-				strncpy(line, buffer, pos);
-				line[pos] = '\0';
-
-				return line;
-			}
-		}
-
-		char *new_buffer = realloc(buffer, pos + BUFFER_SIZE + 1);
-		if (!new_buffer)
-		{
-			free(buffer);
-			return NULL;
-		}
-		buffer = new_buffer;
+		buffer = (char *)malloc(BUFFER_SIZE + 1);
+		if (!buffer)
+			return (0);
 	}
+	while (!ft_strchr(buffer, '\n') && bytes_out > 0)
+	{
+		tmp = buffer;
+		buffer = ft_strjoin(buffer, (char *)malloc(BUFFER_SIZE + 1));
+		free(tmp);
+		if (!buffer)
+			return (0);
+		bytes_out = read(fd, buffer + ft_strlen(buffer), BUFFER_SIZE);
+		if (bytes_out == -1)
+			return (0);
+		buffer[ft_strlen(buffer) + bytes_out] = '\0';
+	}
+
+	return (buffer);
+}
+
+char *get_next_line(int fd)
+{
+	static char *buffer;
+	char *line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (0);
+	buffer = ft_get_line(buffer, fd);
+	if (buffer && ft_strchr(buffer, '\n'))
+	{
+		line = ft_strjoin("", buffer);
+		line[ft_strchr(buffer, '\n') - buffer] = '\0';
+		ft_strlcpy(buffer, ft_strchr(buffer, '\n') + 1, ft_strlen(ft_strchr(buffer, '\n') + 1) + 1);
+
+		return line;
+	}
+
+	return (buffer);
 }
 
 int main()
 {
 	int fd = open("./test", O_RDONLY);
-	printf("next line is '%s'\n", get_line(fd));
-	printf("next line is '%s'\n", get_line(fd));
-	printf("next line is '%s'\n", get_line(fd));
-	printf("next line is '%s'\n", get_line(fd));
-	printf("next line is '%s'\n", get_line(fd));
-	printf("next line is '%s'\n", get_line(fd));
-	printf("next line is '%s'\n", get_line(fd));
-	printf("next line is '%s'\n", get_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	printf("next line is '%s'\n", get_next_line(fd));
+	// get_next_line(fd);
+	// get_next_line(fd);
+	// get_next_line(fd);
+	// get_next_line(fd);
+	// get_next_line(fd);
 }
