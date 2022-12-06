@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:54 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/30 15:47:13 by herbie           ###   ########.fr       */
+/*   Updated: 2022/12/06 10:27:51 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,19 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
 
-#define BUFFER_SIZE 1024
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 5
+#endif /* BUFFER_SIZE */
 
 char *get_next_line(int fd);
-size_t ft_strnlen(const char *s, char c);
+size_t ft_strlen(const char *s);
+char *ft_strchr(const char *s, int c);
+size_t ft_strlcpy(char *dst, const char *src, size_t size);
 char *ft_strjoin(char const *s1, char const *s2);
+// size_t ft_strnlen(const char *s, char c);
+// char *ft_strjoin(char const *s1, char const *s2);
 
 #endif /* GET_NEXT_LINE_H */

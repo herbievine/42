@@ -6,27 +6,99 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:48 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/30 15:34:33 by herbie           ###   ########.fr       */
+/*   Updated: 2022/12/05 17:19:59 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /**
- * @brief The ft_strlen() function computes the length of the string s up to
- * char c.
+ * @brief The ft_strlen() function computes the length of the string s.
  *
  * @param s
  * @return size_t
  */
-size_t ft_strnlen(const char *s, char c)
+size_t ft_strlen(const char *s)
 {
 	size_t i;
 
 	i = 0;
-	while (s[i] && s[i] != c)
+	while (s[i])
 		i++;
 	return (i);
+}
+
+/**
+ * @brief The ft_strchr() function locates the first occurrence of c (converted
+ * to a char) in the string pointed to by s. The terminating null character is
+ * considered to be part of the string; therefore if c is '\0', the functions
+ * locate the terminating '\0'.
+ *
+ * @param s
+ * @param c
+ * @return char*
+ */
+char *ft_strchr(const char *s, int c)
+{
+	size_t i;
+
+	i = -1;
+	if (!c)
+		return ((char *)(s + ft_strlen(s)));
+	while (++i < ft_strlen(s))
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
+	return (0);
+}
+
+/**
+ * @brief The ft_strlcpy() function copies up to 'size' - 1 characters from the
+ * NUL-terminated string 'src' to 'dst', NUL-terminating the result.
+ *
+ * @param dst
+ * @param src
+ * @param size
+ * @return size_t
+ */
+size_t ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t i;
+
+	i = -1;
+	if (size == 0)
+		return (ft_strlen(src));
+	while (src[++i] && i < size - 1)
+		dst[i] = src[i];
+	dst[i] = '\0';
+	return (ft_strlen(src));
+}
+
+/**
+ * @brief The strlcat() function appends string src to the end of dst. It will
+ * append at most size - strlen(dst) - 1 bytes, NULL-terminating the result.
+ *
+ * @param dst
+ * @param src
+ * @param size
+ * @return size_t
+ */
+static size_t ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t i;
+	size_t dest_len;
+	size_t src_len;
+
+	i = -1;
+	dest_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (!dst && size == 0)
+		return (0);
+	if (size < dest_len || !size)
+		return (size + src_len);
+	while (src[++i] && i + 1 < (size - dest_len))
+		dst[dest_len + i] = src[i];
+	dst[dest_len + i] = '\0';
+	return (dest_len + src_len);
 }
 
 /**
@@ -39,19 +111,14 @@ size_t ft_strnlen(const char *s, char c)
  */
 char *ft_strjoin(char const *s1, char const *s2)
 {
-	int i;
 	char *dup;
 
 	if (!s1 || !s2)
 		return (0);
-	i = -1;
-	dup = (char *)malloc((ft_strnlen(s1, 0) + ft_strnlen(s2, 0) + 1) * sizeof(char));
+	dup = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!dup)
 		return (0);
-	dup[i] = 0;
-	while (*s1)
-		dup[++i] = *s1++;
-	while (*s2)
-		dup[++i] = *s2++;
+	ft_strlcpy(dup, s1, ft_strlen(s1) + 1);
+	ft_strlcat(dup + ft_strlen(s1), s2, ft_strlen(s2) + 1);
 	return (dup);
 }
