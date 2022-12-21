@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:48 by herbie            #+#    #+#             */
-/*   Updated: 2022/12/05 17:19:59 by herbie           ###   ########.fr       */
+/*   Updated: 2022/12/17 15:03:44 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,34 +74,6 @@ size_t ft_strlcpy(char *dst, const char *src, size_t size)
 }
 
 /**
- * @brief The strlcat() function appends string src to the end of dst. It will
- * append at most size - strlen(dst) - 1 bytes, NULL-terminating the result.
- *
- * @param dst
- * @param src
- * @param size
- * @return size_t
- */
-static size_t ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t i;
-	size_t dest_len;
-	size_t src_len;
-
-	i = -1;
-	dest_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
-	if (!dst && size == 0)
-		return (0);
-	if (size < dest_len || !size)
-		return (size + src_len);
-	while (src[++i] && i + 1 < (size - dest_len))
-		dst[dest_len + i] = src[i];
-	dst[dest_len + i] = '\0';
-	return (dest_len + src_len);
-}
-
-/**
  * @brief The ft_strjoin() function allocates (with malloc(3)) and returns a new
  * string, which is the result of the concatenation of 's1' and 's2'.
  *
@@ -112,13 +84,35 @@ static size_t ft_strlcat(char *dst, const char *src, size_t size)
 char *ft_strjoin(char const *s1, char const *s2)
 {
 	char *dup;
+	size_t i;
 
 	if (!s1 || !s2)
 		return (0);
 	dup = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!dup)
 		return (0);
-	ft_strlcpy(dup, s1, ft_strlen(s1) + 1);
-	ft_strlcat(dup + ft_strlen(s1), s2, ft_strlen(s2) + 1);
+	dup[ft_strlen(s1) + ft_strlen(s2)] = 0;
+	i = ft_strlcpy(dup, s1, ft_strlen(s1) + 1);
+	while (*s2)
+		dup[i++] = *s2++;
+	return (dup);
+}
+
+/**
+ * @brief The ft_strdup() function allocates sufficient memory for a copy of the
+ * string s1, does the copy, and returns a pointer to it. The pointer may
+ * subsequently be used as an argument to the function free(3).
+ *
+ * @param s
+ * @return char*
+ */
+char *ft_strdup(const char *s)
+{
+	char *dup;
+
+	dup = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!dup)
+		return (0);
+	ft_strlcpy(dup, s, ft_strlen(s) + 1);
 	return (dup);
 }

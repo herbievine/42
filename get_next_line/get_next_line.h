@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:54 by herbie            #+#    #+#             */
-/*   Updated: 2022/12/06 10:27:51 by herbie           ###   ########.fr       */
+/*   Updated: 2022/12/17 15:04:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,17 @@
 #define BUFFER_SIZE 5
 #endif /* BUFFER_SIZE */
 
+typedef struct line_s
+{
+	char *line;
+	char *remainder;
+} line_t;
+
 char *get_next_line(int fd);
 size_t ft_strlen(const char *s);
 char *ft_strchr(const char *s, int c);
-size_t ft_strlcpy(char *dst, const char *src, size_t size);
 char *ft_strjoin(char const *s1, char const *s2);
+char *ft_strdup(const char *s);
 // size_t ft_strnlen(const char *s, char c);
 // char *ft_strjoin(char const *s1, char const *s2);
 
