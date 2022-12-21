@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2022/12/21 13:28:02 by herbie           ###   ########.fr       */
+/*   Updated: 2022/12/21 15:33:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ char *get_line(int fd, char *prev)
 			return (NULL);
 		}
 		buffer[bytes_out] = 0;
-		tmp = prev;
-		prev = ft_free(prev, buffer);
-		free(tmp);
+		// tmp = prev;
+		prev = ft_strjoin(prev, buffer);
+		// free(tmp);
 		if (ft_strchr(prev, '\n'))
 			break;
 	}
@@ -83,7 +83,7 @@ int main()
 	char *res;
 	int fd = open("poem", O_RDONLY);
 
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 25; i++)
 	{
 		res = get_next_line(fd);
 		printf("%s", res);
