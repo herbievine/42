@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2022/12/21 15:33:45 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/01 17:35:02 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ char *get_line(int fd, char *prev)
 			return (NULL);
 		}
 		buffer[bytes_out] = 0;
-		// tmp = prev;
+		tmp = prev;
 		prev = ft_strjoin(prev, buffer);
-		// free(tmp);
+		free(tmp);
 		if (ft_strchr(prev, '\n'))
 			break;
 	}
@@ -67,12 +67,15 @@ char *get_next_line(int fd)
 	if (ft_strchr(line, '\n'))
 	{
 		line[ft_strchr(line, '\n') - line + 1] = 0;
-		buffer += (ft_strchr(buffer, '\n') - buffer + 1);
+		char *t = buffer;
+		buffer = ft_strdup(buffer + (ft_strchr(buffer, '\n') - buffer + 1));
+		free(t);
+		// buffer += (ft_strchr(buffer, '\n') - buffer + 1);
 	}
 	else
 	{
-		buffer += ft_strlen(buffer);
-		// free(buffer);
+		// buffer += ft_strlen(buffer);
+		free(buffer);
 	}
 
 	return (line);
@@ -87,7 +90,7 @@ int main()
 	{
 		res = get_next_line(fd);
 		printf("%s", res);
-		// if (res)
-		// 	free(res);
+		if (res)
+			free(res);
 	}
 }
