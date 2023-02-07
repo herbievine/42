@@ -6,13 +6,20 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/01 18:50:09 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/07 18:16:03 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// join and free
+/**
+ * @brief The ft_free function takes in a buffer and a string and returns a new
+ * string that is the concatenation of the two. The buffer is freed.
+ *
+ * @param buffer
+ * @param buf
+ * @return char*
+ */
 char *ft_free(char *buffer, char *buf)
 {
 	char *temp;
@@ -22,25 +29,33 @@ char *ft_free(char *buffer, char *buf)
 	return (temp);
 }
 
-// delete line find
+/**
+ * @brief The ft_clean_buffer function takes in the buffer and returns
+ * a new buffer with the first line removed. If the buffer is empty
+ * or does not contain a newline, the buffer is freed and NULL is returned.
+ *
+ * @param buffer
+ * @return char*
+ */
 char *ft_clean_buffer(char *buffer)
 {
 	char *tmp;
 
-	if (!buffer[ft_strlen(buffer)])
+	if (!buffer[0] || ft_strchr(buffer, '\n') == NULL)
 	{
 		free(buffer);
 		return NULL;
 	}
 
 	tmp = buffer;
-	buffer = ft_strndup(buffer + (ft_strchr(buffer, '\n') - buffer + 1), ft_strlen(buffer + (ft_strchr(buffer, '\n') - buffer + 1)));
+	buffer = ft_strndup(
+			buffer + (ft_strchr(buffer, '\n') - buffer + 1),
+			ft_strlen((ft_strchr(buffer, '\n') + 1)));
 	free(tmp);
 
 	return buffer;
 }
 
-// take line for return
 char *ft_extract_line_from_buffer(char *buffer)
 {
 	if (ft_strchr(buffer, '\n'))
@@ -89,12 +104,18 @@ char *get_line(int fd, char *line)
 	return line;
 }
 
+/**
+ * @brief The get_next_line function takes in a file descriptor and returns
+ * the next line in the file.
+ *
+ * @param fd
+ * @return char*
+ */
 char *get_next_line(int fd)
 {
 	static char *buffer;
 	char *line;
 
-	// error handling
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buffer = get_line(fd, buffer);
@@ -108,16 +129,16 @@ char *get_next_line(int fd)
 	return (line);
 }
 
-// int main()
-// {
-// 	char *res;
-// 	int fd = open("poem", O_RDONLY);
+int main()
+{
+	char *res;
+	int fd = open("41_with_nl", O_RDONLY);
 
-// 	for (int i = 0; i < 25; i++)
-// 	{
-// 		res = get_next_line(fd);
-// 		printf("%s", res);
-// 		if (res)
-// 			free(res);
-// 	}
-// }
+	for (int i = 0; i < 25; i++)
+	{
+		res = get_next_line(fd);
+		printf("%s", res);
+		if (res)
+			free(res);
+	}
+}
