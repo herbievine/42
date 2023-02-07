@@ -18,9 +18,9 @@
  * @param s
  * @return size_t
  */
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
@@ -38,9 +38,9 @@ size_t ft_strlen(const char *s)
  * @param c
  * @return char*
  */
-char *ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t i;
+	size_t	i;
 
 	i = -1;
 	if (!c)
@@ -60,9 +60,9 @@ char *ft_strchr(const char *s, int c)
  * @param size
  * @return size_t
  */
-size_t ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	size_t i;
+	size_t	i;
 
 	i = -1;
 	if (size == 0)
@@ -81,10 +81,10 @@ size_t ft_strlcpy(char *dst, const char *src, size_t size)
  * @param s2
  * @return char*
  */
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *dup;
-	size_t i;
+	char	*dup;
+	size_t	i;
 
 	if (!s1 || !s2)
 		return (0);
@@ -105,9 +105,9 @@ char *ft_strjoin(char const *s1, char const *s2)
  * @param s
  * @return char*
  */
-char *ft_strndup(const char *s, size_t n)
+char	*ft_strndup(const char *s, size_t n)
 {
-	char *dup;
+	char	*dup;
 
 	dup = (char *)malloc((n + 1) * sizeof(char));
 	if (!dup)

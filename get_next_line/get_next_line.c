@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/07 18:16:03 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/07 18:49:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
  * string that is the concatenation of the two. The buffer is freed.
  *
  * @param buffer
- * @param buf
+ * @param str
  * @return char*
  */
-char *ft_free(char *buffer, char *buf)
+char	*ft_free(char *buffer, char *str)
 {
-	char *temp;
+	char	*temp;
 
-	temp = ft_strjoin(buffer, buf);
+	temp = ft_strjoin(buffer, str);
 	free(buffer);
 	return (temp);
 }
@@ -37,31 +37,31 @@ char *ft_free(char *buffer, char *buf)
  * @param buffer
  * @return char*
  */
-char *ft_clean_buffer(char *buffer)
+char	*ft_clean_buffer(char *buffer)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (!buffer[0] || ft_strchr(buffer, '\n') == NULL)
 	{
 		free(buffer);
-		return NULL;
+		return (NULL);
 	}
-
 	tmp = buffer;
 	buffer = ft_strndup(
 			buffer + (ft_strchr(buffer, '\n') - buffer + 1),
 			ft_strlen((ft_strchr(buffer, '\n') + 1)));
 	free(tmp);
-
-	return buffer;
+	if (!buffer)
+		return (NULL);
+	return (buffer);
 }
 
-char *ft_extract_line_from_buffer(char *buffer)
+char	*ft_extract_line_from_buffer(char *buffer)
 {
 	if (ft_strchr(buffer, '\n'))
-		return ft_strndup(buffer, ft_strchr(buffer, '\n') - buffer + 1);
+		return (ft_strndup(buffer, ft_strchr(buffer, '\n') - buffer + 1));
 	else
-		return ft_strndup(buffer, ft_strlen(buffer));
+		return (ft_strndup(buffer, ft_strlen(buffer)));
 }
 
 /**
@@ -73,11 +73,11 @@ char *ft_extract_line_from_buffer(char *buffer)
  * @param line
  * @return char*
  */
-char *get_line(int fd, char *line)
+char	*get_line(int fd, char *line)
 {
-	char *buffer;
-	char *tmp;
-	int bytes_out;
+	char	*buffer;
+	char	*tmp;
+	int		bytes_out;
 
 	if (!line)
 		line = (char *)malloc(1);
@@ -94,14 +94,12 @@ char *get_line(int fd, char *line)
 			return (NULL);
 		}
 		buffer[bytes_out] = 0;
-		tmp = line;
-		line = ft_strjoin(line, buffer);
-		free(tmp);
+		line = ft_free(line, buffer);
 		if (ft_strchr(line, '\n'))
-			break;
+			break ;
 	}
 	free(buffer);
-	return line;
+	return (line);
 }
 
 /**
@@ -111,10 +109,10 @@ char *get_line(int fd, char *line)
  * @param fd
  * @return char*
  */
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *buffer;
-	char *line;
+	static char	*buffer;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
@@ -123,22 +121,8 @@ char *get_next_line(int fd)
 		line = NULL;
 	else
 		line = ft_extract_line_from_buffer(buffer);
-
+	if (!line)
+		return (NULL);
 	buffer = ft_clean_buffer(buffer);
-
 	return (line);
-}
-
-int main()
-{
-	char *res;
-	int fd = open("41_with_nl", O_RDONLY);
-
-	for (int i = 0; i < 25; i++)
-	{
-		res = get_next_line(fd);
-		printf("%s", res);
-		if (res)
-			free(res);
-	}
 }
