@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:54 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/01 17:27:35 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/01 18:20:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ char *get_next_line(int fd);
 size_t ft_strlen(const char *s);
 char *ft_strchr(const char *s, int c);
 char *ft_strjoin(char const *s1, char const *s2);
-char *ft_strdup(const char *s);
+char *ft_strndup(const char *s, size_t n);
 
 #endif /* GET_NEXT_LINE_H */

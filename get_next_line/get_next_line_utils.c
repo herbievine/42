@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:48 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/01 17:34:47 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/01 18:19:50 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,19 @@ char *ft_strjoin(char const *s1, char const *s2)
 }
 
 /**
- * @brief The ft_strdup() function allocates sufficient memory for a copy of the
- * string s1, does the copy, and returns a pointer to it. The pointer may
- * subsequently be used as an argument to the function free(3).
+ * @brief The ft_strndup() function copies up to 'n' characters from the string
+ * 's1' to a fresh allocated string.
  *
  * @param s
  * @return char*
  */
-char *ft_strdup(const char *s)
+char *ft_strndup(const char *s, size_t n)
 {
 	char *dup;
 
-	dup = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	dup = (char *)malloc((n + 1) * sizeof(char));
 	if (!dup)
 		return (0);
-	ft_strlcpy(dup, s, ft_strlen(s) + 1);
+	ft_strlcpy(dup, s, n + 1);
 	return (dup);
 }
