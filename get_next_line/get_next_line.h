@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:54 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/07 18:48:47 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/10 13:10:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <string.h>
+# include <stdint.h> 
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5

@@ -3,30 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/07 18:49:43 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/10 13:20:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /**
- * @brief The ft_free function takes in a buffer and a string and returns a new
- * string that is the concatenation of the two. The buffer is freed.
- *
- * @param buffer
- * @param str
- * @return char*
+ * @brief The ft_calloc() function allocates memory for an array of nmemb
+ * elements of size bytes each and returns a pointer to the allocated memory.
+ * The memory is set to zero.
+ * 
+ * @param nmemb 
+ * @param size 
+ * @return void* 
  */
-char	*ft_free(char *buffer, char *str)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*temp;
+	void	*space;
+	size_t	i;
 
-	temp = ft_strjoin(buffer, str);
-	free(buffer);
-	return (temp);
+	if (size && nmemb > SIZE_MAX / size)
+		return (0);
+	space = malloc(nmemb * size);
+	if (!space)
+		return (0);
+	i = 0;
+	while (i < nmemb * size)
+	{
+		((char *)space)[i] = 0;
+		i++;
+	}
+	return (space);
 }
 
 /**
@@ -56,6 +67,14 @@ char	*ft_clean_buffer(char *buffer)
 	return (buffer);
 }
 
+/**
+ * @brief The ft_extract_line_from_buffer function takes in the buffer and
+ * returns a new string that is the first line in the buffer. If the buffer
+ * does not contain a newline, the entire buffer is returned.
+ * 
+ * @param buffer 
+ * @return char* 
+ */
 char	*ft_extract_line_from_buffer(char *buffer)
 {
 	if (ft_strchr(buffer, '\n'))
@@ -76,30 +95,30 @@ char	*ft_extract_line_from_buffer(char *buffer)
 char	*get_line(int fd, char *line)
 {
 	char	*buffer;
-	char	*tmp;
 	int		bytes_out;
+	char	*tmp;
 
 	if (!line)
-		line = (char *)malloc(1);
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer || !line)
+		line = (char *)ft_calloc(1, 1);
+	if (!line)
 		return (NULL);
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (free(line), NULL);
 	bytes_out = 1;
 	while (bytes_out > 0)
 	{
 		bytes_out = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_out == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
+			return (free(buffer), NULL);
 		buffer[bytes_out] = 0;
-		line = ft_free(line, buffer);
+		tmp = line;
+		line = ft_strjoin(line, buffer);
+		free(tmp);
 		if (ft_strchr(line, '\n'))
 			break ;
 	}
-	free(buffer);
-	return (line);
+	return (free(buffer), line);
 }
 
 /**
