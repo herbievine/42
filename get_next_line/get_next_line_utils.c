@@ -88,7 +88,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	dup = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	dup = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	if (!dup)
 		return (0);
 	dup[ft_strlen(s1) + ft_strlen(s2)] = 0;
@@ -109,7 +109,7 @@ char	*ft_strndup(const char *s, size_t n)
 {
 	char	*dup;
 
-	dup = (char *)malloc((n + 1) * sizeof(char));
+	dup = (char *)ft_calloc(n + 1, sizeof(char));
 	if (!dup)
 		return (0);
 	ft_strlcpy(dup, s, n + 1);

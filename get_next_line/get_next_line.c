@@ -102,7 +102,7 @@ char	*get_line(int fd, char *line)
 		line = (char *)ft_calloc(1, 1);
 	if (!line)
 		return (NULL);
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
 		return (free(line), NULL);
 	bytes_out = 1;

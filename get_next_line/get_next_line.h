@@ -27,6 +27,7 @@
 # endif /* BUFFER_SIZE */
 
 char	*get_next_line(int fd);
+void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
