@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/10 13:20:56 by codespace        ###   ########.fr       */
+/*   Updated: 2023/02/10 15:22:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*get_line(int fd, char *line)
 	{
 		bytes_out = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_out == -1)
-			return (free(buffer), NULL);
+			return (free(buffer), free(line), NULL);
 		buffer[bytes_out] = 0;
 		tmp = line;
 		line = ft_strjoin(line, buffer);
@@ -140,8 +140,6 @@ char	*get_next_line(int fd)
 		line = NULL;
 	else
 		line = ft_extract_line_from_buffer(buffer);
-	if (!line)
-		return (NULL);
 	buffer = ft_clean_buffer(buffer);
 	return (line);
 }
