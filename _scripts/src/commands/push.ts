@@ -58,7 +58,7 @@ const push = async (...props: any[]) => {
     const commands = [
       `git init`,
       `git add .`,
-      `git commit -m "first commit"`,
+      `git commit -m "commit from 42-cli"`,
       `git branch -M main`,
       `git remote add origin ${url}`,
       `git push -u origin main`,
