@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/10 13:18:07 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:17:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_lstiter() function iterates the list 'lst' and applies the
+ * function 'f' to the content of each node.
+ * 
+ * @param lst 
+ * @param f 
+ */
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
-	return (0);
+	if (!f)
+		return ;
+	while (lst)
+	{
+		(f)(lst->content);
+		lst = lst->next;
+	}
 }

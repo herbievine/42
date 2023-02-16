@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/10 12:30:27 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:16:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
- * received as an argument.
+ * @brief The ft_lstclear() function deletes and frees the given node and every
+ * successor of that node, using the function 'del' and free(3).
  * 
- * @param n 
- * @return int 
+ * @param lst 
+ * @param del 
  */
-int	ft_intlen(int n)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int	len;
+	t_list	*head;
+	t_list	*tmp;
 
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
+	if (!lst || !del)
+		return ;
+	head = *lst;
+	while (head)
 	{
-		len++;
-		n /= 10;
+		tmp = head->next;
+		ft_lstdelone(head, del);
+		head = tmp;
 	}
-	return (len);
+	*lst = 0;
 }

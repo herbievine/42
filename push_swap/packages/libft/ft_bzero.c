@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/10/22 12:15:23 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:19:09 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_bzero() function writes n zeroed bytes to the string s. If n is
+ * zero, ft_bzero() does nothing.
+ * 
+ * @param s 
+ * @param n 
+ */
+void	ft_bzero(void *s, size_t n)
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
-	return (0);
+	ft_memset(s, 0, n);
 }

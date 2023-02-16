@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/07 11:14:44 by hvine             #+#    #+#             */
+/*   Updated: 2022/11/11 21:24:42 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_isdigit() function tests for a decimal digit character.
+ * Regardless of locale, this includes the following characters only: '0' '1'
+ * '2' '3' '4' '5' '6' '7' '8' '9'.
+ * 
+ * @param c 
+ * @return int 
+ */
+int	ft_isdigit(int c)
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
+	if (c >= 48 && c <= 57)
+		return (1);
 	return (0);
 }

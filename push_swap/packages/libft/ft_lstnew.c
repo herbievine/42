@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/10 11:56:21 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:27:37 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
- * received as an argument.
+ * @brief The ft_lstnew() function allocates (with malloc(3)) and returns a new
+ * element. The variable 'content' is initialized with the value of the
+ * parameter 'content'. The variable 'next' is initialized to NULL.
  * 
- * @param n 
- * @return int 
+ * @param content 
+ * @return t_list* 
  */
-int	ft_intlen(int n)
+t_list	*ft_lstnew(void *content)
 {
-	int	len;
+	t_list	*new;
 
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (0);
+	new->content = content;
+	new->next = 0;
+	return (new);
 }

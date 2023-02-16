@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen.c                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
+/*   Created: 2022/10/23 11:57:05 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:05:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
- * received as an argument.
+ * @brief The memcmp() function compares byte string s1 against byte string s2.
+ * Both strings are assumed to be n bytes long.
  * 
+ * @param s1 
+ * @param s2 
  * @param n 
  * @return int 
  */
-int	ft_intlen(int n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	len;
-
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
+	if (n == 0)
+		return (0);
+	while (n-- > 0)
 	{
-		len++;
-		n /= 10;
+		if (*(unsigned char *)s1 != *(unsigned char *)s2)
+			return (*(unsigned char *)s1 - *(unsigned char *)s2);
+		s1++;
+		s2++;
 	}
-	return (len);
+	return (0);
 }

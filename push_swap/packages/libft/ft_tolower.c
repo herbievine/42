@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 09:58:17 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 16:45:46 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/07 11:29:18 by hvine             #+#    #+#             */
+/*   Updated: 2022/11/11 21:14:23 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 /**
- * @brief The ft_putchar_fd() function outputs the character 'c' to the given
- * file descriptor and returns the number of bytes written.
+ * @brief The ft_tolower() function converts an upper-case letter to the
+ * corresponding lower-case letter.  The argument must be representable as an
+ * unsigned char or the value of EOF.
  * 
  * @param c 
- * @param fd 
  * @return int 
  */
-int	ft_putchar_fd(char c, int fd)
+int	ft_tolower(int c)
 {
-	write(fd, &c, 1);
-	return (1);
+	if (c >= 65 && c <= 90)
+		c += 32;
+	return (c);
 }

@@ -6,13 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:53:26 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/11 17:54:35 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/16 09:43:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PACKAGES_H
 #define PACKAGES_H
 
-#include "../packages/ft_printf/ft_printf.h"
+#include "../packages/libft/libft.h"
 
 #endif /* PACKAGES_H */

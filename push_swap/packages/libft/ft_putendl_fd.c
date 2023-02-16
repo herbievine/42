@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/10 10:01:28 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/16 09:44:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_putendl_fd() function outputs the string 's' to the given file
+ * descriptor, followed by a newline.
+ *
+ * @param s
+ * @param fd
+ */
+int ft_putendl_fd(char *s, int fd)
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
-	return (0);
+	if (!s)
+		return (0);
+	return (ft_putstr_fd(s, fd) + ft_putchar_fd('\n', fd));
 }

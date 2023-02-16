@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/07 11:11:41 by hvine             #+#    #+#             */
+/*   Updated: 2022/11/11 21:22:18 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_isalpha() function tests for any character for which isupper(3)
+ * or islower(3) is true.  The value of the argument must be representable as an
+ * unsigned char or the value of EOF.
+ * 
+ * @param c 
+ * @return int 
+ */
+int	ft_isalpha(int c)
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
 	return (0);
 }

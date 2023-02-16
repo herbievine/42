@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:18:08 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/18 09:06:03 by hvine            ###   ########.fr       */
+/*   Updated: 2023/02/16 09:49:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-static int	ft_is_legal_flag(const char *str);
-static int	ft_parse_special_chars(char c, va_list *ap);
+static int ft_is_legal_flag(const char *str);
+static int ft_parse_special_chars(char c, va_list *ap);
 
 /**
  * @brief The ft_printf() function formats and prints data. It returns the
  * number of characters printed (excluding the null byte used to end output to
  * strings).
- * 
- * @param format 
- * @param ... 
- * @return int 
+ *
+ * @param format
+ * @param ...
+ * @return int
  */
-int	ft_printf(const char *format, ...)
+int ft_printf(const char *format, ...)
 {
-	int		bytes;
-	va_list	ap;
+	int bytes;
+	va_list ap;
 
 	bytes = 0;
 	va_start(ap, format);
@@ -50,16 +50,16 @@ int	ft_printf(const char *format, ...)
 	return (bytes);
 }
 
-static int	ft_is_legal_flag(const char *str)
+static int ft_is_legal_flag(const char *str)
 {
-	const char	*legal_flags = "cspdiuxX";
+	const char *legal_flags = "cspdiuxX";
 
 	if (*str == '%' && *(str + 1) && ft_strchr(legal_flags, *(str + 1)))
 		return (1);
 	return (0);
 }
 
-static int	ft_parse_special_chars(char c, va_list *ap)
+static int ft_parse_special_chars(char c, va_list *ap)
 {
 	if (c == 'c')
 		return (ft_putchar_fd(va_arg(*ap, int), 1));

@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/23 12:53:05 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/12 10:04:25 by hvine            ###   ########.fr       */
+/*   Created: 2022/11/10 12:08:14 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:17:16 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 /**
- * @brief The ft_strlen() function computes the length of the string s.
+ * @brief The ft_lstlast() function returns the last node of the list.
  * 
- * @param s 
- * @return size_t 
+ * @param lst 
+ * @return t_list* 
  */
-size_t	ft_strlen(const char *s)
+t_list	*ft_lstlast(t_list *lst)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (!lst)
+		return (0);
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
 }

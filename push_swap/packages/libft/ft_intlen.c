@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/17 17:35:34 by codespace        ###   ########.fr       */
+/*   Updated: 2023/02/16 09:49:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 /**
  * @brief The ft_intlen() function returns the number of digits in the integer
  * received as an argument.
- * 
- * @param n 
- * @return int 
+ *
+ * @param n
+ * @return int
  */
-int	ft_intlen(int n)
+int ft_intlen(int n)
 {
-	int	len;
+	int len;
 
 	len = 0;
 	if (n < 0)

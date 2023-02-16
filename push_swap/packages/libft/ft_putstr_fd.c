@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/10 10:00:27 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/16 09:49:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
- * received as an argument.
+ * @brief The ft_putstr_fd() function outputs the string 's' to the given file
+ * descriptor and returns the number of bytes written. If 's' is NULL, the
+ * function writes "(null)" to the file descriptor and returns 6.
  * 
- * @param n 
+ * @param s 
+ * @param fd 
  * @return int 
  */
-int	ft_intlen(int n)
+int	ft_putstr_fd(char *s, int fd)
 {
-	int	len;
-
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
+	if (!s)
+		return (ft_putstr_fd("(null)", fd));
+	write(fd, s, ft_strlen(s));
+	return (ft_strlen(s));
 }

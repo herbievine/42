@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/10 11:59:55 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:16:17 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_lstadd_front() function adds the element 'new' at the beginning
+ * of the list.
+ * 
+ * @param lst 
+ * @param new 
+ */
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
-	return (0);
+	t_list	*head;
+
+	head = *lst;
+	if (!lst || !new)
+		return ;
+	new->next = head;
+	*lst = new;
 }

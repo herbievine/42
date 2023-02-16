@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/10 12:26:35 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:16:54 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_lstdelone() function takes as a parameter an node and frees the
+ * memory of the node's content using the function 'del' given as a parameter
+ * 
+ * @param lst 
+ * @param del 
+ */
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
-	return (0);
+	if (!lst || !del)
+		return ;
+	(del)(lst->content);
+	free(lst);
 }

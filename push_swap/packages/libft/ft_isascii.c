@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/07 11:18:02 by hvine             #+#    #+#             */
+/*   Updated: 2022/11/11 21:18:51 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_isascii() function tests for an ASCII character, which is any
+ * character between 0 and octal 0177 inclusive.
+ * 
+ * @param c 
+ * @return int 
+ */
+int	ft_isascii(int c)
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
+	if (c >= 0 && c <= 127)
+		return (1);
 	return (0);
 }

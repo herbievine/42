@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
+/*   Created: 2022/10/23 13:09:20 by herbie            #+#    #+#             */
+/*   Updated: 2022/11/11 21:11:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
- * received as an argument.
+ * @brief The ft_strlcpy() function copies up to 'size' - 1 characters from the
+ * NUL-terminated string 'src' to 'dst', NUL-terminating the result.
  * 
- * @param n 
- * @return int 
+ * @param dst 
+ * @param src 
+ * @param size 
+ * @return size_t 
  */
-int	ft_intlen(int n)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int	len;
+	size_t	i;
 
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
+	i = -1;
+	if (size == 0)
+		return (ft_strlen(src));
+	while (src[++i] && i < size - 1)
+		dst[i] = src[i];
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }

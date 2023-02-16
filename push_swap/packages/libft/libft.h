@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:55:57 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/13 17:16:54 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/16 09:48:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h> 
+# include <stdarg.h>
+# include <stdio.h>
+# include <limits.h>
+
+# ifndef __MACH__
+#  define __MACH__ 0
+# endif /* __MACH__ */
 
 typedef struct s_list
 {
@@ -27,14 +34,12 @@ typedef struct s_list
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memccpy(void *dest, const void *src, int c, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t len);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 
 // String stuff
-size_t	ft_strlen(const char *s);
 int		ft_atoi(const char *nptr);
 char	*ft_itoa(int n);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -61,10 +66,16 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 
 // Stdout stuff
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
+int 	ft_printf(const char *format, ...);
+int		ft_putchar_fd(char c, int fd);
+int		ft_putstr_fd(char *s, int fd);
+int		ft_putendl_fd(char *s, int fd);
+int		ft_putnbr_fd(int n, int fd);
+int		ft_putunbr_fd(unsigned int n, int fd);
+int		ft_puthex_fd(unsigned int n, int fd);
+int		ft_puthex_up_fd(unsigned int n, int fd);
+int		ft_putptr_fd(void *ptr, int fd);
+int		ft_putnbr_base_fd(unsigned long n, char *base, int fd);
 
 // List stuff
 t_list	*ft_lstnew(void *content);
@@ -77,7 +88,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 int		ft_lstsize(t_list *lst);
 
-// Num stuff
+// Misc
+size_t	ft_strlen(const char *s);
 int		ft_intlen(int n);
 
 #endif

@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:53:35 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/07 11:20:07 by hvine             #+#    #+#             */
+/*   Updated: 2022/11/11 21:18:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/packages.h"
+#include "libft.h"
 
-int main()
+/**
+ * @brief The ft_isprint() function tests for any printing character, including
+ * space (' ').  The value of the argument must be representable as an unsigned
+ * char or the value of EOF.
+ * 
+ * @param c 
+ * @return int 
+ */
+int	ft_isprint(int c)
 {
-	ft_printf("char out: %d\n", ft_putendl_fd("hello", 1));
+	if (c >= 32 && c <= 126)
+		return (1);
 	return (0);
 }

@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/07 15:38:15 by hvine             #+#    #+#             */
+/*   Updated: 2022/11/11 21:10:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
- * received as an argument.
+ * @brief The ft_strdup() function allocates sufficient memory for a copy of the
+ * string s1, does the copy, and returns a pointer to it. The pointer may
+ * subsequently be used as an argument to the function free(3).
  * 
- * @param n 
- * @return int 
+ * @param s 
+ * @return char* 
  */
-int	ft_intlen(int n)
+char	*ft_strdup(const char *s)
 {
-	int	len;
+	char	*dup;
 
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
+	dup = (char *)ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!dup)
+		return (0);
+	ft_strlcpy(dup, s, ft_strlen(s) + 1);
+	return (dup);
 }

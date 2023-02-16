@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intlen.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:59:27 by herbie           ###   ########.fr       */
+/*   Created: 2022/11/07 12:16:23 by hvine             #+#    #+#             */
+/*   Updated: 2022/11/11 21:22:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
- * received as an argument.
+ * @brief The ft_strncmp() function lexicographically compares the
+ * null-terminated strings s1 and s2.
  * 
+ * @param s1 
+ * @param s2 
  * @param n 
  * @return int 
  */
-int	ft_intlen(int n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	len;
+	size_t	i;
 
-	len = 0;
-	if (n < 0)
-		len++;
-	while (n)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
+	i = 0;
+	if (n <= 0)
+		return (0);
+	while (s1[i] && s1[i] == s2[i] && i < n - 1)
+		i++;
+	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
 }

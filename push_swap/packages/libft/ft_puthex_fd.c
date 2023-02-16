@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 16:50:33 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/17 17:35:39 by codespace        ###   ########.fr       */
+/*   Updated: 2023/02/16 09:49:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 /**
  * @brief The ft_puthex_fd() function outputs the hexadecimal representation of
