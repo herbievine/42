@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   lib.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 12:08:14 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:17:16 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/17 21:33:52 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
 
-/**
- * @brief The ft_lstlast() function returns the last node of the list.
- * 
- * @param lst 
- * @return t_list* 
- */
-t_list	*ft_lstlast(t_list *lst)
+int *ft_sort_large_array(int *array, int size)
 {
-	if (!lst)
-		return (0);
-	while (lst && lst->next)
-		lst = lst->next;
-	return (lst);
+	printf("arr is %d and size is %d\n", array, size);
+
+	int i = 0;
+	int j = 0;
+
+	return (array);
 }

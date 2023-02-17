@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   packages.h                                         :+:      :+:    :+:   */
+/*   num.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/11 17:53:26 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/16 09:43:11 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/17 20:14:26 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/17 21:32:51 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PACKAGES_H
-#define PACKAGES_H
+#ifndef NUM_H
+#define NUM_H
 
-#include "../packages/libft/libft.h"
+int ft_to_radix(int num, int radix);
 
-#endif /* PACKAGES_H */
+#endif /* NUM_H */

@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 15:34:36 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 21:19:24 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/17 21:20:45 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/17 21:26:14 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "string.h"
 
 /**
  * @brief The ft_atoi() function converts the initial portion of the string
- * pointed to by str to int representation.
- * 
- * @param nptr 
- * @return int 
+ * pointed to by nptr to int representation.
+ *
+ * @param nptr
+ * @return int
  */
-int	ft_atoi(const char *nptr)
+int ft_atoi(const char *nptr)
 {
-	int	i;
-	int	sign;
-	int	res;
+	int i;
+	int sign;
+	int res;
 
 	i = 0;
 	sign = 1;
