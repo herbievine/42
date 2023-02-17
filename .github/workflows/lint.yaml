@@ -1,0 +1,30 @@
+name: Lint
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    name: Lint
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install norminette
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint
+        run: |
+          source venv/bin/activate
+          norminette -R CheckForbiddenSourceHeader $(find . -name "*.c" -o -name "*.h")
