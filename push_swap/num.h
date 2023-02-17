@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #ifndef NUM_H
-#define NUM_H
+# define NUM_H
 
-int ft_to_radix(int num, int radix);
+int	ft_to_radix(int num, int radix);
 
 #endif /* NUM_H */

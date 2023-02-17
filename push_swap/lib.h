@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #ifndef LIB_H
-#define LIB_H
+# define LIB_H
 
-int *ft_sort_large_array(int *array, int size);
+int	*ft_sort_large_array(int *array, int size);
 
 #endif /* LIB_H */

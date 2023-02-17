@@ -13,10 +13,10 @@
 #include "num.h"
 #include "math.h"
 
-int ft_to_radix(int num, int radix)
+int	ft_to_radix(int num, int radix)
 {
-	int i;
-	int res;
+	int	i;
+	int	res;
 
 	i = 0;
 	res = 0;
@@ -25,5 +25,5 @@ int ft_to_radix(int num, int radix)
 		res += (num % radix) * pow(10, i++);
 		num /= radix;
 	}
-	return res;
+	return (res);
 }

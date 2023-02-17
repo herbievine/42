@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string.h                                           :+:      :+:    :+:   */
+/*   strings.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 21:20:18 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/17 21:24:16 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/17 22:02:00 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/17 22:02:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRING_H
-#define STRING_H
+#ifndef STRINGS_H
+# define STRINGS_H
 
-int ft_atoi(const char *nptr);
+int	ft_atoi(const char *nptr);
 
-#endif /* STRING_H */
+#endif /* STRINGS_H */
