@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strings.h                                          :+:      :+:    :+:   */
+/*   ops.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 22:02:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 16:07:54 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/18 16:04:21 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRINGS_H
-#define STRINGS_H
+#include "ops.h"
 
-#include <stdlib.h>
+/**
+ * @brief The ft_ra() function rotates the a stack, moving all elements up by one,
+ * and the last element becomes the first.
+ *
+ * @param a Stack A
+ * @param b Stack B
+ */
+void ft_ra(t_list **a)
+{
+	t_list *new_head;
+	t_list *rotate;
 
-size_t ft_strlen(const char *s);
-int ft_atoi(const char *nptr);
+	rotate = *a;
+	new_head = (*a)->next;
 
-#endif /* STRINGS_H */
+	ft_lstadd_back(&new_head, rotate);
+}

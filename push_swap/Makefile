@@ -6,14 +6,14 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/17 21:48:01 by herbie           ###   ########.fr        #
+#    Updated: 2023/02/18 16:10:31 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -22,12 +22,18 @@ SRCS = \
 	main.c \
 	lib.c \
 	num.c \
-	strings.c
+	strings.c \
+	ops.c \
+	display.c \
+	lists.c
 
 INCLUDES = \
 	./lib.h \
 	./num.h \
-	./strings.h
+	./strings.h \
+	./ops.h \
+	./display.h \
+	./lists.h
 
 OBJS = $(SRCS:.c=.o)
 

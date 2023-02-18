@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strings.h                                          :+:      :+:    :+:   */
+/*   ops.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 22:02:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 16:07:54 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/18 14:58:13 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/18 15:34:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRINGS_H
-#define STRINGS_H
+#ifndef OPS_H
+#define OPS_H
 
-#include <stdlib.h>
+#include "lists.h"
 
-size_t ft_strlen(const char *s);
-int ft_atoi(const char *nptr);
+void ft_ra(t_list **a);
 
-#endif /* STRINGS_H */
+#endif /* OPS_H */

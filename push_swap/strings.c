@@ -1,16 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string.c                                           :+:      :+:    :+:   */
+/*   strings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:20:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/17 21:26:14 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/18 16:07:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "string.h"
+#include "strings.h"
+
+/**
+ * @brief The ft_strlen() function computes the length of the string s.
+ *
+ * @param s
+ * @return size_t
+ */
+size_t ft_strlen(const char *s)
+{
+	size_t i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
 /**
  * @brief The ft_atoi() function converts the initial portion of the string
@@ -19,11 +35,11 @@
  * @param nptr
  * @return int
  */
-int	ft_atoi(const char *nptr)
+int ft_atoi(const char *nptr)
 {
-	int	i;
-	int	sign;
-	int	res;
+	int i;
+	int sign;
+	int res;
 
 	i = 0;
 	sign = 1;

@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strings.h                                          :+:      :+:    :+:   */
+/*   display.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 22:02:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 16:07:54 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/18 15:42:14 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/18 16:08:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRINGS_H
-#define STRINGS_H
+#ifndef DISPLAY_H
+#define DISPLAY_H
 
-#include <stdlib.h>
+#include <unistd.h>
 
-size_t ft_strlen(const char *s);
-int ft_atoi(const char *nptr);
+int ft_putchar_fd(char c, int fd);
+int ft_putnbr_fd(int n, int fd);
+int ft_putnbr_base_fd(unsigned long n, char *base, int fd);
 
-#endif /* STRINGS_H */
+#endif /* DISPLAY_H */
