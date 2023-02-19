@@ -3,28 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ops.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 13:12:19 by hvine            ###   ########.fr       */
+/*   Updated: 2023/02/19 20:56:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ops.h"
+#include <stdio.h>
 
 /**
- * @brief The ft_r() function rotates the stack, moving all elements up by one,
- * and the last element becomes the first.
+ * @brief The ft_rotate() function rotates the stack, moving all elements up by
+ * one, and the last element becomes the first.
  *
  * @param lst
  */
 void	ft_rotate(t_list **list)
 {
-	t_list *new_head;
-	t_list *rotate;
+	t_list *last;
+	t_list *tmp;
 
-	rotate = *list;
-	new_head = (*list)->next;
+	last = ft_lstlast(*list);
+	tmp = ft_lstnew((*list)->content);
+	last->next = tmp;
+	*list = (*list)->next;
+}
 
-	ft_lstadd_back(&new_head, rotate);
+/**
+ * @brief The ft_push() function moves the first element of the stack to the top
+ * of the other stack.
+ * 
+ * @param src 
+ * @param dst 
+ */
+void	ft_push(t_list **src, t_list **dst)
+{
+	t_list *tmp;
+
+	tmp = ft_lstnew((*src)->content);
+	if (!*dst)
+		*dst = ft_lstnew((*src)->content);
+	else
+		ft_lstadd_front(dst, tmp);
+	*src = (*src)->next;
 }

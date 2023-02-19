@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lib.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 14:45:34 by hvine            ###   ########.fr       */
+/*   Updated: 2023/02/19 20:56:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 #include "lists.h"
-#include "num.h"
+#include "ops.h"
+#include "display.h"
+#include <math.h>
+#include <stdio.h>
 
 void	ft_sort_int_tab(int **arr, int size)
 {
@@ -92,14 +95,85 @@ int	ft_is_sorted(t_list *list)
 	return (1);
 }
 
+int ft_get_binary_length(int n)
+{
+	if (n > 64 && n % 2 != 0)
+		return (log2(n) + 2);
+	else 
+		return (log2(n) + 1);
+}
+
+int	ft_is_stack_ready(t_list *list, int unit)
+{
+	while (list != NULL)
+	{
+		if (!(list->content >> unit & 1))
+			return (0);
+		list = list->next;
+	}
+	return (1);
+}
+
+void	ft_print_stacks(t_list *a, t_list *b, char *op)
+{
+	printf("--------%s--------\n", op);
+	printf("| A:  ");
+	while (a != NULL)
+	{
+		printf("%d ", a->content);
+		a = a->next;
+	}
+	printf("\n");
+	printf("| B:  ");
+	while (b != NULL)
+	{
+		printf("%d ", b->content);
+		b = b->next;
+	}
+	printf("\n");
+	printf("------------------\n");
+}
+
 void	ft_sort_large_array(int *args, int size)
 {
+	int i;
+	int max_binary_length;
 	t_list	*a;
 	t_list	*b;
 
 	ft_replace_args_by_indices(&args, size);
 	a = ft_fill_list_with_args(args, size);
-	printf("sorted: %d\n", ft_is_sorted(a));
-	ft_lstprint(a);
+	b = NULL;
+	i = -1;
+	while (++i < size)
+		if (ft_get_binary_length(args[i]) > max_binary_length)
+			max_binary_length = ft_get_binary_length(args[i]);
+	i = 0;
+	while(i < max_binary_length && !ft_is_sorted(a))
+	{
+		while (!ft_is_stack_ready(a, i))
+		{
+			if ((a->content >> i) & 1)
+			{
+				ft_rotate(&a);
+				ft_putstr_fd("ra\n", 1);
+			}
+			else
+			{
+				ft_push(&a, &b);
+				ft_putstr_fd("pb\n", 1);
+			}
+		}
+		while (b != NULL)
+		{
+			ft_push(&b, &a);
+			ft_putstr_fd("pa\n", 1);
+		}
+		i++;
+	}
+
+	ft_print_stacks(a, b, "ev");
+
 	ft_lstclear(&a);
+	ft_lstclear(&b);
 }

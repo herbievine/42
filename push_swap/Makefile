@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/19 13:17:58 by hvine            ###   ########.fr        #
+#    Updated: 2023/02/19 18:09:25 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ RMFLAG = -f
 SRCS = \
 	main.c \
 	lib.c \
-	num.c \
 	strings.c \
 	ops.c \
 	display.c \
@@ -30,7 +29,6 @@ SRCS = \
 
 INCLUDES = \
 	./lib.h \
-	./num.h \
 	./strings.h \
 	./ops.h \
 	./display.h \
@@ -50,9 +48,6 @@ all: $(NAME) compile
 
 $(NAME): $(OBJS) $(INCLUDES)
 	$(CC) $(CFLAGS) -o $< -c $(<:.o=.c)
-
-$(PACKAGES):
-	$(MAKE) -C $(addprefix $(PACKAGES_PATH)/, $@)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
