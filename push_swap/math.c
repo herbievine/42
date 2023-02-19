@@ -20,9 +20,9 @@
  * @param power
  * @return int
  */
-int ft_pow(int nb, int power)
+int	ft_pow(int nb, int power)
 {
-	int res;
+	int	res;
 
 	if (nb == 0)
 		return (0);

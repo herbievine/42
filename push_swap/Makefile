@@ -6,14 +6,14 @@
 #    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/19 11:16:58 by hvine            ###   ########.fr        #
+#    Updated: 2023/02/19 13:17:58 by hvine            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f

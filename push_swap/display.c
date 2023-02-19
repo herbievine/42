@@ -13,7 +13,7 @@
 #include "display.h"
 #include "strings.h"
 
-static int ft_print_recursive(unsigned long n, char *base, int fd);
+static int	ft_print_recursive(unsigned long n, char *base, int fd);
 
 /**
  * @brief The ft_putchar_fd() function outputs the character 'c' to the given
@@ -23,7 +23,7 @@ static int ft_print_recursive(unsigned long n, char *base, int fd);
  * @param fd
  * @return int
  */
-int ft_putchar_fd(char c, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 	return (1);
@@ -37,9 +37,9 @@ int ft_putchar_fd(char c, int fd)
  * @param fd
  * @return int
  */
-int ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(int n, int fd)
 {
-	long long num;
+	long long	num;
 
 	num = n;
 	if (num < 0)
@@ -61,16 +61,16 @@ int ft_putnbr_fd(int n, int fd)
  * @param fd
  * @return int
  */
-int ft_putnbr_base_fd(unsigned long n, char *base, int fd)
+int	ft_putnbr_base_fd(unsigned long n, char *base, int fd)
 {
 	if (n == 0)
 		return (ft_putchar_fd(base[0], fd));
 	return (ft_print_recursive(n, base, fd) - 1);
 }
 
-static int ft_print_recursive(unsigned long n, char *base, int fd)
+static int	ft_print_recursive(unsigned long n, char *base, int fd)
 {
-	int bytes;
+	int	bytes;
 
 	bytes = 1;
 	if (n)

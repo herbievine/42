@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef LIB_H
-#define LIB_H
+# define LIB_H
 
-#include <stdio.h>
-#include <stdlib.h>
+# include <stdio.h>
+# include <stdlib.h>
 
-void ft_sort_large_array(int *args, int size);
+void	ft_sort_large_array(int *args, int size);
 
 #endif /* LIB_H */

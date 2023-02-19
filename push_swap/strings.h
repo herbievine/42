@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef STRINGS_H
-#define STRINGS_H
+# define STRINGS_H
 
-#include <stdlib.h>
+# include <stdlib.h>
 
-size_t ft_strlen(const char *s);
-int ft_atoi(const char *nptr);
+size_t	ft_strlen(const char *s);
+int		ft_atoi(const char *nptr);
 
 #endif /* STRINGS_H */

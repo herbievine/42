@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #ifndef DISPLAY_H
-#define DISPLAY_H
+# define DISPLAY_H
 
-#include <unistd.h>
+# include <unistd.h>
 
-int ft_putchar_fd(char c, int fd);
-int ft_putnbr_fd(int n, int fd);
-int ft_putnbr_base_fd(unsigned long n, char *base, int fd);
+int	ft_putchar_fd(char c, int fd);
+int	ft_putnbr_fd(int n, int fd);
+int	ft_putnbr_base_fd(unsigned long n, char *base, int fd);
 
 #endif /* DISPLAY_H */

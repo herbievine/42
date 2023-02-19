@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:11:11 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 16:15:08 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 13:14:24 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
  * @param content
  * @return t_list*
  */
-t_list *ft_lstnew(int content)
+t_list	*ft_lstnew(int content)
 {
-	t_list *new;
+	t_list	*new;
 
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
@@ -40,13 +40,13 @@ t_list *ft_lstnew(int content)
  * @param lst
  * @param new
  */
-void ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	t_list *head;
+	t_list	*head;
 
 	head = *lst;
 	if (!lst || !new)
-		return;
+		return ;
 	new->next = head;
 	*lst = new;
 }
@@ -58,9 +58,9 @@ void ft_lstadd_front(t_list **lst, t_list *new)
  * @param lst
  * @param new
  */
-void ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list *last;
+	t_list	*last;
 
 	if (*lst)
 	{
@@ -77,7 +77,7 @@ void ft_lstadd_back(t_list **lst, t_list *new)
  * @param lst
  * @return t_list*
  */
-t_list *ft_lstlast(t_list *lst)
+t_list	*ft_lstlast(t_list *lst)
 {
 	if (!lst)
 		return (0);
@@ -93,18 +93,17 @@ t_list *ft_lstlast(t_list *lst)
  * @param lst
  * @param del
  */
-void ft_lstclear(t_list **lst, void (*del)(int))
+void	ft_lstclear(t_list **lst)
 {
-	t_list *head;
-	t_list *tmp;
+	t_list	*head;
+	t_list	*tmp;
 
-	if (!lst || !del)
-		return;
+	if (!lst)
+		return ;
 	head = *lst;
 	while (head)
 	{
 		tmp = head->next;
-		(del)(head->content);
 		free(head);
 		head = tmp;
 	}
@@ -116,11 +115,11 @@ void ft_lstclear(t_list **lst, void (*del)(int))
  *
  * @param lst
  */
-void ft_lstprint(t_list *lst)
+void	ft_lstprint(t_list *lst)
 {
 	while (lst)
 	{
-		ft_putnbr_fd(lst->content, 1);
+		ft_putnbr_base_fd(lst->content, "0123456789", 1);
 		ft_putchar_fd('\n', 1);
 		lst = lst->next;
 	}

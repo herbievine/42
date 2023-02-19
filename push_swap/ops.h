@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #ifndef OPS_H
-#define OPS_H
+# define OPS_H
 
-#include "lists.h"
+# include "lists.h"
 
-void ft_ra(t_list **a);
+void	ft_rotate(t_list **list);
 
 #endif /* OPS_H */

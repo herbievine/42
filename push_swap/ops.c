@@ -3,29 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ops.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 16:04:21 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 13:12:19 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ops.h"
 
 /**
- * @brief The ft_ra() function rotates the a stack, moving all elements up by one,
+ * @brief The ft_r() function rotates the stack, moving all elements up by one,
  * and the last element becomes the first.
  *
- * @param a Stack A
- * @param b Stack B
+ * @param lst
  */
-void ft_ra(t_list **a)
+void	ft_rotate(t_list **list)
 {
 	t_list *new_head;
 	t_list *rotate;
 
-	rotate = *a;
-	new_head = (*a)->next;
+	rotate = *list;
+	new_head = (*list)->next;
 
 	ft_lstadd_back(&new_head, rotate);
 }

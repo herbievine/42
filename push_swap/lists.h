@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:10:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 16:10:08 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 13:14:29 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list *ft_lstnew(int content);
 void ft_lstadd_front(t_list **lst, t_list *new);
 void ft_lstadd_back(t_list **lst, t_list *new);
 t_list *ft_lstlast(t_list *lst);
-void ft_lstclear(t_list **lst, void (*del)(int));
+void ft_lstclear(t_list **lst);
 void ft_lstprint(t_list *lst);
 
 #endif /* LISTS_H */

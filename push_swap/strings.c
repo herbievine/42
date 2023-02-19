@@ -18,9 +18,9 @@
  * @param s
  * @return size_t
  */
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
@@ -35,11 +35,11 @@ size_t ft_strlen(const char *s)
  * @param nptr
  * @return int
  */
-int ft_atoi(const char *nptr)
+int	ft_atoi(const char *nptr)
 {
-	int i;
-	int sign;
-	int res;
+	int	i;
+	int	sign;
+	int	res;
 
 	i = 0;
 	sign = 1;

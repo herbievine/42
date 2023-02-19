@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #ifndef MATH_H
-#define MATH_H
+# define MATH_H
 
-int ft_pow(int nb, int power);
+int	ft_pow(int nb, int power);
 
 #endif /* MATH_H */

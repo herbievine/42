@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 15:58:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 14:35:55 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 #include "num.h"
+#include "display.h"
 #include "strings.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int i;
-	int size;
-	int *args;
+	int	i;
+	int	size;
+	int	*args;
 
 	i = -1;
 	size = argc - 1;
