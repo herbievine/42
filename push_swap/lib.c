@@ -6,68 +6,18 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 20:56:43 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 21:32:39 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 #include "lists.h"
 #include "ops.h"
+#include "math.h"
 #include "display.h"
+#include "sort.h"
 #include <math.h>
 #include <stdio.h>
-
-void	ft_sort_int_tab(int **arr, int size)
-{
-	int	i;
-	int	j;
-	int	temp;
-
-	i = 0;
-	while (i < size)
-	{
-		j = i + 1;
-		while (j < size)
-		{
-			if ((*arr)[i] > (*arr)[j])
-			{
-				temp = (*arr)[i];
-				(*arr)[i] = (*arr)[j];
-				(*arr)[j] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	ft_replace_args_by_indices(int **args, int size)
-{
-	int	i;
-	int	j;
-	int	*sorted_array;
-
-	i = -1;
-	j = -1;
-	sorted_array = (int *)malloc(size * sizeof(int));
-	while (++i < size)
-		sorted_array[i] = (*args)[i];
-	ft_sort_int_tab(&sorted_array, size);
-	i = -1;
-	while (++i < size)
-	{
-		j = -1;
-		while (++j < size)
-		{
-			if ((*args)[i] == sorted_array[j])
-			{
-				(*args)[i] = j;
-				break ;
-			}
-		}
-	}
-	free(sorted_array);
-}
 
 t_list	*ft_fill_list_with_args(int *args, int size)
 {
@@ -95,14 +45,6 @@ int	ft_is_sorted(t_list *list)
 	return (1);
 }
 
-int ft_get_binary_length(int n)
-{
-	if (n > 64 && n % 2 != 0)
-		return (log2(n) + 2);
-	else 
-		return (log2(n) + 1);
-}
-
 int	ft_is_stack_ready(t_list *list, int unit)
 {
 	while (list != NULL)
@@ -114,42 +56,41 @@ int	ft_is_stack_ready(t_list *list, int unit)
 	return (1);
 }
 
-void	ft_print_stacks(t_list *a, t_list *b, char *op)
-{
-	printf("--------%s--------\n", op);
-	printf("| A:  ");
-	while (a != NULL)
-	{
-		printf("%d ", a->content);
-		a = a->next;
-	}
-	printf("\n");
-	printf("| B:  ");
-	while (b != NULL)
-	{
-		printf("%d ", b->content);
-		b = b->next;
-	}
-	printf("\n");
-	printf("------------------\n");
-}
+// void	ft_print_stacks(t_list *a, t_list *b, char *op)
+// {
+// 	printf("--------%s--------\n", op);
+// 	printf("| A:  ");
+// 	while (a != NULL)
+// 	{
+// 		printf("%d ", a->content);
+// 		a = a->next;
+// 	}
+// 	printf("\n");
+// 	printf("| B:  ");
+// 	while (b != NULL)
+// 	{
+// 		printf("%d ", b->content);
+// 		b = b->next;
+// 	}
+// 	printf("\n");
+// 	printf("------------------\n");
+// }
 
 void	ft_sort_large_array(int *args, int size)
 {
-	int i;
-	int max_binary_length;
+	int		i;
+	int		max_binary_length;
 	t_list	*a;
 	t_list	*b;
 
-	ft_replace_args_by_indices(&args, size);
 	a = ft_fill_list_with_args(args, size);
 	b = NULL;
 	i = -1;
 	while (++i < size)
-		if (ft_get_binary_length(args[i]) > max_binary_length)
-			max_binary_length = ft_get_binary_length(args[i]);
+		if (ft_binary_length(args[i]) > max_binary_length)
+			max_binary_length = ft_binary_length(args[i]);
 	i = 0;
-	while(i < max_binary_length && !ft_is_sorted(a))
+	while (i < max_binary_length && !ft_is_sorted(a))
 	{
 		while (!ft_is_stack_ready(a, i))
 		{
@@ -171,9 +112,6 @@ void	ft_sort_large_array(int *args, int size)
 		}
 		i++;
 	}
-
-	ft_print_stacks(a, b, "ev");
-
 	ft_lstclear(&a);
 	ft_lstclear(&b);
 }

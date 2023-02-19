@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 11:14:54 by hvine             #+#    #+#             */
-/*   Updated: 2023/02/19 11:15:22 by hvine            ###   ########.fr       */
+/*   Updated: 2023/02/19 21:24:15 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define MATH_H
 
 int	ft_pow(int nb, int power);
+int	ft_binary_length(int n);
 
 #endif /* MATH_H */

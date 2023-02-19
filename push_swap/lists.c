@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:11:11 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 20:02:51 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 21:16:35 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,14 @@ void	ft_lstclear(t_list **lst)
  *
  * @param lst
  */
-void	ft_lstprint(t_list *lst, char *msg)
-{
-	while (lst && lst->content > -1)
-	{
-		ft_putstr_fd(msg, 1);
-		ft_putstr_fd(": ", 1);
-		ft_putnbr_base_fd(lst->content, "0123456789", 1);
-		ft_putchar_fd('\n', 1);
-		lst = lst->next;
-	}
-}
+// void	ft_lstprint(t_list *lst, char *msg)
+// {
+// 	while (lst && lst->content > -1)
+// 	{
+// 		ft_putstr_fd(msg, 1);
+// 		ft_putstr_fd(": ", 1);
+// 		ft_putnbr_base_fd(lst->content, "0123456789", 1);
+// 		ft_putchar_fd('\n', 1);
+// 		lst = lst->next;
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 20:56:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 21:13:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  */
 void	ft_rotate(t_list **list)
 {
-	t_list *last;
-	t_list *tmp;
+	t_list	*last;
+	t_list	*tmp;
 
 	last = ft_lstlast(*list);
 	tmp = ft_lstnew((*list)->content);
@@ -39,7 +39,7 @@ void	ft_rotate(t_list **list)
  */
 void	ft_push(t_list **src, t_list **dst)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = ft_lstnew((*src)->content);
 	if (!*dst)

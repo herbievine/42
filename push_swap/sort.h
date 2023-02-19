@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lists.h                                            :+:      :+:    :+:   */
+/*   sort.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/18 15:10:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 21:18:24 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/19 21:17:45 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/19 21:25:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LISTS_H
-# define LISTS_H
+#ifndef SORT_H
+# define SORT_H
 
-# include <stdlib.h>
+void	ft_replace_args_by_indices(int **args, int size);
+void	ft_sort_int_tab(int **arr, int size);
 
-typedef struct s_list
-{
-	int				content;
-	struct s_list	*next;
-}	t_list;
-
-t_list	*ft_lstnew(int content);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstclear(t_list **lst);
-// void	ft_lstprint(t_list *lst, char *msg);
-
-#endif /* LISTS_H */
+#endif /* SORT_H */

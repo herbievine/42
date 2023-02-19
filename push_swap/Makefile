@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/19 18:09:25 by herbie           ###   ########.fr        #
+#    Updated: 2023/02/19 21:18:36 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS = \
 	ops.c \
 	display.c \
 	lists.c \
-	math.c
+	math.c \
+	sort.c
 
 INCLUDES = \
 	./lib.h \
@@ -33,7 +34,8 @@ INCLUDES = \
 	./ops.h \
 	./display.h \
 	./lists.h \
-	./math.h
+	./math.h \
+	./sort.h
 
 OBJS = $(SRCS:.c=.o)
 
