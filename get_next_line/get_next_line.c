@@ -136,7 +136,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buffer = get_line(fd, buffer);
-	if (!buffer[0])
+	if (!buffer || !buffer[0])
 		line = NULL;
 	else
 		line = ft_extract_line_from_buffer(buffer);
