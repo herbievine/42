@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: hvine <hvine@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/18 21:09:25 by herbie           ###   ########.fr        #
+#    Updated: 2023/02/19 11:16:58 by hvine            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS = \
 	strings.c \
 	ops.c \
 	display.c \
-	lists.c
+	lists.c \
+	math.c
 
 INCLUDES = \
 	./lib.h \
@@ -33,7 +34,8 @@ INCLUDES = \
 	./strings.h \
 	./ops.h \
 	./display.h \
-	./lists.h
+	./lists.h \
+	./math.h
 
 OBJS = $(SRCS:.c=.o)
 

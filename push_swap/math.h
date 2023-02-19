@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   num.c                                              :+:      :+:    :+:   */
+/*   math.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 20:14:50 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 11:16:26 by hvine            ###   ########.fr       */
+/*   Created: 2023/02/19 11:14:54 by hvine             #+#    #+#             */
+/*   Updated: 2023/02/19 11:15:22 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "num.h"
-#include "math.h"
+#ifndef MATH_H
+#define MATH_H
 
-int ft_to_radix(int num, int radix)
-{
-	int i;
-	int res;
+int ft_pow(int nb, int power);
 
-	i = 0;
-	res = 0;
-	while (num)
-	{
-		res += (num % radix) * ft_pow(10, i++);
-		num /= radix;
-	}
-	return (res);
-}
+#endif /* MATH_H */
