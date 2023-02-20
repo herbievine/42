@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 18:21:55 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 20:09:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,14 @@ void	ft_sort_args(int *args, int size)
 
 	a = ft_fill_list_with_args(args, size);
 	b = NULL;
-	if (size <= 5)
-		printf("Not implemented yet");
+	if (ft_is_sorted(a))
+		return ;
+	else if (size == 2 && args[0] > args[1])
+		ft_putstr_fd("sa\n", 1);
+	else if (size == 3)
+		ft_sort_three_array(args);
+	else if (size == 5)
+		ft_sort_five_array(args);
 	else
 		ft_sort_large_array(&a, &b, size);
 	ft_lstclear(&a);
@@ -80,6 +86,30 @@ void	ft_sort_args(int *args, int size)
 // 	printf("------------------\n");
 // }
 
+void	ft_sort_three_array(int *args)
+{
+	if (args[0] < args[1] && args[1] < args[2])
+		ft_putstr_fd("", 1);
+	else if (args[0] < args[1] && args[1] > args[2] && args[0] > args[2])
+		ft_putstr_fd("rra\n", 1);
+	else if (args[0] > args[1] && args[0] > args[2] && args[1] < args[2])
+		ft_putstr_fd("ra\n", 1);
+	else if (args[0] > args[1] && args[1] > args[2])
+		ft_putstr_fd("sa\nrra\n", 1);
+	else if (args[0] < args[1] && args[1] > args[2])
+		ft_putstr_fd("sa\nra\n", 1);
+	else if (args[0] > args[1] && args[1] < args[2])
+		ft_putstr_fd("sa\n", 1);
+}
+
+void	ft_sort_five_array(int *args)
+{
+	ft_putstr_fd("pb\npb\n", 1);
+	ft_sort_three_array(args + sizeof(int));
+	ft_putstr_fd("pa\n", 1);
+	// if (args[1] )
+}
+
 void	ft_sort_large_array(t_list **a, t_list **b, int size)
 {
 	int	i;
@@ -87,7 +117,8 @@ void	ft_sort_large_array(t_list **a, t_list **b, int size)
 	int	max_binary_length;
 
 	i = -1;
-	while ((size - 1 >> max_binary_length) != 0)
+	max_binary_length = 0;
+	while (((size - 1) >> max_binary_length) != 0)
 		max_binary_length++;
 	i = -1;
 	while (++i < max_binary_length && !ft_is_sorted(*a))
