@@ -2,7 +2,7 @@
 
 <br />
 
-This is a list of projects that I have worked on. I have tried to include as many details as possible, but if you have any questions, please feel free to contact me.
+This is where I dump all my 42 shit. Feel free to have a look around if you're stuck. No cheating though, right? ;)
 
 ## Score
 
@@ -10,5 +10,5 @@ This is a list of projects that I have worked on. I have tried to include as man
 | ------------- | ------------- | ------------- |
 | 0             | libft         | 125/100       |
 | 1             | ft_printf     | 100/100       |
-| 1             | get_next_line | TBD/100       |
+| 1             | get_next_line | 100/100       |
 | 1             | born2beroot   | 115/100       |
