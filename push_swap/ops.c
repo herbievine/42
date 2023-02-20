@@ -6,10 +6,11 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 21:13:40 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 17:54:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "display.h"
 #include "ops.h"
 #include <stdio.h>
 
@@ -19,7 +20,7 @@
  *
  * @param lst
  */
-void	ft_rotate(t_list **list)
+void	ft_rotate(t_list **list, char *op)
 {
 	t_list	*last;
 	t_list	*tmp;
@@ -28,6 +29,7 @@ void	ft_rotate(t_list **list)
 	tmp = ft_lstnew((*list)->content);
 	last->next = tmp;
 	*list = (*list)->next;
+	ft_putstr_fd(op, 1);
 }
 
 /**
@@ -37,7 +39,7 @@ void	ft_rotate(t_list **list)
  * @param src 
  * @param dst 
  */
-void	ft_push(t_list **src, t_list **dst)
+void	ft_push(t_list **src, t_list **dst, char *op)
 {
 	t_list	*tmp;
 
@@ -47,4 +49,5 @@ void	ft_push(t_list **src, t_list **dst)
 	else
 		ft_lstadd_front(dst, tmp);
 	*src = (*src)->next;
+	ft_putstr_fd(op, 1);
 }

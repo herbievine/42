@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 16:48:10 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 18:09:51 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void ft_print_stacks(t_list *a, t_list *b, char *op)
 void ft_sort_large_array(int *args, int size)
 {
 	int i;
+	int j;
 	int max_binary_length;
 	t_list *a;
 	t_list *b;
@@ -86,40 +87,22 @@ void ft_sort_large_array(int *args, int size)
 	a = ft_fill_list_with_args(args, size);
 	b = NULL;
 	i = -1;
-	while (++i < size)
-		if (ft_binary_length(args[i]) > max_binary_length)
-			max_binary_length = ft_binary_length(args[i]);
-	i = 0;
-	while (i < max_binary_length && !ft_is_sorted(a))
+	while ((size - 1 >> max_binary_length) != 0)
+		max_binary_length++;
+	i = -1;
+	while (++i < max_binary_length && !ft_is_sorted(a))
 	{
-		while (!ft_is_stack_ready(a, i))
+		j = -1;
+		while (++j < size)
 		{
 			if ((a->content >> i) & 1)
-			{
-				ft_rotate(&a);
-				// printf("unit: %d\n", i);
-				// ft_print_stacks(a, b, "ra");
-				ft_putstr_fd("ra\n", 1);
-			}
+				ft_rotate(&a, "ra\n");
 			else
-			{
-				ft_push(&a, &b);
-				// printf("unit: %d\n", i);
-				// ft_print_stacks(a, b, "pb");
-				ft_putstr_fd("pb\n", 1);
-			}
+				ft_push(&a, &b, "pb\n");
 		}
 		while (b != NULL)
-		{
-			ft_push(&b, &a);
-			// printf("unit: %d\n", i);
-			// ft_print_stacks(a, b, "pa");
-			ft_putstr_fd("pa\n", 1);
-		}
-		i++;
+			ft_push(&b, &a, "pa\n");
 	}
-	// ft_print_stacks(a, b, "final");
-	// printf("sorted: %s\n", ft_is_sorted(a) ? "true" : "false");
 	ft_lstclear(&a);
 	ft_lstclear(&b);
 }
