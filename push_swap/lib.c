@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 23:07:38 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 23:14:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_sort_five_array(t_list **a, t_list **b)
 	ft_push(a, b, "pb\n");
 	ft_push(a, b, "pb\n");
 	ft_sort_three_array(a);
-	//ft_print_stacks(*a, *b, "start");
+	// ft_print_stacks(*a, *b, "start");
 	i = -1;
 	while (++i < 3 && (*b) != NULL)
 	{
@@ -93,6 +93,19 @@ void	ft_sort_five_array(t_list **a, t_list **b)
 		// 	ft_push(b, a, "pa\n");
 		// 	break ;
 		// }
+		if ((*b)-> val == 0 && (*a)->val == ft_lowest_value(*a))
+		{
+			// ft_putstr_fd("FUNC2", 1);
+			ft_push(b, a, "pa\n");
+			break ;
+		}
+		if ((*b)->val == 4 && (*a)->val == ft_highest_value(*a))
+		{
+			// ft_putstr_fd("FUNC3", 1);
+			ft_rotate(a, "ra\n");
+			ft_push(b, a, "pa\n");
+			break ;
+		}
 		if ((*b)->val - 1 == (*a)->val)
 		{
 			// ft_putstr_fd("FUNC1", 1);
@@ -112,7 +125,7 @@ void	ft_sort_five_array(t_list **a, t_list **b)
 			ft_rotate(a, "ra\n");
 		}
 	}
-	//ft_print_stacks(*a, *b, "mid start");
+	// ft_print_stacks(*a, *b, "mid start");
 	i = -1;
 	while (++i < 4 && (*b) != NULL)
 	{
@@ -131,10 +144,10 @@ void	ft_sort_five_array(t_list **a, t_list **b)
 		else
 			ft_rotate(a, "ra\n");
 	}
-	//ft_print_stacks(*a, *b, "mid end");
+	// ft_print_stacks(*a, *b, "mid end");
 	while (!ft_is_sorted(*a))
 		ft_rotate(a, "ra\n");
-	//ft_print_stacks(*a, *b, "end");
+	// ft_print_stacks(*a, *b, "end");
 }
 
 void	ft_sort_large_array(t_list **a, t_list **b, int size)
