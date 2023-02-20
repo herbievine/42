@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:16:50 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:26:33 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 22:52:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ t_list	*ft_fill_list_with_args(int *args, int size)
 		i++;
 	}
 	return (list);
+}
+
+int	ft_highest_value(t_list *list)
+{
+	int	highest;
+
+	highest = list->val;
+	while (list != NULL)
+	{
+		if (list->val > highest)
+			highest = list->val;
+		list = list->n;
+	}
+	return (highest);
 }
 
 int	ft_is_sorted(t_list *list)
