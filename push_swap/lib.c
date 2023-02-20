@@ -6,43 +6,17 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 20:14:01 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 20:36:39 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 #include "lists.h"
+#include "utils.h"
 #include "ops.h"
 #include "display.h"
-#include "sort.h"
 
 #include <stdio.h>
-
-t_list	*ft_fill_list_with_args(int *args, int size)
-{
-	t_list	*list;
-	int		i;
-
-	i = 1;
-	list = ft_lstnew(args[0]);
-	while (i < size)
-	{
-		ft_lstadd_back(&list, ft_lstnew(args[i]));
-		i++;
-	}
-	return (list);
-}
-
-int	ft_is_sorted(t_list *list)
-{
-	while (list != NULL)
-	{
-		if (list->next != NULL && list->content > list->next->content)
-			return (0);
-		list = list->next;
-	}
-	return (1);
-}
 
 void	ft_sort_args(int *args, int size)
 {
@@ -106,7 +80,6 @@ void	ft_sort_five_array(int *args)
 	ft_putstr_fd("pb\npb\n", 1);
 	ft_sort_three_array(args + sizeof(int));
 	ft_putstr_fd("pa\n", 1);
-	// if (args[1] )
 }
 
 void	ft_sort_large_array(t_list **a, t_list **b, int size)

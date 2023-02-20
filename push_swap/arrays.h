@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.h                                             :+:      :+:    :+:   */
+/*   arrays.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 21:17:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 21:25:06 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/20 20:31:48 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/20 20:32:05 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SORT_H
-# define SORT_H
+#ifndef ARRAYS_H
+# define ARRAYS_H
 
-void	ft_replace_args_by_indices(int **args, int size);
 void	ft_sort_int_tab(int **arr, int size);
 
-#endif /* SORT_H */
+#endif /* ARRAYS_H */
