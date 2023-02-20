@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 21:29:12 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/19 22:07:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,18 @@
 #include "display.h"
 #include "strings.h"
 #include "sort.h"
+#include "parse.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 int	main(int argc, char **argv)
 {
-	int	i;
-	int	size;
 	int	*args;
+	int size;
 
-	i = -1;
+	args = ft_parse_args(argc, argv);
 	size = argc - 1;
-	args = (int *)malloc(size * sizeof(int));
-	while (++i < size)
-		args[i] = ft_atoi(argv[i + 1]);
 	ft_replace_args_by_indices(&args, size);
 	ft_sort_large_array(args, size);
 	free(args);
