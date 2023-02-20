@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:26:33 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 22:13:13 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /**
  * @brief The ft_rotate() function rotates the stack, moving all elements up by
- * one, and the last element becomes the first.
+ * one, and the first element becomes the last.
  *
  * @param lst
  * @param op
@@ -71,8 +71,8 @@ void	ft_swap(t_list **list, char *op)
 
 /**
  * @brief The ft_reverse_rotate() function rotates the stack in the opposite
- * direction, moving all elements down by one, and the first element becomes the
- * last.
+ * direction, moving all elements down by one, and the last element becomes the
+ * first.
  * 
  * @param lst 
  * @param op
@@ -80,14 +80,14 @@ void	ft_swap(t_list **list, char *op)
 void	ft_reverse_rotate(t_list **list, char *op)
 {
 	t_list	*last;
-	t_list	*tmp;
+	t_list	*second_last;
 
+	second_last = *list;
 	last = ft_lstlast(*list);
-	tmp = ft_lstnew(last->val);
-	ft_lstadd_front(list, tmp);
-	while ((*list)->n->n)
-		*list = (*list)->n;
-	free((*list)->n);
-	(*list)->n = NULL;
+	ft_lstadd_front(list, ft_lstnew(last->val));
+	while (second_last->n->n)
+		second_last = second_last->n;
+	free(second_last->n);
+	second_last->n = NULL;
 	ft_putstr_fd(op, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:20:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 21:11:16 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:41:51 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i])
-		i++;
+	while (i[s])
+		++i;
 	return (i);
 }
 

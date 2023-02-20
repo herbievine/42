@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:29:41 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 22:49:32 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,53 @@ void	ft_sort_three_array(t_list **a)
 
 void	ft_sort_five_array(t_list **a, t_list **b)
 {
+	int i;
+
 	ft_push(a, b, "pb\n");
 	ft_push(a, b, "pb\n");
 	ft_sort_three_array(a);
-	ft_push(b, a, "pa\n");
-	ft_print_stacks(*a, *b, "sort 3");
+	ft_print_stacks(*a, *b, "start");
+	i = -1;
+	while (++i < 3 && (*b) != NULL)
+	{
+		if (
+			((*b)->val == 3 && (*a)->val == 2)
+			|| ((*b)->val == 4 && (*a)->val > 2)
+		)
+		{
+			ft_rotate(a, "ra\n");
+			ft_push(b, a, "pa\n");
+			break ;
+		}
+		else if (((*b)->val < (*a)->val) && ((*b)->val > (*a)->n->val))
+		{
+			ft_push(b, a, "pa\n");
+			break ;
+		}
+		else
+			ft_rotate(a, "ra\n");
+	}
+	ft_print_stacks(*a, *b, "mid start");
+	i = -1;
+	while (++i < 4 && (*b) != NULL)
+	{
+		if (
+			((*b)->val == 3 && (*a)->val == 3 - 1)
+			|| ((*b)->val == 4 && (*a)->val > 2)
+		)
+		{
+			ft_rotate(a, "ra\n");
+			ft_push(b, a, "pa\n");
+		}
+		else if ((*b)->val + 1 == (*a)->val)
+			ft_push(b, a, "pa\n");
+		else
+			ft_rotate(a, "ra\n");
+	}
+	ft_print_stacks(*a, *b, "mid end");
+	while (!ft_is_sorted(*a))
+		ft_rotate(a, "ra\n");
+	ft_print_stacks(*a, *b, "end");
 }
 
 void	ft_sort_large_array(t_list **a, t_list **b, int size)
