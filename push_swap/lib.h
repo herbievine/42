@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 20:13:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 20:14:06 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:03:35 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "lists.h"
 
 void	ft_sort_args(int *args, int size);
-void	ft_sort_three_array(int *args);
+void	ft_sort_three_array(t_list **a);
 void	ft_sort_five_array(int *args);
 void	ft_sort_large_array(t_list **a, t_list **b, int size);
 

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 20:36:39 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:12:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_sort_args(int *args, int size)
 	else if (size == 2 && args[0] > args[1])
 		ft_putstr_fd("sa\n", 1);
 	else if (size == 3)
-		ft_sort_three_array(args);
+		ft_sort_three_array(&a);
 	else if (size == 5)
 		ft_sort_five_array(args);
 	else
@@ -45,41 +45,39 @@ void	ft_sort_args(int *args, int size)
 // 	printf("| A:  ");
 // 	while (a != NULL)
 // 	{
-// 		printf("%d ", a->content);
-// 		a = a->next;
+// 		printf("%d ", a->c);
+// 		a = a->n;
 // 	}
 // 	printf("\n");
 // 	printf("| B:  ");
 // 	while (b != NULL)
 // 	{
-// 		printf("%d ", b->content);
-// 		b = b->next;
+// 		printf("%d ", b->c);
+// 		b = b->n;
 // 	}
 // 	printf("\n");
 // 	printf("------------------\n");
 // }
 
-void	ft_sort_three_array(int *args)
+void	ft_sort_three_array(t_list **a)
 {
-	if (args[0] < args[1] && args[1] < args[2])
-		ft_putstr_fd("", 1);
-	else if (args[0] < args[1] && args[1] > args[2] && args[0] > args[2])
-		ft_putstr_fd("rra\n", 1);
-	else if (args[0] > args[1] && args[0] > args[2] && args[1] < args[2])
-		ft_putstr_fd("ra\n", 1);
-	else if (args[0] > args[1] && args[1] > args[2])
-		ft_putstr_fd("sa\nrra\n", 1);
-	else if (args[0] < args[1] && args[1] > args[2])
-		ft_putstr_fd("sa\nra\n", 1);
-	else if (args[0] > args[1] && args[1] < args[2])
-		ft_putstr_fd("sa\n", 1);
+	if ((*a)->c < (*a)->n->c && (*a)->c > (*a)->n->n->c)
+		return (ft_reverse_rotate(a, "rra\n"));
+	else if ((*a)->c > (*a)->n->n->c && (*a)->n->c < (*a)->n->n->c)
+		return (ft_rotate(a, "ra\n"));
+	else if ((*a)->c > (*a)->n->c && (*a)->n->c > (*a)->n->n->c)
+		return (ft_swap(a, "sa\n"), ft_reverse_rotate(a, "rra\n"));
+	else if ((*a)->c < (*a)->n->c && (*a)->n->c > (*a)->n->n->c)
+		return (ft_swap(a, "sa\n"), ft_rotate(a, "ra\n"));
+	else if ((*a)->c > (*a)->n->c && (*a)->n->c < (*a)->n->n->c)
+		return (ft_swap(a, "sa\n"));
 }
 
 void	ft_sort_five_array(int *args)
 {
-	ft_putstr_fd("pb\npb\n", 1);
-	ft_sort_three_array(args + sizeof(int));
-	ft_putstr_fd("pa\n", 1);
+	// ft_putstr_fd("pb\npb\n", 1);
+	// ft_sort_three_array(args + (sizeof(int) * 2));
+	// ft_putstr_fd("pa\n", 1);
 }
 
 void	ft_sort_large_array(t_list **a, t_list **b, int size)
@@ -98,7 +96,7 @@ void	ft_sort_large_array(t_list **a, t_list **b, int size)
 		j = -1;
 		while (++j < size)
 		{
-			if (((*a)->content >> i) & 1)
+			if (((*a)->c >> i) & 1)
 				ft_rotate(a, "ra\n");
 			else
 				ft_push(a, b, "pb\n");

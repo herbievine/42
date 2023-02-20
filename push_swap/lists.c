@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:11:11 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 21:16:35 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:06:58 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_list	*ft_lstnew(int content)
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
 		return (0);
-	new->content = content;
-	new->next = 0;
+	new->c = content;
+	new->n = 0;
 	return (new);
 }
 
@@ -47,7 +47,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	head = *lst;
 	if (!lst || !new)
 		return ;
-	new->next = head;
+	new->n = head;
 	*lst = new;
 }
 
@@ -65,7 +65,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	if (*lst)
 	{
 		last = ft_lstlast(*lst);
-		last->next = new;
+		last->n = new;
 	}
 	else
 		*lst = new;
@@ -81,8 +81,8 @@ t_list	*ft_lstlast(t_list *lst)
 {
 	if (!lst)
 		return (0);
-	while (lst && lst->next)
-		lst = lst->next;
+	while (lst && lst->n)
+		lst = lst->n;
 	return (lst);
 }
 
@@ -103,7 +103,7 @@ void	ft_lstclear(t_list **lst)
 	head = *lst;
 	while (head)
 	{
-		tmp = head->next;
+		tmp = head->n;
 		free(head);
 		head = tmp;
 	}
@@ -117,12 +117,12 @@ void	ft_lstclear(t_list **lst)
  */
 // void	ft_lstprint(t_list *lst, char *msg)
 // {
-// 	while (lst && lst->content > -1)
+// 	while (lst && lst->c > -1)
 // 	{
 // 		ft_putstr_fd(msg, 1);
 // 		ft_putstr_fd(": ", 1);
-// 		ft_putnbr_base_fd(lst->content, "0123456789", 1);
+// 		ft_putnbr_base_fd(lst->c, "0123456789", 1);
 // 		ft_putchar_fd('\n', 1);
-// 		lst = lst->next;
+// 		lst = lst->n;
 // 	}
 // }

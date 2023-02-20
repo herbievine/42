@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 20:17:51 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:06:58 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	ft_rotate(t_list **list, char *op)
 	t_list	*tmp;
 
 	last = ft_lstlast(*list);
-	tmp = ft_lstnew((*list)->content);
-	last->next = tmp;
-	*list = (*list)->next;
+	tmp = ft_lstnew((*list)->c);
+	last->n = tmp;
+	*list = (*list)->n;
 	ft_putstr_fd(op, 1);
 }
 
@@ -44,12 +44,12 @@ void	ft_push(t_list **src, t_list **dst, char *op)
 {
 	t_list	*tmp;
 
-	tmp = ft_lstnew((*src)->content);
+	tmp = ft_lstnew((*src)->c);
 	if (!*dst)
-		*dst = ft_lstnew((*src)->content);
+		*dst = ft_lstnew((*src)->c);
 	else
 		ft_lstadd_front(dst, tmp);
-	*src = (*src)->next;
+	*src = (*src)->n;
 	ft_putstr_fd(op, 1);
 }
 
@@ -63,9 +63,9 @@ void	ft_swap(t_list **list, char *op)
 {
 	int	tmp;
 
-	tmp = (*list)->content;
-	(*list)->content = (*list)->next->content;
-	(*list)->next->content = tmp;
+	tmp = (*list)->c;
+	(*list)->c = (*list)->n->c;
+	(*list)->n->c = tmp;
 	ft_putstr_fd(op, 1);
 }
 
@@ -83,11 +83,11 @@ void	ft_reverse_rotate(t_list **list, char *op)
 	t_list	*tmp;
 
 	last = ft_lstlast(*list);
-	tmp = ft_lstnew(last->content);
+	tmp = ft_lstnew(last->c);
 	ft_lstadd_front(list, tmp);
-	while ((*list)->next->next)
-		*list = (*list)->next;
-	free((*list)->next);
-	(*list)->next = NULL;
+	while ((*list)->n->n)
+		*list = (*list)->n;
+	free((*list)->n);
+	(*list)->n = NULL;
 	ft_putstr_fd(op, 1);
 }
