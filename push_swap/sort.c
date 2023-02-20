@@ -6,12 +6,11 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:16:50 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 22:02:25 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 20:15:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sort.h"
-
 #include <stdlib.h>
 
 void	ft_replace_args_by_indices(int **args, int size)

@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/19 21:50:29 by herbie           ###   ########.fr        #
+#    Updated: 2023/02/20 20:15:43 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SRCS = \
 	ops.c \
 	display.c \
 	lists.c \
-	math.c \
 	sort.c \
 	parse.c
 
@@ -35,7 +34,6 @@ INCLUDES = \
 	./ops.h \
 	./display.h \
 	./lists.h \
-	./math.h \
 	./sort.h \
 	./parse.h
 

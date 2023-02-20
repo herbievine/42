@@ -6,13 +6,12 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 18:56:27 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 20:15:32 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "display.h"
 #include "ops.h"
-#include <stdio.h>
 
 /**
  * @brief The ft_rotate() function rotates the stack, moving all elements up by

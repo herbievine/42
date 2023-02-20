@@ -6,17 +6,16 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 20:09:12 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 20:14:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 #include "lists.h"
 #include "ops.h"
-#include "math.h"
 #include "display.h"
 #include "sort.h"
-#include <math.h>
+
 #include <stdio.h>
 
 t_list	*ft_fill_list_with_args(int *args, int size)

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 20:13:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 20:08:47 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 20:14:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define LIB_H
 
 # include "lists.h"
-
-# include <stdio.h>
-# include <stdlib.h>
 
 void	ft_sort_args(int *args, int size);
 void	ft_sort_three_array(int *args);

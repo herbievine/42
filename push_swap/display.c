@@ -6,12 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:43:42 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/19 19:34:03 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 20:14:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "display.h"
 #include "strings.h"
+#include <unistd.h>
 
 static int	ft_print_recursive(unsigned long n, char *base, int fd);
 
