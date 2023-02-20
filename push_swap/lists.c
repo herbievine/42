@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:11:11 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:06:58 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:26:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_list	*ft_lstnew(int content)
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
 		return (0);
-	new->c = content;
+	new->val = content;
 	new->n = 0;
 	return (new);
 }
@@ -117,11 +117,11 @@ void	ft_lstclear(t_list **lst)
  */
 // void	ft_lstprint(t_list *lst, char *msg)
 // {
-// 	while (lst && lst->c > -1)
+// 	while (lst && lst->val > -1)
 // 	{
 // 		ft_putstr_fd(msg, 1);
 // 		ft_putstr_fd(": ", 1);
-// 		ft_putnbr_base_fd(lst->c, "0123456789", 1);
+// 		ft_putnbr_base_fd(lst->val, "0123456789", 1);
 // 		ft_putchar_fd('\n', 1);
 // 		lst = lst->n;
 // 	}

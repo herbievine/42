@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:16:50 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:06:58 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:26:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_is_sorted(t_list *list)
 {
 	while (list != NULL)
 	{
-		if (list->n != NULL && list->c > list->n->c)
+		if (list->n != NULL && list->val > list->n->val)
 			return (0);
 		list = list->n;
 	}

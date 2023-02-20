@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:10:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:06:51 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:26:23 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_list
 {
-	int				c;
+	int				val;
 	struct s_list	*n;
 }	t_list;
 

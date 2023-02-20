@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:12:57 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/20 21:29:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,27 @@
 #include "utils.h"
 #include "ops.h"
 #include "display.h"
-
 #include <stdio.h>
+
+void ft_print_stacks(t_list *a, t_list *b, char *op)
+{
+	printf("--------%s--------\n", op);
+	printf("| A:  ");
+	while (a != NULL)
+	{
+		printf("%d ", a->val);
+		a = a->n;
+	}
+	printf("\n");
+	printf("| B:  ");
+	while (b != NULL)
+	{
+		printf("%d ", b->val);
+		b = b->n;
+	}
+	printf("\n");
+	printf("------------------\n");
+}
 
 void	ft_sort_args(int *args, int size)
 {
@@ -32,52 +51,34 @@ void	ft_sort_args(int *args, int size)
 	else if (size == 3)
 		ft_sort_three_array(&a);
 	else if (size == 5)
-		ft_sort_five_array(args);
+		ft_sort_five_array(&a, &b);
 	else
 		ft_sort_large_array(&a, &b, size);
 	ft_lstclear(&a);
 	ft_lstclear(&b);
 }
 
-// void ft_print_stacks(t_list *a, t_list *b, char *op)
-// {
-// 	printf("--------%s--------\n", op);
-// 	printf("| A:  ");
-// 	while (a != NULL)
-// 	{
-// 		printf("%d ", a->c);
-// 		a = a->n;
-// 	}
-// 	printf("\n");
-// 	printf("| B:  ");
-// 	while (b != NULL)
-// 	{
-// 		printf("%d ", b->c);
-// 		b = b->n;
-// 	}
-// 	printf("\n");
-// 	printf("------------------\n");
-// }
-
 void	ft_sort_three_array(t_list **a)
 {
-	if ((*a)->c < (*a)->n->c && (*a)->c > (*a)->n->n->c)
+	if ((*a)->val < (*a)->n->val && (*a)->val > (*a)->n->n->val)
 		return (ft_reverse_rotate(a, "rra\n"));
-	else if ((*a)->c > (*a)->n->n->c && (*a)->n->c < (*a)->n->n->c)
+	else if ((*a)->val > (*a)->n->n->val && (*a)->n->val < (*a)->n->n->val)
 		return (ft_rotate(a, "ra\n"));
-	else if ((*a)->c > (*a)->n->c && (*a)->n->c > (*a)->n->n->c)
+	else if ((*a)->val > (*a)->n->val && (*a)->n->val > (*a)->n->n->val)
 		return (ft_swap(a, "sa\n"), ft_reverse_rotate(a, "rra\n"));
-	else if ((*a)->c < (*a)->n->c && (*a)->n->c > (*a)->n->n->c)
+	else if ((*a)->val < (*a)->n->val && (*a)->n->val > (*a)->n->n->val)
 		return (ft_swap(a, "sa\n"), ft_rotate(a, "ra\n"));
-	else if ((*a)->c > (*a)->n->c && (*a)->n->c < (*a)->n->n->c)
+	else if ((*a)->val > (*a)->n->val && (*a)->n->val < (*a)->n->n->val)
 		return (ft_swap(a, "sa\n"));
 }
 
-void	ft_sort_five_array(int *args)
+void	ft_sort_five_array(t_list **a, t_list **b)
 {
-	// ft_putstr_fd("pb\npb\n", 1);
-	// ft_sort_three_array(args + (sizeof(int) * 2));
-	// ft_putstr_fd("pa\n", 1);
+	ft_push(a, b, "pb\n");
+	ft_push(a, b, "pb\n");
+	ft_sort_three_array(a);
+	ft_push(b, a, "pa\n");
+	ft_print_stacks(*a, *b, "sort 3");
 }
 
 void	ft_sort_large_array(t_list **a, t_list **b, int size)
@@ -96,7 +97,7 @@ void	ft_sort_large_array(t_list **a, t_list **b, int size)
 		j = -1;
 		while (++j < size)
 		{
-			if (((*a)->c >> i) & 1)
+			if (((*a)->val >> i) & 1)
 				ft_rotate(a, "ra\n");
 			else
 				ft_push(a, b, "pb\n");
