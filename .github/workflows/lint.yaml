@@ -27,7 +27,7 @@ jobs:
         run: norminette -R CheckForbiddenSourceHeader $(find . -name "*.c" -o -name "*.h")
   build:
     name: Build
-    needs: lint
+    # needs: lint
     timeout-minutes: 2
     runs-on: ubuntu-latest
 
@@ -37,4 +37,4 @@ jobs:
       - name: Check grep alias
         run: alias grep
       - name: Build
-        run: sh build.sh
+        run: \! find . -name Makefile -type f -execdir make re \; 2>&1 | grep -qF 'Error 1'
