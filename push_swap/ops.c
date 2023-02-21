@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 22:13:13 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 08:33:36 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_rotate(t_list **list, char *op)
 	t_list	*tmp;
 
 	last = ft_lstlast(*list);
-	tmp = ft_lstnew((*list)->val);
+	tmp = ft_lstnew((*list)->v);
 	last->n = tmp;
 	*list = (*list)->n;
 	ft_putstr_fd(op, 1);
@@ -44,9 +44,9 @@ void	ft_push(t_list **src, t_list **dst, char *op)
 {
 	t_list	*tmp;
 
-	tmp = ft_lstnew((*src)->val);
+	tmp = ft_lstnew((*src)->v);
 	if (!*dst)
-		*dst = ft_lstnew((*src)->val);
+		*dst = ft_lstnew((*src)->v);
 	else
 		ft_lstadd_front(dst, tmp);
 	*src = (*src)->n;
@@ -63,9 +63,9 @@ void	ft_swap(t_list **list, char *op)
 {
 	int	tmp;
 
-	tmp = (*list)->val;
-	(*list)->val = (*list)->n->val;
-	(*list)->n->val = tmp;
+	tmp = (*list)->v;
+	(*list)->v = (*list)->n->v;
+	(*list)->n->v = tmp;
 	ft_putstr_fd(op, 1);
 }
 
@@ -84,7 +84,7 @@ void	ft_reverse_rotate(t_list **list, char *op)
 
 	second_last = *list;
 	last = ft_lstlast(*list);
-	ft_lstadd_front(list, ft_lstnew(last->val));
+	ft_lstadd_front(list, ft_lstnew(last->v));
 	while (second_last->n->n)
 		second_last = second_last->n;
 	free(second_last->n);
