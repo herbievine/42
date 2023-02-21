@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 09:23:02 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 11:32:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,6 @@
 #include "ops.h"
 #include "display.h"
 #include <stdio.h>
-
-void ft_print_stacks(t_list *a, t_list *b, char *op)
-{
-	printf("--------%s--------\n", op);
-	printf("| A:  ");
-	while (a != NULL)
-	{
-		printf("%d ", a->v);
-		a = a->n;
-	}
-	printf("\n");
-	printf("| B:  ");
-	while (b != NULL)
-	{
-		printf("%d ", b->v);
-		b = b->n;
-	}
-	printf("\n");
-	printf("------------------\n");
-}
 
 void	ft_sort_args(int *args, int size)
 {
@@ -74,47 +54,29 @@ void	ft_sort_three_array(t_list **a)
 
 void	ft_sort_five_array(t_list **a, t_list **b)
 {
-	int	i;
-	int	j;
-
 	ft_push(a, b, "pb\n");
 	ft_push(a, b, "pb\n");
 	ft_sort_three_array(a);
-	i = -1;
-	// ft_print_stacks(*a, *b, "sort_five");
-	while (++i < 2) // CHNAGE TO 2
+	while ((*b) != NULL)
 	{
-		j = -1;
-		while (++j < 3 + i && (*b) != NULL)
+		if (
+			((*b)->v + 1 == (*a)->v)
+			|| ((*b)->v == 0 && ft_lstlast(*a)->v == ft_highest_value(*a))
+			|| ((*b)->v == 4 && ft_lstlast(*a)->v == ft_highest_value(*a))
+		)
+			ft_push(b, a, "pa\n");
+		else if (((*b)->v - 1 == (*a)->v))
 		{
-			// printf("b value = %d | last a value = %d\n", (*b)->v, ft_lstlast(*a)->v);
-			if (((*b)->v == 0 && (*a)->v == ft_lowest_value(*a)) || ((*b)->v + 1 == (*a)->v))
-				ft_push(b, a, "pa\n");
-			else if (((*b)->v == 4 && (*a)->v == ft_highest_value(*a)) || ((*b)->v - 1 == (*a)->v))
-			{
-				ft_rotate(a, "ra\n");
-				ft_push(b, a, "pa\n");
-			}
-			else if (((*b)->v == 0 && ft_lstlast(*a)->v == ft_highest_value(*a)))
-			{
-				// ft_reverse_rotate(a, "rra\n");
-				ft_push(b, a, "pa\n");
-			}
-			else if (((*b)->v == 4 && ft_lstlast(*a)->v == ft_highest_value(*a)))
-			{
-				// ft_reverse_rotate(a, "rra\n");
-				ft_push(b, a, "pa\n");
-			}
-			else
-				ft_rotate(a, "ra\n");
+			ft_rotate(a, "ra\n");
+			ft_push(b, a, "pa\n");
 		}
+		else
+			ft_rotate(a, "ra\n");
 	}
-	// ft_print_stacks(*a, *b, "sort_five");
 	while (ft_get_index_of(*a, 0) > 2 && !ft_is_sorted(*a))
 		ft_reverse_rotate(a, "rra\n");
 	while (!ft_is_sorted(*a))
 		ft_rotate(a, "ra\n");
-	// ft_print_stacks(*a, *b, "sort_five");
 }
 
 void	ft_sort_large_array(t_list **a, t_list **b, int size)

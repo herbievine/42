@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:16:50 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 08:33:36 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 11:28:16 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,19 @@ int	ft_highest_value(t_list *list)
 	return (highest);
 }
 
-int	ft_lowest_value(t_list *list)
+int	ft_get_index_of(t_list *lst, int value)
 {
-	int	lowest;
+	int	i;
 
-	lowest = list->v;
-	while (list != NULL)
+	i = 0;
+	while (lst != NULL)
 	{
-		if (list->v < lowest)
-			lowest = list->v;
-		list = list->n;
+		if (lst->v == value)
+			return (i);
+		lst = lst->n;
+		i++;
 	}
-	return (lowest);
+	return (-1);
 }
 
 int	ft_is_sorted(t_list *list)

@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/21 08:49:49 by herbie           ###   ########.fr        #
+#    Updated: 2023/02/21 11:28:26 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,7 @@ SRCS = \
 	lists.c \
 	arrays.c \
 	parse.c \
-	utils.c \
-	utils2.c
+	utils.c 
 
 INCLUDES = \
 	./lib.h \
