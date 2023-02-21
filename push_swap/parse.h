@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:50:03 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 21:21:32 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 22:54:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-typedef struct	args
+typedef struct args
 {
 	char	**argv;
 	int		*args;

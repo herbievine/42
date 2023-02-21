@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:49:53 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 21:24:34 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 22:55:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,9 @@
 #include "strings.h"
 #include "split.h"
 
-// TODO remove this
-#include <stdio.h>
-
 t_args	*ft_parse_args(int argc, char **argv)
 {
-	int	i;
+	int		i;
 	t_args	*arg;
 
 	if (argc == 2)
@@ -29,7 +26,7 @@ t_args	*ft_parse_args(int argc, char **argv)
 		arg = ft_get_args_from_argv(argc, argv);
 	ft_check_if_args_are_numbers(arg->argc, arg->argv);
 	arg->args = malloc(sizeof(int) * (arg->argc));
-	i= -1;
+	i = -1;
 	while (++i < arg->argc)
 		arg->args[i] = ft_atoi(arg->argv[i]);
 	return (arg);
@@ -45,7 +42,7 @@ t_args	*ft_get_args_from_argv(int argc, char **argv)
 	arg->argc = argc - 1;
 	arg->argv = argv + 1;
 	arg->args = NULL;
-	return arg;
+	return (arg);
 }
 
 t_args	*ft_get_args_from_str(char *str)
@@ -66,12 +63,12 @@ t_args	*ft_get_args_from_str(char *str)
 	arg->argc = i;
 	arg->argv = args;
 	arg->args = NULL;
-	return arg;
+	return (arg);
 }
 
 void	ft_check_if_args_are_numbers(int argc, char **argv)
 {
-	int i;
+	int	i;
 
 	while (argc-- > 0)
 	{
