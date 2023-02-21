@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     name: Build
-    needs: lint
     timeout-minutes: 2
     runs-on: ubuntu-latest
 
