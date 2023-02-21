@@ -34,4 +34,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: find . -name Makefile -type f -execdir make re \;
+        run: \! find . -name Makefile -type f -execdir make re \; 2>&1 | grep -qF 'Error 1'
