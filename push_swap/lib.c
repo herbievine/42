@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 21:24:25 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 22:12:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,17 @@ void	ft_sort_args(int *args, int size)
 
 	a = ft_fill_list_with_args(args, size);
 	b = NULL;
-	if (ft_is_sorted(a))
-		return ;
-	else if (size == 2 && args[0] > args[1])
-		ft_putstr_fd("sa\n", 1);
-	else if (size == 3)
-		ft_sort_three_array(&a);
-	else if (size == 5)
-		ft_sort_five_array(&a, &b);
-	else
-		ft_sort_large_array(&a, &b, size);
+	if (!ft_is_sorted(a))
+	{
+		if (size == 2 && args[0] > args[1])
+			ft_putstr_fd("sa\n", 1);
+		else if (size == 3)
+			ft_sort_three_array(&a);
+		else if (size == 5)
+			ft_sort_five_array(&a, &b);
+		else
+			ft_sort_large_array(&a, &b, size);
+	}
 	ft_lstclear(&a);
 	ft_lstclear(&b);
 }

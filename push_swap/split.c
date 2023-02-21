@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2023/02/21 20:38:02 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 22:08:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static char	**ft_init_list(char const *s, char c);
 static void	ft_fill_list_with_strs(char **list, char const *s, char c);
-static void	ft_free_list(char **list, size_t idx);
 
 /**
  * @brief The ft_split() function allocates (with malloc(3)) and returns an array
@@ -83,7 +82,7 @@ static void	ft_fill_list_with_strs(char **list, char const *s, char c)
 	}
 }
 
-static void	ft_free_list(char **list, size_t idx)
+void	ft_free_list(char **list, size_t idx)
 {
 	while (idx--)
 		free(list[idx]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:11:11 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 08:33:36 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 22:10:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,3 @@ void	ft_lstclear(t_list **lst)
 	}
 	*lst = NULL;
 }
-
-/**
- * @brief The ft_lstprint() function prints the content of the using.
- *
- * @param lst
- */
-// void	ft_lstprint(t_list *lst, char *msg)
-// {
-// 	while (lst && lst->v > -1)
-// 	{
-// 		ft_putstr_fd(msg, 1);
-// 		ft_putstr_fd(": ", 1);
-// 		ft_putnbr_base_fd(lst->v, "0123456789", 1);
-// 		ft_putchar_fd('\n', 1);
-// 		lst = lst->n;
-// 	}
-// }
