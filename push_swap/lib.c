@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 08:33:53 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 08:36:59 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	ft_sort_five_array(t_list **a, t_list **b)
 		j = -1;
 		while (++j < 3 + i && (*b) != NULL)
 		{
-			if (((*b)->v == 0 && (*a)->v == 2) || ((*b)->v + 1 == (*a)->v))
+			if (((*b)->v == 0 && (*a)->v == ft_lowest_value(*a)) || ((*b)->v + 1 == (*a)->v))
 				ft_push(b, a, "pa\n");
-			else if (((*b)->v == 4 && (*a)->v == 2) || (*b)->v - 1 == (*a)->v)
+			else if (((*b)->v == 4 && (*a)->v == ft_highest_value(*a)) || ((*b)->v - 1 == (*a)->v))
 			{
 				ft_rotate(a, "ra\n");
 				ft_push(b, a, "pa\n");
