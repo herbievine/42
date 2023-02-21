@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 19:59:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 11:32:00 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 21:24:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ void	ft_sort_five_array(t_list **a, t_list **b)
 
 void	ft_sort_large_array(t_list **a, t_list **b, int size)
 {
+	int	max_binary_length;
 	int	i;
 	int	j;
-	int	max_binary_length;
 
-	i = -1;
 	max_binary_length = 0;
 	while (((size - 1) >> max_binary_length) != 0)
 		max_binary_length++;

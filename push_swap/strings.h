@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:02:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/18 16:07:54 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 20:37:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,8 @@
 
 size_t	ft_strlen(const char *s);
 int		ft_atoi(const char *nptr);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif /* STRINGS_H */
