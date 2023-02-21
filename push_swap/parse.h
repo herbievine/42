@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:50:03 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 15:04:59 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/21 14:54:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
-# define PARSE_H
+#define PARSE_H
 
-// int	*ft_parse_args(int argc, char **argv);
+int *ft_parse_args(int argc, char **argv);
 
 #endif /* PARSE_H */
