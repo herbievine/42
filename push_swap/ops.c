@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ops.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 22:02:29 by codespace        ###   ########.fr       */
+/*   Updated: 2023/02/22 08:57:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
  * @param lst
  * @param op
  */
-void ft_rotate(t_list **list, char *op)
+void	ft_rotate(t_list **list, char *op)
 {
-	t_list *last;
-	t_list *tmp;
+	t_list	*last;
+	t_list	*tmp;
 
 	last = ft_lstlast(*list);
 	tmp = ft_lstnew((*list)->v);
@@ -43,9 +43,9 @@ void ft_rotate(t_list **list, char *op)
  * @param dst 
  * @param op
  */
-void ft_push(t_list **src, t_list **dst, char *op)
+void	ft_push(t_list **src, t_list **dst, char *op)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (!*dst)
 		*dst = ft_lstnew((*src)->v);
@@ -66,9 +66,9 @@ void ft_push(t_list **src, t_list **dst, char *op)
  * @param lst 
  * @param op
  */
-void ft_swap(t_list **list, char *op)
+void	ft_swap(t_list **list, char *op)
 {
-	int tmp;
+	int	tmp;
 
 	tmp = (*list)->v;
 	(*list)->v = (*list)->n->v;
@@ -84,10 +84,10 @@ void ft_swap(t_list **list, char *op)
  * @param lst 
  * @param op
  */
-void ft_reverse_rotate(t_list **list, char *op)
+void	ft_reverse_rotate(t_list **list, char *op)
 {
-	t_list *last;
-	t_list *second_last;
+	t_list	*last;
+	t_list	*second_last;
 
 	second_last = *list;
 	last = ft_lstlast(*list);

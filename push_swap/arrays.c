@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 20:32:25 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 20:36:31 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/22 08:56:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param arr 
  * @param size 
  */
-void	ft_sort_int_tab(int **arr, int size)
+void	ft_sort_int_array(int **arr, int size)
 {
 	int	i;
 	int	j;

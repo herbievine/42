@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 08:40:22 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/22 08:54:23 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,15 @@ int	main(int argc, char **argv)
 	t_args	*args;
 
 	args = ft_parse_args(argc, argv);
-	if (!args || ft_replace_args_by_indices(&(args->args), args->argc) == -1)
+	if (
+		!args
+		|| ft_replace_args_by_indices(&(args->int_array), args->count) == -1
+	)
 		return (0);
-	ft_sort_args(args->args, args->argc);
-	free(args->args);
+	ft_sort_args(args->int_array, args->count);
+	free(args->int_array);
 	if (args->is_malloced)
-		ft_free_list(args->argv, args->argc);
+		ft_free_list(args->str_array, args->count);
 	free(args);
 	return (0);
 }

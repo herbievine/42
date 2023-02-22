@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:50:03 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 08:41:37 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/22 08:50:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ typedef enum e_bool
 
 typedef struct args
 {
-	char	**argv;
-	int		*args;
-	int		argc;
+	char	**str_array;
+	int		*int_array;
+	int		count;
 	t_bool	is_malloced;
 }				t_args;
 
