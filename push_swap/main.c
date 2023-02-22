@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 22:08:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/02/22 08:40:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 		return (0);
 	ft_sort_args(args->args, args->argc);
 	free(args->args);
-	if (argc == 2)
+	if (args->is_malloced)
 		ft_free_list(args->argv, args->argc);
 	free(args);
 	return (0);

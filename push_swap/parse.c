@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:49:53 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 22:55:26 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/22 08:47:35 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parse.h"
 #include "strings.h"
 #include "split.h"
+#include <stdio.h>
 
 t_args	*ft_parse_args(int argc, char **argv)
 {
@@ -29,6 +30,7 @@ t_args	*ft_parse_args(int argc, char **argv)
 	i = -1;
 	while (++i < arg->argc)
 		arg->args[i] = ft_atoi(arg->argv[i]);
+	ft_check_duplicates(arg);
 	return (arg);
 }
 
@@ -42,6 +44,7 @@ t_args	*ft_get_args_from_argv(int argc, char **argv)
 	arg->argc = argc - 1;
 	arg->argv = argv + 1;
 	arg->args = NULL;
+	arg->is_malloced = false;
 	return (arg);
 }
 
@@ -63,6 +66,7 @@ t_args	*ft_get_args_from_str(char *str)
 	arg->argc = i;
 	arg->argv = args;
 	arg->args = NULL;
+	arg->is_malloced = true;
 	return (arg);
 }
 
@@ -81,6 +85,30 @@ void	ft_check_if_args_are_numbers(int argc, char **argv)
 				i++;
 			else
 			{
+				ft_putstr_fd("Error\n", 2);
+				exit(1);
+			}
+		}
+	}
+}
+
+void	ft_check_duplicates(t_args *arg)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < arg->argc)
+	{
+		j = i;
+		while (++j < arg->argc)
+		{
+			if (arg->args[i] == arg->args[j] && i != j)
+			{
+				free(arg->args);
+				if (arg->is_malloced)
+					ft_free_list(arg->argv, arg->argc);
+				free(arg);
 				ft_putstr_fd("Error\n", 2);
 				exit(1);
 			}

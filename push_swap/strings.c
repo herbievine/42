@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:20:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 21:57:44 by codespace        ###   ########.fr       */
+/*   Updated: 2023/02/22 08:43:05 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * @param s
  * @return size_t
  */
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i[s])
@@ -36,11 +36,11 @@ size_t ft_strlen(const char *s)
  * @param nptr
  * @return int
  */
-int ft_atoi(const char *nptr)
+int	ft_atoi(const char *nptr)
 {
-	int i;
-	int sign;
-	int res;
+	int	i;
+	int	sign;
+	int	res;
 
 	i = 0;
 	sign = 1;
@@ -67,9 +67,9 @@ int ft_atoi(const char *nptr)
  * @param size
  * @return void*
  */
-void *ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void *space;
+	void	*space;
 
 	if (size && nmemb > SIZE_MAX / size)
 		return (0);
@@ -89,7 +89,7 @@ void *ft_calloc(size_t nmemb, size_t size)
  * @param n
  * @return void*
  */
-void *ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *s, int c, size_t n)
 {
 	while (n-- > 0)
 		((char *)s)[n] = (unsigned char)c;
@@ -106,10 +106,10 @@ void *ft_memset(void *s, int c, size_t n)
  * @param len
  * @return char*
  */
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t i;
-	char *str;
+	size_t	i;
+	char	*str;
 
 	if (!s)
 		return (0);
