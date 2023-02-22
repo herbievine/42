@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/02/21 20:35:40 by herbie           ###   ########.fr        #
+#    Updated: 2023/02/22 18:29:06 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,26 +43,19 @@ INCLUDES = \
 
 OBJS = $(SRCS:.c=.o)
 
-# Some shit from SO. `make run [...args]` will run the program with args
-# Won't work for negatif numbers though...
-ifeq (run,$(firstword $(MAKECMDGOALS)))
-  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  $(eval $(RUN_ARGS):;@:)
-endif
+all: $(NAME)
 
-all: $(NAME) compile
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 $(NAME): $(OBJS) $(INCLUDES)
-	$(CC) $(CFLAGS) -o $< -c $(<:.o=.c)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
 
-compile:
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-
-run: all
-	./$(NAME) $(RUN_ARGS)
+# compile: $(NAME)
+# 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 fclean: clean
 	$(RM) $(RMFLAG) $(NAME)
