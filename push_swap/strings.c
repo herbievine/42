@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:20:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 08:43:05 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/22 10:39:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ size_t	ft_strlen(const char *s)
 
 /**
  * @brief The ft_atoi() function converts the initial portion of the string
- * pointed to by nptr to int representation.
+ * pointed to by nptr to long representation.
  *
  * @param nptr
- * @return int
+ * @return long
  */
-int	ft_atoi(const char *nptr)
+long	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	sign;
-	int	res;
+	long	i;
+	long	sign;
+	long	res;
 
 	i = 0;
 	sign = 1;
@@ -55,7 +55,7 @@ int	ft_atoi(const char *nptr)
 		res = res * 10 + nptr[i] - 48;
 		i++;
 	}
-	return (res * sign);
+	return ((long)(res * sign));
 }
 
 /**
