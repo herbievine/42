@@ -23,6 +23,8 @@ int	main(int argc, char **argv)
 {
 	t_args	*args;
 
+	if (argc == 1)
+		return (0);
 	args = ft_parse_args(argc, argv);
 	if (
 		!args
