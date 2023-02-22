@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:49:53 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 09:02:29 by herbie           ###   ########.fr       */
+/*   Updated: 2023/02/22 09:15:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_args	*ft_parse_args(int argc, char **argv)
 		arg = ft_get_args_from_str(argv[1]);
 	else
 		arg = ft_get_args_from_argv(argc, argv);
-	ft_check_if_args_are_numbers(arg->count, arg->str_array);
+	ft_check_if_args_are_numbers(arg);
 	arg->int_array = malloc(sizeof(int) * (arg->count));
 	i = -1;
 	while (++i < arg->count)
@@ -70,23 +70,30 @@ t_args	*ft_get_args_from_str(char *str)
 	return (arg);
 }
 
-void	ft_check_if_args_are_numbers(int argc, char **argv)
+void	ft_check_if_args_are_numbers(t_args *arg)
 {
 	int	i;
 
-	while (argc-- > 0)
+	while (arg->count-- > 0)
 	{
 		i = 0;
-		while (argv[argc][i])
+		while (arg->str_array[arg->count][i])
 		{
-			if (i == 0 && (argv[argc][i] == '-' || argv[argc][i] == '+'))
+			if (
+				(i == 0 && arg->str_array[arg->count][i] == '-')
+				|| (i == 0 && arg->str_array[arg->count][i] == '+')
+			)
 				i++;
-			if (argv[argc][i] >= 48 && argv[argc][i] <= 57)
+			if (
+				arg->str_array[arg->count][i] >= 48
+				&& arg->str_array[arg->count][i] <= 57
+			)
 				i++;
 			else
 			{
-				ft_putstr_fd("Error\n", 2);
-				exit(1);
+				if (arg->is_malloced)
+					ft_free_list(arg->str_array, arg->count);
+				return (ft_putstr_fd("Error\n", 2), exit(1));
 			}
 		}
 	}
