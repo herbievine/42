@@ -23,7 +23,7 @@ void	ft_sort_int_array(int **arr, int size)
 {
 	int	i;
 	int	j;
-	int	temp;
+	int	tmp;
 
 	i = 0;
 	while (i < size)
@@ -33,9 +33,9 @@ void	ft_sort_int_array(int **arr, int size)
 		{
 			if ((*arr)[i] > (*arr)[j])
 			{
-				temp = (*arr)[i];
+				tmp = (*arr)[i];
 				(*arr)[i] = (*arr)[j];
-				(*arr)[j] = temp;
+				(*arr)[j] = tmp;
 			}
 			j++;
 		}
