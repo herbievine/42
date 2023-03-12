@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 21:17:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 11:50:30 by herbie           ###   ########.fr       */
+/*   Created: 2023/03/01 17:24:25 by herbie            #+#    #+#             */
+/*   Updated: 2023/03/01 17:24:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-# include "structs.h"
+typedef enum e_bool
+{
+	false,
+	true
+}	t_bool;
 
-void	ft_free_args(t_args *arg, t_bool free_ints);
-int		ft_highest_value(t_list *list);
-int		ft_is_sorted(t_list *list);
-int		ft_replace_args_by_indices(int **args, int size);
-int		ft_get_index_of(t_list *lst, int value);
+typedef struct args
+{
+	char	**str_array;
+	int		*int_array;
+	int		count;
+	t_bool	is_malloced;
+}				t_args;
 
-#endif /* UTILS_H */
+typedef struct s_list
+{
+	int				v;
+	struct s_list	*n;
+}	t_list;
+
+#endif /* STRUCTS_H */

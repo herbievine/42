@@ -13,6 +13,9 @@
 #ifndef ARRAYS_H
 # define ARRAYS_H
 
+# include "structs.h"
+
 void	ft_sort_int_array(int **arr, int size);
+t_list	*ft_fill_list_with_args(int *args, int size);
 
 #endif /* ARRAYS_H */

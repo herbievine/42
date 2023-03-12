@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "display.h"
+#include "lists.h"
 #include "ops.h"
 #include <stdlib.h>
 

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:49:53 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 10:48:32 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/01 17:19:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parse.h"
 #include "strings.h"
 #include "split.h"
+#include "utils.h"
 #include <stdio.h>
 #include <limits.h>
 
@@ -28,17 +29,18 @@ t_args	*ft_parse_args(int argc, char **argv)
 		arg = ft_get_args_from_argv(argc, argv);
 	ft_check_if_args_are_numbers(arg, arg->count);
 	arg->int_array = malloc(sizeof(int) * (arg->count));
+	if (!arg->int_array)
+		return (
+			ft_free_args(arg, false),
+			ft_putstr_fd("Error\n", 2), exit(1), NULL);
 	i = -1;
 	while (++i < arg->count)
 	{
 		if (ft_atoi(arg->str_array[i]) > INT_MAX
 			|| ft_atoi(arg->str_array[i]) < INT_MIN)
-		{
-			free(arg->int_array);
-			if (arg->is_malloced)
-				ft_free_list(arg->str_array, arg->count);
-			return (free(arg), ft_putstr_fd("Error\n", 2), exit(1), NULL);
-		}
+			return (
+				ft_free_args(arg, true),
+				ft_putstr_fd("Error\n", 2), exit(1), NULL);
 		arg->int_array[i] = (int)ft_atoi(arg->str_array[i]);
 	}
 	ft_check_duplicates(arg);
@@ -101,11 +103,9 @@ void	ft_check_if_args_are_numbers(t_args *arg, int count)
 			)
 				i++;
 			else
-			{
-				if (arg->is_malloced)
-					ft_free_list(arg->str_array, count);
-				return (free(arg), ft_putstr_fd("Error\n", 2), exit(1));
-			}
+				return (
+					ft_free_args(arg, false),
+					ft_putstr_fd("Error\n", 2), exit(1));
 		}
 	}
 }
@@ -123,10 +123,7 @@ void	ft_check_duplicates(t_args *arg)
 		{
 			if (arg->int_array[i] == arg->int_array[j] && i != j)
 			{
-				free(arg->int_array);
-				if (arg->is_malloced)
-					ft_free_list(arg->str_array, arg->count);
-				free(arg);
+				ft_free_args(arg, true);
 				ft_putstr_fd("Error\n", 2);
 				exit(1);
 			}

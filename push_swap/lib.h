@@ -13,7 +13,7 @@
 #ifndef LIB_H
 # define LIB_H
 
-# include "lists.h"
+# include "structs.h"
 
 void	ft_sort_args(int *args, int size);
 void	ft_sort_three_array(t_list **a);

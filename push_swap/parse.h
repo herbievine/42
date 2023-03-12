@@ -13,19 +13,7 @@
 #ifndef PARSE_H
 # define PARSE_H
 
-typedef enum e_bool
-{
-	false,
-	true
-}	t_bool;
-
-typedef struct args
-{
-	char	**str_array;
-	int		*int_array;
-	int		count;
-	t_bool	is_malloced;
-}				t_args;
+# include "structs.h"
 
 t_args	*ft_parse_args(int argc, char **argv);
 t_args	*ft_get_args_from_argv(int argc, char **argv);

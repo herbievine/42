@@ -14,12 +14,7 @@
 # define LISTS_H
 
 # include <stdlib.h>
-
-typedef struct s_list
-{
-	int				v;
-	struct s_list	*n;
-}	t_list;
+# include "structs.h"
 
 t_list	*ft_lstnew(int content);
 void	ft_lstadd_front(t_list **lst, t_list *new);

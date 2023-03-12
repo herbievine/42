@@ -12,6 +12,7 @@
 
 #include "lib.h"
 #include "lists.h"
+#include "arrays.h"
 #include "utils.h"
 #include "ops.h"
 #include "display.h"
