@@ -19,12 +19,12 @@ typedef enum e_bool
 	true
 }	t_bool;
 
-typedef struct args
+typedef struct s_args
 {
 	char	**str_array;
 	int		*int_array;
 	int		count;
-	t_bool	is_malloced;
+	t_bool	is_str_array_alloced;
 }				t_args;
 
 typedef struct s_list

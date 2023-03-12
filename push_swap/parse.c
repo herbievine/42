@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:49:53 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/01 17:19:08 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/12 10:42:05 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_args	*ft_get_args_from_argv(int argc, char **argv)
 	arg->count = argc - 1;
 	arg->str_array = argv + 1;
 	arg->int_array = NULL;
-	arg->is_malloced = false;
+	arg->is_str_array_alloced = false;
 	return (arg);
 }
 
@@ -79,7 +79,7 @@ t_args	*ft_get_args_from_str(char *str)
 	arg->count = i;
 	arg->str_array = args;
 	arg->int_array = NULL;
-	arg->is_malloced = true;
+	arg->is_str_array_alloced = true;
 	return (arg);
 }
 

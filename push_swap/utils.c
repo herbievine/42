@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 21:16:50 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/01 17:28:21 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/12 10:42:05 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_is_sorted(t_list *list)
 
 void	ft_free_args(t_args *arg, t_bool free_ints)
 {
-	if (arg->is_malloced)
+	if (arg->is_str_array_alloced)
 		ft_free_list(arg->str_array, arg->count);
 	if (free_ints)
 		free(arg->int_array);

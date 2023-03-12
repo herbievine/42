@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 08:54:23 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/12 10:42:05 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "utils.h"
 #include "parse.h"
 #include "split.h"
+#include "structs.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -32,9 +33,6 @@ int	main(int argc, char **argv)
 	)
 		return (0);
 	ft_sort_args(args->int_array, args->count);
-	free(args->int_array);
-	if (args->is_malloced)
-		ft_free_list(args->str_array, args->count);
-	free(args);
+	ft_free_args(args, true);
 	return (0);
 }
