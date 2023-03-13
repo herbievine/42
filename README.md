@@ -12,3 +12,4 @@ This is where I dump all my 42 shit. Feel free to have a look around if you're s
 | 1             | ft_printf     | 100/100       |
 | 1             | get_next_line | 100/100       |
 | 1             | born2beroot   | 115/100       |
+| 2             | push_swap     | 84/100        |
