@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 20:13:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:24:14 by herbie           ###   ########.fr       */
+/*   Created: 2023/03/01 17:24:25 by herbie            #+#    #+#             */
+/*   Updated: 2023/03/01 17:24:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-# include "structs.h"
+typedef enum e_bool
+{
+	false,
+	true
+}	t_bool;
 
-void	ft_sort_args(int *args, int size);
-void	ft_sort_three_array(t_list **a);
-void	ft_sort_five_array(t_list **a, t_list **b);
-void	ft_sort_large_array(t_list **a, t_list **b, int size);
+typedef struct s_args
+{
+	char	**str_array;
+	int		*int_array;
+	int		count;
+	t_bool	is_str_array_alloced;
+}				t_args;
 
-#endif /* LIB_H */
+typedef struct s_list
+{
+	int				v;
+	struct s_list	*n;
+}	t_list;
+
+#endif /* STRUCTS_H */

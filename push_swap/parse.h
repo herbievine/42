@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 20:13:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:24:14 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/19 21:50:03 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/22 10:44:18 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#ifndef PARSE_H
+# define PARSE_H
 
 # include "structs.h"
 
-void	ft_sort_args(int *args, int size);
-void	ft_sort_three_array(t_list **a);
-void	ft_sort_five_array(t_list **a, t_list **b);
-void	ft_sort_large_array(t_list **a, t_list **b, int size);
+t_args	*ft_parse_args(int argc, char **argv);
+t_args	*ft_get_args_from_argv(int argc, char **argv);
+t_args	*ft_get_args_from_str(char *str);
+void	ft_check_if_args_are_numbers(t_args *arg, int count);
+void	ft_check_duplicates(t_args *arg);
 
-#endif /* LIB_H */
+#endif /* PARSE_H */

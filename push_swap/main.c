@@ -3,51 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:55:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/17 22:02:34 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/12 10:42:05 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
-#include "num.h"
+#include "display.h"
 #include "strings.h"
-
+#include "utils.h"
+#include "parse.h"
+#include "split.h"
+#include "structs.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 int	main(int argc, char **argv)
 {
-	int	i;
-	int	size;
-	int	*args;
+	t_args	*args;
 
-	i = -1;
-	size = argc - 1;
-	args = (int *)malloc(size * sizeof(int));
-	while (++i < size)
-		args[i] = ft_atoi(argv[i + 1]);
-	ft_sort_large_array(args, size);
-	free(args);
+	if (argc == 1)
+		return (0);
+	args = ft_parse_args(argc, argv);
+	if (
+		!args
+		|| ft_replace_args_by_indices(&(args->int_array), args->count) == -1
+	)
+		return (0);
+	ft_sort_args(args->int_array, args->count);
+	ft_free_args(args, true);
 	return (0);
 }
-
-// int i = 0;
-// int a[5] = {0, 3, 1, 4, 2};
-// int b[5] = {};
-
-// while (i < 5)
-// {
-// 	if ((a[i] >> 0) & 1)
-// 		b[i] = a[i];
-// 	i++;
-// }
-
-// i = 0;
-
-// while (i < 5)
-// {
-// 	printf("%d\n ", b[i]);
-// 	i++;
-// }

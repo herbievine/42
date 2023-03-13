@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   lists.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 20:13:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:24:14 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/18 15:10:58 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/21 08:33:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#ifndef LISTS_H
+# define LISTS_H
 
+# include <stdlib.h>
 # include "structs.h"
 
-void	ft_sort_args(int *args, int size);
-void	ft_sort_three_array(t_list **a);
-void	ft_sort_five_array(t_list **a, t_list **b);
-void	ft_sort_large_array(t_list **a, t_list **b, int size);
+t_list	*ft_lstnew(int content);
+void	ft_lstadd_front(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstclear(t_list **lst);
+// void	ft_lstprint(t_list *lst, char *msg);
 
-#endif /* LIB_H */
+#endif /* LISTS_H */

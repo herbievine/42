@@ -7,6 +7,10 @@
 # Ignore code testers
 **/tester
 
+#Log files
+*.log
+*.logs
+
 # Prerequisites
 *.d
 

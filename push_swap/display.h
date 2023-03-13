@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   display.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 20:13:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/20 21:24:14 by herbie           ###   ########.fr       */
+/*   Created: 2023/02/18 15:42:14 by herbie            #+#    #+#             */
+/*   Updated: 2023/02/21 11:33:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#ifndef DISPLAY_H
+# define DISPLAY_H
 
-# include "structs.h"
+int	ft_putchar_fd(char c, int fd);
+int	ft_putstr_fd(char *s, int fd);
 
-void	ft_sort_args(int *args, int size);
-void	ft_sort_three_array(t_list **a);
-void	ft_sort_five_array(t_list **a, t_list **b);
-void	ft_sort_large_array(t_list **a, t_list **b, int size);
-
-#endif /* LIB_H */
+#endif /* DISPLAY_H */
