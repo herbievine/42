@@ -6,8 +6,9 @@
 
 # Ignore code testers
 **/tester
+**/checker
 
-#Log files
+# Log files
 *.log
 *.logs
 
@@ -63,3 +64,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# 42 Project Executables
+push_swap/push_swap
+pipex/pipex
