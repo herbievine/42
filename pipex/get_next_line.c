@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/12 16:48:15 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/17 16:47:31 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*get_line(int fd, char *line)
  * @param fd
  * @return char*
  */
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*line;

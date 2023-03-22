@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/22 11:03:45 by herbie           ###   ########.fr       */
+/*   Created: 2023/03/17 20:16:50 by herbie            #+#    #+#             */
+/*   Updated: 2023/03/22 10:51:59 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef PARSE_H
+#define PARSE_H
 
-typedef enum e_bool
-{
-	false,
-	true
-} t_bool;
+#include "structs.h"
 
-typedef struct s_fd_pair
-{
-	long fd[2];
-} t_fd_pair;
+t_bool parse_args(t_pipex *pipex, int argc, char **argv);
 
-typedef struct s_pipex
-{
-	int in;
-	int out_fd;
-	t_bool here_doc;
-} t_pipex;
-
-#endif /* STRUCTS_H */
+#endif /* PARSE_H */

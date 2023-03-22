@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/22 11:03:45 by herbie           ###   ########.fr       */
+/*   Created: 2023/03/22 11:02:05 by herbie            #+#    #+#             */
+/*   Updated: 2023/03/22 11:11:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#include "error.h"
+#include "str.h"
+#include <errno.h>
+#include <stdio.h>
+#include <unistd.h>
 
-typedef enum e_bool
+void error(char *err)
 {
-	false,
-	true
-} t_bool;
-
-typedef struct s_fd_pair
-{
-	long fd[2];
-} t_fd_pair;
-
-typedef struct s_pipex
-{
-	int in;
-	int out_fd;
-	t_bool here_doc;
-} t_pipex;
-
-#endif /* STRUCTS_H */
+	if (errno)
+		perror(err);
+	else
+	{
+		write(STDERR_FILENO, err, ft_strlen(err));
+		write(STDERR_FILENO, "\n", 1);
+	}
+}

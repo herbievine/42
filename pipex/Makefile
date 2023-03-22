@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/03/17 16:21:09 by herbie           ###   ########.fr        #
+#    Updated: 2023/03/22 11:04:48 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRCS = \
 	get_next_line.c \
 	mem.c \
 	str.c \
+	parse.c \
+	error.c
 
 # INCLUDES = \
 # 	./lib.h \

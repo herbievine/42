@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/22 11:03:45 by herbie           ###   ########.fr       */
+/*   Created: 2023/03/22 10:59:36 by herbie            #+#    #+#             */
+/*   Updated: 2023/03/22 11:04:20 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef ERROR_H
+#define ERROR_H
 
-typedef enum e_bool
-{
-	false,
-	true
-} t_bool;
+#define ERR_ARGS "Error: Invalid number of arguments"
+#define ERR_FORK "Error: Fork failed"
+#define ERR_PIPE "Error: Pipe failed"
+#define ERR_EXEC "Error: Exec failed"
 
-typedef struct s_fd_pair
-{
-	long fd[2];
-} t_fd_pair;
+void error(char *err);
 
-typedef struct s_pipex
-{
-	int in;
-	int out_fd;
-	t_bool here_doc;
-} t_pipex;
-
-#endif /* STRUCTS_H */
+#endif /* ERROR_H */
