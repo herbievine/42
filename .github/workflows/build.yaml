@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    name: Build
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: make
+      - name: Re-build
+        run: make re
+      - name: Clean
+        run: make fclean
