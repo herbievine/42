@@ -23,15 +23,5 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip setuptools
           pip install norminette
-      - name: Lint
+      - name: Run Norminette
         run: norminette -R CheckForbiddenSourceHeader $(find . -name "*.c" -o -name "*.h")
-  build:
-    name: Build
-    timeout-minutes: 2
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Build
-        run: sh build.sh
