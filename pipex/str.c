@@ -138,3 +138,34 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
 }
+
+/**
+ * @brief The ft_substr() function allocates (with malloc(3)) and returns a
+ * substring from the string 's'. The substring begins at index 'start' and is of
+ * maximum size 'len'.
+ * 
+ * @param s 
+ * @param start 
+ * @param len 
+ * @return char* 
+ */
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*str;
+
+	if (!s)
+		return (0);
+	if (ft_strlen(s) < start)
+		return (ft_strdup(""));
+	if (ft_strlen(s) < len + start)
+		str = (char *)ft_calloc(ft_strlen(s) - start + 1, sizeof(char));
+	else
+		str = (char *)ft_calloc(len + 1, sizeof(char));
+	if (!str)
+		return (0);
+	i = -1;
+	while (s[start + ++i] && i < len)
+		str[i] = s[start + i];
+	return (str);
+}
