@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:28:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 15:39:26 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/27 19:21:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-t_bool get_infile(t_pipex *pipex, char **argv)
+int ft_get_infile(t_pipex *pipex, char **argv)
 {
 	int fd;
 	char *buffer;
@@ -27,35 +27,28 @@ t_bool get_infile(t_pipex *pipex, char **argv)
 	if (pipex->here_doc)
 	{
 		fd = open(".here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-		while (fd > 0)
+		write(1, "heredoc> ", 9);
+		while (fd > 0 && ft_read(0, &buffer) > 0)
 		{
-			write(1, "heredoc> ", 9);
-			buffer = ft_get_next_line(0);
-			if (!buffer)
-				break;
 			if (ft_strncmp(buffer, argv[2], ft_strlen(argv[2])) == 0)
+			{
+				free(buffer);
 				break;
+			}
 			write(fd, buffer, ft_strlen(buffer));
 			free(buffer);
+			write(1, "heredoc> ", 9);
 		}
 		close(fd);
-		fd = open(".here_doc", O_RDONLY);
-		if (fd < 0)
-			return (false);
-		pipex->in_fd = fd;
+		pipex->in_fd = open(".here_doc", O_RDONLY);
 	}
 	else
-	{
-		fd = open(argv[1], O_RDONLY);
-		if (fd < 0)
-			return (false);
-		pipex->in_fd = fd;
-	}
-
-	return (true);
+		pipex->in_fd = open(argv[1], O_RDONLY);
+	return (pipex->in_fd);
 }
 
-t_bool get_outfile(t_pipex *pipex, char **argv)
+int ft_get_outfile(t_pipex *pipex, char **argv, int argc)
 {
-	return (true);
+	pipex->out_fd = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	return (pipex->out_fd);
 }

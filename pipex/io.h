@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:28:51 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 15:28:51 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/27 19:26:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structs.h"
 
-t_bool	get_infile(t_pipex *pipex, char **argv);
-t_bool	get_outfile(t_pipex *pipex, char **argv);
+int ft_get_infile(t_pipex *pipex, char **argv);
+int ft_get_outfile(t_pipex *pipex, char **argv, int argc);
 
 #endif /* IO_H */

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:15:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/17 16:15:16 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/27 13:52:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mem.h"
+#include <stdint.h>
 #include <stdlib.h>
 
 /**
