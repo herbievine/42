@@ -6,13 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/22 11:19:08 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/27 15:37:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "str.h"
 #include "structs.h"
+#include "io.h"
 #include "error.h"
 #include <stdio.h>
 
@@ -23,6 +24,8 @@ t_bool parse_args(t_pipex *pipex, int argc, char **argv)
 	else
 		pipex->here_doc = false;
 	if (argc < 5 + pipex->here_doc)
+		return (false);
+	if (!get_infile(pipex, argv))
 		return (false);
 	return (true);
 }

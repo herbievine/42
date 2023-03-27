@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   io.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 15:34:15 by herbie           ###   ########.fr       */
+/*   Created: 2023/03/27 15:28:51 by herbie            #+#    #+#             */
+/*   Updated: 2023/03/27 15:28:51 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef IO_H
+# define IO_H
 
-typedef enum e_bool
-{
-	false,
-	true
-} t_bool;
+# include "structs.h"
 
-typedef struct s_fd_pair
-{
-	long fd[2];
-} t_fd_pair;
+t_bool	get_infile(t_pipex *pipex, char **argv);
+t_bool	get_outfile(t_pipex *pipex, char **argv);
 
-typedef struct s_pipex
-{
-	int in_fd;
-	int out_fd;
-	t_bool here_doc;
-} t_pipex;
-
-#endif /* STRUCTS_H */
+#endif /* IO_H */

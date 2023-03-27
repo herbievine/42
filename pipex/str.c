@@ -157,7 +157,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (0);
 	if (ft_strlen(s) < start)
-		return (ft_strdup(""));
+		return (ft_strndup("", 0));
 	if (ft_strlen(s) < len + start)
 		str = (char *)ft_calloc(ft_strlen(s) - start + 1, sizeof(char));
 	else
