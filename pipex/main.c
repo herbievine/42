@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 19:26:57 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/27 21:46:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,42 +30,42 @@
  *
  * @param pipex
  */
-void ft_here_doc(t_pipex *pipex, char *limiter)
-{
-	char *line;
-	pid_t reader;
-	int fd[2];
+// void ft_here_doc(t_pipex *pipex, char *limiter)
+// {
+// 	char *line;
+// 	pid_t reader;
+// 	int fd[2];
 
-	if (pipe(fd) == -1)
-		return (perror("pipe"), (void)0);
-	reader = fork();
-	if (reader == -1)
-		return (perror("fork"), (void)0);
-	if (reader == 0)
-	{
-		close(fd[0]);
-		write(STDOUT_FILENO, "heredoc> ", 9);
-		while (ft_read(0, &line) > 0)
-		{
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
-			{
-				free(line);
-				break;
-			}
-			write(fd[1], line, ft_strlen(line));
-			free(line);
-			write(STDOUT_FILENO, "heredoc> ", 9);
-		}
-		close(fd[1]);
-	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDERR_FILENO);
-		close(fd[0]);
-		waitpid(reader, NULL, 0);
-	}
-}
+// 	if (pipe(fd) == -1)
+// 		return (perror("pipe"), (void)0);
+// 	reader = fork();
+// 	if (reader == -1)
+// 		return (perror("fork"), (void)0);
+// 	if (reader == 0)
+// 	{
+// 		close(fd[0]);
+// 		write(STDOUT_FILENO, "heredoc> ", 9);
+// 		while (ft_read(0, &line) > 0)
+// 		{
+// 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+// 			{
+// 				free(line);
+// 				break;
+// 			}
+// 			write(fd[1], line, ft_strlen(line));
+// 			free(line);
+// 			write(STDOUT_FILENO, "heredoc> ", 9);
+// 		}
+// 		close(fd[1]);
+// 	}
+// 	else
+// 	{
+// 		close(fd[1]);
+// 		dup2(fd[0], STDERR_FILENO);
+// 		close(fd[0]);
+// 		waitpid(reader, NULL, 0);
+// 	}
+// }
 
 /**
  * @brief The cleanup function takes in a pipex struct, closes all file
