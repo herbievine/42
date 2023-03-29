@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:28:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 19:21:12 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/29 12:12:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int ft_get_infile(t_pipex *pipex, char **argv)
 
 	if (pipex->here_doc)
 	{
-		fd = open(".here_doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		fd = open(HERE_DOC_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		write(1, "heredoc> ", 9);
 		while (fd > 0 && ft_read(0, &buffer) > 0)
 		{
@@ -40,7 +40,7 @@ int ft_get_infile(t_pipex *pipex, char **argv)
 			write(1, "heredoc> ", 9);
 		}
 		close(fd);
-		pipex->in_fd = open(".here_doc", O_RDONLY);
+		pipex->in_fd = open(HERE_DOC_PATH, O_RDONLY);
 	}
 	else
 		pipex->in_fd = open(argv[1], O_RDONLY);
@@ -49,6 +49,9 @@ int ft_get_infile(t_pipex *pipex, char **argv)
 
 int ft_get_outfile(t_pipex *pipex, char **argv, int argc)
 {
-	pipex->out_fd = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (pipex->here_doc)
+		pipex->out_fd = open(argv[argc - 1], O_RDWR | O_CREAT | O_APPEND, 0644);
+	else
+		pipex->out_fd = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
 	return (pipex->out_fd);
 }

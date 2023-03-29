@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 19:13:07 by codespace        ###   ########.fr       */
+/*   Updated: 2023/03/29 12:02:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int ft_read(int fd, char **line)
 	buffer = malloc(sizeof(char) * 10000);
 	if (!buffer)
 		return (-1);
-	while (read(0, &c, 1) > 0 && c && c != '\n' && i < 10000)
+	while (read(0, &c, 1) > 0 && c && c != '\n' && i < 10000 - 2)
 		buffer[i++] = c;
 	buffer[i] = '\n';
 	buffer[i + 1] = '\0';

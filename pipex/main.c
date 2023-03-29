@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/29 13:06:48 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/29 12:51:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "parse.h"
 #include "error.h"
+#include "io.h"
 #include "get_next_line.h"
 #include "str.h"
 #include "split.h"
@@ -68,44 +69,6 @@
 // 	}
 // }
 
-/**
- * @brief The cleanup function takes in a pipex struct, closes all file
- * descriptors, and frees all memory.
- *
- * @param pipex
- */
-void cleanup(t_pipex *pipex)
-{
-	if (pipex->in_fd != -1)
-		close(pipex->in_fd);
-	if (pipex->out_fd != -1)
-		close(pipex->out_fd);
-	free(pipex);
-}
-
-char *ft_find_path(char *cmd, char **envp)
-{
-	int i;
-	char **paths;
-
-	i = -1;
-	while (envp[++i])
-		if (ft_strncmp("PATH=", envp[i], 5) == 0)
-			paths = ft_split(envp[i] + 5, ':');
-	i = -1;
-	while (paths[++i])
-	{
-		char *path = ft_strjoin(paths[i], "/");
-		char *full_path = ft_strjoin(path, cmd);
-		free(path);
-		if (access(full_path, F_OK) == 0)
-			return (full_path);
-		free(full_path);
-	}
-	//! FIX FREE(paths)
-	return (NULL);
-}
-
 int main(int argc, char **argv, char **envp)
 {
 	t_pipex *pipex;
@@ -160,7 +123,7 @@ int main(int argc, char **argv, char **envp)
 			char **cmd = ft_split(argv[i], ' ');
 			char *path = ft_find_path(cmd[0], envp);
 			if (execve(path, cmd, envp) == -1)
-				return (cleanup(pipex), bash_not_found(cmd[0]), 1);
+				bash_not_found(cmd[0]);
 		}
 		// parent process
 		else
@@ -179,6 +142,6 @@ int main(int argc, char **argv, char **envp)
 	char **cmd = ft_split(argv[i], ' ');
 	char *path = ft_find_path(cmd[0], envp);
 	if (execve(path, cmd, envp) == -1)
-		return (cleanup(pipex), bash_not_found(cmd[0]), 1);
+		bash_not_found(cmd[0]);
 	return (cleanup(pipex), 0);
 }

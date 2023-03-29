@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:16:50 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/22 10:51:59 by herbie           ###   ########.fr       */
+/*   Updated: 2023/03/29 12:35:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 #include "structs.h"
 
 t_bool parse_args(t_pipex *pipex, int argc, char **argv);
+char *ft_find_path(char *cmd, char **envp);
 
 #endif /* PARSE_H */

@@ -15,6 +15,8 @@
 
 # include "structs.h"
 
+# define HERE_DOC_PATH ".here_doc"
+
 int ft_get_infile(t_pipex *pipex, char **argv);
 int ft_get_outfile(t_pipex *pipex, char **argv, int argc);
 
