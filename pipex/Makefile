@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/03/27 15:38:08 by herbie           ###   ########.fr        #
+#    Updated: 2023/03/29 12:12:19 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = \
 	str.c \
 	io.c \
 	parse.c \
+	split.c \
 	error.c
 
 # INCLUDES = \
