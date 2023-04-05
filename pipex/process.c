@@ -47,6 +47,7 @@ t_bool	ft_spawn_child(char *path, char **args, char **envp)
 		dup2(fd[1], STDOUT_FILENO);
 		if (execve(path, args, envp) == -1)
 			bash_not_found(args[0]);
+		exit(0);
 	}
 	else
 	{
