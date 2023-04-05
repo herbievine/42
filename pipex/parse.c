@@ -43,6 +43,7 @@ t_bool	ft_parse_args(t_pipex *pipex, int argc, char **argv)
 		return (false);
 	if (ft_get_outfile(pipex, argv, argc) == -1)
 		return (false);
+	pipex->cmd_count = argc - 3 - pipex->here_doc;
 	return (true);
 }
 
@@ -71,10 +72,8 @@ t_bool	ft_parse_cmd_path(t_pipex *pipex, int argc, char **argv, char **envp)
 	{
 		cmd = ft_split(argv[i], ' ');
 		if (!cmd)
-			return (ft_free_array(pipex->cmd_paths), false);
+			return (ft_free_array(pipex->cmd_paths, i), false);
 		pipex->cmd_paths[i - 2 - pipex->here_doc] = ft_find_path(cmd[0], envp);
-		if (!pipex->cmd_paths[i - 2 - pipex->here_doc])
-			return (ft_free_array(pipex->cmd_paths), false);
 	}
 	return (true);
 }
@@ -103,7 +102,7 @@ t_bool	ft_parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	{
 		cmd = ft_split(argv[i], ' ');
 		if (!cmd)
-			return (ft_free_array_of_array(pipex->cmd_args), false);
+			return (ft_free_2d_array(pipex->cmd_args), false);
 		pipex->cmd_args[i - 2 - pipex->here_doc] = cmd;
 	}
 	return (true);
@@ -141,5 +140,6 @@ char	*ft_find_path(char *cmd, char **envp)
 			return (full_path);
 		free(full_path);
 	}
+	ft_free_array(paths, -1);
 	return (NULL);
 }

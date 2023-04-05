@@ -13,22 +13,27 @@
 #include "free.h"
 #include <stdlib.h>
 
-void	ft_free_array(char **array)
+void	ft_free_array(char **array, int size)
 {
 	int	i;
 
 	i = -1;
-	while (array[++i])
-		free(array[i]);
+	if (size == -1)
+		while (array[++i])
+			free(array[i]);
+	else
+		while (++i < size)
+			if (array[i])
+				free(array[i]);
 	free(array);
 }
 
-void	ft_free_array_of_array(char ***array)
+void	ft_free_2d_array(char ***array)
 {
 	int	i;
 
 	i = -1;
 	while (array[++i])
-		ft_free_array(array[i]);
+		ft_free_array(array[i], -1);
 	free(array);
 }

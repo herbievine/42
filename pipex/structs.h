@@ -26,6 +26,7 @@ typedef struct s_pipex
 	t_bool	here_doc;
 	char	**cmd_paths;
 	char	***cmd_args;
+	int		cmd_count;
 }		t_pipex;
 
 #endif /* STRUCTS_H */

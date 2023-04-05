@@ -13,7 +13,7 @@
 #ifndef FREE_H
 # define FREE_H
 
-void	ft_free_array(char **array);
-void	ft_free_array_of_array(char ***array);
+void	ft_free_array(char **array, int size);
+void	ft_free_2d_array(char ***array);
 
 #endif /* FREE_H */

@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	if (dup2(pipex->in_fd, STDIN_FILENO) == -1)
 		return (cleanup(pipex), error(ERR_DUP), 1);
 	i = -1;
-	while (pipex->cmd_paths[++i] && pipex->cmd_paths[i + 1])
+	while (++i < pipex->cmd_count - 1)
 		if (!ft_spawn_child(pipex->cmd_paths[i], pipex->cmd_args[i], envp))
 			return (cleanup(pipex), error(ERR_FORK), 1);
 	if (dup2(pipex->out_fd, STDOUT_FILENO) == -1)
