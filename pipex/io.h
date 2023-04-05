@@ -17,7 +17,8 @@
 
 # define HERE_DOC_PATH ".here_doc"
 
-int ft_get_infile(t_pipex *pipex, char **argv);
-int ft_get_outfile(t_pipex *pipex, char **argv, int argc);
+int	ft_read(char **line);
+int	ft_get_infile(t_pipex *pipex, char **argv);
+int	ft_get_outfile(t_pipex *pipex, char **argv, int argc);
 
 #endif /* IO_H */

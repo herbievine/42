@@ -62,18 +62,18 @@ char	*ft_strchr(const char *s, int c)
  * @param size
  * @return size_t
  */
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
+// size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+// {
+// 	size_t	i;
 
-	i = -1;
-	if (size == 0)
-		return (ft_strlen(src));
-	while (src[++i] && i < size - 1)
-		dst[i] = src[i];
-	dst[i] = '\0';
-	return (ft_strlen(src));
-}
+// 	i = -1;
+// 	if (size == 0)
+// 		return (ft_strlen(src));
+// 	while (src[++i] && i < size - 1)
+// 		dst[i] = src[i];
+// 	dst[i] = '\0';
+// 	return (ft_strlen(src));
+// }
 
 /**
  * @brief The ft_strjoin() function allocates (with malloc(3)) and returns a new
@@ -94,27 +94,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!dup)
 		return (0);
 	dup[ft_strlen(s1) + ft_strlen(s2)] = 0;
-	i = ft_strlcpy(dup, s1, ft_strlen(s1) + 1);
+	i = 0;
+	while (*s1)
+		dup[i++] = *s1++;
 	while (*s2)
 		dup[i++] = *s2++;
-	return (dup);
-}
-
-/**
- * @brief The ft_strndup() function copies up to 'n' characters from the string
- * 's1' to a fresh allocated string.
- *
- * @param s
- * @return char*
- */
-char	*ft_strndup(const char *s, size_t n)
-{
-	char	*dup;
-
-	dup = (char *)ft_calloc(n + 1, sizeof(char));
-	if (!dup)
-		return (0);
-	ft_strlcpy(dup, s, n + 1);
 	return (dup);
 }
 
@@ -157,7 +141,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (0);
 	if (ft_strlen(s) < start)
-		return (ft_strndup("", 0));
+		return (ft_calloc(1, sizeof(char)));
 	if (ft_strlen(s) < len + start)
 		str = (char *)ft_calloc(ft_strlen(s) - start + 1, sizeof(char));
 	else

@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void error(char *err)
+void	error(char *err)
 {
 	if (errno)
 		perror(err);
@@ -29,10 +29,10 @@ void error(char *err)
 	}
 }
 
-void bash_not_found(char *cmd)
+void	bash_not_found(char *cmd)
 {
-	char *err_msg;
-	char *bash_msg;
+	char	*err_msg;
+	char	*bash_msg;
 
 	err_msg = ft_strjoin(cmd, ": command not found\n");
 	if (!err_msg)
@@ -51,13 +51,12 @@ void bash_not_found(char *cmd)
  *
  * @param pipex
  */
-void cleanup(t_pipex *pipex)
+void	cleanup(t_pipex *pipex)
 {
 	if (pipex->in_fd != -1)
 		close(pipex->in_fd);
 	if (pipex->out_fd != -1)
 		close(pipex->out_fd);
-	//! FIX
 	if (pipex->here_doc)
 		printf("unlink %d\n", unlink(HERE_DOC_PATH));
 	free(pipex);

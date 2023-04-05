@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.h                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 11:15:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/05 11:53:08 by herbie           ###   ########.fr       */
+/*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
+/*   Updated: 2023/04/05 10:33:15 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROCESS_H
-# define PROCESS_H
+#include "free.h"
+#include <stdlib.h>
 
-# include "structs.h"
+void	ft_free_array(char **array)
+{
+	int	i;
 
-t_bool	ft_spawn_child(char *path, char **args, char **envp);
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+}
 
-#endif /* PROCESS_H */
+void	ft_free_array_of_array(char ***array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		ft_free_array(array[i]);
+	free(array);
+}

@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 08:23:54 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 15:13:58 by codespace        ###   ########.fr       */
+/*   Created: 2023/04/04 12:40:41 by herbie            #+#    #+#             */
+/*   Updated: 2023/04/04 12:40:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-#define GET_NEXT_LINE_H
+#ifndef FREE_H
+# define FREE_H
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 5
-#endif /* BUFFER_SIZE */
+void	ft_free_array(char **array);
+void	ft_free_array_of_array(char ***array);
 
-int ft_read(int fd, char **line);
-
-#endif /* GET_NEXT_LINE_H */
+#endif /* FREE_H */

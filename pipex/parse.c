@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/29 12:36:20 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/05 12:35:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 #include "io.h"
 #include "split.h"
 #include "error.h"
+#include "free.h"
 #include <stdio.h>
 #include <unistd.h>
 
 /**
- * @brief The parse_args function takes in a pipex struct and the arguments
+ * @brief The ft_parse_args function takes in a pipex struct and the arguments
  * passed to the program. It then parses the arguments and sets the pipex
  * struct accordingly. It returns true if the arguments are valid, and false
  * otherwise.
@@ -30,18 +31,81 @@
  * @param argv
  * @return t_bool
  */
-t_bool parse_args(t_pipex *pipex, int argc, char **argv)
+t_bool	ft_parse_args(t_pipex *pipex, int argc, char **argv)
 {
 	if (argv[1] && ft_strncmp(argv[1], "here_doc", 9) == 0)
 		pipex->here_doc = true;
 	else
 		pipex->here_doc = false;
-	if (argc < 5 + pipex->here_doc)
+	if (argc < 5 + (int)pipex->here_doc)
 		return (false);
 	if (ft_get_infile(pipex, argv) == -1)
 		return (false);
 	if (ft_get_outfile(pipex, argv, argc) == -1)
 		return (false);
+	return (true);
+}
+
+/**
+ * @brief The ft_parse_cmd_path function takes in a pipex struct and the
+ * arguments passed to the program. It then parses the arguments and sets
+ * `cmd_paths` in the pipex struct. It returns true if all the arguments were
+ * parsed successfully, and false otherwise, freeing all memory created.
+ *
+ * @param pipex
+ * @param argc
+ * @param argv
+ * @param envp
+ * @return t_bool
+ */
+t_bool	ft_parse_cmd_path(t_pipex *pipex, int argc, char **argv, char **envp)
+{
+	int		i;
+	char	**cmd;
+
+	pipex->cmd_paths = malloc(sizeof(char *) * (argc - 2 - pipex->here_doc));
+	if (!pipex->cmd_paths)
+		return (false);
+	i = 1 + pipex->here_doc;
+	while (++i < argc - 1)
+	{
+		cmd = ft_split(argv[i], ' ');
+		if (!cmd)
+			return (ft_free_array(pipex->cmd_paths), false);
+		pipex->cmd_paths[i - 2 - pipex->here_doc] = ft_find_path(cmd[0], envp);
+		if (!pipex->cmd_paths[i - 2 - pipex->here_doc])
+			return (ft_free_array(pipex->cmd_paths), false);
+	}
+	return (true);
+}
+
+/**
+ * @brief The ft_parse_cmd_args function takes in a pipex struct and the
+ * arguments passed to the program. It then parses the arguments and sets
+ * `cmd_args` in the pipex struct. It returns true if all the arguments were
+ * parsed successfully, and false otherwise, freeing all memory created.
+ *
+ * @param pipex
+ * @param argc
+ * @param argv
+ * @return t_bool
+ */
+t_bool	ft_parse_cmd_args(t_pipex *pipex, int argc, char **argv)
+{
+	int		i;
+	char	**cmd;
+
+	pipex->cmd_args = malloc(sizeof(char **) * (argc - 2 - pipex->here_doc));
+	if (!pipex->cmd_args)
+		return (false);
+	i = 1 + pipex->here_doc;
+	while (++i < argc - 1)
+	{
+		cmd = ft_split(argv[i], ' ');
+		if (!cmd)
+			return (ft_free_array_of_array(pipex->cmd_args), false);
+		pipex->cmd_args[i - 2 - pipex->here_doc] = cmd;
+	}
 	return (true);
 }
 
@@ -54,11 +118,15 @@ t_bool parse_args(t_pipex *pipex, int argc, char **argv)
  * @param envp
  * @return char*
  */
-char *ft_find_path(char *cmd, char **envp)
+char	*ft_find_path(char *cmd, char **envp)
 {
-	int i;
-	char **paths;
+	int		i;
+	char	**paths;
+	char	*path;
+	char	*full_path;
 
+	if (access(cmd, F_OK) == 0)
+		return (cmd);
 	i = -1;
 	while (envp[++i])
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
@@ -66,13 +134,12 @@ char *ft_find_path(char *cmd, char **envp)
 	i = -1;
 	while (paths[++i])
 	{
-		char *path = ft_strjoin(paths[i], "/");
-		char *full_path = ft_strjoin(path, cmd);
+		path = ft_strjoin(paths[i], "/");
+		full_path = ft_strjoin(path, cmd);
 		free(path);
 		if (access(full_path, F_OK) == 0)
 			return (full_path);
 		free(full_path);
 	}
-	//! FIX FREE(paths)
 	return (NULL);
 }
