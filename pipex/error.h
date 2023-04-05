@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:59:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/05 12:15:16 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/05 14:35:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@
 
 void	error(char *err);
 void	bash_not_found(char *cmd);
-void	cleanup(t_pipex *pipex);
 
 #endif /* ERROR_H */
