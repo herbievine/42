@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 18:43:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 18:53:25 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/10 21:19:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,4 @@
 
 int	ft_dprintf(int fd, const char *format, ...);
 
-#endif PRINT_H /* PRINT_H */
+#endif /* PRINT_H */

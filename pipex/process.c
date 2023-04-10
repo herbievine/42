@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:14:55 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 18:37:04 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/10 21:55:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 	{
 		if (idx == 0)
 			dup2(pipex->in_fd, STDIN_FILENO);
-		else if (idx == pipex->cmd_count - 1)
+		if (idx == pipex->cmd_count - 1)
 			dup2(pipex->out_fd, STDOUT_FILENO);
 		else
 			dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		if (execve(pipex->cmd_paths[idx], pipex->cmd_args[idx], envp) == -1)
-			bash_not_found(pipex->cmd_args[idx][0]);
+			ft_bash_not_found(pipex->cmd_args[idx][0]);
 		exit(0);
 	}
 	else

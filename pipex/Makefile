@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/04/10 13:05:51 by herbie           ###   ########.fr        #
+#    Updated: 2023/04/10 21:20:00 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRCS = \
 	process.c \
 	error.c \
 	free.c \
+	display.c \
+	print.c
 
 OBJS = $(SRCS:.c=.o)
 

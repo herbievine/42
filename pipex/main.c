@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 18:26:40 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/10 21:38:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ft_init_pipex(pipex);
 	if (!ft_parse_args(pipex, argc, argv))
-		return (ft_cleanup(pipex), error(ERR_ARGS), 1);
+		return (ft_cleanup(pipex), ft_err(EARGS));
 	if (!ft_parse_cmd_path(pipex, argc, argv, envp))
-		return (ft_cleanup(pipex), error(ERR_ARGS), 1);
+		return (ft_cleanup(pipex), ft_err(EARGS));
 	if (!ft_parse_cmd_args(pipex, argc, argv))
-		return (ft_cleanup(pipex), error(ERR_ARGS), 1);
+		return (ft_cleanup(pipex), ft_err(EARGS));
 	i = -1;
 	while (++i < pipex->cmd_count)
 		if (!ft_spawn_child(pipex, envp, i))
-			return (ft_cleanup(pipex), error(ERR_FORK), 1);
+			return (ft_cleanup(pipex), ft_err(EUNKN));
 	return (ft_cleanup(pipex), 0);
 }
