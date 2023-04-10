@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:14:55 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 15:28:22 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/10 18:37:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,44 +22,23 @@
 #include <sys/wait.h>
 
 /**
- * @brief The ft_fork_and_pipe function forks and pipes the child process. If
- * the pipe fails, it returns -1.
+ * @brief The ft_fork_and_pipe function takes in the fd pair and a pointer to the
+ * pid, and 
  * 
  * @param fd 
- * @return pid_t 
+ * @param pid 
+ * @return t_bool 
  */
-t_bool	ft_fork_and_pipe(int *fd, pid_t *pid)
+t_bool	ft_fork_and_pipe(int fd[2], pid_t *pid)
 {
 	if (pipe(fd) == -1)
 		return (false);
 	*pid = fork();
 	if (*pid == -1)
+	{
+		close(fd[0]);
+		close(fd[1]);
 		return (false);
-	return (true);
-}
-
-t_bool	ft_redirect(t_pipex *pipex, int *fd, int idx)
-{
-	if (idx == 0)
-	{
-		if (dup2(pipex->in_fd, STDIN_FILENO) == -1)
-			return (false);
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			return (false);
-	}
-	else if (idx == pipex->cmd_count - 1)
-	{
-		if (dup2(pipex->out_fd, STDOUT_FILENO) == -1)
-			return (false);
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-			return (false);
-	}
-	else
-	{
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-			return (false);
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			return (false);
 	}
 	return (true);
 }
@@ -83,11 +62,13 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 		return (false);
 	if (pid == 0)
 	{
-		close(fd[0]);
-		if (idx == pipex->cmd_count - 1)
+		if (idx == 0)
+			dup2(pipex->in_fd, STDIN_FILENO);
+		else if (idx == pipex->cmd_count - 1)
 			dup2(pipex->out_fd, STDOUT_FILENO);
 		else
 			dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
 		if (execve(pipex->cmd_paths[idx], pipex->cmd_args[idx], envp) == -1)
 			bash_not_found(pipex->cmd_args[idx][0]);
 		exit(0);

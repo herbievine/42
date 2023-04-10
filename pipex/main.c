@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 15:29:27 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/10 18:26:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_cleanup(pipex), error(ERR_ARGS), 1);
 	if (!ft_parse_cmd_args(pipex, argc, argv))
 		return (ft_cleanup(pipex), error(ERR_ARGS), 1);
-	if (dup2(pipex->in_fd, STDIN_FILENO) == -1)
-		return (ft_cleanup(pipex), error(ERR_DUP), 1);
 	i = -1;
 	while (++i < pipex->cmd_count)
 		if (!ft_spawn_child(pipex, envp, i))
