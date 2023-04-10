@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:15:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/05 11:53:08 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/10 14:56:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "structs.h"
 
-t_bool	ft_spawn_child(char *path, char **args, char **envp);
+t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx);
 
 #endif /* PROCESS_H */
