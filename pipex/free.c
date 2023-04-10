@@ -16,9 +16,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void ft_free_array(char **array, int size)
+void	ft_free_array(char **array, int size)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (size == -1)
@@ -31,9 +31,9 @@ void ft_free_array(char **array, int size)
 	free(array);
 }
 
-void ft_free_2d_array(char ***array)
+void	ft_free_2d_array(char ***array)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (array[++i])
@@ -47,7 +47,7 @@ void ft_free_2d_array(char ***array)
  *
  * @param pipex
  */
-void ft_cleanup(t_pipex *pipex)
+void	ft_cleanup(t_pipex *pipex)
 {
 	if (pipex->in_fd != -1)
 		close(pipex->in_fd);

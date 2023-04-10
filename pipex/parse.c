@@ -33,7 +33,6 @@
  */
 t_bool	ft_parse_args(t_pipex *pipex, int argc, char **argv)
 {
-	pipex->cmd_count = argc - 3 - pipex->here_doc;
 	pipex->in_fd = -1;
 	pipex->out_fd = -1;
 	if (argv[1] && ft_strncmp(argv[1], "here_doc", 9) == 0)
@@ -46,6 +45,7 @@ t_bool	ft_parse_args(t_pipex *pipex, int argc, char **argv)
 		return (false);
 	if (ft_get_outfile(pipex, argv, argc) == -1)
 		return (false);
+	pipex->cmd_count = argc - 3 - pipex->here_doc;
 	return (true);
 }
 

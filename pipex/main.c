@@ -35,9 +35,9 @@ void	ft_init_pipex(t_pipex *pipex)
 	pipex->out_fd = -1;
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_pipex *pipex;
+	t_pipex	*pipex;
 	int		i;
 
 	pipex = malloc(sizeof(t_pipex));
