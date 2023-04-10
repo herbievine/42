@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:14:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/17 16:14:22 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/10 19:16:14 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,6 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)(s + i));
 	return (0);
 }
-
-/**
- * @brief The ft_strlcpy() function copies up to 'size' - 1 characters from the
- * NUL-terminated string 'src' to 'dst', NUL-terminating the result.
- *
- * @param dst
- * @param src
- * @param size
- * @return size_t
- */
-// size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-// {
-// 	size_t	i;
-
-// 	i = -1;
-// 	if (size == 0)
-// 		return (ft_strlen(src));
-// 	while (src[++i] && i < size - 1)
-// 		dst[i] = src[i];
-// 	dst[i] = '\0';
-// 	return (ft_strlen(src));
-// }
 
 /**
  * @brief The ft_strjoin() function allocates (with malloc(3)) and returns a new
