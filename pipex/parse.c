@@ -104,7 +104,7 @@ t_bool	ft_parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	{
 		cmd = ft_split(argv[i], ' ');
 		if (!cmd)
-			return (ft_free_2d_array(pipex->cmd_args), false);
+			return (ft_free_2d_array(pipex->cmd_args, NULL), false);
 		pipex->cmd_args[i - 2 - pipex->here_doc] = cmd;
 	}
 	return (true);

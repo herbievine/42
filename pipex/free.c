@@ -15,29 +15,48 @@
 #include "io.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-void	ft_free_array(char **array, int size)
+/**
+ * @brief The ft_free_array function takes in an array and frees all memory.
+ * If n if provided, it will only free the memory of the first n elements.
+ * 
+ * @param array 
+ * @param n 
+ */
+void	ft_free_array(char **array, int n)
 {
 	int	i;
 
 	i = -1;
-	if (size == -1)
+	if (n == -1)
 		while (array[++i])
 			free(array[i]);
 	else
-		while (++i < size)
+		while (++i < n)
 			if (array[i])
 				free(array[i]);
 	free(array);
 }
 
-void	ft_free_2d_array(char ***array)
+/**
+ * @brief The ft_free_2d_array function takes in a 2d array and frees all
+ * memory. If n if provided, it will only free the memory of the first n
+ * elements.
+ * 
+ * @param array 
+ */
+void	ft_free_2d_array(char ***array, int *n)
 {
 	int	i;
 
 	i = -1;
-	while (array[++i])
-		ft_free_array(array[i], -1);
+	if (n == NULL)
+		while (array[++i])
+			ft_free_array(array[i], -1);
+	else
+		while (array[++i] && n[i] > 0)
+			ft_free_array(array[i], n[i]);
 	free(array);
 }
 
@@ -56,7 +75,7 @@ void	ft_cleanup(t_pipex *pipex)
 	if (pipex->cmd_paths != NULL)
 		ft_free_array(pipex->cmd_paths, pipex->cmd_count);
 	if (pipex->cmd_args != NULL)
-		ft_free_2d_array(pipex->cmd_args);
+		ft_free_2d_array(pipex->cmd_args, NULL);
 	if (pipex->here_doc)
 		unlink(HERE_DOC_PATH);
 	free(pipex);
