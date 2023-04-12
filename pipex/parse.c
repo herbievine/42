@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/05 14:27:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/12 10:10:19 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_bool	ft_parse_cmd_path(t_pipex *pipex, int argc, char **argv, char **envp)
 		if (!cmd)
 			return (ft_free_array(pipex->cmd_paths, i), false);
 		pipex->cmd_paths[i - 2 - pipex->here_doc] = ft_find_path(cmd[0], envp);
+		ft_free_array(cmd, -1);
 	}
 	return (true);
 }
@@ -132,6 +133,8 @@ char	*ft_find_path(char *cmd, char **envp)
 	while (envp[++i])
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
 			paths = ft_split(envp[i] + 5, ':');
+	if (!paths)
+		return (NULL);
 	i = -1;
 	while (paths[++i])
 	{
