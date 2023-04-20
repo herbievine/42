@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/12 10:10:19 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/20 15:26:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
  */
 t_bool	ft_parse_args(t_pipex *pipex, int argc, char **argv)
 {
-	pipex->in_fd = -1;
-	pipex->out_fd = -1;
 	if (argv[1] && ft_strncmp(argv[1], "here_doc", 9) == 0)
 		pipex->here_doc = true;
 	else
@@ -61,7 +59,7 @@ t_bool	ft_parse_args(t_pipex *pipex, int argc, char **argv)
  * @param envp
  * @return t_bool
  */
-t_bool	ft_parse_cmd_path(t_pipex *pipex, int argc, char **argv, char **envp)
+t_bool	ft_parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 {
 	int		i;
 	char	**cmd;
@@ -105,7 +103,7 @@ t_bool	ft_parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	{
 		cmd = ft_split(argv[i], ' ');
 		if (!cmd)
-			return (ft_free_2d_array(pipex->cmd_args, NULL), false);
+			return (ft_free_2d_array(pipex->cmd_args, pipex->cmd_count), false);
 		pipex->cmd_args[i - 2 - pipex->here_doc] = cmd;
 	}
 	return (true);
@@ -139,12 +137,15 @@ char	*ft_find_path(char *cmd, char **envp)
 	while (paths[++i])
 	{
 		path = ft_strjoin(paths[i], "/");
+		if (!path)
+			return (ft_free_array(paths, -1), NULL);
 		full_path = ft_strjoin(path, cmd);
 		free(path);
+		if (!full_path)
+			return (ft_free_array(paths, -1), NULL);
 		if (access(full_path, F_OK) == 0)
-			return (full_path);
+			return (ft_free_array(paths, -1), full_path);
 		free(full_path);
 	}
-	ft_free_array(paths, -1);
-	return (NULL);
+	return (ft_free_array(paths, -1), NULL);
 }

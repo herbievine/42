@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 21:38:48 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/20 15:07:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 
 void	ft_init_pipex(t_pipex *pipex)
 {
-	pipex->cmd_count = 0;
-	pipex->cmd_paths = NULL;
-	pipex->cmd_args = NULL;
 	pipex->in_fd = -1;
 	pipex->out_fd = -1;
+	pipex->here_doc = false;
+	pipex->cmd_paths = NULL;
+	pipex->cmd_args = NULL;
+	pipex->cmd_count = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -42,11 +43,11 @@ int	main(int argc, char **argv, char **envp)
 
 	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)
-		return (1);
+		return (EXIT_FAILURE);
 	ft_init_pipex(pipex);
 	if (!ft_parse_args(pipex, argc, argv))
 		return (ft_cleanup(pipex), ft_err(EARGS));
-	if (!ft_parse_cmd_path(pipex, argc, argv, envp))
+	if (!ft_parse_cmd_paths(pipex, argc, argv, envp))
 		return (ft_cleanup(pipex), ft_err(EARGS));
 	if (!ft_parse_cmd_args(pipex, argc, argv))
 		return (ft_cleanup(pipex), ft_err(EARGS));

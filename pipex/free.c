@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 14:38:40 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/20 15:27:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 /**
  * @brief The ft_free_array function takes in an array and frees all memory.
  * If n if provided, it will only free the memory of the first n elements.
- * 
- * @param array 
- * @param n 
+ *
+ * @param array
+ * @param n
  */
 void	ft_free_array(char **array, int n)
 {
@@ -43,20 +43,21 @@ void	ft_free_array(char **array, int n)
  * @brief The ft_free_2d_array function takes in a 2d array and frees all
  * memory. If n if provided, it will only free the memory of the first n
  * elements.
- * 
- * @param array 
+ *
+ * @param array
  */
-void	ft_free_2d_array(char ***array, int *n)
+void	ft_free_2d_array(char ***array, int n)
 {
 	int	i;
 
 	i = -1;
-	if (n == NULL)
+	if (n == -1)
 		while (array[++i])
 			ft_free_array(array[i], -1);
 	else
-		while (array[++i] && n[i] > 0)
-			ft_free_array(array[i], n[i]);
+		while (++i < n)
+			if (array[i])
+				ft_free_array(array[i], -1);
 	free(array);
 }
 
@@ -75,7 +76,7 @@ void	ft_cleanup(t_pipex *pipex)
 	if (pipex->cmd_paths != NULL)
 		ft_free_array(pipex->cmd_paths, pipex->cmd_count);
 	if (pipex->cmd_args != NULL)
-		ft_free_2d_array(pipex->cmd_args, NULL);
+		ft_free_2d_array(pipex->cmd_args, pipex->cmd_count);
 	if (pipex->here_doc)
 		unlink(HERE_DOC_PATH);
 	free(pipex);

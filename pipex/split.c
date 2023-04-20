@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2023/03/29 12:16:00 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/18 14:12:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "split.h"
 #include "str.h"
 #include "mem.h"
+#include "free.h"
 #include <stdlib.h>
 
 static char	**ft_init_list(char const *s, char c);
@@ -72,20 +73,11 @@ static void	ft_fill_list_with_strs(char **list, char const *s, char c)
 		{
 			list[idx++] = ft_substr(s, i - len, len);
 			if (!list[idx - 1])
-			{
-				ft_free_list(list, idx);
-				return ;
-			}
+				return (ft_free_array(list, idx));
 			len = 0;
 		}
 		if (s[i])
 			i++;
 	}
-}
-
-void	ft_free_list(char **list, size_t idx)
-{
-	while (idx--)
-		free(list[idx]);
-	free(list);
+	list[idx] = NULL;
 }
