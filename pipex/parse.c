@@ -17,6 +17,7 @@
 #include "split.h"
 #include "error.h"
 #include "free.h"
+#include "env.h"
 #include <stdio.h>
 #include <unistd.h>
 
@@ -127,10 +128,7 @@ char	*ft_find_path(char *cmd, char **envp)
 
 	if (access(cmd, F_OK) == 0)
 		return (cmd);
-	i = -1;
-	while (envp[++i])
-		if (ft_strncmp("PATH=", envp[i], 5) == 0)
-			paths = ft_split(envp[i] + 5, ':');
+	paths = ft_get_paths(envp);
 	if (!paths)
 		return (NULL);
 	i = -1;

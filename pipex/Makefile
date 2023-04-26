@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/04/10 21:20:00 by herbie           ###   ########.fr        #
+#    Updated: 2023/04/26 17:49:09 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS = \
 	str.c \
 	io.c \
 	parse.c \
+	env.c \
 	split.c \
 	process.c \
 	error.c \
@@ -40,14 +41,11 @@ bonus: all
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-$(NAME): $(OBJS) # $(INCLUDES)
+$(NAME): $(OBJS) 
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
-
-# compile: $(NAME)
-# 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 fclean: clean
 	$(RM) $(RMFLAG) $(NAME)
