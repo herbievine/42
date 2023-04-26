@@ -46,6 +46,26 @@ int	ft_read(char **line)
 	return (i + 1);
 }
 
+void	ft_handle_here_doc(t_pipex *pipex, char *limiter)
+{
+	char	*buffer;
+
+	pipex->in_fd = open(HERE_DOC_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	write(1, "heredoc> ", 9);
+	while (pipex->in_fd > 0 && ft_read(&buffer) > 0)
+	{
+		if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0)
+		{
+			free(buffer);
+			break ;
+		}
+		write(pipex->in_fd, buffer, ft_strlen(buffer));
+		free(buffer);
+		write(1, "heredoc> ", 9);
+	}
+	close(pipex->in_fd);
+}
+
 /**
  * @brief The ft_get_infile function takes in a pipex struct and the argv array.
  * It checks if the pipex struct has a here_doc flag. If it does, it opens a
@@ -59,29 +79,25 @@ int	ft_read(char **line)
  */
 int	ft_get_infile(t_pipex *pipex, char **argv)
 {
-	int		fd;
-	char	*buffer;
-
 	if (pipex->here_doc)
 	{
-		fd = open(HERE_DOC_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		write(1, "heredoc> ", 9);
-		while (fd > 0 && ft_read(&buffer) > 0)
-		{
-			if (ft_strncmp(buffer, argv[2], ft_strlen(argv[2])) == 0)
-			{
-				free(buffer);
-				break ;
-			}
-			write(fd, buffer, ft_strlen(buffer));
-			free(buffer);
-			write(1, "heredoc> ", 9);
-		}
-		close(fd);
+		ft_handle_here_doc(pipex, argv[2]);
 		pipex->in_fd = open(HERE_DOC_PATH, O_RDONLY);
 	}
 	else
-		pipex->in_fd = open(argv[1], O_RDONLY);
+	{
+		if (access(argv[1], F_OK) == -1)
+		{
+			pipex->is_invalid_input = true;
+			pipex->in_fd = open(INVALID_INPUT_FILE_NAME,
+					O_RDWR | O_CREAT | O_TRUNC, 0644);
+		}
+		else
+		{
+			pipex->is_invalid_input = false;
+			pipex->in_fd = open(argv[1], O_RDONLY);
+		}
+	}
 	return (pipex->in_fd);
 }
 
