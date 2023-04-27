@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:28:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/05 12:34:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/27 14:45:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	ft_handle_here_doc(char *limiter)
 	write(1, "heredoc> ", 9);
 	while (fd > 0 && ft_read(&buffer) > 0)
 	{
-		if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0)
+		if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0
+			&& ft_strlen(buffer) == ft_strlen(limiter) + 1)
 		{
 			free(buffer);
 			break ;
@@ -103,10 +104,7 @@ int	ft_get_infile(t_pipex *pipex, char **argv)
 					O_RDWR | O_CREAT | O_TRUNC, 0644);
 		}
 		else
-		{
-			pipex->is_invalid_input = false;
 			pipex->in_fd = open(argv[1], O_RDONLY);
-		}
 	}
 	return (pipex->in_fd);
 }
