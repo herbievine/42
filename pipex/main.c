@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 17:26:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/27 19:09:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	main(int argc, char **argv, char **envp)
 	while (++i < pipex->cmd_count)
 		if (!ft_spawn_child(pipex, envp, i))
 			return (ft_cleanup(pipex), ft_err(EUNKN));
-	while (pipex->cmd_count--)
+	i = -1;
+	while (++i < pipex->cmd_count)
 		wait(NULL);
 	return (ft_cleanup(pipex), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 17:25:56 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/27 19:31:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*ft_find_path(char *cmd, char **envp)
 	char	*full_path;
 
 	if (access(cmd, F_OK) == 0)
-		return (cmd);
+		return (ft_substr(cmd, 0, ft_strlen(cmd)));
 	paths = ft_get_paths(envp);
 	if (!paths)
 		return (NULL);

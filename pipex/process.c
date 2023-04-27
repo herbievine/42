@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:14:55 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 17:13:47 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/27 19:35:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "structs.h"
 #include "error.h"
 #include "str.h"
+#include "print.h"
+#include "free.h"
 #include "parse.h"
 #include "split.h"
 #include <unistd.h>
@@ -22,14 +24,18 @@
 #include <sys/wait.h>
 
 /**
- * @brief The ft_fork_and_pipe function takes in the fd pair and a pointer to the
- * pid, and 
+ * @brief The ft_fork_and_pipe function takes in a pointer to a pipex struct, a
+ * pointer to an array of file descriptors, a pointer to a process id, and an
+ * index. It then forks and pipes the file descriptors. If the fork fails, it
+ * returns false.
  * 
- * @param fd 
- * @param pid 
+ * @param pipex
+ * @param fd
+ * @param pid
+ * @param idx
  * @return t_bool 
  */
-t_bool	ft_fork_and_pipe(int fd[2], pid_t *pid)
+t_bool	ft_fork_and_pipe(t_pipex *pipex, int fd[2], pid_t *pid, int idx)
 {
 	if (pipe(fd) == -1)
 		return (false);
@@ -40,6 +46,17 @@ t_bool	ft_fork_and_pipe(int fd[2], pid_t *pid)
 		close(fd[1]);
 		return (false);
 	}
+	if (*pid == 0)
+	{
+		if (idx == 0)
+			dup2(pipex->in_fd, STDIN_FILENO);
+		if (idx == pipex->cmd_count - 1)
+			dup2(pipex->out_fd, STDOUT_FILENO);
+		else
+			dup2(fd[1], STDOUT_FILENO);
+	}
+	else
+		dup2(fd[0], STDIN_FILENO);
 	return (true);
 }
 
@@ -58,23 +75,19 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 	pid_t	pid;
 	int		fd[2];
 
-	if (!ft_fork_and_pipe(fd, &pid))
+	if (!ft_fork_and_pipe(pipex, fd, &pid, idx))
 		return (false);
 	if (pid == 0)
 	{
-		if (idx == 0)
-			dup2(pipex->in_fd, STDIN_FILENO);
-		if (idx == pipex->cmd_count - 1)
-			dup2(pipex->out_fd, STDOUT_FILENO);
+		if (pipex->cmd_paths[idx])
+			execve(pipex->cmd_paths[idx], pipex->cmd_args[idx], envp);
 		else
-			dup2(fd[1], STDOUT_FILENO);
-		if (execve(pipex->cmd_paths[idx], pipex->cmd_args[idx], envp) == -1)
-			ft_bash_not_found(pipex->cmd_args[idx][0]);
+			ft_dprintf(2, "pipex: %s: cmd not found\n", pipex->cmd_args[idx][0]);
+		ft_cleanup(pipex);
 		exit(0);
 	}
 	else
 	{
-		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
 		close(fd[0]);
 	}
