@@ -13,7 +13,8 @@
 PROJECT = libft \
 	ft_printf \
 	push_swap \
-	pipex
+	pipex \
+	so_long
 
 all: 
 	@for i in $(PROJECT); do \
