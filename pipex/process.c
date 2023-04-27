@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:14:55 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 07:50:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/27 17:13:47 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
 		close(fd[0]);
-		waitpid(pid, NULL, 0);
 	}
 	return (true);
 }

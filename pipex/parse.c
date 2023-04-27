@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/26 17:58:42 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/27 17:25:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "error.h"
 #include "free.h"
 #include "env.h"
+#include "mem.h"
 #include <stdio.h>
 #include <unistd.h>
 
@@ -65,7 +66,7 @@ t_bool	ft_parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	int		i;
 	char	**cmd;
 
-	pipex->cmd_paths = malloc(sizeof(char *) * (argc - 2 - pipex->here_doc));
+	pipex->cmd_paths = ft_calloc(sizeof(char *), (argc - 2 - pipex->here_doc));
 	if (!pipex->cmd_paths)
 		return (false);
 	i = 1 + pipex->here_doc;
@@ -96,7 +97,7 @@ t_bool	ft_parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	int		i;
 	char	**cmd;
 
-	pipex->cmd_args = malloc(sizeof(char **) * (argc - 2 - pipex->here_doc));
+	pipex->cmd_args = ft_calloc(sizeof(char **), (argc - 2 - pipex->here_doc));
 	if (!pipex->cmd_args)
 		return (false);
 	i = 1 + pipex->here_doc;
