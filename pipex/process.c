@@ -44,13 +44,13 @@ t_bool	ft_fork_and_pipe(int fd[2], pid_t *pid)
 }
 
 /**
- * @brief The ft_spawn_child function takes in the cmd path, args, and envp and
- * spawns a child process to execute the command. It then waits for the child to
- * finish. If the fork or pipe fails, it returns false.
- *
- * @param path
- * @param args
+ * @brief The ft_spawn_child function takes in a pointer to a pipex struct, a
+ * pointer to the environment variables, and an index. It then forks and pipes
+ * the file descriptors, and then executes the command.
+ * 
+ * @param pipex
  * @param envp
+ * @param idx
  * @return t_bool
  */
 t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
@@ -62,13 +62,13 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 		return (false);
 	if (pid == 0)
 	{
+		close(fd[0]);
 		if (idx == 0)
 			dup2(pipex->in_fd, STDIN_FILENO);
 		if (idx == pipex->cmd_count - 1)
 			dup2(pipex->out_fd, STDOUT_FILENO);
 		else
 			dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
 		if (execve(pipex->cmd_paths[idx], pipex->cmd_args[idx], envp) == -1)
 			ft_bash_not_found(pipex->cmd_args[idx][0]);
 		exit(0);

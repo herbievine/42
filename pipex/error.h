@@ -18,6 +18,7 @@
 # define EARGS "error: invalid arguments"
 # define EUNKN "error: unknown error"
 # define ECFND "error: command not found"
+# define ENOENT "error: no such file or directory"
 
 int		ft_err(char *err);
 void	ft_bash_not_found(char *cmd);
