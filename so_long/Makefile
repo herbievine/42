@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/04/27 11:56:42 by herbie           ###   ########.fr        #
+#    Updated: 2023/04/27 15:59:37 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ RMFLAG = -f
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+
+X11_FLAGS = -L/usr/X11/lib -lXext -lX11
 
 SRCS = \
 	main.c \
@@ -39,7 +41,7 @@ all: $(MLX_LIB) $(NAME)
 	$(CC) $(CFLAGS) -Imlx -c -o $@ $<
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) $(MLX_FLAGS) $(X11_FLAGS) -o $(NAME) $(OBJS)
 
 $(MLX_LIB):
 	@make -C $(MLX_DIR)
