@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:14:55 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 21:55:25 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/27 07:50:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 		return (false);
 	if (pid == 0)
 	{
-		close(fd[0]);
 		if (idx == 0)
 			dup2(pipex->in_fd, STDIN_FILENO);
 		if (idx == pipex->cmd_count - 1)
@@ -75,8 +74,9 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 	}
 	else
 	{
-		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[1]);
+		close(fd[0]);
 		waitpid(pid, NULL, 0);
 	}
 	return (true);
