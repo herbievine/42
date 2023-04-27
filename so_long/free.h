@@ -13,10 +13,7 @@
 #ifndef FREE_H
 # define FREE_H
 
-# include "structs.h"
-
 void	ft_free_array(char **array, int n);
 void	ft_free_2d_array(char ***array, int n);
-void	ft_cleanup(t_pipex *pipex);
 
 #endif /* FREE_H */

@@ -6,26 +6,17 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 10:36:16 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/27 11:49:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "print.h"
 #include "mlx/mlx.h"
-#include <stdlib.h>
 
-int	main(int argc, char **argv, char **envp)
+int main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
+	void *mlx;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	mlx_new_window(mlx, 500, 500, "mlx_project");
 	mlx_loop(mlx);
-	free(mlx);
-	free(mlx_win);
-	return (0);
 }
