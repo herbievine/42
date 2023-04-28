@@ -63,7 +63,9 @@ t_bool	ft_fork_and_pipe(t_pipex *pipex, int fd[2], pid_t *pid, int idx)
 /**
  * @brief The ft_spawn_child function takes in a pointer to a pipex struct, a
  * pointer to the environment variables, and an index. It then forks and pipes
- * the file descriptors, and then executes the command.
+ * the file descriptors. If the fork fails, it returns false. If the fork
+ * succeeds, it executes the command. If the command is not found, it prints an
+ * error message. It then cleans up and exits.
  * 
  * @param pipex
  * @param envp

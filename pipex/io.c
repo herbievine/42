@@ -22,12 +22,14 @@
 
 /**
  * @brief The ft_read function takes in a pointer to a string. It reads from
- * stdin until it reads a newline character or until it has read 10000
- * characters. It then returns the number of characters read, or -1 if an error
- * occurred.
- *
+ * the file descriptor `fd` until it reaches the limiter character. It then
+ * returns the number of characters read. If the file descriptor is invalid,
+ * it returns -1.
+ * 
  * @param line
- * @return char*
+ * @param fd
+ * @param limiter
+ * @return int
  */
 int	ft_read(char **line, int fd, char limiter)
 {
@@ -78,6 +80,13 @@ void	ft_handle_here_doc(char *limiter)
 	close(fd);
 }
 
+/**
+ * @brief The ft_handle_urandom function takes in a pipex struct. It opens
+ * /dev/urandom and reads from it until it reaches the null terminator. It then
+ * writes the contents to a temporary file and closes it.
+ * 
+ * @param pipex 
+ */
 void	ft_handle_urandom(t_pipex *pipex)
 {
 	int		tmp_fd;
@@ -99,10 +108,12 @@ void	ft_handle_urandom(t_pipex *pipex)
 
 /**
  * @brief The ft_get_infile function takes in a pipex struct and the argv array.
- * It checks if the pipex struct has a here_doc flag. If it does, it opens a
- * file called "here_doc.txt" and writes to it until it reads the delimiter
- * string. It then closes the file and returns the file descriptor. If there is
- * no here_doc flag, it returns the file descriptor of the first argument.
+ * It checks if the pipex struct has a here_doc or is_urandom flag. If it does,
+ * it calls the ft_handle_here_doc or ft_handle_urandom function respectively.
+ * If it doesn't, it checks if the input file exists. If it does, it opens it
+ * in read only mode. If it doesn't, it opens a temporary file in read only
+ * mode and sets the is_invalid_input flag to true. It then returns the file
+ * descriptor.
  *
  * @param pipex
  * @param argv
