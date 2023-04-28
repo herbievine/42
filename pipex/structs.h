@@ -13,8 +13,6 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# define INVALID_INPUT_FILE_NAME "error"
-
 typedef enum e_bool
 {
 	false,
@@ -25,8 +23,9 @@ typedef struct s_pipex
 {
 	int		in_fd;
 	int		out_fd;
-	t_bool	is_invalid_input;
 	t_bool	here_doc;
+	t_bool	is_invalid_input;
+	t_bool	is_urandom;
 	char	**cmd_paths;
 	char	***cmd_args;
 	int		cmd_count;

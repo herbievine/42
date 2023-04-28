@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 11:14:55 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 19:35:32 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/28 14:43:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ t_bool	ft_spawn_child(t_pipex *pipex, char **envp, int idx)
 		if (pipex->cmd_paths[idx])
 			execve(pipex->cmd_paths[idx], pipex->cmd_args[idx], envp);
 		else
-			ft_dprintf(2, "pipex: %s: cmd not found\n", pipex->cmd_args[idx][0]);
+			ft_dprintf(2, "pipex: %s: command not found\n",
+				pipex->cmd_args[idx][0]);
 		ft_cleanup(pipex);
 		exit(0);
 	}

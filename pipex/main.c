@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 19:09:02 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/28 15:55:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_init_pipex(t_pipex *pipex)
 	pipex->out_fd = -1;
 	pipex->here_doc = false;
 	pipex->is_invalid_input = false;
+	pipex->is_urandom = false;
 	pipex->cmd_paths = NULL;
 	pipex->cmd_args = NULL;
 	pipex->cmd_count = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 19:31:04 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/28 16:04:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@
  */
 t_bool	ft_parse_args(t_pipex *pipex, int argc, char **argv)
 {
-	if (argv[1] && ft_strncmp(argv[1], "here_doc", 9) == 0)
+	if (argv[1] && ft_strncmp(argv[1], "here_doc", 8) == 0
+		&& ft_strlen(argv[1]) == 8)
 		pipex->here_doc = true;
-	else
-		pipex->here_doc = false;
+	else if (argv[1] && ft_strncmp(argv[1], "/dev/urandom", 12) == 0
+		&& ft_strlen(argv[1]) == 12)
+		pipex->is_urandom = true;
 	if (argc < 5 + (int)pipex->here_doc)
 		return (false);
 	if (ft_get_infile(pipex, argv) == -1)

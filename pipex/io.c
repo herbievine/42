@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:28:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/27 14:45:42 by codespace        ###   ########.fr       */
+/*   Updated: 2023/04/28 15:00:49 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,19 @@
  * @param line
  * @return char*
  */
-int	ft_read(char **line)
+int	ft_read(char **line, int fd, char limiter)
 {
 	char	*buffer;
 	char	c;
 	int		i;
 
 	i = 0;
+	if (fd < 0)
+		return (-1);
 	buffer = malloc(sizeof(char) * 10000);
 	if (!buffer)
 		return (-1);
-	while (read(0, &c, 1) > 0 && c && c != '\n' && i < 10000 - 2)
+	while (read(fd, &c, 1) > 0 && c && c != limiter && i < 10000 - 2)
 		buffer[i++] = c;
 	buffer[i] = '\n';
 	buffer[i + 1] = '\0';
@@ -51,8 +53,8 @@ int	ft_read(char **line)
  * @brief The ft_handle_here_doc function takes in a string called limiter. It
  * opens a temporary file and writes to it until it reads the limiter string.
  * It then closes the file.
- * 
- * @param limiter 
+ *
+ * @param limiter
  */
 void	ft_handle_here_doc(char *limiter)
 {
@@ -61,7 +63,7 @@ void	ft_handle_here_doc(char *limiter)
 
 	fd = open(HERE_DOC_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	write(1, "heredoc> ", 9);
-	while (fd > 0 && ft_read(&buffer) > 0)
+	while (fd > 0 && ft_read(&buffer, STDIN_FILENO, '\n') > 0)
 	{
 		if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0
 			&& ft_strlen(buffer) == ft_strlen(limiter) + 1)
@@ -74,6 +76,25 @@ void	ft_handle_here_doc(char *limiter)
 		write(1, "heredoc> ", 9);
 	}
 	close(fd);
+}
+
+void	ft_handle_urandom(t_pipex *pipex)
+{
+	int		tmp_fd;
+	int		urandom_fd;
+	char	*buffer;
+
+	urandom_fd = open("/dev/urandom", O_RDONLY);
+	if (urandom_fd < 0)
+		return ;
+	tmp_fd = open(URANDOM_PATH, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (tmp_fd < 0)
+		return ;
+	if (ft_read(&buffer, urandom_fd, '\0') == -1)
+		return ;
+	write(tmp_fd, buffer, ft_strlen(buffer));
+	free(buffer);
+	close(tmp_fd);
 }
 
 /**
@@ -94,14 +115,18 @@ int	ft_get_infile(t_pipex *pipex, char **argv)
 		ft_handle_here_doc(argv[2]);
 		pipex->in_fd = open(HERE_DOC_PATH, O_RDONLY);
 	}
+	else if (pipex->is_urandom)
+	{
+		ft_handle_urandom(pipex);
+		pipex->in_fd = open(URANDOM_PATH, O_RDONLY);
+	}
 	else
 	{
 		if (access(argv[1], F_OK) == -1)
 		{
-			pipex->is_invalid_input = true;
 			ft_dprintf(2, "pipex: %s\n", ENOENT);
-			pipex->in_fd = open(INVALID_INPUT_FILE_NAME,
-					O_RDWR | O_CREAT | O_TRUNC, 0644);
+			pipex->in_fd = open(INVALID_INPUT_PATH, O_RDONLY | O_CREAT, 0644);
+			pipex->is_invalid_input = true;
 		}
 		else
 			pipex->in_fd = open(argv[1], O_RDONLY);

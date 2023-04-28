@@ -80,6 +80,8 @@ void	ft_cleanup(t_pipex *pipex)
 	if (pipex->here_doc)
 		unlink(HERE_DOC_PATH);
 	if (pipex->is_invalid_input)
-		unlink(INVALID_INPUT_FILE_NAME);
+		unlink(INVALID_INPUT_PATH);
+	if (pipex->is_urandom)
+		unlink(URANDOM_PATH);
 	free(pipex);
 }
