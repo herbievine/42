@@ -1,13 +1,22 @@
+# 42 Executables
+push_swap/push_swap
+pipex/pipex
+
+# 42 Misc
+out
+.here_doc
+
+# Ignore code testers
+**/tester
+**/checker
+
 # MacOS
 .DS_Store
 
 # VSCode
 .vscode
 
-# Ignore code testers
-**/tester
-
-#Log files
+# Log files
 *.log
 *.logs
 

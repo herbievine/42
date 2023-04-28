@@ -13,3 +13,4 @@ all my projects for 42paris.
 | get_next_line | 100/100       |
 | born2beroot   | 115/100       |
 | push_swap     | 84/100        |
+| pipex         | TBD           |
