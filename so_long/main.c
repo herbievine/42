@@ -12,9 +12,9 @@
 
 #include "mlx/mlx.h"
 
-int main(void)
+int	main(void)
 {
-	void *mlx;
+	void	*mlx;
 
 	mlx = mlx_init();
 	mlx_new_window(mlx, 500, 500, "herbievine: so_long");
