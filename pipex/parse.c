@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 20:18:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/28 16:04:24 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/29 17:25:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ t_bool	ft_parse_cmd_paths(t_pipex *pipex, int argc, char **argv, char **envp)
 	{
 		cmd = ft_split(argv[i], ' ');
 		if (!cmd)
-			return (ft_free_array(pipex->cmd_paths, i), false);
+		{
+			ft_free_array(pipex->cmd_paths, i - 2 - pipex->here_doc);
+			pipex->cmd_paths = NULL;
+			return (false);
+		}
 		pipex->cmd_paths[i - 2 - pipex->here_doc] = ft_find_path(cmd[0], envp);
 		ft_free_array(cmd, -1);
 	}
@@ -107,7 +111,11 @@ t_bool	ft_parse_cmd_args(t_pipex *pipex, int argc, char **argv)
 	{
 		cmd = ft_split(argv[i], ' ');
 		if (!cmd)
-			return (ft_free_2d_array(pipex->cmd_args, pipex->cmd_count), false);
+		{
+			ft_free_2d_array(pipex->cmd_args, pipex->cmd_count);
+			pipex->cmd_args = NULL;
+			return (false);
+		}
 		pipex->cmd_args[i - 2 - pipex->here_doc] = cmd;
 	}
 	return (true);
