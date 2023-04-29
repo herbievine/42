@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:28:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/28 15:00:49 by herbie           ###   ########.fr       */
+/*   Updated: 2023/04/29 16:59:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "structs.h"
 #include "error.h"
 #include "str.h"
+#include "mem.h"
 #include "print.h"
 #include <fcntl.h>
 #include <unistd.h>
@@ -40,7 +41,7 @@ int	ft_read(char **line, int fd, char limiter)
 	i = 0;
 	if (fd < 0)
 		return (-1);
-	buffer = malloc(sizeof(char) * 10000);
+	buffer = ft_calloc(sizeof(char), 10000);
 	if (!buffer)
 		return (-1);
 	while (read(fd, &c, 1) > 0 && c && c != limiter && i < 10000 - 2)
