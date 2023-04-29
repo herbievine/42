@@ -1,9 +1,11 @@
 # 42 Executables
 push_swap/push_swap
 pipex/pipex
+so_long/so_long
 
 # 42 Misc
 out
+mlx
 .here_doc
 
 # Ignore code testers
