@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.h                                             :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 12:40:41 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/20 15:06:25 by codespace        ###   ########.fr       */
+/*   Created: 2023/05/05 10:21:02 by herbie            #+#    #+#             */
+/*   Updated: 2023/05/05 11:24:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREE_H
-# define FREE_H
+#ifndef ERROR_H
+# define ERROR_H
 
 # include "structs.h"
 
-void	ft_free_array(char **array, int n);
-void	ft_free_2d_array(char ***array, int n);
-void	ft_free_map(t_map *map);
+# define EMAP "Invalid map"
+# define EIO "Input/output error"
+# define EUNKN "Unknown error"
+# define ENOENT "No such file or directory"
 
-#endif /* FREE_H */
+void	ft_err(char *msg, t_map *map);
+
+#endif /* ERROR_H */

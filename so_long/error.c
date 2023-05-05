@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.h                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 12:40:41 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/20 15:06:25 by codespace        ###   ########.fr       */
+/*   Created: 2023/05/05 10:24:23 by herbie            #+#    #+#             */
+/*   Updated: 2023/05/05 10:24:23 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREE_H
-# define FREE_H
+#include "error.h"
+#include "print.h"
+#include "structs.h"
+#include "free.h"
+#include <stdlib.h>
 
-# include "structs.h"
-
-void	ft_free_array(char **array, int n);
-void	ft_free_2d_array(char ***array, int n);
-void	ft_free_map(t_map *map);
-
-#endif /* FREE_H */
+void	ft_err(char *msg, t_map *map)
+{
+	ft_dprintf(2, "Error\n%s\n", msg);
+	if (map)
+		ft_free_map(map);
+	exit(1);
+}

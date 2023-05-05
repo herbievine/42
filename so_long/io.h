@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.h                                             :+:      :+:    :+:   */
+/*   io.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 12:40:41 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/20 15:06:25 by codespace        ###   ########.fr       */
+/*   Created: 2023/03/27 15:28:51 by herbie            #+#    #+#             */
+/*   Updated: 2023/03/27 19:26:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FREE_H
-# define FREE_H
+#ifndef IO_H
+# define IO_H
 
-# include "structs.h"
+int	ft_read(char **line, int fd);
 
-void	ft_free_array(char **array, int n);
-void	ft_free_2d_array(char ***array, int n);
-void	ft_free_map(t_map *map);
-
-#endif /* FREE_H */
+#endif /* IO_H */
