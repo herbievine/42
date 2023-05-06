@@ -12,9 +12,7 @@
 
 #include "io.h"
 #include "mem.h"
-#include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
 
 /**
  * @brief The ft_read function takes in a pointer to a string. It reads from
@@ -25,11 +23,11 @@
  * @param fd
  * @return int
  */
-int ft_read(char **line, int fd)
+int	ft_read(char **line, int fd)
 {
-	char *buffer;
-	char c;
-	int i;
+	char	*buffer;
+	char	c;
+	int		i;
 
 	i = 0;
 	if (fd < 0)
@@ -44,20 +42,3 @@ int ft_read(char **line, int fd)
 	*line = buffer;
 	return (i + 1);
 }
-
-// char	**ft_fetch_map(char *map_path)
-// {
-// 	char	**map;
-// 	char	*buffer;
-// 	int		fd;
-// 	int		i;
-
-// 	fd = open(map_path, O_RDONLY);
-// 	if (fd < 0)
-// 		return (NULL);
-// 	i = -1;
-// 	while (ft_read(&buffer, fd) > 0)
-// 		map[++i] = buffer;
-// 	map[++i] = NULL;
-// 	return (map);
-// }
