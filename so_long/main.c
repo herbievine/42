@@ -17,9 +17,9 @@
 #include "window.h"
 #include <stdlib.h>
 
-t_data *ft_init(void)
+t_data	*ft_init(void)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -39,15 +39,14 @@ t_data *ft_init(void)
 	return (data);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	(void)argv;
-	t_data *data;
+	t_data	*data;
 
 	if (argc != 2)
 		ft_err(EIO);
 	data = ft_init();
 	ft_parse_map_or_throw(data, argv[1]);
-	// ft_init_window(data);
+	ft_init_window(data);
 	return (0);
 }

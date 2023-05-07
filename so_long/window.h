@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #ifndef WINDOW_H
-#define WINDOW_H
+# define WINDOW_H
 
-#include "structs.h"
+# include "structs.h"
 
-void ft_init_window(t_data *data);
+void	ft_init_window(t_data *data);
 
 #endif /* WINDOW_H */

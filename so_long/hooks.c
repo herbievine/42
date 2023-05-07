@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <X11/keysym.h>
 
-int on_keypress(int keysym, t_data *data)
+int	on_keypress(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape)
 	{
@@ -27,7 +27,7 @@ int on_keypress(int keysym, t_data *data)
 	return (0);
 }
 
-int on_destroy(t_data *data)
+int	on_destroy(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);

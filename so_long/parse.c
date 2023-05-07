@@ -48,10 +48,7 @@ void	ft_parse_map_or_throw(t_data *data, char *map_path)
 	if (!ft_check_basic_rules(data->map)
 		|| !ft_is_map_possible(
 			data->map, data->map->start.x, data->map->start.y, flood))
-	{
-		free(flood);
-		return (ft_free_data(data), ft_err(EMAP));
-	}
+		return (free(flood), ft_free_data(data), ft_err(EMAP));
 	free(flood);
 }
 
