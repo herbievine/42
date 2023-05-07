@@ -23,7 +23,7 @@
 #define TILE_SIZE 48
 #define EMPT_PATH "./assets/floor.xpm"
 #define WALL_PATH "./assets/wall.xpm"
-#define PLAYER_PATH "./assets/puss.xpm"
+#define PLAYER_PATH "./assets/cat.xpm"
 #define COLLECTIBLE_PATH "./assets/fish.xpm"
 #define EXIT_PATH "./assets/end.xpm"
 
@@ -66,8 +66,6 @@ void	ft_render_assets(t_data *data)
 	int	i;
 	int	j;
 
-	if (data->win_ptr == NULL)
-		return ;
 	i = -1;
 	while (++i < data->map->height)
 	{
@@ -95,8 +93,6 @@ void	ft_render_bg(t_data *data)
 	int	i;
 	int	j;
 
-	if (data->win_ptr == NULL)
-		return ;
 	i = -1;
 	while (++i < data->map->height)
 	{
@@ -107,7 +103,9 @@ void	ft_render_bg(t_data *data)
 				mlx_put_image_to_window(
 					data->mlx_ptr, data->win_ptr, data->assets[1].mlx_img,
 					j * TILE_SIZE, i * TILE_SIZE);
-			else if (!(i == data->map->start.y && j == data->map->start.x))
+			else if (!(i == data->map->start.y && j == data->map->start.x)
+				&& (data->map->map[i][j] != EXIT || data->map->collectibles)
+				&& data->map->map[i][j] != COLL)
 				mlx_put_image_to_window(
 					data->mlx_ptr, data->win_ptr, data->assets[0].mlx_img,
 					j * TILE_SIZE, i * TILE_SIZE);

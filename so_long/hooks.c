@@ -22,17 +22,25 @@
 void	handle_move(int keysym, t_data *data)
 {
 	if (keysym == XK_Up
-		&& data->map->map[data->map->start.y - 1][data->map->start.x] != WALL)
-		--data->map->start.y;
+		&& data->map->map[data->map->start.y - 1][data->map->start.x] != WALL
+		&& ++data->map->moves
+		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
+	--data->map->start.y;
 	else if (keysym == XK_Down
-		&& data->map->map[data->map->start.y + 1][data->map->start.x] != WALL)
-		++data->map->start.y;
+		&& data->map->map[data->map->start.y + 1][data->map->start.x] != WALL
+		&& ++data->map->moves
+		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
+	++data->map->start.y;
 	else if (keysym == XK_Left
-		&& data->map->map[data->map->start.y][data->map->start.x - 1] != WALL)
-		--data->map->start.x;
+		&& data->map->map[data->map->start.y][data->map->start.x - 1] != WALL
+		&& ++data->map->moves
+		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
+	--data->map->start.x;
 	else if (keysym == XK_Right
-		&& data->map->map[data->map->start.y][data->map->start.x + 1] != WALL)
-		++data->map->start.x;
+		&& data->map->map[data->map->start.y][data->map->start.x + 1] != WALL
+		&& ++data->map->moves
+		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
+	++data->map->start.x;
 }
 
 int	on_keypress(int keysym, t_data *data)
@@ -41,14 +49,11 @@ int	on_keypress(int keysym, t_data *data)
 		on_destroy(data);
 	else if (keysym == XK_Up || keysym == XK_Down
 		|| keysym == XK_Left || keysym == XK_Right)
-	{
 		handle_move(keysym, data);
-		++data->map->moves;
-	}
 	if (data->map->map[data->map->start.y][data->map->start.x] == EXIT)
 	{
 		ft_dprintf(1, "You win!\n");
-		ft_dprintf(1, "Number of moves: %d\n", data->map->moves);
+		ft_dprintf(1, "Total moves: %d\n", data->map->moves);
 		on_destroy(data);
 	}
 	else if (data->map->map[data->map->start.y][data->map->start.x] == COLL)
