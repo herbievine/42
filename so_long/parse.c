@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+char	**ft_get_map(char *map_path);
 void	ft_get_map_info(t_map *map);
 t_bool	ft_check_basic_rules(t_map *map);
 t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood);
@@ -28,15 +29,9 @@ t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood);
 void	ft_parse_map_or_throw(t_data *data, char *map_path)
 {
 	t_flood	*flood;
-	char	*buffer;
-	int		fd;
+	char	**dup_map;
 
-	buffer = NULL;
-	fd = open(map_path, O_RDONLY);
-	if (fd < 0 || ft_read(&buffer, fd) < 0)
-		return (ft_free_data(data), ft_err(EUNKN));
-	data->map->map = ft_split(buffer, '\n');
-	free(buffer);
+	data->map->map = ft_get_map(map_path);
 	if (!data->map->map)
 		return (ft_free_data(data), ft_err(EMAP));
 	ft_get_map_info(data->map);
@@ -45,11 +40,31 @@ void	ft_parse_map_or_throw(t_data *data, char *map_path)
 		return (ft_free_data(data), ft_err(EUNKN));
 	flood->collectibles = 0;
 	flood->exits = 0;
+	dup_map = ft_get_map(map_path);
+	if (!dup_map)
+		return (ft_free_data(data), ft_err(EUNKN));
 	if (!ft_check_basic_rules(data->map)
 		|| !ft_is_map_possible(
 			data->map, data->map->start.x, data->map->start.y, flood))
 		return (free(flood), ft_free_data(data), ft_err(EMAP));
+	ft_free_array(data->map->map, -1);
+	data->map->map = dup_map;
 	free(flood);
+}
+
+char	**ft_get_map(char *map_path)
+{
+	char	*buffer;
+	char	**map;
+	int		fd;
+
+	buffer = NULL;
+	fd = open(map_path, O_RDONLY);
+	if (ft_read(&buffer, fd) < 0)
+		return (NULL);
+	map = ft_split(buffer, '\n');
+	free(buffer);
+	return (map);
 }
 
 void	ft_get_map_info(t_map *map)

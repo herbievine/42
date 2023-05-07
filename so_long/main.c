@@ -15,6 +15,7 @@
 #include "structs.h"
 #include "error.h"
 #include "window.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 t_data	*ft_init(void)

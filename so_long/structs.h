@@ -49,12 +49,18 @@ typedef struct s_map
 	int		moves;
 }	t_map;
 
+typedef struct s_assets
+{
+	void	*mlx_img;
+	char	id;
+}	t_assets;
+
 typedef struct s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_ptr;
-	t_map	*map;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_assets	assets[4];
+	t_map		*map;
 }	t_data;
 
 #endif /* STRUCTS_H */
