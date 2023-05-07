@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/05 19:41:57 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/07 10:25:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void	ft_get_map_info(t_map *map);
 t_bool	ft_check_basic_rules(t_map *map);
+t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood);
 
 void	ft_parse_map_or_throw(t_map *map, char *map_path)
 {
 	char	*buffer;
 	int		fd;
 
+	buffer = NULL;
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0 || ft_read(&buffer, fd) < 0)
 		ft_err(EUNKN, map);
 	map->map = ft_split(buffer, '\n');
-	if (!map->map || !ft_check_basic_rules(map))
+	free(buffer);
+	if (!map->map)
+		ft_err(EMAP, map);
+	ft_get_map_info(map);
+	if (!ft_check_basic_rules(map)
+		|| !ft_is_map_possible(map, map->start.x, map->start.y, NULL))
 		ft_err(EMAP, map);
 }
 
-t_bool	ft_check_basic_rules(t_map *map)
+void	ft_get_map_info(t_map *map)
 {
 	int	i;
 	int	j;
@@ -43,19 +51,73 @@ t_bool	ft_check_basic_rules(t_map *map)
 	i = -1;
 	while (map->map[++i])
 	{
+		if (i == 0)
+			map->width = ft_strlen(map->map[i]);
+		j = -1;
+		while (map->map[i][++j])
+		{
+			if ((map->map[i][j] == EXIT && ++map->exits)
+				|| (map->map[i][j] == STRT && ++map->entries)
+				|| (map->map[i][j] == COLL && ++map->collectibles))
+				;
+			if (map->map[i][j] == STRT)
+			{
+				map->start = (t_start){j, i};
+			}
+		}
+	}
+	map->height = i;
+}
+
+t_bool	ft_check_basic_rules(t_map *map)
+{
+	int	i;
+	int	j;
+
+	if (map->collectibles < 1 || map->exits != 1 || map->entries != 1)
+		return (false);
+	i = -1;
+	while (map->map[++i])
+	{
 		j = -1;
 		while (map->map[i][++j])
 			if (((i == 0 || i == map->height - 1) && map->map[i][j] != WALL)
-				|| ((j == 0 || j == map->width - 1) && map->map[i][j] != WALL))
+				|| ((j == 0 || j == map->width - 1) && map->map[i][j] != WALL)
+				|| (map->map[i][j] != WALL && map->map[i][j] != EMPT
+					&& map->map[i][j] != COLL && map->map[i][j] != STRT
+					&& map->map[i][j] != EXIT))
 				return (false);
-		if (ft_strlen(map->map[i]) != ft_strlen(map->map[0]))
+		if ((int)ft_strlen(map->map[i]) != map->width)
 			return (false);
-		if ((ft_strchr(map->map[i], EXIT) && ++map->exits)
-			|| (ft_strchr(map->map[i], STRT) && ++map->entries)
-			|| (ft_strchr(map->map[i], COLL) && ++map->collectibles))
-			;
 	}
-	if (map->collectibles < 1 || map->exits != 1 || map->entries != 1)
-		return (false);
 	return (true);
+}
+
+t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood)
+{
+	if (!flood)
+	{
+		flood = malloc(sizeof(t_flood));
+		if (!flood)
+			ft_err(EUNKN, map);
+		flood->collectibles = 0;
+		flood->exits = 0;
+	}
+	if (flood->collectibles == map->collectibles && flood->exits == 1)
+		return (true);
+	if (px < 0 || py < 0 || px >= map->width || py >= map->height)
+		return (false);
+	if (map->map[py][px] == WALL)
+		return (false);
+	if (map->map[py][px] == COLL)
+		flood->collectibles++;
+	if (map->map[py][px] == EXIT)
+		flood->exits++;
+	map->map[py][px] = WALL;
+	if (ft_is_map_possible(map, px + 1, py, flood) == true
+		|| ft_is_map_possible(map, px - 1, py, flood) == true
+		|| ft_is_map_possible(map, px, py + 1, flood) == true
+		|| ft_is_map_possible(map, px, py - 1, flood) == true)
+		return (true);
+	return (false);
 }
