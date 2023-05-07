@@ -109,8 +109,6 @@ t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood)
 	}
 	if (flood->collectibles == map->collectibles && flood->exits == 1)
 		return (true);
-	if (px < 0 || py < 0 || px >= map->width || py >= map->height)
-		return (false);
 	if (map->map[py][px] == WALL)
 		return (false);
 	if (map->map[py][px] == COLL)
