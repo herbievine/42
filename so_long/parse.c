@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 15:09:24 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/07 14:27:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_parse_map_or_throw(t_data *data, char *map_path)
 	flood = (t_flood *)malloc(sizeof(t_flood));
 	if (!flood)
 		return (ft_free_data(data), ft_err(EUNKN));
+	flood->collectibles = 0;
+	flood->exits = 0;
 	if (!ft_check_basic_rules(data->map)
 		|| !ft_is_map_possible(
 			data->map, data->map->start.x, data->map->start.y, flood))
@@ -69,7 +71,8 @@ void	ft_get_map_info(t_map *map)
 			if ((map->map[i][j] == EXIT && ++map->exits)
 				|| (map->map[i][j] == STRT && ++map->entries)
 				|| (map->map[i][j] == COLL && ++map->collectibles))
-				;
+			{
+			}
 			if (map->map[i][j] == STRT)
 				map->start = (t_start){j, i};
 		}
@@ -104,11 +107,6 @@ t_bool	ft_check_basic_rules(t_map *map)
 
 t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood)
 {
-	if (!flood->collectibles && !flood->exits)
-	{
-		flood->collectibles = 0;
-		flood->exits = 0;
-	}
 	if (flood->collectibles == map->collectibles && flood->exits == 1)
 		return (true);
 	if (map->map[py][px] == WALL)
