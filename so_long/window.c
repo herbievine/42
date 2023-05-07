@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:36:01 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 18:33:04 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/07 19:47:55 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 #define TILE_SIZE 48
 #define EMPT_PATH "./assets/floor.xpm"
 #define WALL_PATH "./assets/wall.xpm"
+#define PLAYER_PATH "./assets/puss.xpm"
+#define COLLECTIBLE_PATH "./assets/fish.xpm"
+#define EXIT_PATH "./assets/end.xpm"
 
 t_bool	ft_init_assets(t_data *data)
 {
@@ -31,10 +34,14 @@ t_bool	ft_init_assets(t_data *data)
 	size = TILE_SIZE;
 	data->assets[0].mlx_img = mlx_xpm_file_to_image(
 			data->mlx_ptr, EMPT_PATH, &size, &size);
-	data->assets[0].id = EMPT;
 	data->assets[1].mlx_img = mlx_xpm_file_to_image(
 			data->mlx_ptr, WALL_PATH, &size, &size);
-	data->assets[1].id = WALL;
+	data->assets[2].mlx_img = mlx_xpm_file_to_image(
+			data->mlx_ptr, PLAYER_PATH, &size, &size);
+	data->assets[3].mlx_img = mlx_xpm_file_to_image(
+			data->mlx_ptr, COLLECTIBLE_PATH, &size, &size);
+	data->assets[4].mlx_img = mlx_xpm_file_to_image(
+			data->mlx_ptr, EXIT_PATH, &size, &size);
 	return (true);
 }
 
@@ -54,6 +61,35 @@ t_bool	ft_init_assets(t_data *data)
 // 	}
 // }
 
+void	ft_render_assets(t_data *data)
+{
+	int	i;
+	int	j;
+
+	if (data->win_ptr == NULL)
+		return ;
+	i = -1;
+	while (++i < data->map->height)
+	{
+		j = -1;
+		while (++j < data->map->width)
+		{
+			if (i == data->map->start.y && j == data->map->start.x)
+				mlx_put_image_to_window(
+					data->mlx_ptr, data->win_ptr, data->assets[2].mlx_img,
+					j * TILE_SIZE, i * TILE_SIZE);
+			else if (data->map->map[i][j] == COLL)
+				mlx_put_image_to_window(
+					data->mlx_ptr, data->win_ptr, data->assets[3].mlx_img,
+					j * TILE_SIZE, i * TILE_SIZE);
+			else if (data->map->map[i][j] == EXIT && !data->map->collectibles)
+				mlx_put_image_to_window(
+					data->mlx_ptr, data->win_ptr, data->assets[4].mlx_img,
+					j * TILE_SIZE, i * TILE_SIZE);
+		}
+	}
+}
+
 void	ft_render_bg(t_data *data)
 {
 	int	i;
@@ -71,7 +107,7 @@ void	ft_render_bg(t_data *data)
 				mlx_put_image_to_window(
 					data->mlx_ptr, data->win_ptr, data->assets[1].mlx_img,
 					j * TILE_SIZE, i * TILE_SIZE);
-			else
+			else if (!(i == data->map->start.y && j == data->map->start.x))
 				mlx_put_image_to_window(
 					data->mlx_ptr, data->win_ptr, data->assets[0].mlx_img,
 					j * TILE_SIZE, i * TILE_SIZE);
@@ -84,6 +120,7 @@ int	ft_render(t_data *data)
 	if (data->win_ptr == NULL)
 		return (0);
 	ft_render_bg(data);
+	ft_render_assets(data);
 	return (0);
 }
 
