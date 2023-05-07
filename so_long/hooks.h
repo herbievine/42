@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   hooks.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 10:21:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/05 11:24:40 by herbie           ###   ########.fr       */
+/*   Created: 2023/05/07 14:34:00 by herbie            #+#    #+#             */
+/*   Updated: 2023/05/07 14:34:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef HOOKS_H
+# define HOOKS_H
 
-# define EMAP "Invalid map"
-# define EIO "Input/output error"
-# define EUNKN "Unknown error"
-# define ENOENT "No such file or directory"
+# include "structs.h"
 
-void	ft_err(char *msg);
+int	on_keypress(int keysym, t_data *data);
+int	on_destroy(t_data *data);
 
-#endif /* ERROR_H */
+#endif /* HOOKS_H */

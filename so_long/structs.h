@@ -47,8 +47,14 @@ typedef struct s_map
 	int		exits;
 	int		entries;
 	int		moves;
-	t_bool	is_valid;
-	t_bool	is_finished;
 }	t_map;
+
+typedef struct s_data
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*img_ptr;
+	t_map	*map;
+}	t_data;
 
 #endif /* STRUCTS_H */

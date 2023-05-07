@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 10:24:23 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 15:07:02 by herbie           ###   ########.fr       */
+/*   Created: 2023/05/07 14:33:04 by herbie            #+#    #+#             */
+/*   Updated: 2023/05/07 14:52:30 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
-#include "print.h"
+#include "hooks.h"
 #include "structs.h"
-#include "free.h"
+#include "mlx/mlx.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <X11/keysym.h>
 
-/**
- * @brief The ft_err function prints the error message and exits the program 
- * with the status 1.
- * 
- * @param msg 
- */
-void	ft_err(char *msg)
+int on_keypress(int keysym, t_data *data)
 {
-	ft_dprintf(2, "Error\n%s\n", msg);
-	exit(1);
+	if (keysym == XK_Escape)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		data->win_ptr = NULL;
+	}
+	return (0);
+}
+
+int on_destroy(t_data *data)
+{
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
+	free(data);
+	exit(0);
+	return (0);
 }
