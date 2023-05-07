@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 10:21:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/05 11:24:40 by herbie           ###   ########.fr       */
+/*   Created: 2023/05/07 13:36:08 by herbie            #+#    #+#             */
+/*   Updated: 2023/05/07 14:42:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
-# define EMAP "Invalid map"
-# define EIO "Input/output error"
-# define EUNKN "Unknown error"
-# define ENOENT "No such file or directory"
+#include "structs.h"
 
-void	ft_err(char *msg);
+void ft_init_window(t_data *data);
 
-#endif /* ERROR_H */
+#endif /* WINDOW_H */

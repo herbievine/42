@@ -17,6 +17,6 @@
 
 void	ft_free_array(char **array, int n);
 void	ft_free_2d_array(char ***array, int n);
-void	ft_free_map(t_map *map);
+void	ft_free_data(t_data *data);
 
 #endif /* FREE_H */

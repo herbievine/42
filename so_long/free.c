@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/05 18:08:14 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/07 15:17:02 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ void	ft_free_2d_array(char ***array, int n)
 }
 
 /**
- * @brief The ft_free_map function takes in a map and frees all memory.
+ * @brief The ft_free_data function takes in a data struct and frees all
+ * memory.
  *
- * @param map
+ * @param data
  */
-void	ft_free_map(t_map *map)
+void	ft_free_data(t_data *data)
 {
-	if (map->map)
-		ft_free_array(map->map, -1);
-	free(map);
+	if (data->map->map)
+		ft_free_array(data->map->map, -1);
+	free(data->map);
+	free(data);
 }

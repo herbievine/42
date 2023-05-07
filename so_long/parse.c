@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 10:25:38 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/07 15:09:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "io.h"
 #include "str.h"
 #include "structs.h"
+#include "free.h"
 #include "split.h"
 #include "error.h"
 #include <fcntl.h>
@@ -24,7 +25,7 @@ void	ft_get_map_info(t_map *map);
 t_bool	ft_check_basic_rules(t_map *map);
 t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood);
 
-void	ft_parse_map_or_throw(t_map *map, char *map_path)
+void	ft_parse_map_or_throw(t_data *data, char *map_path)
 {
 	t_flood	*flood;
 	char	*buffer;
@@ -33,20 +34,21 @@ void	ft_parse_map_or_throw(t_map *map, char *map_path)
 	buffer = NULL;
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0 || ft_read(&buffer, fd) < 0)
-		ft_err(EUNKN, map);
-	map->map = ft_split(buffer, '\n');
+		return (ft_free_data(data), ft_err(EUNKN));
+	data->map->map = ft_split(buffer, '\n');
 	free(buffer);
-	if (!map->map)
-		ft_err(EMAP, map);
-	ft_get_map_info(map);
+	if (!data->map->map)
+		return (ft_free_data(data), ft_err(EMAP));
+	ft_get_map_info(data->map);
 	flood = (t_flood *)malloc(sizeof(t_flood));
 	if (!flood)
-		ft_err(EUNKN, map);
-	if (!ft_check_basic_rules(map)
-		|| !ft_is_map_possible(map, map->start.x, map->start.y, flood))
+		return (ft_free_data(data), ft_err(EUNKN));
+	if (!ft_check_basic_rules(data->map)
+		|| !ft_is_map_possible(
+			data->map, data->map->start.x, data->map->start.y, flood))
 	{
 		free(flood);
-		ft_err(EMAP, map);
+		return (ft_free_data(data), ft_err(EMAP));
 	}
 	free(flood);
 }

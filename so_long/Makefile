@@ -6,14 +6,14 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/05/07 11:57:51 by herbie           ###   ########.fr        #
+#    Updated: 2023/05/07 15:00:42 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I/opt/X11/include
 
 RM = rm
 RMFLAG = -f
@@ -33,6 +33,8 @@ SRCS = \
 	display.c \
 	print.c \
 	parse.c \
+	window.c \
+	hooks.c \
 	io.c \
 	error.c 
 
