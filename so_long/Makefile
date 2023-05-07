@@ -3,26 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/05/07 15:00:42 by herbie           ###   ########.fr        #
+#    Updated: 2023/05/07 14:15:51 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I/opt/X11/include
+CFLAGS = -Wall -Wextra -Werror
+
+ifeq ($(shell uname), Linux)
+	INCLUDES = -I/usr/include -Imlx
+else
+	INCLUDES = -I/opt/X11/include -Imlx
+endif
 
 RM = rm
 RMFLAG = -f
 
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
-MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
-
-X11_FLAGS = -L/usr/X11/lib -lXext -lX11
+ifeq ($(shell uname), Linux)
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm -lz
+else
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
+endif
 
 SRCS = \
 	main.c \
@@ -43,10 +51,10 @@ OBJS = $(SRCS:.c=.o)
 all: $(MLX_LIB) $(NAME)
 
 .c.o:
-	$(CC) $(CFLAGS) -Imlx -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) $(X11_FLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS)
 
 $(MLX_LIB):
 	@make -C $(MLX_DIR)
