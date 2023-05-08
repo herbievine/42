@@ -14,52 +14,12 @@
 #include "structs.h"
 #include "hooks.h"
 #include "free.h"
+#include "textures.h"
 #include "mlx/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <X11/X.h>
 #include <X11/keysym.h>
-
-#define TILE_SIZE 48
-#define EMPT_PATH "./assets/floor.xpm"
-#define WALL_PATH "./assets/wall.xpm"
-#define PLAYER_PATH "./assets/cat.xpm"
-#define COLLECTIBLE_PATH "./assets/fish.xpm"
-#define EXIT_PATH "./assets/end.xpm"
-
-t_bool	ft_init_assets(t_data *data)
-{
-	int	size;
-
-	size = TILE_SIZE;
-	data->assets[0].mlx_img = mlx_xpm_file_to_image(
-			data->mlx_ptr, EMPT_PATH, &size, &size);
-	data->assets[1].mlx_img = mlx_xpm_file_to_image(
-			data->mlx_ptr, WALL_PATH, &size, &size);
-	data->assets[2].mlx_img = mlx_xpm_file_to_image(
-			data->mlx_ptr, PLAYER_PATH, &size, &size);
-	data->assets[3].mlx_img = mlx_xpm_file_to_image(
-			data->mlx_ptr, COLLECTIBLE_PATH, &size, &size);
-	data->assets[4].mlx_img = mlx_xpm_file_to_image(
-			data->mlx_ptr, EXIT_PATH, &size, &size);
-	return (true);
-}
-
-// void	ft_render_bg(t_data *data)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	if (data->win_ptr == NULL)
-// 		return ;
-// 	i = -1;
-// 	while (++i < 300)
-// 	{
-// 		j = -1;
-// 		while (++j < 600)
-// 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, j++, i, BG_COLOR);
-// 	}
-// }
 
 void	ft_render_assets(t_data *data)
 {
@@ -74,15 +34,15 @@ void	ft_render_assets(t_data *data)
 		{
 			if (i == data->map->start.y && j == data->map->start.x)
 				mlx_put_image_to_window(
-					data->mlx_ptr, data->win_ptr, data->assets[2].mlx_img,
+					data->mlx_ptr, data->win_ptr, data->textures[2],
 					j * TILE_SIZE, i * TILE_SIZE);
 			else if (data->map->map[i][j] == COLL)
 				mlx_put_image_to_window(
-					data->mlx_ptr, data->win_ptr, data->assets[3].mlx_img,
+					data->mlx_ptr, data->win_ptr, data->textures[3],
 					j * TILE_SIZE, i * TILE_SIZE);
 			else if (data->map->map[i][j] == EXIT && !data->map->collectibles)
 				mlx_put_image_to_window(
-					data->mlx_ptr, data->win_ptr, data->assets[4].mlx_img,
+					data->mlx_ptr, data->win_ptr, data->textures[4],
 					j * TILE_SIZE, i * TILE_SIZE);
 		}
 	}
@@ -101,13 +61,13 @@ void	ft_render_bg(t_data *data)
 		{
 			if (data->map->map[i][j] == WALL)
 				mlx_put_image_to_window(
-					data->mlx_ptr, data->win_ptr, data->assets[1].mlx_img,
+					data->mlx_ptr, data->win_ptr, data->textures[1],
 					j * TILE_SIZE, i * TILE_SIZE);
 			else if (!(i == data->map->start.y && j == data->map->start.x)
 				&& (data->map->map[i][j] != EXIT || data->map->collectibles)
 				&& data->map->map[i][j] != COLL)
 				mlx_put_image_to_window(
-					data->mlx_ptr, data->win_ptr, data->assets[0].mlx_img,
+					data->mlx_ptr, data->win_ptr, data->textures[0],
 					j * TILE_SIZE, i * TILE_SIZE);
 		}
 	}
@@ -132,7 +92,7 @@ void	ft_init_window(t_data *data)
 			data->map->height * TILE_SIZE, "herbie: so_long");
 	if (data->win_ptr == NULL)
 		return (ft_free_data(data));
-	if (!ft_init_assets(data))
+	if (!ft_load_textures(data))
 		return (ft_free_data(data));
 	mlx_loop_hook(data->mlx_ptr, &ft_render, data);
 	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, data);

@@ -58,7 +58,7 @@ typedef struct s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_assets	assets[5];
+	void		*textures[5];
 	t_map		*map;
 }	t_data;
 
