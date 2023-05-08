@@ -85,10 +85,8 @@ void	ft_handle_here_doc(char *limiter)
  * @brief The ft_handle_urandom function takes in a pipex struct. It opens
  * /dev/urandom and reads from it until it reaches the null terminator. It then
  * writes the contents to a temporary file and closes it.
- * 
- * @param pipex 
  */
-void	ft_handle_urandom(t_pipex *pipex)
+void	ft_handle_urandom(void)
 {
 	int		tmp_fd;
 	int		urandom_fd;
@@ -129,7 +127,7 @@ int	ft_get_infile(t_pipex *pipex, char **argv)
 	}
 	else if (pipex->is_urandom)
 	{
-		ft_handle_urandom(pipex);
+		ft_handle_urandom();
 		pipex->in_fd = open(URANDOM_PATH, O_RDONLY);
 	}
 	else
