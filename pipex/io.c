@@ -86,7 +86,7 @@ void	ft_handle_here_doc(char *limiter)
  * /dev/urandom and reads from it until it reaches the null terminator. It then
  * writes the contents to a temporary file and closes it.
  */
-void	ft_handle_urandom()
+void	ft_handle_urandom(void)
 {
 	int		tmp_fd;
 	int		urandom_fd;
