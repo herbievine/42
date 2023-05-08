@@ -1,0 +1,6 @@
+name = "ft_printf"
+
+[scripts]
+build = { cmd = "make" }
+clean = { cmd = "make fclean" }
+norme = { cmd = "norminette ." }

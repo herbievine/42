@@ -1,0 +1,4 @@
+name = "get_next_line"
+
+[scripts]
+norm = { cmd = "norminette ." }
