@@ -15,6 +15,14 @@
 #include "mlx/mlx.h"
 #include <stdlib.h>
 
+/**
+ * @brief The ft_load_textures function loads the textures into the data struct.
+ * If it fails to load a texture, it frees all the textures that were loaded
+ * before and returns false.
+ * 
+ * @param data 
+ * @return t_bool 
+ */
 t_bool	ft_load_textures(t_data *data)
 {
 	char	*texture_map[5];

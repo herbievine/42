@@ -26,6 +26,14 @@ void	ft_get_map_info(t_map *map);
 t_bool	ft_check_basic_rules(t_map *map);
 t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood);
 
+/**
+ * @brief The ft_parse_map_or_throw function parses the map. It gathers 
+ * information about the map, checks if the map is valid, and if so, returns
+ * the map. Otherwise, it frees the data and exits with an error.
+ * 
+ * @param data 
+ * @param map_path 
+ */
 void	ft_parse_map_or_throw(t_data *data, char *map_path)
 {
 	t_flood	*flood;
@@ -53,6 +61,13 @@ void	ft_parse_map_or_throw(t_data *data, char *map_path)
 	free(flood);
 }
 
+/**
+ * @brief The ft_get_map function reads the map file and returns the map as a
+ * 2D array of characters.
+ * 
+ * @param map_path 
+ * @return char** 
+ */
 char	**ft_get_map(char *map_path)
 {
 	char	*buffer;
@@ -68,6 +83,11 @@ char	**ft_get_map(char *map_path)
 	return (map);
 }
 
+/**
+ * @brief The ft_get_map_info function gathers information about the map.
+ * 
+ * @param map 
+ */
 void	ft_get_map_info(t_map *map)
 {
 	int	i;
@@ -93,6 +113,13 @@ void	ft_get_map_info(t_map *map)
 	map->height = i;
 }
 
+/**
+ * @brief The ft_check_basic_rules function checks if the map respects the
+ * basic rules imposed by the subject. If not, it returns false.
+ * 
+ * @param map 
+ * @return t_bool 
+ */
 t_bool	ft_check_basic_rules(t_map *map)
 {
 	int	i;
@@ -118,6 +145,18 @@ t_bool	ft_check_basic_rules(t_map *map)
 	return (true);
 }
 
+/**
+ * @brief The ft_is_map_possible function checks if the map is possible by
+ * flooding the map from the starting position. If the number of collectibles
+ * and exits is the same as the number of collectibles and exits in the map,
+ * it returns true. Otherwise, it returns false.
+ * 
+ * @param map 
+ * @param px 
+ * @param py 
+ * @param flood 
+ * @return t_bool 
+ */
 t_bool	ft_is_map_possible(t_map *map, int px, int py, t_flood *flood)
 {
 	if (flood->collectibles == map->collectibles && flood->exits == 1)

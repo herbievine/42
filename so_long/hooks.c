@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 14:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 19:12:19 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/08 13:21:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@
 #include <stdio.h>
 #include <X11/keysym.h>
 
-void	handle_move(int keysym, t_data *data)
+/**
+ * @brief The ft_handle_move function handles the movement of the player. It
+ * checks if the player is moving into a wall, and if not, it moves the player
+ * and increments the move counter.
+ * 
+ * @param keysym 
+ * @param data 
+ */
+void	ft_handle_move(int keysym, t_data *data)
 {
 	if (keysym == XK_Up
 		&& data->map->map[data->map->start.y - 1][data->map->start.x] != WALL
@@ -43,19 +51,28 @@ void	handle_move(int keysym, t_data *data)
 		++data->map->start.x;
 }
 
-int	on_keypress(int keysym, t_data *data)
+/**
+ * @brief The ft_on_keypress function handles the keypresses. It checks if the
+ * player has pressed the escape key, and if so, it calls the ft_on_close
+ * function. Otherwise, it calls the ft_handle_move function. It also handles
+ * the win condition.
+ * 
+ * @param keysym 
+ * @param data 
+ * @return int 
+ */
+int	ft_on_keypress(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape)
-		on_destroy(data);
-	else if (keysym == XK_Up || keysym == XK_Down
-		|| keysym == XK_Left || keysym == XK_Right)
-		handle_move(keysym, data);
+		ft_on_close(data);
+	else
+		ft_handle_move(keysym, data);
 	if (data->map->map[data->map->start.y][data->map->start.x] == EXIT
 		&& data->map->collectibles == 0)
 	{
 		ft_dprintf(1, "You win!\n");
 		ft_dprintf(1, "Total moves: %d\n", data->map->moves);
-		on_destroy(data);
+		ft_on_close(data);
 	}
 	else if (data->map->map[data->map->start.y][data->map->start.x] == COLL)
 	{
@@ -65,7 +82,14 @@ int	on_keypress(int keysym, t_data *data)
 	return (0);
 }
 
-int	on_destroy(t_data *data)
+/**
+ * @brief The ft_on_close function frees the textures, mlx, and data, and then
+ * exits the program.
+ * 
+ * @param data 
+ * @return int 
+ */
+int	ft_on_close(t_data *data)
 {
 	ft_free_textures(data);
 	ft_free_mlx(data);

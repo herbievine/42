@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:36:01 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 19:47:55 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/08 13:21:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
 
+/**
+ * @brief The ft_render_assets function renders the assets of the game. It
+ * renders the player, the collectibles, and the exit.
+ * 
+ * @param data 
+ */
 void	ft_render_assets(t_data *data)
 {
 	int	i;
@@ -49,6 +55,12 @@ void	ft_render_assets(t_data *data)
 	}
 }
 
+/**
+ * @brief The ft_render_bg function renders the background of the game. It
+ * handles the rendering of the floor and the walls.
+ * 
+ * @param data 
+ */
 void	ft_render_bg(t_data *data)
 {
 	int	i;
@@ -74,7 +86,15 @@ void	ft_render_bg(t_data *data)
 	}
 }
 
-int	ft_render(t_data *data)
+/**
+ * @brief The ft_on_render function is the main loop of the game. It gets
+ * called every time the window needs to be refreshed. It renders the
+ * background and the assets of the game.
+ * 
+ * @param data 
+ * @return int 
+ */
+int	ft_on_render(t_data *data)
 {
 	if (data->win_ptr == NULL)
 		return (0);
@@ -83,6 +103,12 @@ int	ft_render(t_data *data)
 	return (0);
 }
 
+/**
+ * @brief The ft_init_window function initializes the window of the game. It
+ * creates the window, loads the textures, and sets the hooks.
+ * 
+ * @param data 
+ */
 void	ft_init_window(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
@@ -95,10 +121,10 @@ void	ft_init_window(t_data *data)
 		return (ft_free_mlx(data), ft_free_data(data), ft_err(EX11));
 	if (!ft_load_textures(data))
 		return (ft_free_mlx(data), ft_free_data(data), ft_err(ETXTUR));
-	mlx_loop_hook(data->mlx_ptr, &ft_render, data);
-	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, data);
+	mlx_loop_hook(data->mlx_ptr, &ft_on_render, data);
+	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &ft_on_keypress, data);
 	mlx_hook(
-		data->win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, data);
+		data->win_ptr, DestroyNotify, StructureNotifyMask, &ft_on_close, data);
 	mlx_loop(data->mlx_ptr);
 	return (ft_free_textures(data), ft_free_mlx(data), ft_free_data(data));
 }
