@@ -50,7 +50,8 @@ int	on_keypress(int keysym, t_data *data)
 	else if (keysym == XK_Up || keysym == XK_Down
 		|| keysym == XK_Left || keysym == XK_Right)
 		handle_move(keysym, data);
-	if (data->map->map[data->map->start.y][data->map->start.x] == EXIT)
+	if (data->map->map[data->map->start.y][data->map->start.x] == EXIT
+		&& data->map->collectibles == 0)
 	{
 		ft_dprintf(1, "You win!\n");
 		ft_dprintf(1, "Total moves: %d\n", data->map->moves);
