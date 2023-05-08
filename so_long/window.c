@@ -100,6 +100,5 @@ void	ft_init_window(t_data *data)
 	mlx_hook(
 		data->win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, data);
 	mlx_loop(data->mlx_ptr);
-	printf("Exit success\n");
 	return (ft_free_textures(data), ft_free_mlx(data), ft_free_data(data));
 }

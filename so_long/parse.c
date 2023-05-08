@@ -99,7 +99,7 @@ t_bool	ft_check_basic_rules(t_map *map)
 	int	j;
 
 	if (map->collectibles < 1 || map->exits != 1 || map->entries != 1
-		|| map->width == map->height)
+		|| map->width == map->height || map->width < 3 || map->height < 3)
 		return (false);
 	i = -1;
 	while (map->map[++i])
