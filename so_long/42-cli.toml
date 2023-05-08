@@ -1,0 +1,6 @@
+name = "so_long"
+
+[scripts]
+install = [{ cmd = "make" }]
+run = [{ cmd = "./so_long maps/small.ber" }]
+clean = [{ cmd = "make fclean" }]
