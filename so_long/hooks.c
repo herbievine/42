@@ -66,8 +66,8 @@ int	on_keypress(int keysym, t_data *data)
 
 int	on_destroy(t_data *data)
 {
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_display(data->mlx_ptr);
+	ft_free_textures(data);
+	ft_free_mlx(data);
 	ft_free_data(data);
 	exit(0);
 	return (0);

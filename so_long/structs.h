@@ -49,11 +49,6 @@ typedef struct s_map
 	int		moves;
 }	t_map;
 
-typedef struct s_assets
-{
-	void	*mlx_img;
-}	t_assets;
-
 typedef struct s_data
 {
 	void		*mlx_ptr;

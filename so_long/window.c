@@ -13,6 +13,7 @@
 #include "window.h"
 #include "structs.h"
 #include "hooks.h"
+#include "error.h"
 #include "free.h"
 #include "textures.h"
 #include "mlx/mlx.h"
@@ -85,20 +86,20 @@ int	ft_render(t_data *data)
 void	ft_init_window(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
-	if (data->mlx_ptr == NULL)
-		return (ft_free_data(data));
+	if (!data->mlx_ptr)
+		return (ft_free_data(data), ft_err(EX11));
 	data->win_ptr = mlx_new_window(
 			data->mlx_ptr, data->map->width * TILE_SIZE,
 			data->map->height * TILE_SIZE, "herbie: so_long");
-	if (data->win_ptr == NULL)
-		return (ft_free_data(data));
+	if (!data->win_ptr)
+		return (ft_free_mlx(data), ft_free_data(data), ft_err(EX11));
 	if (!ft_load_textures(data))
-		return (ft_free_data(data));
+		return (ft_free_mlx(data), ft_free_data(data), ft_err(ETXTUR));
 	mlx_loop_hook(data->mlx_ptr, &ft_render, data);
 	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &on_keypress, data);
 	mlx_hook(
 		data->win_ptr, DestroyNotify, StructureNotifyMask, &on_destroy, data);
 	mlx_loop(data->mlx_ptr);
-	mlx_destroy_display(data->mlx_ptr);
-	ft_free_data(data);
+	printf("Exit success\n");
+	return (ft_free_textures(data), ft_free_mlx(data), ft_free_data(data));
 }

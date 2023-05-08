@@ -34,10 +34,7 @@ t_bool	ft_load_textures(t_data *data)
 		if (!data->textures[i])
 		{
 			while (--i >= 0)
-			{
 				mlx_destroy_image(data->mlx_ptr, data->textures[i]);
-				free(data->textures[i]);
-			}
 			return (false);
 		}
 	}

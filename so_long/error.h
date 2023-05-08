@@ -13,10 +13,14 @@
 #ifndef ERROR_H
 # define ERROR_H
 
+# include <stdio.h>
+
 # define EMAP "Invalid map"
-# define EIO "Input/output error"
+# define EIO "I/O error"
 # define EUNKN "Unknown error"
 # define ENOENT "No such file or directory"
+# define EX11 "X11 error"
+# define ETXTUR "Texture error"
 
 void	ft_err(char *msg);
 

@@ -17,6 +17,8 @@
 
 void	ft_free_array(char **array, int n);
 void	ft_free_2d_array(char ***array, int n);
+void	ft_free_textures(t_data *data);
+void	ft_free_mlx(t_data *data);
 void	ft_free_data(t_data *data);
 
 #endif /* FREE_H */
