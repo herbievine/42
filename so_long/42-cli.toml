@@ -1,6 +1,7 @@
 name = "so_long"
 
 [scripts]
-install = [{ cmd = "make" }]
+build = { cmd = "make", mlx = true }
 run = [{ cmd = "./so_long maps/small.ber" }]
-clean = [{ cmd = "make fclean" }]
+clean = { cmd = "make fclean", mlx = true }
+norm = { cmd = "norminette ." }
