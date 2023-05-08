@@ -25,22 +25,22 @@ void	handle_move(int keysym, t_data *data)
 		&& data->map->map[data->map->start.y - 1][data->map->start.x] != WALL
 		&& ++data->map->moves
 		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-	--data->map->start.y;
+		--data->map->start.y;
 	else if (keysym == XK_Down
 		&& data->map->map[data->map->start.y + 1][data->map->start.x] != WALL
 		&& ++data->map->moves
 		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-	++data->map->start.y;
+		++data->map->start.y;
 	else if (keysym == XK_Left
 		&& data->map->map[data->map->start.y][data->map->start.x - 1] != WALL
 		&& ++data->map->moves
 		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-	--data->map->start.x;
+		--data->map->start.x;
 	else if (keysym == XK_Right
 		&& data->map->map[data->map->start.y][data->map->start.x + 1] != WALL
 		&& ++data->map->moves
 		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-	++data->map->start.x;
+		++data->map->start.x;
 }
 
 int	on_keypress(int keysym, t_data *data)
