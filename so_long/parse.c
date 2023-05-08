@@ -35,18 +35,19 @@ void	ft_parse_map_or_throw(t_data *data, char *map_path)
 	if (!data->map->map)
 		return (ft_free_data(data), ft_err(EMAP));
 	ft_get_map_info(data->map);
-	flood = (t_flood *)malloc(sizeof(t_flood));
+	flood = malloc(sizeof(t_flood));
 	if (!flood)
 		return (ft_free_data(data), ft_err(EUNKN));
 	flood->collectibles = 0;
 	flood->exits = 0;
 	dup_map = ft_get_map(map_path);
 	if (!dup_map)
-		return (ft_free_data(data), ft_err(EUNKN));
+		return (free(flood), ft_free_data(data), ft_err(EUNKN));
 	if (!ft_check_basic_rules(data->map)
 		|| !ft_is_map_possible(
 			data->map, data->map->start.x, data->map->start.y, flood))
-		return (free(flood), ft_free_data(data), ft_err(EMAP));
+		return (free(flood), ft_free_array(dup_map, -1),
+			ft_free_data(data), ft_err(EMAP));
 	ft_free_array(data->map->map, -1);
 	data->map->map = dup_map;
 	free(flood);
