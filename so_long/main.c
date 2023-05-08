@@ -25,7 +25,6 @@ t_data	*ft_init(void)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (ft_err(EUNKN), NULL);
-	data->are_textures_loaded = 0;
 	data->map = malloc(sizeof(t_map));
 	if (!data->map)
 		return (free(data), ft_err(EUNKN), NULL);
