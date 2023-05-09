@@ -3,4 +3,4 @@ name = "libft"
 [scripts]
 build = { cmd = "make" }
 clean = { cmd = "make fclean" }
-norm = { cmd = "norminette ." }
+lint = { cmd = "norminette ." }

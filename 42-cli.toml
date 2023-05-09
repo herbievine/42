@@ -1,5 +1,5 @@
 name = "42"
-children = [
+projects = [
 	"libft",
 	"ft_printf",
 	"get_next_line",

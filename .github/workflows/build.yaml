@@ -13,11 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Install 42 CLI # CARGO_NET_GIT_FETCH_WITH_CLI=true
+        run: cargo install --git https://github.com/herbievine/42-cli.git --branch v2
+      - name: Install MLX dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gcc make xorg libxext-dev libbsd-dev
       - name: Build
-        run: make
-      - name: Re-build
-        run: make re
+        run: fourtytwo-cli build
       - name: Clean
-        run: make fclean
+        run: fourtytwo-cli clean

@@ -8,4 +8,4 @@ test = [
 	{ cmd = "rm -rf tester" }
 ]
 clean = { cmd = "make fclean" }
-norm = { cmd = "norminette ." }
+lint = { cmd = "norminette ." }

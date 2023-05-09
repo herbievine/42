@@ -4,4 +4,4 @@ name = "so_long"
 build = { cmd = "make", mlx = true }
 run = [{ cmd = "./so_long maps/small.ber" }]
 clean = { cmd = "make fclean", mlx = true }
-norm = { cmd = "norminette ." }
+lint = { cmd = "norminette ." }
