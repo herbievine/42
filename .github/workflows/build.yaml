@@ -17,13 +17,16 @@ jobs:
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
+          override: true
+      # - name: Clear Registry Cache
+      #   run: rm -rf ~/.cargo/registry
       - name: Install 42 CLI # CARGO_NET_GIT_FETCH_WITH_CLI=true
-        run: cargo install --git https://github.com/herbievine/42-cli.git --branch v2
-      - name: Install MLX dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq gcc make xorg libxext-dev libbsd-dev
+        run: cargo install --git https://github.com/herbievine/42-cli.git --branch v2 -Z sparse-registry
+      # - name: Install MLX dependencies
+      #   run: |
+      #     sudo apt-get update -qq
+      #     sudo apt-get install -y -qq gcc make xorg libxext-dev libbsd-dev
       - name: Build
         run: fourtytwo-cli build
       - name: Clean
