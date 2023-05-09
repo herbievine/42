@@ -1,4 +1,9 @@
 name = "get_next_line"
 
 [scripts]
+test = [
+	{ cmd = "git clone https://github.com/Tripouille/gnlTester.git tester" },
+	{ cmd = "make m", dir = "tester" },
+	{ cmd = "rm -rf tester" }
+]
 lint = { cmd = "norminette ." }

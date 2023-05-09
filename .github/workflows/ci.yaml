@@ -1,4 +1,4 @@
-name: Build
+name: CI
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  build:
-    name: Build
-    timeout-minutes: 2
+  ci:
+    name: CI
+    timeout-minutes: 5
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +17,10 @@ jobs:
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: stable
           override: true
-      - name: Install 42 CLI # CARGO_NET_GIT_FETCH_WITH_CLI=true
-        run: cargo install --git https://github.com/herbievine/42-cli.git --branch v2 -Z sparse-registry
+      - name: Install 42 CLI
+        run: CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install --git https://github.com/herbievine/42-cli.git --branch v2
       - name: Install MLX dependencies
         run: |
           sudo apt-get update -qq
@@ -29,3 +29,5 @@ jobs:
         run: fourtytwo-cli build
       - name: Clean
         run: fourtytwo-cli clean
+      - name: Lint
+        run: fourtytwo-cli lint
