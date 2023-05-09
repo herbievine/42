@@ -1,0 +1,11 @@
+name = "libft"
+
+[scripts]
+build = { cmd = "make" }
+test = [
+	{ cmd = "git clone https://github.com/Tripouille/libftTester.git tester" },
+	{ cmd = "make m", dir = "tester" },
+	{ cmd = "rm -rf tester" }
+]
+clean = { cmd = "make fclean" }
+lint = { cmd = "norminette ." }

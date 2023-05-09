@@ -1,0 +1,15 @@
+name = "ft_printf"
+
+[scripts]
+build = { cmd = "make" }
+test = [
+	{ cmd = "git clone https://github.com/LeoFu9487/push_swap_tester.git tester" },
+	{ cmd = "bash loop.sh 3 10", dir = "tester" },
+	{ cmd = "bash loop.sh 5 10", dir = "tester" },
+	{ cmd = "bash loop.sh 10 10", dir = "tester" },
+	{ cmd = "bash loop.sh 100 10", dir = "tester" },
+	{ cmd = "bash loop.sh 500 10", dir = "tester" },
+	{ cmd = "rm -rf tester" }
+]
+clean = { cmd = "make fclean" }
+lint = { cmd = "norminette ." }

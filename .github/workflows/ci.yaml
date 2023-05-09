@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  ci:
+    name: CI
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install 42 CLI
+        run: CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install --git https://github.com/herbievine/42-cli.git --branch v2
+      - name: Install MLX dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gcc make xorg libxext-dev libbsd-dev
+      - name: Install Norminette
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          pip install norminette
+      - name: Build
+        run: fourtytwo-cli build
+      - name: Clean
+        run: fourtytwo-cli clean
+      - name: Lint
+        run: fourtytwo-cli lint
