@@ -12,7 +12,7 @@
 
 NAME = so_long
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 ifeq ($(shell uname), Linux)
