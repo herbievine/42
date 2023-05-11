@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.h                                           :+:      :+:    :+:   */
+/*   ints.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 13:36:08 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 14:42:04 by herbie           ###   ########.fr       */
+/*   Created: 2023/05/11 17:30:18 by codespace         #+#    #+#             */
+/*   Updated: 2023/05/11 17:30:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_H
-# define WINDOW_H
+#ifndef INTS_H
+# define INTS_H
 
-# include "structs.h"
+int		ft_intlen(int n);
+char	*ft_itoa(int n);
 
-# define SCORE_OFFSET 50
-
-void	ft_init_window(t_data *data);
-
-#endif /* WINDOW_H */
+#endif
