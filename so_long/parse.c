@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 14:27:45 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/15 11:03:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,19 @@ char	**ft_get_map(char *map_path)
 	char	*buffer;
 	char	**map;
 	int		fd;
+	int		i;
 
 	buffer = NULL;
 	fd = open(map_path, O_RDONLY);
 	if (ft_read(&buffer, fd) < 0)
 		return (NULL);
+	i = -1;
+	while (buffer[++i])
+	{
+		printf("%c", buffer[i]);
+		if (buffer[i] == '\n' && buffer[i + 1] == '\n')
+			return (free(buffer), NULL);
+	}
 	map = ft_split(buffer, '\n');
 	free(buffer);
 	return (map);
