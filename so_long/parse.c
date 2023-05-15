@@ -81,11 +81,8 @@ char	**ft_get_map(char *map_path)
 		return (NULL);
 	i = -1;
 	while (buffer[++i])
-	{
-		printf("%c", buffer[i]);
 		if (buffer[i] == '\n' && buffer[i + 1] == '\n')
 			return (free(buffer), NULL);
-	}
 	map = ft_split(buffer, '\n');
 	free(buffer);
 	return (map);
