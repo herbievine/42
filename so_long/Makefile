@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/05/11 17:35:45 by codespace        ###   ########.fr        #
+#    Updated: 2023/05/18 12:23:38 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ clean:
 
 fclean: clean
 	$(RM) $(RMFLAG) $(NAME)
-	@make -C $(MLX_DIR) clean
+	if [ -d "./mlx" ]; then make -C $(MLX_DIR) clean; fi
 
 re: fclean all
 
