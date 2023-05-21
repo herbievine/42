@@ -1,0 +1,9 @@
+name = "philo"
+
+[scripts]
+build = { cmd = "make" }
+test = [
+	{ cmd = "valgrind --tool=helgrind --check-leaks=full ./philo 5 800 400 400" }
+]
+clean = { cmd = "make fclean" }
+lint = { cmd = "norminette ." }

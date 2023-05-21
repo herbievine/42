@@ -5,7 +5,8 @@ projects = [
 	"get_next_line",
 	"pipex",
 	"push_swap",
-	"so_long"
+	"so_long",
+	"philosophers/philo",
 ]
-        
+
 [scripts]

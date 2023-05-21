@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:18:12 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:14:01 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_strtrim() function allocates (with malloc(3)) and returns a copy
+ * @brief The ft_strtrim funtion allocates (with malloc(3)) and returns a copy
  * of 's1' with the characters specified in 'set' removed from the beginning and
  * the end of the string.
  * 

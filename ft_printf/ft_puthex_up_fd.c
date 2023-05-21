@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthex_up_fd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 08:15:37 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/17 17:34:43 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /**
- * @brief The ft_puthex_up_fd() function outputs the hexadecimal representation
+ * @brief The ft_puthex_up_fd funtion outputs the hexadecimal representation
  * of the unsigned integer 'n' to the given file descriptor and returns the
  * number of bytes written.
  * 

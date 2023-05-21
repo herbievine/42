@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:58:05 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 08:57:24 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 
 /**
- * @brief The ft_rotate() function rotates the stack, moving all elements up by
+ * @brief The ft_rotate funtion rotates the stack, moving all elements up by
  * one, and the first element becomes the last.
  *
  * @param lst
@@ -37,7 +37,7 @@ void	ft_rotate(t_list **list, char *op)
 }
 
 /**
- * @brief The ft_push() function moves the first element of the stack to the top
+ * @brief The ft_push funtion moves the first element of the stack to the top
  * of the other stack.
  * 
  * @param src 
@@ -62,7 +62,7 @@ void	ft_push(t_list **src, t_list **dst, char *op)
 }
 
 /**
- * @brief The ft_swap() function swaps the first two elements of the stack.
+ * @brief The ft_swap funtion swaps the first two elements of the stack.
  * 
  * @param lst 
  * @param op
@@ -78,7 +78,7 @@ void	ft_swap(t_list **list, char *op)
 }
 
 /**
- * @brief The ft_reverse_rotate() function rotates the stack in the opposite
+ * @brief The ft_reverse_rotate funtion rotates the stack in the opposite
  * direction, moving all elements down by one, and the last element becomes the
  * first.
  * 

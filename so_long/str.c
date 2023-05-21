@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:14:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 19:16:14 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 /**
- * @brief The ft_strlen() function computes the length of the string s.
+ * @brief The ft_strlen funtion computes the length of the string s.
  *
  * @param s
  * @return size_t
@@ -31,7 +31,7 @@ size_t	ft_strlen(const char *s)
 }
 
 /**
- * @brief The ft_strchr() function locates the first occurrence of c (converted
+ * @brief The ft_strchr funtion locates the first occurrence of c (converted
  * to a char) in the string pointed to by s. The terminating null character is
  * considered to be part of the string; therefore if c is '\0', the functions
  * locate the terminating '\0'.
@@ -54,7 +54,7 @@ char	*ft_strchr(const char *s, int c)
 }
 
 /**
- * @brief The ft_strjoin() function allocates (with malloc(3)) and returns a new
+ * @brief The ft_strjoin funtion allocates (with malloc(3)) and returns a new
  * string, which is the result of the concatenation of 's1' and 's2'.
  *
  * @param s1
@@ -81,7 +81,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 /**
- * @brief The ft_strncmp() function lexicographically compares the
+ * @brief The ft_strncmp funtion lexicographically compares the
  * null-terminated strings s1 and s2.
  *
  * @param s1
@@ -102,7 +102,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 }
 
 /**
- * @brief The ft_substr() function allocates (with malloc(3)) and returns a
+ * @brief The ft_substr funtion allocates (with malloc(3)) and returns a
  * substring from the string 's'. The substring begins at index 'start' and is of
  * maximum size 'len'.
  * 

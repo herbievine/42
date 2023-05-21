@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 13:10:04 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/12 15:53:53 by hvine            ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The strlcat() function appends string src to the end of dst. It will
+ * @brief The strlcat funtion appends string src to the end of dst. It will
  * append at most size - strlen(dst) - 1 bytes, NULL-terminating the result.
  * 
  * @param dst 

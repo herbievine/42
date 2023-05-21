@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 09:33:09 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/14 15:58:25 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_itoa() function allocates (with malloc(3)) and returns a
+ * @brief The ft_itoa funtion allocates (with malloc(3)) and returns a
  * string representing the integer received as an argument.
  * 
  * @param n 

@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 09:58:17 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:13:30 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_putchar_fd() function outputs the character 'c' to the given
+ * @brief The ft_putchar_fd funtion outputs the character 'c' to the given
  * file descriptor.
  * 
  * @param c 

@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 08:23:48 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/01 18:19:50 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /**
- * @brief The ft_strlen() function computes the length of the string s.
+ * @brief The ft_strlen funtion computes the length of the string s.
  *
  * @param s
  * @return size_t
@@ -29,7 +29,7 @@ size_t	ft_strlen(const char *s)
 }
 
 /**
- * @brief The ft_strchr() function locates the first occurrence of c (converted
+ * @brief The ft_strchr funtion locates the first occurrence of c (converted
  * to a char) in the string pointed to by s. The terminating null character is
  * considered to be part of the string; therefore if c is '\0', the functions
  * locate the terminating '\0'.
@@ -52,7 +52,7 @@ char	*ft_strchr(const char *s, int c)
 }
 
 /**
- * @brief The ft_strlcpy() function copies up to 'size' - 1 characters from the
+ * @brief The ft_strlcpy funtion copies up to 'size' - 1 characters from the
  * NUL-terminated string 'src' to 'dst', NUL-terminating the result.
  *
  * @param dst
@@ -74,7 +74,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 }
 
 /**
- * @brief The ft_strjoin() function allocates (with malloc(3)) and returns a new
+ * @brief The ft_strjoin funtion allocates (with malloc(3)) and returns a new
  * string, which is the result of the concatenation of 's1' and 's2'.
  *
  * @param s1
@@ -99,7 +99,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 /**
- * @brief The ft_strndup() function copies up to 'n' characters from the string
+ * @brief The ft_strndup funtion copies up to 'n' characters from the string
  * 's1' to a fresh allocated string.
  *
  * @param s

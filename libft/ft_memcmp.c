@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 11:57:05 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:05:48 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The memcmp() function compares byte string s1 against byte string s2.
+ * @brief The memcmp funtion compares byte string s1 against byte string s2.
  * Both strings are assumed to be n bytes long.
  * 
  * @param s1 

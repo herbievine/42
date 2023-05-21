@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:15:07 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/10 21:57:19 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static int	ft_print_recursive(unsigned long n, char *base, int fd);
 
 /**
- * @brief The ft_putnbr_fd() function outputs the integer 'n' to the given
+ * @brief The ft_putnbr_fd funtion outputs the integer 'n' to the given
  * file descriptor and returns the number of bytes written.
  * 
  * @param n 
@@ -70,7 +70,7 @@ int	ft_putstr_fd(char *s, int fd)
 }
 
 /**
- * @brief The ft_putnbr_base_fd() function outputs the representation of the
+ * @brief The ft_putnbr_base_fd funtion outputs the representation of the
  * unsigned integer 'n' in the given base to the given file descriptor and
  * returns the number of bytes written.
  * 

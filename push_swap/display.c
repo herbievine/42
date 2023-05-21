@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:43:42 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 14:43:45 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 /**
- * @brief The ft_putchar_fd() function outputs the character 'c' to the given
+ * @brief The ft_putchar_fd funtion outputs the character 'c' to the given
  * file descriptor and returns the number of bytes written.
  *
  * @param c
@@ -29,7 +29,7 @@ int	ft_putchar_fd(char c, int fd)
 }
 
 /**
- * @brief The ft_putstr_fd() function outputs the string 's' to the given file
+ * @brief The ft_putstr_fd funtion outputs the string 's' to the given file
  * descriptor and returns the number of bytes written. If 's' is NULL, the
  * function writes "(null)" to the file descriptor and returns 6.
  *

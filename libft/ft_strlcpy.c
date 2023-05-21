@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 13:09:20 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:11:04 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_strlcpy() function copies up to 'size' - 1 characters from the
+ * @brief The ft_strlcpy funtion copies up to 'size' - 1 characters from the
  * NUL-terminated string 'src' to 'dst', NUL-terminating the result.
  * 
  * @param dst 

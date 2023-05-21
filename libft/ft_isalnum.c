@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 11:16:02 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 21:18:45 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_isalnum() function returns zero if the character tests false and
+ * @brief The ft_isalnum funtion returns zero if the character tests false and
  * returns non-zero if the character tests true.
  * 
  * @param c 

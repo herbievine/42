@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:15:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/27 13:52:38 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 /**
- * @brief The ft_bzero() function writes n zeroed bytes to the string s. If n is
+ * @brief The ft_bzero funtion writes n zeroed bytes to the string s. If n is
  * zero, ft_bzero() does nothing.
  *
  * @param s
@@ -27,7 +27,7 @@ void	ft_bzero(void *s, size_t n)
 }
 
 /**
- * @brief The ft_calloc() function allocates memory for an array of nmemb
+ * @brief The ft_calloc funtion allocates memory for an array of nmemb
  * elements of size bytes each and returns a pointer to the allocated memory.
  * The memory is set to zero.
  *
@@ -49,7 +49,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 }
 
 /**
- * @brief The memset() function writes len bytes of value c (converted to an
+ * @brief The memset funtion writes len bytes of value c (converted to an
  * unsigned char) to the string b.
  *
  * @param s

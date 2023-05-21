@@ -1,4 +1,4 @@
-name = "ft_printf"
+name = "pipex"
 
 [scripts]
 build = { cmd = "make" }
