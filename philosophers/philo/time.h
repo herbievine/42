@@ -15,7 +15,7 @@
 
 # include "structs.h"
 
-t_timeval	ft_get_time_in_ms(void);
-int	ft_get_time_diff_in_ms(t_timeval time);
+unsigned long	ft_get_time_in_ms(void);
+int	ft_get_time_diff_in_ms(unsigned long time);
 
 #endif /* TIME_H */

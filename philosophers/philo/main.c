@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 13:54:33 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 20:45:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	ft_init_forks(t_fork *forks, t_data *data)
+void ft_init_forks(t_fork *forks, t_data *data)
 {
-	int	i;
+	int i;
 
 	i = -1;
 	while (++i < data->philo_count)
 		forks[i].is_taken = false;
 }
 
-void	ft_init_philos(t_philo *philos, t_data *data, t_fork *forks)
+void ft_init_philos(t_philo *philos, t_data *data, t_fork *forks)
 {
-	int	i;
+	int i;
 
 	i = -1;
 	while (++i < data->philo_count)
@@ -44,23 +44,22 @@ void	ft_init_philos(t_philo *philos, t_data *data, t_fork *forks)
 	}
 }
 
-void	ft_init_data(t_data *data)
+void ft_init_data(t_data *data)
 {
 	data->philo_count = 0;
 	data->time_die_in_ms = 0;
 	data->time_eat_in_ms = 0;
 	data->time_sleep_in_ms = 0;
 	data->max_eat = -1;
-	data->start_time.tv_sec = 0;
-	data->start_time.tv_usec = 0;
+	data->start_time = 0;
 	data->is_dead = false;
 }
 
-int	main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-	t_data	data;
-	t_philo	*philos;
-	t_fork	*forks;
+	t_data data;
+	t_philo *philos;
+	t_fork *forks;
 
 	ft_init_data(&data);
 	if (!ft_parse_args(argc, argv, &data))

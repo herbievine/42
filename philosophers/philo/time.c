@@ -19,14 +19,14 @@
  * @brief The ft_get_time_in_ms function returns the current time in
  * milliseconds.
  * 
- * @return t_timeval 
+ * @return unsigned long 
  */
-t_timeval	ft_get_time_in_ms(void)
+unsigned long	ft_get_time_in_ms(void)
 {
 	t_timeval	time;
 
 	gettimeofday(&time, NULL);
-	return (time);
+	return ((unsigned long)(time.tv_sec * 1000 + time.tv_usec / 1000));
 }
 
 /**
@@ -36,12 +36,10 @@ t_timeval	ft_get_time_in_ms(void)
  * @param time
  * @return int 
  */
-int	ft_get_time_diff_in_ms(t_timeval time)
+int	ft_get_time_diff_in_ms(unsigned long time)
 {
-	t_timeval	current_time;
+	unsigned long	current_time;
 
 	current_time = ft_get_time_in_ms();
-	current_time.tv_sec -= time.tv_sec;
-	current_time.tv_usec -= time.tv_usec;
-	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
+	return ((int)(current_time - time));
 }

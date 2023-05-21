@@ -32,25 +32,25 @@ typedef struct s_fork
 
 typedef struct s_data
 {
-	int			philo_count;
-	int			time_die_in_ms;
-	int			time_eat_in_ms;
-	int			time_sleep_in_ms;
-	int			max_eat;
-	t_timeval	start_time;
-	t_bool		is_dead;
+	int				philo_count;
+	int				time_die_in_ms;
+	int				time_eat_in_ms;
+	int				time_sleep_in_ms;
+	int				max_eat;
+	unsigned long	start_time;
+	t_bool			is_dead;
 }	t_data;
 
 typedef struct s_philo
 {
-	int			id;
-	t_bool		is_eating;
-	int			eat_count;
-	t_data		*data;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
-	t_timeval	last_meal_time;
-	pthread_t	thread;
+	int				id;
+	t_bool			is_eating;
+	int				eat_count;
+	t_data			*data;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	unsigned long	last_meal_time;
+	pthread_t		thread;
 }	t_philo;
 
 #endif /* STRUCTS_H */
