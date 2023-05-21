@@ -13,18 +13,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
+          profile: minimal
           toolchain: stable
           override: true
       - name: Install Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+      - name: Install sccache
+        uses: mozilla-actions/sccache-action@v0.0.3
+        with:
+          token: ${{ github.token }}
       - name: Install 42 CLI
-        run: CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install --git https://github.com/herbievine/42-cli.git --branch v2
+        run: cargo install ftcli
+        env:
+          SCCACHE_GHA_ENABLED: "true"
+          RUSTC_WRAPPER: "sccache"
+          CARGO_NET_GIT_FETCH_WITH_CLI: "true"
       - name: Install MLX dependencies
         run: |
           sudo apt-get update -qq
@@ -34,8 +44,8 @@ jobs:
           python3 -m pip install --upgrade pip setuptools
           pip install norminette
       - name: Build
-        run: fourtytwo-cli build
+        run: ftcli build
       - name: Clean
-        run: fourtytwo-cli clean
+        run: ftcli clean
       - name: Lint
-        run: fourtytwo-cli lint
+        run: ftcli lint
