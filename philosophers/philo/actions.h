@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   threads.h                                          :+:      :+:    :+:   */
+/*   actions.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 13:55:47 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 13:56:01 by herbie           ###   ########.fr       */
+/*   Created: 2023/05/21 15:14:10 by herbie            #+#    #+#             */
+/*   Updated: 2023/05/21 15:30:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THREADS_H
-# define THREADS_H
+#ifndef ACTIONS_H
+# define ACTIONS_H
 
 # include "structs.h"
 
-t_bool	ft_spawn_threads(t_data *data, t_philo *philos);
+void	ft_take_forks(t_philo *philo);
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
 
-#endif /* THREADS_H */
+#endif /* ACTIONS_H */

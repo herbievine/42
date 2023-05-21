@@ -13,7 +13,9 @@
 #ifndef TIME_H
 # define TIME_H
 
-int	ft_get_time_in_ms(void);
-int	ft_get_time_diff_in_ms(int time_in_ms);
+# include "structs.h"
+
+t_timeval	ft_get_time_in_ms(void);
+int	ft_get_time_diff_in_ms(t_timeval time);
 
 #endif /* TIME_H */

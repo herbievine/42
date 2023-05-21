@@ -13,8 +13,6 @@
 #ifndef INT_H
 # define INT_H
 
-int		ft_intlen(int n);
-char	*ft_itoa(int n);
-int		ft_atoi(char *str);
+int	ft_atoi(char *str);
 
 #endif

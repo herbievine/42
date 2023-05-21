@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/05/21 14:22:08 by herbie           ###   ########.fr        #
+#    Updated: 2023/05/21 15:27:17 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,13 @@ RMFLAG = -f
 
 SRCS = \
 	main.c \
-	mem.c \
-	str.c \
 	int.c \
-	split.c \
 	error.c \
 	free.c \
 	parse.c \
 	threads.c \
-	time.c
+	time.c \
+	actions.c
 
 OBJS = $(SRCS:.c=.o)
 

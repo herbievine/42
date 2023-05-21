@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 11:46:55 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 14:01:28 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 15:27:32 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@ t_bool	ft_parse_args(int argc, char **argv, t_data *data)
 	data->time_sleep_in_ms = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->max_eat = ft_atoi(argv[5]);
+	if (data->philo_count < 1 || data->time_die_in_ms < 1
+		|| data->time_eat_in_ms < 1 || data->time_sleep_in_ms < 1
+		|| (argc == 6 && data->max_eat < 1))
+		return (false);
 	return (true);
 }
