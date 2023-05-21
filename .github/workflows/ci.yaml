@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -24,15 +25,16 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Run sccache-cache
+      - name: Install sccache
         uses: mozilla-actions/sccache-action@v0.0.3
         with:
           token: ${{ github.token }}
-      - name: Install 42 CLI # CARGO_NET_GIT_FETCH_WITH_CLI=true
-        run: CARGO_NET_GIT_FETCH_WITH_CLI=true cargo install ftcli
+      - name: Install 42 CLI
+        run: cargo install ftcli
         env:
           SCCACHE_GHA_ENABLED: "true"
           RUSTC_WRAPPER: "sccache"
+          CARGO_NET_GIT_FETCH_WITH_CLI: "true"
       - name: Install MLX dependencies
         run: |
           sudo apt-get update -qq
