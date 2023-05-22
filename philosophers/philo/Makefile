@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/05/22 11:03:22 by herbie           ###   ########.fr        #
+#    Updated: 2023/05/22 09:30:15 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
+
+ifeq ($(shell uname), Linux)
+	PTHREAD_FLAGS = -pthread
+endif
 
 SRCS = \
 	main.c \
@@ -38,7 +42,7 @@ bonus: all
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME): $(OBJS) 
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PTHREAD_FLAGS)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
