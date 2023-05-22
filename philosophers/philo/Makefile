@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/05/21 15:27:17 by herbie           ###   ########.fr        #
+#    Updated: 2023/05/22 11:03:22 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ SRCS = \
 	main.c \
 	int.c \
 	error.c \
-	free.c \
 	parse.c \
 	threads.c \
 	time.c \
-	actions.c
+	actions.c \
+	structs.c
 
 OBJS = $(SRCS:.c=.o)
 

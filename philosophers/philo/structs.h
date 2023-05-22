@@ -54,4 +54,8 @@ typedef struct s_philo
 	pthread_t		thread;
 }	t_philo;
 
+void	ft_init_forks(t_fork *forks, t_data *data);
+void	ft_init_philos(t_philo *philos, t_data *data, t_fork *forks);
+void	ft_init_data(t_data *data);
+
 #endif /* STRUCTS_H */

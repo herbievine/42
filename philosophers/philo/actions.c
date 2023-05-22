@@ -37,6 +37,12 @@ static void	ft_internal_usleep(t_philo *philo, unsigned long time)
 	}
 }
 
+/**
+ * @brief The ft_print function prints the message with the current time.
+ * 
+ * @param philo 
+ * @param msg 
+ */
 static void	ft_print(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&(philo->data->print_mutex));
