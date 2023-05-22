@@ -37,33 +37,27 @@ static void	ft_internal_usleep(t_philo *philo, unsigned long time)
 	}
 }
 
-/**
- * @brief The ft_take_forks function locks the mutexes of the left and right
- * forks.
- * 
- * @param philo 
- */
-void	ft_take_forks(t_philo *philo)
+static void	ft_print(t_philo *philo, char *msg)
 {
-	pthread_mutex_lock(&(philo->left_fork->mutex));
-	printf("[%dms] %d has taken a fork\n",
-		ft_get_time_diff_in_ms(philo->data->start_time), philo->id);
-	pthread_mutex_lock(&(philo->right_fork->mutex));
-	printf("[%dms] %d has taken a fork\n",
-		ft_get_time_diff_in_ms(philo->data->start_time), philo->id);
+	pthread_mutex_lock(&(philo->data->print_mutex));
+	if (!philo->data->is_dead)
+		printf("[%dms] %d %s\n", ft_get_time_diff_in_ms(philo->data->start_time),
+			philo->id, msg);
+	pthread_mutex_unlock(&(philo->data->print_mutex));
 }
 
 /**
- * @brief The ft_eat function prints that the philosopher is eating, updates
- * the last meal time and sleeps for the specified time in milliseconds. It
- * then unlocks the mutexes of the left and right forks.
+ * @brief The ft_eat function takes two forks, eats and then releases them.
  * 
  * @param philo 
  */
 void	ft_eat(t_philo *philo)
 {
-	printf("[%dms] %d is eating\n",
-		ft_get_time_diff_in_ms(philo->data->start_time), philo->id);
+	pthread_mutex_lock(&(philo->left_fork->mutex));
+	ft_print(philo, "has taken a fork");
+	pthread_mutex_lock(&(philo->right_fork->mutex));
+	ft_print(philo, "has taken a fork");
+	ft_print(philo, "is eating");
 	philo->last_meal_time = ft_get_time_in_ms();
 	ft_internal_usleep(philo, philo->data->time_eat_in_ms);
 	pthread_mutex_unlock(&(philo->left_fork->mutex));
@@ -71,25 +65,13 @@ void	ft_eat(t_philo *philo)
 }
 
 /**
- * @brief The ft_sleep function prints that the philosopher is sleeping and
- * sleeps for the specified time in milliseconds.
+ * @brief The ft_sleep_and_think function sleeps and thinks.
  * 
  * @param philo 
  */
-void	ft_sleep(t_philo *philo)
+void	ft_sleep_and_think(t_philo *philo)
 {
-	printf("[%dms] %d is sleeping\n",
-		ft_get_time_diff_in_ms(philo->data->start_time), philo->id);
+	ft_print(philo, "is sleeping");
 	ft_internal_usleep(philo, philo->data->time_sleep_in_ms);
-}
-
-/**
- * @brief The ft_think function prints that the philosopher is thinking.
- * 
- * @param philo 
- */
-void	ft_think(t_philo *philo)
-{
-	printf("[%dms] %d is thinking\n",
-		ft_get_time_diff_in_ms(philo->data->start_time), philo->id);
+	ft_print(philo, "is thinking");
 }

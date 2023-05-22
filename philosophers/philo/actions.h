@@ -15,9 +15,7 @@
 
 # include "structs.h"
 
-void	ft_take_forks(t_philo *philo);
 void	ft_eat(t_philo *philo);
-void	ft_sleep(t_philo *philo);
-void	ft_think(t_philo *philo);
+void	ft_sleep_and_think(t_philo *philo);
 
 #endif /* ACTIONS_H */

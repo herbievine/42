@@ -39,6 +39,7 @@ typedef struct s_data
 	int				max_eat;
 	unsigned long	start_time;
 	t_bool			is_dead;
+	pthread_mutex_t	print_mutex;
 }	t_data;
 
 typedef struct s_philo

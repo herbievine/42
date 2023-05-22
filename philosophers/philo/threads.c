@@ -16,55 +16,77 @@
 #include "time.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-t_bool hasDied(t_philo *philo)
+static void	ft_wait_for_exit(t_data *data, t_philo *philos)
 {
-	if (ft_get_time_diff_in_ms(philo->last_meal_time) > philo->data->time_die_in_ms)
-		return (true);
-	return (false);
+	int	i;
+
+	while (data->max_eat != 0 || !data->is_dead)
+	{
+		i = -1;
+		while (++i < data->philo_count)
+		{
+			if (ft_get_time_diff_in_ms(philos[i].last_meal_time)
+				> philos[i].data->time_die_in_ms)
+			{
+				printf("[%dms] %d died\n",
+					ft_get_time_diff_in_ms(philos[i].data->start_time),
+					philos[i].id);
+				data->is_dead = true;
+				pthread_mutex_unlock(&philos[i].left_fork->mutex);
+				pthread_mutex_unlock(&philos[i].right_fork->mutex);
+				return ;
+			}
+		}
+	}
 }
 
-void *ft_philo_routine(void *arg)
+void	*ft_philo_routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (42 && philo->data->is_dead == false)
+	while (!philo->data->is_dead)
 	{
-		ft_take_forks(philo);
 		ft_eat(philo);
-		ft_sleep(philo);
-		ft_think(philo);
-		if (hasDied(philo))
-		{
-			printf("[%dms] %d died\n", ft_get_time_diff_in_ms(philo->data->start_time), philo->id);
-			return (NULL);
-		}
+		ft_sleep_and_think(philo);
 	}
 	return (NULL);
 }
 
-t_bool ft_spawn_threads(t_data *data, t_philo *philos)
+static t_bool	ft_destroy_threads(t_data *data, t_philo *philos)
 {
-	int i;
+	int	i;
 
 	i = -1;
+	while (++i < data->philo_count)
+	{
+		if (pthread_join(philos[i].thread, NULL)
+			|| pthread_mutex_destroy(&(philos[i].right_fork->mutex)))
+			return (false);
+	}
+	pthread_mutex_unlock(&data->print_mutex);
+	pthread_mutex_destroy(&data->print_mutex);
+	free(philos);
+	return (true);
+}
+
+t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
+{
+	int	i;
+
+	i = -1;
+	pthread_mutex_init(&data->print_mutex, NULL);
 	while (++i < data->philo_count)
 	{
 		pthread_mutex_init(&(philos[i].left_fork->mutex), NULL);
 		pthread_mutex_init(&(philos[i].right_fork->mutex), NULL);
 		philos[i].last_meal_time = ft_get_time_in_ms();
 		if (pthread_create(&(philos[i].thread), NULL,
-											 &ft_philo_routine, &(philos[i])))
+				&ft_philo_routine, &(philos[i])))
 			return (false);
 	}
-	i = -1;
-	while (++i < data->philo_count)
-	{
-		if (pthread_join(philos[i].thread, NULL))
-			return (false);
-		pthread_mutex_destroy(&(philos[i].left_fork->mutex));
-		pthread_mutex_destroy(&(philos[i].right_fork->mutex));
-	}
-	return (true);
+	ft_wait_for_exit(data, philos);
+	return (ft_destroy_threads(data, philos));
 }

@@ -19,18 +19,18 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void ft_init_forks(t_fork *forks, t_data *data)
+void	ft_init_forks(t_fork *forks, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < data->philo_count)
 		forks[i].is_taken = false;
 }
 
-void ft_init_philos(t_philo *philos, t_data *data, t_fork *forks)
+void	ft_init_philos(t_philo *philos, t_data *data, t_fork *forks)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < data->philo_count)
@@ -44,7 +44,7 @@ void ft_init_philos(t_philo *philos, t_data *data, t_fork *forks)
 	}
 }
 
-void ft_init_data(t_data *data)
+void	ft_init_data(t_data *data)
 {
 	data->philo_count = 0;
 	data->time_die_in_ms = 0;
@@ -55,11 +55,11 @@ void ft_init_data(t_data *data)
 	data->is_dead = false;
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_data data;
-	t_philo *philos;
-	t_fork *forks;
+	t_data	data;
+	t_philo	*philos;
+	t_fork	*forks;
 
 	ft_init_data(&data);
 	if (!ft_parse_args(argc, argv, &data))
@@ -75,5 +75,6 @@ int main(int argc, char *argv[])
 	data.start_time = ft_get_time_in_ms();
 	if (!ft_spawn_threads(&data, philos))
 		return (ft_err(EUNKN));
+	free(forks);
 	return (0);
 }
