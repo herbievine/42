@@ -33,9 +33,9 @@ static void	ft_wait_for_exit(t_data *data, t_philo *philos)
 				printf("[%dms] %d died\n",
 					ft_get_time_diff_in_ms(philos[i].data->start_time),
 					philos[i].id);
+				pthread_mutex_lock(&philos[i].data->data_mutex);
 				data->is_dead = true;
-				pthread_mutex_unlock(&philos[i].left_fork->mutex);
-				pthread_mutex_unlock(&philos[i].right_fork->mutex);
+				pthread_mutex_unlock(&philos[i].data->data_mutex);
 				return ;
 			}
 		}
@@ -57,17 +57,20 @@ void	*ft_philo_routine(void *arg)
 
 static t_bool	ft_destroy_threads(t_data *data, t_philo *philos)
 {
+	t_data	*data_to_free;
 	int	i;
 
+	data_to_free = ft_read_data_from_mutex(data);
 	i = -1;
-	while (++i < data->philo_count)
+	while (++i < data_to_free->philo_count)
 	{
 		if (pthread_join(philos[i].thread, NULL)
 			|| pthread_mutex_destroy(&(philos[i].right_fork->mutex)))
 			return (false);
 	}
-	pthread_mutex_unlock(&data->print_mutex);
-	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data_to_free->print_mutex);
+	pthread_mutex_destroy(&data_to_free->data_mutex);
+	free(data_to_free);
 	free(philos);
 	return (true);
 }
@@ -78,6 +81,7 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 
 	i = -1;
 	pthread_mutex_init(&data->print_mutex, NULL);
+	pthread_mutex_init(&data->data_mutex, NULL);
 	while (++i < data->philo_count)
 	{
 		pthread_mutex_init(&(philos[i].left_fork->mutex), NULL);

@@ -40,6 +40,7 @@ typedef struct s_data
 	unsigned long	start_time;
 	t_bool			is_dead;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t data_mutex;
 }	t_data;
 
 typedef struct s_philo
@@ -54,6 +55,7 @@ typedef struct s_philo
 	pthread_t		thread;
 }	t_philo;
 
+t_data	*ft_read_data_from_mutex(t_data *data);
 void	ft_init_forks(t_fork *forks, t_data *data);
 void	ft_init_philos(t_philo *philos, t_data *data, t_fork *forks);
 void	ft_init_data(t_data *data);

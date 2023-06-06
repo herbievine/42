@@ -27,7 +27,7 @@ RMFLAG = -f
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
 ifeq ($(shell uname), Linux)
-	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm -lz
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 else
 	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit
 endif

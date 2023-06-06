@@ -45,11 +45,13 @@ static void	ft_internal_usleep(t_philo *philo, unsigned long time)
  */
 static void	ft_print(t_philo *philo, char *msg)
 {
-	pthread_mutex_lock(&(philo->data->print_mutex));
+	pthread_mutex_lock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->data->data_mutex);
 	if (!philo->data->is_dead)
 		printf("[%dms] %d %s\n", ft_get_time_diff_in_ms(philo->data->start_time),
 			philo->id, msg);
-	pthread_mutex_unlock(&(philo->data->print_mutex));
+	pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_unlock(&philo->data->data_mutex);
 }
 
 /**
@@ -59,15 +61,17 @@ static void	ft_print(t_philo *philo, char *msg)
  */
 void	ft_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->left_fork->mutex));
+	pthread_mutex_lock(&philo->left_fork->mutex);
 	ft_print(philo, "has taken a fork");
-	pthread_mutex_lock(&(philo->right_fork->mutex));
+	pthread_mutex_lock(&philo->right_fork->mutex);
 	ft_print(philo, "has taken a fork");
 	ft_print(philo, "is eating");
 	philo->last_meal_time = ft_get_time_in_ms();
+	pthread_mutex_lock(&philo->data->data_mutex);
 	ft_internal_usleep(philo, philo->data->time_eat_in_ms);
-	pthread_mutex_unlock(&(philo->left_fork->mutex));
-	pthread_mutex_unlock(&(philo->right_fork->mutex));
+	pthread_mutex_unlock(&philo->data->data_mutex);
+	pthread_mutex_unlock(&philo->left_fork->mutex);
+	pthread_mutex_unlock(&philo->right_fork->mutex);
 }
 
 /**
@@ -78,6 +82,8 @@ void	ft_eat(t_philo *philo)
 void	ft_sleep_and_think(t_philo *philo)
 {
 	ft_print(philo, "is sleeping");
+	pthread_mutex_lock(&philo->data->data_mutex);
 	ft_internal_usleep(philo, philo->data->time_sleep_in_ms);
+	pthread_mutex_unlock(&philo->data->data_mutex);
 	ft_print(philo, "is thinking");
 }
