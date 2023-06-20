@@ -38,7 +38,7 @@ int	main(int argc, char *argv[])
 	ft_init_philos(philos, &data, forks);
 	data.start_time = ft_get_time_in_ms();
 	if (!ft_spawn_threads(&data, philos))
-		return (ft_err(EUNKN));
+		return (ft_err(ETHRD));
 	free(forks);
 	return (0);
 }

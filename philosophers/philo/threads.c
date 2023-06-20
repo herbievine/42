@@ -42,7 +42,7 @@ static void	ft_wait_for_exit(t_data *data, t_philo *philos)
 	}
 }
 
-void	*ft_philo_routine(void *arg)
+static void	*ft_philo_routine(void *arg)
 {
 	(void)arg;
 	// t_philo	*philo;
@@ -63,14 +63,19 @@ static t_bool	ft_destroy_threads(t_data *data, t_philo *philos)
 
 	data_to_free = ft_read_data_from_mutex(data);
 	i = -1;
+	int destroy;
 	while (++i < data_to_free->philo_count)
 	{
-		if (pthread_join(philos[i].thread, NULL)
-			|| pthread_mutex_destroy(&(philos[i].right_fork->mutex)))
+		int join =  pthread_join(philos[i].thread, NULL);
+		destroy = pthread_mutex_destroy(&(philos[i].right_fork->mutex));
+		printf("join: %d, destroy: %d\n", join, destroy);
+		if (join || destroy)
 			return (false);
 	}
-	pthread_mutex_destroy(&data_to_free->print_mutex);
-	pthread_mutex_destroy(&data_to_free->data_mutex);
+	destroy = pthread_mutex_destroy(&data_to_free->print_mutex);
+	printf("destroy: %d\n", destroy);
+	destroy = pthread_mutex_destroy(&data_to_free->data_mutex);
+	printf("destroy: %d\n", destroy);
 	free(data_to_free);
 	free(philos);
 	return (true);
@@ -92,6 +97,10 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 				&ft_philo_routine, &(philos[i])))
 			return (false);
 	}
+	// printf("here");
 	ft_wait_for_exit(data, philos);
-	return (ft_destroy_threads(data, philos));
+	// printf("here2");
+	t_bool t = ft_destroy_threads(data, philos);
+	// printf("here3");
+	return (t);
 }

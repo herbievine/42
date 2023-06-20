@@ -15,6 +15,7 @@
 
 # define EARGS "error: invalid arguments"
 # define EUNKN "error: unknown error"
+# define ETHRD "error: thread error"
 
 int		ft_err(char *err);
 
