@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:55:35 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 20:45:45 by herbie           ###   ########.fr       */
+/*   Updated: 2023/06/20 06:49:59 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,22 @@ static void	ft_wait_for_exit(t_data *data, t_philo *philos)
 
 void	*ft_philo_routine(void *arg)
 {
-	t_philo	*philo;
+	(void)arg;
+	// t_philo	*philo;
 
-	philo = (t_philo *)arg;
-	while (!philo->data->is_dead)
-	{
-		ft_eat(philo);
-		ft_sleep_and_think(philo);
-	}
+	// philo = (t_philo *)arg;
+	// while (!philo->data->is_dead)
+	// {
+	// 	ft_eat(philo);
+	// 	ft_sleep_and_think(philo);
+	// }
 	return (NULL);
 }
 
 static t_bool	ft_destroy_threads(t_data *data, t_philo *philos)
 {
 	t_data	*data_to_free;
-	int	i;
+	int		i;
 
 	data_to_free = ft_read_data_from_mutex(data);
 	i = -1;
