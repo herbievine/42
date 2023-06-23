@@ -17,5 +17,6 @@
 
 unsigned long	ft_get_time_in_ms(void);
 int				ft_get_time_diff_in_ms(unsigned long time);
+void			ft_usleep(unsigned long time);
 
 #endif /* TIME_H */

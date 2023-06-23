@@ -14,6 +14,7 @@
 #include "structs.h"
 #include <sys/time.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /**
  * @brief The ft_get_time_in_ms function returns the current time in
@@ -42,4 +43,19 @@ int	ft_get_time_diff_in_ms(unsigned long time)
 
 	current_time = ft_get_time_in_ms();
 	return ((int)(current_time - time));
+}
+
+/**
+ * @brief The ft_usleep function sleeps for the specified time in
+ * milliseconds. If the philosopher is dead, the function returns.
+ *
+ * @param time
+ */
+void	ft_usleep(unsigned long time)
+{
+	unsigned long start_time;
+
+	start_time = ft_get_time_in_ms();
+	while ((unsigned long)ft_get_time_diff_in_ms(start_time) < time)
+		usleep(100);
 }
