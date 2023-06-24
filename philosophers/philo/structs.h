@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 11:39:52 by herbie            #+#    #+#             */
-/*   Updated: 2023/06/23 08:28:28 by codespace        ###   ########.fr       */
+/*   Updated: 2023/06/24 15:46:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@ typedef struct timeval t_timeval;
 
 typedef struct s_data
 {
-	int philo_count;
-	int time_die_in_ms;
-	int time_eat_in_ms;
-	int time_sleep_in_ms;
-	int max_eat;
+	int philo_count;			/* data_mutex */
+	int time_die_in_ms;		/* meal_mutex */
+	int time_eat_in_ms;		/* data_mutex */
+	int time_sleep_in_ms; /* data_mutex */
+	int max_eat;					/* meal_mutex */
 	unsigned long start_time;
 	t_bool is_ready;
 	t_bool is_game_over;
-	pthread_mutex_t mutex;
+	pthread_mutex_t data_mutex;
+	pthread_mutex_t meal_mutex;
+	pthread_mutex_t print_mutex;
 } t_data;
 
 typedef struct s_philo
