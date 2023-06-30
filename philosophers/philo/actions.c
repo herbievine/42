@@ -26,15 +26,15 @@
  */
 static void	ft_print(t_philo *philo, char *msg)
 {
-	pthread_mutex_lock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->data->meal_mutex);
 	if (!philo->data->is_game_over)
 	{
-		pthread_mutex_lock(&philo->data->data_mutex);
+		pthread_mutex_lock(&philo->data->print_mutex);
 		printf("[%dms] %d %s\n", ft_get_time_diff_in_ms(philo->data->start_time),
 			philo->id, msg);
-		pthread_mutex_unlock(&philo->data->data_mutex);
+		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
-	pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_unlock(&philo->data->meal_mutex);
 }
 
 /**

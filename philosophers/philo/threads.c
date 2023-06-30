@@ -66,8 +66,8 @@ static void	*ft_philo_routine(void *arg)
 		&& !philo->data->is_game_over)
 	{
 		pthread_mutex_unlock(&philo->data->meal_mutex);
-		// ft_eat(philo);
-		// ft_sleep_and_think(philo);
+		ft_eat(philo);
+		ft_sleep_and_think(philo);
 	}
 	pthread_mutex_unlock(&philo->data->meal_mutex);
 	write(1, "exit\n", 5);
