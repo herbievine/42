@@ -53,7 +53,7 @@ int	ft_get_time_diff_in_ms(unsigned long time)
  */
 void	ft_usleep(unsigned long time)
 {
-	unsigned long start_time;
+	unsigned long	start_time;
 
 	start_time = ft_get_time_in_ms();
 	while ((unsigned long)ft_get_time_diff_in_ms(start_time) < time)

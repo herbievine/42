@@ -24,14 +24,14 @@
  * @param philo
  * @param msg
  */
-static void ft_print(t_philo *philo, char *msg)
+static void	ft_print(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->data->print_mutex);
 	if (!philo->data->is_game_over)
 	{
 		pthread_mutex_lock(&philo->data->data_mutex);
 		printf("[%dms] %d %s\n", ft_get_time_diff_in_ms(philo->data->start_time),
-					 philo->id, msg);
+			philo->id, msg);
 		pthread_mutex_unlock(&philo->data->data_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->print_mutex);
@@ -42,7 +42,7 @@ static void ft_print(t_philo *philo, char *msg)
  *
  * @param philo
  */
-void ft_eat(t_philo *philo)
+void	ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	ft_print(philo, "has taken the left fork");
@@ -65,7 +65,7 @@ void ft_eat(t_philo *philo)
  *
  * @param philo
  */
-void ft_sleep_and_think(t_philo *philo)
+void	ft_sleep_and_think(t_philo *philo)
 {
 	ft_print(philo, "is sleeping");
 	pthread_mutex_lock(&philo->data->data_mutex);

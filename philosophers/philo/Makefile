@@ -6,14 +6,14 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/06/24 14:04:23 by codespace        ###   ########.fr        #
+#    Updated: 2023/06/30 10:57:07 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -ggdb
+CFLAGS = #-Wall -Wextra -Werror -ggdb
 
 RM = rm
 RMFLAG = -f

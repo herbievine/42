@@ -13,15 +13,14 @@
 #include "structs.h"
 #include <stdlib.h>
 
-void ft_init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
+void	ft_init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < data->philo_count)
 	{
 		philos[i].id = i + 1;
-		philos[i].is_eating = false;
 		philos[i].eat_count = 0;
 		philos[i].data = data;
 		philos[i].left_fork = &forks[i];
@@ -29,7 +28,7 @@ void ft_init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 	}
 }
 
-void ft_init_data(t_data *data)
+void	ft_init_data(t_data *data)
 {
 	data->philo_count = 0;
 	data->time_die_in_ms = 0;

@@ -19,11 +19,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_data data;
-	t_philo *philos;
-	pthread_mutex_t *forks;
+	t_data			data;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
 
 	ft_init_data(&data);
 	if (!ft_parse_args(argc, argv, &data))
