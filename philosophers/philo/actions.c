@@ -45,9 +45,9 @@ static void	ft_print(t_philo *philo, char *msg)
 void	ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
-	ft_print(philo, "has taken the left fork");
+	ft_print(philo, "has taken a fork");
 	pthread_mutex_lock(philo->right_fork);
-	ft_print(philo, "has taken the right fork");
+	ft_print(philo, "has taken a fork");
 	ft_print(philo, "is eating");
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = ft_get_time_in_ms();
