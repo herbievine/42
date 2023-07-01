@@ -72,7 +72,7 @@ void	ft_eat(t_philo *philo)
  */
 void	ft_sleep_and_think(t_philo *philo)
 {
-	int sleep_time;
+	int	sleep_time;
 
 	pthread_mutex_lock(&philo->data->data_mutex);
 	sleep_time = philo->data->time_sleep_in_ms;
