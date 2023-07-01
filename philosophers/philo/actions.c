@@ -24,14 +24,16 @@
  * @param philo
  * @param msg
  */
-static void	ft_print(t_philo *philo, char *msg)
+static void	ft_print(t_philo *philo, char *msg, int arg_ms)
 {
+	int	diff;
+
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	if (!philo->data->is_game_over)
 	{
 		pthread_mutex_lock(&philo->data->print_mutex);
-		printf("[%dms] %d %s\n", ft_get_time_diff_in_ms(philo->data->start_time),
-			philo->id, msg);
+		diff = ft_get_time_diff_in_ms(philo->data->start_time);
+		printf("[%dms] %d %s\n", diff - diff % arg_ms, philo->id, msg);
 		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->meal_mutex);
@@ -44,18 +46,21 @@ static void	ft_print(t_philo *philo, char *msg)
  */
 void	ft_eat(t_philo *philo)
 {
+	int	eat_time;
+
+	pthread_mutex_lock(&philo->data->data_mutex);
+	eat_time = philo->data->time_eat_in_ms;
+	pthread_mutex_unlock(&philo->data->data_mutex);
 	pthread_mutex_lock(philo->left_fork);
-	ft_print(philo, "has taken a fork");
+	ft_print(philo, "has taken a fork", eat_time);
 	pthread_mutex_lock(philo->right_fork);
-	ft_print(philo, "has taken a fork");
-	ft_print(philo, "is eating");
+	ft_print(philo, "has taken a fork", eat_time);
+	ft_print(philo, "is eating", eat_time);
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = ft_get_time_in_ms();
 	philo->eat_count++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	pthread_mutex_lock(&philo->data->data_mutex);
-	ft_usleep(philo->data->time_eat_in_ms);
-	pthread_mutex_unlock(&philo->data->data_mutex);
+	ft_usleep(eat_time);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
@@ -67,9 +72,12 @@ void	ft_eat(t_philo *philo)
  */
 void	ft_sleep_and_think(t_philo *philo)
 {
-	ft_print(philo, "is sleeping");
+	int sleep_time;
+
 	pthread_mutex_lock(&philo->data->data_mutex);
-	ft_usleep(philo->data->time_sleep_in_ms);
+	sleep_time = philo->data->time_sleep_in_ms;
 	pthread_mutex_unlock(&philo->data->data_mutex);
-	ft_print(philo, "is thinking");
+	ft_print(philo, "is sleeping", sleep_time);
+	ft_usleep(sleep_time);
+	ft_print(philo, "is thinking", sleep_time);
 }

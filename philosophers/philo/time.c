@@ -47,7 +47,7 @@ int	ft_get_time_diff_in_ms(unsigned long time)
 
 /**
  * @brief The ft_usleep function sleeps for the specified time in
- * milliseconds. If the philosopher is dead, the function returns.
+ * milliseconds.
  *
  * @param time
  */
