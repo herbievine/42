@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:19:23 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 14:19:23 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/01 18:16:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,35 @@ unsigned long	ft_get_time_in_ms(void)
 }
 
 /**
- * @brief The ft_get_time_diff_in_ms function returns the difference between
+ * @brief The ft_get_time_diff function returns the difference between
  * the current time and the time passed in milliseconds.
  * 
  * @param time
  * @return int 
  */
-int	ft_get_time_diff_in_ms(unsigned long time)
+int	ft_get_time_diff(unsigned long time)
 {
 	unsigned long	current_time;
 
 	current_time = ft_get_time_in_ms();
 	return ((int)(current_time - time));
+}
+
+/**
+ * @brief The ft_get_rounded_time_diff function returns the difference
+ * between the current time and the time passed in milliseconds rounded
+ * to the nearest multiple of the round parameter.
+ * 
+ * @param time 
+ * @param round 
+ * @return int 
+ */
+int	ft_get_rounded_time_diff(unsigned long time, int round)
+{
+	unsigned long	current_time;
+
+	current_time = ft_get_time_in_ms();
+	return ((int)(current_time - time) - ((int)(current_time - time) % round));
 }
 
 /**
@@ -56,6 +73,6 @@ void	ft_usleep(unsigned long time)
 	unsigned long	start_time;
 
 	start_time = ft_get_time_in_ms();
-	while ((unsigned long)ft_get_time_diff_in_ms(start_time) < time)
+	while ((unsigned long)ft_get_time_diff(start_time) < time)
 		usleep(100);
 }

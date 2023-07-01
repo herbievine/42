@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/01 12:56:07 by codespace        ###   ########.fr        #
+#    Updated: 2023/07/01 18:33:41 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = \
 	parse.c \
 	threads.c \
 	time.c \
+	exit.c \
 	actions.c \
 	structs.c
 

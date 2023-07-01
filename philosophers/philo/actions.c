@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:14:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/06/24 15:52:10 by codespace        ###   ########.fr       */
+/*   Updated: 2023/07/01 18:16:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 #include <pthread.h>
 #include <sys/time.h>
 
+/**
+ * @brief The ft_single_philo function is used when there is only one
+ * philosopher. It is used to print the first message.
+ * 
+ * @param arg 
+ * @return void* 
+ */
 void	*ft_single_philo(void *arg)
 {
 	t_philo	*philo;
@@ -26,10 +33,17 @@ void	*ft_single_philo(void *arg)
 	pthread_mutex_lock(&philo->data->print_mutex);
 	printf("[0ms] %d has taken a fork\n", philo->id);
 	pthread_mutex_unlock(&philo->data->print_mutex);
-	ft_usleep(philo->data->time_die_in_ms * 10);
 	return (NULL);
 }
 
+/**
+ * @brief The ft_multiple_philos function waits for the start of the game,
+ * then the odd philosophers wait for the even ones to eat, and then they
+ * start their cycle.
+ * 
+ * @param arg 
+ * @return void* 
+ */
 void	*ft_multiple_philos(void *arg)
 {
 	t_philo	*philo;
@@ -57,28 +71,27 @@ void	*ft_multiple_philos(void *arg)
 }
 
 /**
- * @brief The ft_print function prints the message with the current time.
+ * @brief The ft_print function prints the message.
  *
  * @param philo
  * @param msg
  */
 void	ft_print(t_philo *philo, char *msg, int arg_ms)
 {
-	int	diff;
-
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	if (!philo->data->is_game_over)
 	{
 		pthread_mutex_lock(&philo->data->print_mutex);
-		diff = ft_get_time_diff_in_ms(philo->data->start_time);
-		printf("[%dms] %d %s\n", diff - diff % arg_ms, philo->id, msg);
+		printf("[%dms] %d %s\n",
+			ft_get_rounded_time_diff(philo->data->start_time, arg_ms),
+			philo->id, msg);
 		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->meal_mutex);
 }
 
 /**
- * @brief The ft_eat function takes two forks, eats and then releases them.
+ * @brief The ft_eat function locks the forks, eats and unlocks the forks.
  *
  * @param philo
  */
