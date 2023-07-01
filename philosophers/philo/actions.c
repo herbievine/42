@@ -18,13 +18,51 @@
 #include <pthread.h>
 #include <sys/time.h>
 
+void	*ft_single_philo(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("[0ms] %d has taken a fork\n", philo->id);
+	pthread_mutex_unlock(&philo->data->print_mutex);
+	ft_usleep(philo->data->time_die_in_ms * 10);
+	return (NULL);
+}
+
+void	*ft_multiple_philos(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	while (pthread_mutex_lock(&philo->data->data_mutex) == 0
+		&& !philo->data->is_ready)
+		pthread_mutex_unlock(&philo->data->data_mutex);
+	pthread_mutex_unlock(&philo->data->data_mutex);
+	if (philo->id & 1)
+	{
+		pthread_mutex_lock(&philo->data->data_mutex);
+		usleep(philo->data->time_eat_in_ms * 0.9 + 1);
+		pthread_mutex_unlock(&philo->data->data_mutex);
+	}
+	while (pthread_mutex_lock(&philo->data->meal_mutex) == 0
+		&& !philo->data->is_game_over)
+	{
+		pthread_mutex_unlock(&philo->data->meal_mutex);
+		ft_eat(philo);
+		ft_sleep_and_think(philo);
+	}
+	pthread_mutex_unlock(&philo->data->meal_mutex);
+	return (NULL);
+}
+
 /**
  * @brief The ft_print function prints the message with the current time.
  *
  * @param philo
  * @param msg
  */
-static void	ft_print(t_philo *philo, char *msg, int arg_ms)
+void	ft_print(t_philo *philo, char *msg, int arg_ms)
 {
 	int	diff;
 

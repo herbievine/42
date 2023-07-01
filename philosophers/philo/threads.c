@@ -22,7 +22,6 @@
 static void	ft_wait_for_exit(t_data *data, t_philo *philos)
 {
 	int	i;
-	int	eat_count;
 
 	while (true)
 	{
@@ -47,29 +46,15 @@ static void	ft_wait_for_exit(t_data *data, t_philo *philos)
 	}
 }
 
-static void	*ft_philo_routine(void *arg)
+static void	*ft_redirect_philo(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (pthread_mutex_lock(&philo->data->data_mutex) == 0
-		&& !philo->data->is_ready)
-		pthread_mutex_unlock(&philo->data->data_mutex);
-	pthread_mutex_unlock(&philo->data->data_mutex);
-	if (philo->id & 1)
-	{
-		pthread_mutex_lock(&philo->data->data_mutex);
-		usleep(philo->data->time_eat_in_ms * 0.9 + 1);
-		pthread_mutex_unlock(&philo->data->data_mutex);
-	}
-	while (pthread_mutex_lock(&philo->data->meal_mutex) == 0
-		&& !philo->data->is_game_over)
-	{
-		pthread_mutex_unlock(&philo->data->meal_mutex);
-		ft_eat(philo);
-		ft_sleep_and_think(philo);
-	}
-	pthread_mutex_unlock(&philo->data->meal_mutex);
+	if (philo->data->philo_count == 1)
+		ft_single_philo(philo);
+	else
+		ft_multiple_philos(philo);
 	return (NULL);
 }
 
@@ -118,7 +103,7 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 	while (++i < data->philo_count)
 	{
 		if (pthread_create(&philos[i].thread, NULL,
-				&ft_philo_routine, &philos[i]))
+				&ft_redirect_philo, &philos[i]))
 			return (false);
 	}
 	pthread_mutex_lock(&data->data_mutex);
