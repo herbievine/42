@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:58:13 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/17 17:35:34 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
+ * @brief The ft_intlen funtion returns the number of digits in the integer
  * received as an argument.
  * 
  * @param n 

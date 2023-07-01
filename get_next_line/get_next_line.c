@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:22:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/12 16:48:15 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /**
- * @brief The ft_calloc() function allocates memory for an array of nmemb
+ * @brief The ft_calloc funtion allocates memory for an array of nmemb
  * elements of size bytes each and returns a pointer to the allocated memory.
  * The memory is set to zero.
  * 

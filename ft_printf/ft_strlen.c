@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:53:05 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/12 10:04:25 by hvine            ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /**
- * @brief The ft_strlen() function computes the length of the string s.
+ * @brief The ft_strlen funtion computes the length of the string s.
  * 
  * @param s 
  * @return size_t 

@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:40:08 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/11 21:13:26 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_strrchr() function locates the last occurrence of 'c' (converted
+ * @brief The ft_strrchr funtion locates the last occurrence of 'c' (converted
  * to a char) in the string pointed to by 's'. The terminating null character is
  * considered to be part of the string; therefore if 'c' is `\0', the functions
  * locate the terminating `\0'.

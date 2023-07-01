@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 11:47:27 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:05:08 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The memmove() function copies len bytes from string src to string dst.
+ * @brief The memmove funtion copies len bytes from string src to string dst.
  * The two strings may overlap; the copy is always done in a non-destructive 
  * manner.
  * 

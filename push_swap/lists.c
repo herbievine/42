@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:11:11 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/21 22:10:17 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "display.h"
 
 /**
- * @brief The ft_lstnew() function allocates (with malloc(3)) and returns a new
+ * @brief The ft_lstnew funtion allocates (with malloc(3)) and returns a new
  * element. The variable 'content' is initialized with the value of the
  * parameter 'content'. The variable 'next' is initialized to NULL.
  *
@@ -34,7 +34,7 @@ t_list	*ft_lstnew(int content)
 }
 
 /**
- * @brief The ft_lstadd_front() function adds the element 'new' at the beginning
+ * @brief The ft_lstadd_front funtion adds the element 'new' at the beginning
  * of the list.
  *
  * @param lst
@@ -52,7 +52,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 }
 
 /**
- * @brief The ft_lstadd_back() function adds the element 'new' at the end of the
+ * @brief The ft_lstadd_back funtion adds the element 'new' at the end of the
  * list.
  *
  * @param lst
@@ -72,7 +72,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 }
 
 /**
- * @brief The ft_lstlast() function returns the last node of the list.
+ * @brief The ft_lstlast funtion returns the last node of the list.
  *
  * @param lst
  * @return t_list*
@@ -87,7 +87,7 @@ t_list	*ft_lstlast(t_list *lst)
 }
 
 /**
- * @brief The ft_lstclear() function deletes and frees the given node and every
+ * @brief The ft_lstclear funtion deletes and frees the given node and every
  * successor of that node, using the function 'del' and free(3).
  *
  * @param lst

@@ -2,6 +2,7 @@
 push_swap/push_swap
 pipex/pipex
 so_long/so_long
+philosophers/philo/philo
 
 # 42 Misc
 out
@@ -65,6 +66,7 @@ mlx
 *.su
 *.idb
 *.pdb
+vgcore.*
 
 # Kernel Module Compile Results
 *.mod*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/12 16:36:03 by hvine            ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_fill_list_with_strs(char **list, char const *s, char c);
 static void	ft_free_list(char **list, size_t idx);
 
 /**
- * @brief The ft_split() function allocates (with malloc(3)) and returns an array
+ * @brief The ft_split funtion allocates (with malloc(3)) and returns an array
  * of strings obtained by splitting 's' using the character 'c' as a delimiter.
  * 
  * @param s 

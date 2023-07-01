@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:56:21 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:27:37 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_lstnew() function allocates (with malloc(3)) and returns a new
+ * @brief The ft_lstnew funtion allocates (with malloc(3)) and returns a new
  * element. The variable 'content' is initialized with the value of the
  * parameter 'content'. The variable 'next' is initialized to NULL.
  * 

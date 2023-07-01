@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:28:25 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:12:10 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_striteri() function applies the function f to each character of
+ * @brief The ft_striteri funtion applies the function f to each character of
  * the string passed as argument, and passing its index as first argument. Each
  * character is passed by address to f to be modified if necessary.
  * 

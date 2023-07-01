@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ints.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:31:42 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/11 17:31:42 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "mem.h"
 
 /**
- * @brief The ft_intlen() function returns the number of digits in the integer
+ * @brief The ft_intlen funtion returns the number of digits in the integer
  * received as an argument.
  * 
  * @param n 
@@ -37,7 +37,7 @@ int	ft_intlen(int n)
 }
 
 /**
- * @brief The ft_itoa() function allocates (with malloc(3)) and returns a
+ * @brief The ft_itoa funtion allocates (with malloc(3)) and returns a
  * string representing the integer received as an argument.
  * 
  * @param n 

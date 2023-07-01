@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:18:08 by hvine             #+#    #+#             */
-/*   Updated: 2022/11/18 09:06:03 by hvine            ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_is_legal_flag(const char *str);
 static int	ft_parse_special_chars(char c, va_list *ap);
 
 /**
- * @brief The ft_printf() function formats and prints data. It returns the
+ * @brief The ft_printf funtion formats and prints data. It returns the
  * number of characters printed (excluding the null byte used to end output to
  * strings).
  * 

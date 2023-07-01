@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <string.h>
-# include <stdint.h> 
+# include <stdint.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5

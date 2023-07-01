@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:00:27 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:09:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_putstr_fd() function outputs the string 's' to the given file
+ * @brief The ft_putstr_fd funtion outputs the string 's' to the given file
  * descriptor.
  * 
  * @param s 

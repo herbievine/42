@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:20:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/02/22 10:39:04 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdint.h>
 
 /**
- * @brief The ft_strlen() function computes the length of the string s.
+ * @brief The ft_strlen funtion computes the length of the string s.
  *
  * @param s
  * @return size_t
@@ -30,7 +30,7 @@ size_t	ft_strlen(const char *s)
 }
 
 /**
- * @brief The ft_atoi() function converts the initial portion of the string
+ * @brief The ft_atoi funtion converts the initial portion of the string
  * pointed to by nptr to long representation.
  *
  * @param nptr
@@ -59,7 +59,7 @@ long	ft_atoi(const char *nptr)
 }
 
 /**
- * @brief The ft_calloc() function allocates memory for an array of nmemb
+ * @brief The ft_calloc funtion allocates memory for an array of nmemb
  * elements of size bytes each and returns a pointer to the allocated memory.
  * The memory is set to zero.
  *
@@ -81,7 +81,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 }
 
 /**
- * @brief The memset() function writes len bytes of value c (converted to an
+ * @brief The memset funtion writes len bytes of value c (converted to an
  * unsigned char) to the string b.
  *
  * @param s
@@ -97,7 +97,7 @@ void	*ft_memset(void *s, int c, size_t n)
 }
 
 /**
- * @brief The ft_substr() function allocates (with malloc(3)) and returns a
+ * @brief The ft_substr funtion allocates (with malloc(3)) and returns a
  * substring from the string 's'. The substring begins at index 'start' and is of
  * maximum size 'len'.
  *

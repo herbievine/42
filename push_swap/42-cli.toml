@@ -1,4 +1,4 @@
-name = "ft_printf"
+name = "push_swap"
 
 [scripts]
 build = { cmd = "make" }

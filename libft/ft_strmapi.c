@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 14:39:17 by herbie            #+#    #+#             */
-/*   Updated: 2022/11/11 21:11:26 by herbie           ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief The ft_strmapi() function applies the function 'f' to each character of
+ * @brief The ft_strmapi funtion applies the function 'f' to each character of
  * the string 's' to create a new string (with malloc(3)) resulting from
  * successive applications of 'f'.
  * 
