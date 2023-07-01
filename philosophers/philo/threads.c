@@ -79,11 +79,10 @@ static t_bool	ft_destroy_threads(t_data *data, t_philo *philos)
 
 	i = -1;
 	while (++i < data->philo_count)
-	{
-		if (pthread_join(philos[i].thread, NULL)
-			|| pthread_mutex_destroy(philos[i].left_fork))
-			return (false);
-	}
+		pthread_join(philos[i].thread, NULL);
+	i = -1;
+	while (++i < data->philo_count)
+		pthread_mutex_destroy(philos[i].left_fork);
 	pthread_mutex_destroy(&data->data_mutex);
 	pthread_mutex_destroy(&data->meal_mutex);
 	pthread_mutex_destroy(&data->print_mutex);

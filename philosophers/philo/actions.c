@@ -51,9 +51,15 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->data->data_mutex);
 	eat_time = philo->data->time_eat_in_ms;
 	pthread_mutex_unlock(&philo->data->data_mutex);
-	pthread_mutex_lock(philo->left_fork);
+	if (philo->id & 1)
+		pthread_mutex_lock(philo->right_fork);
+	else
+		pthread_mutex_lock(philo->left_fork);
 	ft_print(philo, "has taken a fork", eat_time);
-	pthread_mutex_lock(philo->right_fork);
+	if (philo->id & 1)
+		pthread_mutex_lock(philo->left_fork);
+	else
+		pthread_mutex_lock(philo->right_fork);
 	ft_print(philo, "has taken a fork", eat_time);
 	ft_print(philo, "is eating", eat_time);
 	pthread_mutex_lock(&philo->data->meal_mutex);
