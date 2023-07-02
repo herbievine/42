@@ -1,4 +1,4 @@
-name = "pipex"
+name = "minishell"
 
 [scripts]
 build = { cmd = "make" }
