@@ -10,55 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "parse.h"
-#include "error.h"
-#include "io.h"
 #include "str.h"
-#include "split.h"
-#include "process.h"
-#include "free.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "io.h"
 #include <unistd.h>
-#include <string.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <fcntl.h>
+#include <stdbool.h>
 
-void	ft_init_pipex(t_pipex *pipex)
+void	ft_await_command_entry(void)
 {
-	pipex->in_fd = -1;
-	pipex->out_fd = -1;
-	pipex->here_doc = false;
-	pipex->is_invalid_input = false;
-	pipex->is_urandom = false;
-	pipex->cmd_paths = NULL;
-	pipex->cmd_args = NULL;
-	pipex->cmd_count = 0;
+	char	*buffer;
+
+	write(1, "minishell> ", 11);
+	while (ft_read(&buffer, STDIN_FILENO, '\n') > 0)
+	{
+		write(STDIN_FILENO, buffer, ft_strlen(buffer));
+		free(buffer);
+		write(1, "minishell> ", 11);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipex	*pipex;
-	int		i;
-
-	pipex = malloc(sizeof(t_pipex));
-	if (!pipex)
-		return (EXIT_FAILURE);
-	ft_init_pipex(pipex);
-	if (!ft_parse_args(pipex, argc, argv))
-		return (ft_cleanup(pipex), ft_err(EARGS));
-	if (!ft_parse_cmd_paths(pipex, argc, argv, envp))
-		return (ft_cleanup(pipex), ft_err(EARGS));
-	if (!ft_parse_cmd_args(pipex, argc, argv))
-		return (ft_cleanup(pipex), ft_err(EARGS));
-	i = -1;
-	while (++i < pipex->cmd_count)
-		if (!ft_spawn_child(pipex, envp, i))
-			return (ft_cleanup(pipex), ft_err(EUNKN));
-	i = -1;
-	while (++i < pipex->cmd_count)
-		wait(NULL);
-	return (ft_cleanup(pipex), 0);
+	(void)argc;
+	(void)argv;
+	(void)envp;
+	ft_await_command_entry();
+	return (0);
 }

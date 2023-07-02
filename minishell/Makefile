@@ -23,14 +23,6 @@ SRCS = \
 	mem.c \
 	str.c \
 	io.c \
-	parse.c \
-	env.c \
-	split.c \
-	process.c \
-	error.c \
-	free.c \
-	display.c \
-	print.c
 
 OBJS = $(SRCS:.c=.o)
 
