@@ -13,6 +13,14 @@
 #include "structs.h"
 #include <stdlib.h>
 
+/**
+ * @brief The ft_init_philos function initializes the philos array with the
+ * correct values.
+ * 
+ * @param philos 
+ * @param data 
+ * @param forks 
+ */
 void	ft_init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 {
 	int	i;
@@ -28,6 +36,12 @@ void	ft_init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 	}
 }
 
+/**
+ * @brief The ft_init_data function initializes the data struct with the
+ * correct values.
+ * 
+ * @param data 
+ */
 void	ft_init_data(t_data *data)
 {
 	data->philo_count = 0;

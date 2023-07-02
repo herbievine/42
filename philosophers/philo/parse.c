@@ -14,6 +14,16 @@
 #include "int.h"
 #include "structs.h"
 
+/**
+ * @brief The ft_parse_args function parses the command line arguments and
+ * stores them in the data structure. If the arguments are invalid, it returns
+ * false.
+ * 
+ * @param argc 
+ * @param argv 
+ * @param data 
+ * @return t_bool 
+ */
 t_bool	ft_parse_args(int argc, char **argv, t_data *data)
 {
 	if (argc < 5 || argc > 6)
