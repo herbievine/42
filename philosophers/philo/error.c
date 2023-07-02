@@ -15,8 +15,8 @@
 #include <stdlib.h>
 
 /**
- * @brief The ft_err function takes in a string and prints it to stderr.
- * It then exits the program with a return value of 1.
+ * @brief The ft_err function takes in a string and prints it to the standard
+ * output, then exits the program with a return value of 1.
  *
  * @param err
  * @return int
