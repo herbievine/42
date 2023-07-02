@@ -50,7 +50,7 @@ char	*ft_strchr(const char *s, int c)
 	while (++i < ft_strlen(s))
 		if (s[i] == (char)c)
 			return ((char *)(s + i));
-	return (0);
+	return (NULL);
 }
 
 /**
@@ -67,10 +67,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 
 	if (!s1 || !s2)
-		return (0);
+		return (NULL);
 	dup = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	if (!dup)
-		return (0);
+		return (NULL);
 	dup[ft_strlen(s1) + ft_strlen(s2)] = 0;
 	i = 0;
 	while (*s1)
@@ -117,7 +117,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*str;
 
 	if (!s)
-		return (0);
+		return (NULL);
 	if (ft_strlen(s) < start)
 		return (ft_calloc(1, sizeof(char)));
 	if (ft_strlen(s) < len + start)
@@ -125,7 +125,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	else
 		str = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!str)
-		return (0);
+		return (NULL);
 	i = -1;
 	while (s[start + ++i] && i < len)
 		str[i] = s[start + i];

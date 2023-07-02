@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/02 13:59:17 by juliencros       ###   ########.fr        #
+#    Updated: 2023/07/02 16:26:54 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRCS = \
 	mem.c \
 	str.c \
 	io.c \
+	print.c \
+	display.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -30,8 +32,9 @@ all: $(NAME)
 
 bonus: all
 
-.c.o:
-	$(CC) $(CFLAGS) -c -o $@ $<
+.c.o: # compile + link to readline
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	
 
 $(NAME): $(OBJS) 
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)

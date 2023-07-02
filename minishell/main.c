@@ -14,17 +14,17 @@
 #include "io.h"
 #include <unistd.h>
 #include <stdbool.h>
+#include <readline/readline.h>
 
 void	ft_await_command_entry(void)
 {
 	char	*buffer;
 
-	write(1, "minishell> ", 11);
-	while (ft_read(&buffer, STDIN_FILENO, '\n') > 0)
+	while (true)
 	{
+		buffer = readline("minishell> ");
 		write(STDIN_FILENO, buffer, ft_strlen(buffer));
 		free(buffer);
-		write(1, "minishell> ", 11);
 	}
 }
 
