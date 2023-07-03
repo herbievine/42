@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/02 13:59:17 by juliencros       ###   ########.fr        #
+#    Updated: 2023/07/03 12:31:44 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,19 +18,19 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm
 RMFLAG = -f
 
+ifeq ($(shell uname), Linux)
+	LIB_FLAGS = 
+else
+	LIB_FLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
+endif
+
 SRCS = \
 	main.c \
 	mem.c \
 	str.c \
 	io.c \
-	parse.c \
-	env.c \
-	split.c \
-	process.c \
-	error.c \
-	free.c \
+	print.c \
 	display.c \
-	print.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -39,10 +39,11 @@ all: $(NAME)
 bonus: all
 
 .c.o:
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	
 
 $(NAME): $(OBJS) 
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
