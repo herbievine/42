@@ -12,27 +12,49 @@
 
 #include "str.h"
 #include "io.h"
+#include "parse.h"
+#include "structs.h"
+#include "print.h"
+#include "error.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 
-void	ft_await_command_entry(void)
+void	ft_await_command_entry(t_shell *shell)
 {
-	char	*buffer;
+	char		*buffer;
+	t_command	*command;
 
 	while (true)
 	{
 		buffer = readline("minishell> ");
-		write(STDIN_FILENO, buffer, ft_strlen(buffer));
+		if (!buffer)
+			break ;
+		if (ft_strlen(buffer) > 0)
+		{
+			add_history(buffer);
+			if (!ft_parse(shell, buffer))
+				ft_error(ECMD);
+			command = malloc(sizeof(t_command));
+			if (!command)
+				ft_error(EMALLOC);
+			command->raw = ft_substr(buffer, 0, ft_strlen(buffer));
+			shell->current = command;
+			if (!ft_lexer(shell, buffer))
+				ft_error(ECMD);
+		}
 		free(buffer);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_shell	shell;
+
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	ft_await_command_entry();
+	ft_await_command_entry(&shell);
 	return (0);
 }

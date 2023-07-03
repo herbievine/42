@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/03 12:31:44 by herbie           ###   ########.fr        #
+#    Updated: 2023/07/03 18:50:12 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,10 @@ SRCS = \
 	io.c \
 	print.c \
 	display.c \
+	parse.c \
+	error.c \
+	lists.c \
+	lexer.c
 
 OBJS = $(SRCS:.c=.o)
 
