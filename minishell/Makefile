@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/02 16:26:54 by herbie           ###   ########.fr        #
+#    Updated: 2023/07/03 12:31:44 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,12 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
+
+ifeq ($(shell uname), Linux)
+	LIB_FLAGS = 
+else
+	LIB_FLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
+endif
 
 SRCS = \
 	main.c \
@@ -32,12 +38,12 @@ all: $(NAME)
 
 bonus: all
 
-.c.o: # compile + link to readline
+.c.o:
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 	
 
 $(NAME): $(OBJS) 
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
