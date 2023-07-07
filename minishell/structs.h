@@ -28,6 +28,12 @@ typedef enum e_token_types {
 	TOKEN_DQ,
 }	t_token_types;
 
+typedef enum e_lexer_states {
+	LEXER_STATE_DEFAULT,
+	LEXER_STATE_IN_SQ,
+	LEXER_STATE_IN_DQ,
+}	t_lexer_states;
+
 typedef struct s_token
 {
 	t_token_types	type;
@@ -46,6 +52,7 @@ typedef struct s_subcommand
 typedef struct s_lexer
 {
 	const char		*raw;
+	t_lexer_states	state;
 	int				length;
 	int				cursor;
 }	t_lexer;

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/28 15:55:00 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/07 16:41:52 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,33 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	ft_await_command_entry(void)
+void _debug_print_token(t_token token)
 {
-	char		*buffer;
-	t_lexer		lexer;
-	t_token		token;
+	printf(TOKEN_FMT, token.type, token.length, token.value);
+}
+
+void _debug_print_state(t_lexer lexer, t_token token)
+{
+	if (lexer.state == LEXER_STATE_DEFAULT)
+		printf("DFLT | ");
+	else if (lexer.state == LEXER_STATE_IN_SQ)
+		printf("SIGL | ");
+	else if (lexer.state == LEXER_STATE_IN_DQ)
+		printf("DOUB | ");
+	printf("%.*s\n", token.length, token.value);
+}
+
+void ft_await_command_entry(void)
+{
+	char *buffer;
+	t_lexer lexer;
+	t_token token;
 
 	while (true)
 	{
 		buffer = readline("minishell> ");
 		if (!buffer)
-			break ;
+			break;
 		if (ft_strlen(buffer) > 0)
 		{
 			add_history(buffer);
@@ -40,7 +56,15 @@ void	ft_await_command_entry(void)
 			token = ft_lexer_next(&lexer);
 			while (token.type != TOKEN_END)
 			{
-				printf(TOKEN_FMT, token.type, token.length, token.value);
+				// printf("\n\n");
+				// sleep(1);
+				_debug_print_token(token);
+				// _debug_print_state(lexer, token);
+				if (token.type == TOKEN_INVALID)
+				{
+					ft_invalid_token(lexer, token);
+					break ;
+				}
 				token = ft_lexer_next(&lexer);
 			}
 		}
@@ -48,7 +72,7 @@ void	ft_await_command_entry(void)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;

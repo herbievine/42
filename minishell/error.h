@@ -20,6 +20,6 @@
 # include "structs.h"
 
 void	ft_error(char *msg);
-void	ft_invalid_token(char *command, t_lexer lexer, t_token token);
+void	ft_invalid_token(t_lexer lexer, t_token token);
 
 #endif /* ERROR_H */
