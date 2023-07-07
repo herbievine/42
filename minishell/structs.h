@@ -37,11 +37,17 @@ typedef enum e_lexer_states {
 typedef struct s_token
 {
 	t_token_types	type;
-	char			*value;
+	const char		*value;
 	int				length;
 }	t_token;
 
 # define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
+
+typedef struct s_bash_token_map
+{
+	char			*value;
+	t_token_types	type;
+}	t_bash_token_map;
 
 typedef struct s_subcommand
 {

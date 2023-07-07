@@ -13,7 +13,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -34,8 +34,8 @@ SRCS = \
 	display.c \
 	parse.c \
 	error.c \
-	lexer.c
-	# lists.c \
+	lexer.c \
+	lexer_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
