@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   char.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:38:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/03 15:38:36 by herbie           ###   ########.fr       */
+/*   Created: 2023/04/10 21:14:27 by herbie            #+#    #+#             */
+/*   Updated: 2023/04/10 21:21:30 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef CHAR_H
+# define CHAR_H
 
-# define ECMD "invalid command"
-# define EMALLOC "malloc error"
-# define EUKN "unknown error"
+int	ft_isascii(int c);
+int	ft_isdigit(int c);
+int	ft_isalpha(int c);
+int	ft_isalnum(int c);
+int	ft_isspace(int c);
 
-# include "structs.h"
-
-void	ft_error(char *msg);
-void	ft_invalid_token(char *command, t_lexer lexer, t_token token);
-
-#endif /* ERROR_H */
+#endif /* CHAR_H */

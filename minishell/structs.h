@@ -15,22 +15,27 @@
 
 # include <stdbool.h>
 
-typedef enum e_token {
-	TOKEN_WHITESPACE,
-	TOKEN_GREATER,
-	TOKEN_LESSER,
-	TOKEN_GREATER_GREATER,
-	TOKEN_LESSER_LESSER,
+typedef enum e_token_types {
+	TOKEN_END,
+	TOKEN_INVALID,
+	TOKEN_SYMBOL,
+	TOKEN_GT,
+	TOKEN_LT,
+	TOKEN_GT_GT,
+	TOKEN_LT_LT,
 	TOKEN_PIPE,
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_DOUBLE_QUOTE,
-	TOKEN_LITERAL
+	TOKEN_SQ,
+	TOKEN_DQ,
+}	t_token_types;
+
+typedef struct s_token
+{
+	t_token_types	type;
+	char			*value;
+	int				length;
 }	t_token;
 
-typedef union u_token_value {
-	char	*value;
-	t_token	token;
-}	t_token_value;
+# define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
 
 typedef struct s_subcommand
 {
@@ -38,25 +43,17 @@ typedef struct s_subcommand
 	char	**args;
 }	t_subcommand;
 
-typedef struct s_list
+typedef struct s_lexer
 {
-	int				value;
-	struct s_list	*next;
-}	t_list;
+	const char		*raw;
+	int				length;
+	int				cursor;
+}	t_lexer;
 
 typedef struct s_command
 {
 	const char	*raw;
-	// int				in_fd;
-	// int				out_fd;
-	// char			*out_file;
-	// bool			is_pipe;
-	// bool			is_heredoc;
-	bool				is_valid;
-	// bool			is_complete;
-	t_list				*lexer;
-	// t_subcommand	*subcommands;
-	// int				subcommands_count;	
+	bool		is_valid;
 }	t_command;
 
 typedef struct s_shell

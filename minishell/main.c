@@ -16,15 +16,17 @@
 #include "structs.h"
 #include "print.h"
 #include "error.h"
+#include "lexer.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	ft_await_command_entry(t_shell *shell)
+void	ft_await_command_entry(void)
 {
 	char		*buffer;
-	t_command	*command;
+	t_lexer		lexer;
+	t_token		token;
 
 	while (true)
 	{
@@ -34,15 +36,13 @@ void	ft_await_command_entry(t_shell *shell)
 		if (ft_strlen(buffer) > 0)
 		{
 			add_history(buffer);
-			if (!ft_parse(shell, buffer))
-				ft_error(ECMD);
-			command = malloc(sizeof(t_command));
-			if (!command)
-				ft_error(EMALLOC);
-			command->raw = ft_substr(buffer, 0, ft_strlen(buffer));
-			shell->current = command;
-			if (!ft_lexer(shell, buffer))
-				ft_error(ECMD);
+			lexer = ft_lexer_new(buffer);
+			token = ft_lexer_next(&lexer);
+			while (token.type != TOKEN_END)
+			{
+				printf(TOKEN_FMT, token.type, token.length, token.value);
+				token = ft_lexer_next(&lexer);
+			}
 		}
 		free(buffer);
 	}
@@ -50,11 +50,9 @@ void	ft_await_command_entry(t_shell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
-
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	ft_await_command_entry(&shell);
+	ft_await_command_entry();
 	return (0);
 }

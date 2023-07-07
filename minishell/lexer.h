@@ -16,4 +16,7 @@
 # include "structs.h"
 # include <stdbool.h>
 
+t_lexer		ft_lexer_new(const char *raw);
+t_token		ft_lexer_next(t_lexer *lexer);
+
 #endif /* LEXER_H */
