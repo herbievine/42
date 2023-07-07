@@ -7,6 +7,7 @@ projects = [
 	"push_swap",
 	"so_long",
 	"philosophers/philo",
+	"minishell"
 ]
 
 [scripts]
