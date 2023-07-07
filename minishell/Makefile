@@ -6,14 +6,14 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/03 12:31:44 by herbie           ###   ########.fr        #
+#    Updated: 2023/07/04 09:32:04 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -28,9 +28,14 @@ SRCS = \
 	main.c \
 	mem.c \
 	str.c \
+	char.c \
 	io.c \
 	print.c \
 	display.c \
+	parse.c \
+	error.c \
+	lexer.c
+	# lists.c \
 
 OBJS = $(SRCS:.c=.o)
 
