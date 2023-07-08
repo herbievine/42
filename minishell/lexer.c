@@ -49,10 +49,10 @@ static bool	ft_handle_quotes(t_lexer *lexer, t_token *token)
 				break ;
 			if (!lexer->raw[lexer->cursor + 1])
 			{
-				lexer->cursor++;
 				token->type = TOKEN_INVALID;
 				token->value = lexer->raw + (lexer->cursor - token->length);
 				token->length = token->length + 1;
+				lexer->cursor++;
 				return (true);
 			}
 			lexer->cursor++;
