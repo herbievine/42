@@ -6,11 +6,12 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/07 16:53:58 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/08 15:23:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "lexer_utils.h"
 #include "char.h"
 #include "structs.h"
 #include "str.h"
@@ -19,13 +20,11 @@
 
 static bool	ft_handle_symbol(t_lexer *lexer, t_token *token)
 {
-	if (ft_isalnum(lexer->raw[lexer->cursor])
-		|| lexer->raw[lexer->cursor] == '-')
+	if (ft_is_valid_symbol(lexer->raw[lexer->cursor]))
 	{
 		token->type = TOKEN_SYMBOL;
 		while (lexer->cursor < lexer->length
-			&& (ft_isalnum(lexer->raw[lexer->cursor])
-				|| lexer->raw[lexer->cursor] == '-'))
+			&& (ft_is_valid_symbol(lexer->raw[lexer->cursor])))
 		{
 			lexer->cursor++;
 			token->length++;
@@ -42,15 +41,17 @@ static bool	ft_handle_quotes(t_lexer *lexer, t_token *token)
 		token->type = TOKEN_SYMBOL;
 		while (lexer->cursor < lexer->length)
 		{
-			if ((int)LEXER_STATE_IN_SQ && lexer->raw[lexer->cursor] == '\'')
+			if (lexer->state == LEXER_STATE_IN_SQ
+				&& lexer->raw[lexer->cursor] == '\'')
 				break ;
-			else if ((int)LEXER_STATE_IN_DQ && lexer->raw[lexer->cursor] == '"')
+			else if (lexer->state == LEXER_STATE_IN_DQ
+				&& lexer->raw[lexer->cursor] == '"')
 				break ;
 			if (!lexer->raw[lexer->cursor + 1])
 			{
 				lexer->cursor++;
 				token->type = TOKEN_INVALID;
-				token->value = lexer->raw + token->length - lexer->cursor;
+				token->value = lexer->raw + (lexer->cursor - token->length);
 				token->length = token->length + 1;
 				return (true);
 			}
@@ -71,6 +72,10 @@ static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 
 	i = -1;
 	token_map = ft_get_token_map();
+	if (lexer->state != LEXER_STATE_DEFAULT
+		&& lexer->raw[lexer->cursor] != '\''
+		&& lexer->raw[lexer->cursor] != '"')
+		return (false);
 	while (++i < TOKEN_COUNT)
 	{
 		if (ft_strncmp(&lexer->raw[lexer->cursor],

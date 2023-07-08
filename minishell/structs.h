@@ -41,7 +41,8 @@ typedef struct s_token
 	int				length;
 }	t_token;
 
-# define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
+// # define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
+// # define TOKEN_ARG(token) token.type, token.length, token.value
 
 typedef struct s_bash_token_map
 {

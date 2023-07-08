@@ -35,5 +35,5 @@ void	ft_invalid_token(t_lexer lexer, t_token token)
 	i = -1;
 	while (++i < token.length)
 		ft_dprintf(STDERR_FILENO, "^");
-	ft_dprintf(STDERR_FILENO, " invalid token\n");
+	ft_dprintf(STDERR_FILENO, " invalid token `%s`\n", token.value);
 }

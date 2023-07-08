@@ -12,6 +12,8 @@
 
 #include "lexer.h"
 #include "structs.h"
+#include "char.h"
+#include <stdbool.h>
 
 void	ft_mutate_lexer_state(t_lexer *lexer)
 {
@@ -41,4 +43,12 @@ t_bash_token_map	*ft_get_token_map(void)
 	map[5] = (t_bash_token_map){.value = "'", .type = TOKEN_SQ};
 	map[6] = (t_bash_token_map){.value = "\"", .type = TOKEN_DQ};
 	return ((void *)map);
+}
+
+bool	ft_is_valid_symbol(char c)
+{
+	if (ft_isalnum(c) || c == '-' || c == '$' || c == '_' || c == '.'
+		|| c == '/')
+		return (true);
+	return (false);
 }
