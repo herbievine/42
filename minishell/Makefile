@@ -18,11 +18,7 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm
 RMFLAG = -f
 
-ifeq ($(shell uname), Linux)
-	LIB_FLAGS = 
-else
-	LIB_FLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
-endif
+LIB_FLAGS = -lreadline
 
 SRCS = \
 	main.c \
