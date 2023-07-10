@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/03 18:06:33 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/10 13:15:30 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdbool.h>
 
 typedef enum e_token_types {
-	TOKEN_END,
+	TOKEN_EOF,
 	TOKEN_INVALID,
 	TOKEN_SYMBOL,
 	TOKEN_GT,
@@ -39,6 +39,7 @@ typedef struct s_token
 	t_token_types	type;
 	const char		*value;
 	int				length;
+	struct s_token	*next;
 }	t_token;
 
 // # define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
@@ -50,12 +51,6 @@ typedef struct s_bash_token_map
 	t_token_types	type;
 }	t_bash_token_map;
 
-typedef struct s_subcommand
-{
-	char	*path;
-	char	**args;
-}	t_subcommand;
-
 typedef struct s_lexer
 {
 	const char		*raw;
@@ -66,8 +61,9 @@ typedef struct s_lexer
 
 typedef struct s_command
 {
-	const char	*raw;
-	bool		is_valid;
+	const char		*raw;
+	t_token			*tokens;
+	int				token_length;
 }	t_command;
 
 typedef struct s_shell

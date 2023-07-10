@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/07 16:41:52 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/10 13:15:30 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "print.h"
 #include "error.h"
 #include "lexer.h"
+#include "command.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <readline/readline.h>
@@ -24,20 +25,24 @@
 
 void	ft_build_command(char *buffer)
 {
-	t_lexer	lexer;
-	t_token	token;
+	t_command	command;
+	t_lexer		lexer;
+	t_token		token;
 
+	command = ft_command_new(buffer);
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
-	while (token.type != TOKEN_END)
+	while (token.type != TOKEN_EOF)
 	{
 		if (token.type == TOKEN_INVALID)
 		{
 			ft_invalid_token(lexer, token);
 			break ;
 		}
+		ft_append_token(&command, token);
 		token = ft_lexer_next(&lexer);
 	}
+	ft_debug_print_command(command);
 }
 
 void	ft_await_command_entry(void)

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/08 15:23:08 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/10 13:15:30 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 
 	i = -1;
 	token_map = ft_get_token_map();
-	if (lexer->state != LEXER_STATE_DEFAULT
-		&& lexer->raw[lexer->cursor] != '\''
-		&& lexer->raw[lexer->cursor] != '"')
+	if ((lexer->state == LEXER_STATE_IN_DQ
+			&& lexer->raw[lexer->cursor] == '\'')
+		|| (lexer->state == LEXER_STATE_IN_SQ
+			&& lexer->raw[lexer->cursor] == '"'))
 		return (false);
 	while (++i < TOKEN_COUNT)
 	{
@@ -111,9 +112,10 @@ t_token	ft_lexer_next(t_lexer *lexer)
 		lexer->cursor++;
 	token.value = &lexer->raw[lexer->cursor];
 	token.length = 0;
+	token.next = NULL;
 	if (lexer->cursor >= lexer->length)
 	{
-		token.type = TOKEN_END;
+		token.type = TOKEN_EOF;
 		return (token);
 	}
 	if (ft_handle_tokens(lexer, &token))

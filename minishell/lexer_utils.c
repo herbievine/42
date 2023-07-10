@@ -48,7 +48,7 @@ t_bash_token_map	*ft_get_token_map(void)
 bool	ft_is_valid_symbol(char c)
 {
 	if (ft_isalnum(c) || c == '-' || c == '$' || c == '_' || c == '.'
-		|| c == '/')
+		|| c == '/' || c == '~' || c == '*' || c == '!' || c == '?')
 		return (true);
 	return (false);
 }
