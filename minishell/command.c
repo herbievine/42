@@ -48,6 +48,21 @@ bool	ft_append_token(t_command *command, t_token token)
 	return (true);
 }
 
+bool	ft_clear_tokens(t_command *command)
+{
+	t_token	*next;
+
+	while (command->tokens)
+	{
+		next = command->tokens->next;
+		free(command->tokens);
+		command->tokens = next;
+	}
+	command->tokens = NULL;
+	command->token_length = 0;
+	return (true);
+}
+
 //! DEBUG ONLY
 void	ft_debug_print_command(t_command command)
 {

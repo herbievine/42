@@ -18,10 +18,11 @@
 #include "error.h"
 #include "lexer.h"
 #include "command.h"
+#include "history.h"
+#include "signals.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <readline/readline.h>
-#include <readline/history.h>
 
 void	ft_build_command(char *buffer)
 {
@@ -43,6 +44,7 @@ void	ft_build_command(char *buffer)
 		token = ft_lexer_next(&lexer);
 	}
 	ft_debug_print_command(command);
+	ft_clear_tokens(&command);
 }
 
 void	ft_await_command_entry(void)
@@ -53,10 +55,10 @@ void	ft_await_command_entry(void)
 	{
 		buffer = readline("minishell> ");
 		if (!buffer)
-			break ;
+			ft_handle_ctrl_d();
 		if (ft_strlen(buffer) > 0)
 		{
-			add_history(buffer);
+			ft_history_add(buffer);
 			ft_build_command(buffer);
 		}
 		free(buffer);
@@ -68,6 +70,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
+	ft_history_new();
+	ft_signals_register();
 	ft_await_command_entry();
 	return (0);
 }

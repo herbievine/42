@@ -33,6 +33,8 @@ SRCS = \
 	lexer.c \
 	lexer_utils.c \
 	command.c \
+	history.c \
+	signals.c \
 
 OBJS = $(SRCS:.c=.o)
 
