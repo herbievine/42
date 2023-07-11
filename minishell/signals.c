@@ -12,6 +12,7 @@
 
 #include "signals.h"
 #include "print.h"
+#include "history.h"
 #include "display.h"
 #include <signal.h>
 #include <stdlib.h>
@@ -31,6 +32,7 @@ void	ft_signals_register(void)
 void	ft_handle_ctrl_d(void)
 {
 	printf("exit\n");
+	ft_history_clear();
 	exit(EXIT_SUCCESS);
 }
 
