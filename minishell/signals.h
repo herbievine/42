@@ -14,5 +14,6 @@
 # define SIGNALS_H
 
 void	ft_signals_register(void);
+void	ft_handle_ctrl_d(void);
 
 #endif /* SIGNALS_H */

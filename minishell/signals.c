@@ -28,6 +28,12 @@ void	ft_signals_register(void)
 	signal(SIGQUIT, &ft_handle_ctrl_slash);
 }
 
+void	ft_handle_ctrl_d(void)
+{
+	printf("exit\n");
+	exit(EXIT_SUCCESS);
+}
+
 static void	ft_handle_ctrl_c(int signal)
 {
 	(void)signal;

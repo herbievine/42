@@ -55,7 +55,7 @@ void	ft_await_command_entry(void)
 	{
 		buffer = readline("minishell> ");
 		if (!buffer)
-			break ;
+			ft_handle_ctrl_d();
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
