@@ -22,6 +22,7 @@
 #include "signals.h"
 #include <unistd.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <readline/readline.h>
 
 void	ft_build_command(char *buffer)

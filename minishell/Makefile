@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/04 09:32:04 by herbie           ###   ########.fr        #
+#    Updated: 2023/07/12 15:35:09 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,6 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
-
-LIB_FLAGS = -lreadline
 
 SRCS = \
 	main.c \
@@ -43,11 +41,10 @@ all: $(NAME)
 bonus: all
 
 .c.o:
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-	
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) $(shell pkg-config --cflags readline)
 
 $(NAME): $(OBJS) 
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(shell pkg-config --libs readline)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
