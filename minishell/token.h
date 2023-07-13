@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:38:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/03 15:38:36 by herbie           ###   ########.fr       */
+/*   Created: 2023/07/13 17:05:20 by herbie            #+#    #+#             */
+/*   Updated: 2023/07/13 17:05:20 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
-
-# define ECMD "invalid command"
-# define EMALLOC "malloc error"
-# define EUKN "unknown error"
-# define ENOENT "no such file or directory"
+#ifndef TOKEN_H
+# define TOKEN_H
 
 # include "structs.h"
 
-void	ft_error(char *msg);
-void	ft_invalid_token(t_lexer lexer, t_token token);
+bool	ft_append_token(t_token **tokens, t_token token);
+bool	ft_clear_tokens(t_token **tokens);
 
-#endif /* ERROR_H */
+#endif /* TOKEN_H */

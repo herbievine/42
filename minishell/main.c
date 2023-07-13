@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/10 13:15:30 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/13 17:07:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "lexer.h"
 #include "command.h"
 #include "history.h"
+#include "token.h"
 #include "signals.h"
 #include <unistd.h>
 #include <stdbool.h>
@@ -27,13 +28,15 @@
 
 void	ft_build_command(char *buffer)
 {
-	t_command	command;
+	int			token_length;
 	t_lexer		lexer;
 	t_token		token;
+	t_token		*token_list;
 
-	command = ft_command_new(buffer);
+	token_length = 0;
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
+	token_list = NULL;
 	while (token.type != TOKEN_EOF)
 	{
 		if (token.type == TOKEN_INVALID)
@@ -41,11 +44,12 @@ void	ft_build_command(char *buffer)
 			ft_invalid_token(lexer, token);
 			break ;
 		}
-		ft_append_token(&command, token);
+		if (ft_append_token(&token_list, token))
+			token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	ft_debug_print_command(command);
-	ft_clear_tokens(&command);
+	ft_debug_print_command(token_list, token_length);
+	ft_clear_tokens(&token_list);
 }
 
 void	ft_await_command_entry(void)

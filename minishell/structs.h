@@ -59,11 +59,22 @@ typedef struct s_lexer
 	int				cursor;
 }	t_lexer;
 
+typedef enum e_mode
+{
+	MODE_WRITE,
+	MODE_APPEND
+}	t_mode;
+
 typedef struct s_command
 {
-	const char		*raw;
-	t_token			*tokens;
-	int				token_length;
+	int					in_fd;
+	int					out_fd;
+	char				*raw;
+	char				*path;
+	char				**args;
+	t_mode				mode;
+	bool				is_heredoc;
+	struct s_command	*next;
 }	t_command;
 
 typedef struct s_shell
