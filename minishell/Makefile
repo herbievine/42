@@ -31,6 +31,7 @@ SRCS = \
 	lexer.c \
 	lexer_utils.c \
 	command.c \
+	subcommand.c \
 	history.c \
 	signals.c \
 	token.c \

@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   subcommand.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 17:05:20 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/13 17:05:20 by herbie           ###   ########.fr       */
+/*   Created: 2023/07/14 14:44:28 by herbie            #+#    #+#             */
+/*   Updated: 2023/07/14 14:44:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKEN_H
-# define TOKEN_H
+#ifndef SUBCOMMANDS_H
+# define SUBCOMMANDS_H
 
 # include "structs.h"
+# include <stdbool.h>
 
-# define PIPE_NOT_FOUND -1
+bool	ft_create_subcommands(t_command *command, t_token **tokens, int token_length);
 
-int		ft_next_pipe(t_token *token);
-bool	ft_append_token(t_token **tokens, t_token token);
-bool	ft_clear_tokens(t_token **tokens);
-
-#endif /* TOKEN_H */
+#endif /* SUBCOMMANDS_H */

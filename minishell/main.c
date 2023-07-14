@@ -18,6 +18,7 @@
 #include "error.h"
 #include "lexer.h"
 #include "command.h"
+#include "subcommand.h"
 #include "history.h"
 #include "token.h"
 #include "signals.h"
@@ -28,15 +29,13 @@
 
 void	ft_build_command(char *buffer)
 {
-	int			token_length;
+	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
-	t_token		*token_list;
 
-	token_length = 0;
+	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
-	token_list = NULL;
 	while (token.type != TOKEN_EOF)
 	{
 		if (token.type == TOKEN_INVALID)
@@ -44,12 +43,13 @@ void	ft_build_command(char *buffer)
 			ft_invalid_token(lexer, token);
 			break ;
 		}
-		if (ft_append_token(&token_list, token))
-			token_length++;
+		if (ft_append_token(&command.tokens, token))
+			command.token_count++;
 		token = ft_lexer_next(&lexer);
 	}
-	ft_debug_print_command(token_list, token_length);
-	ft_clear_tokens(&token_list);
+	// ft_debug_print_command(command.tokens, command.token_count);
+	ft_create_subcommands(&command, &command.tokens, command.token_count);
+	ft_clear_tokens(&command.tokens);
 }
 
 void	ft_await_command_entry(void)

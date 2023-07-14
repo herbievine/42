@@ -16,7 +16,7 @@
 # include "structs.h"
 # include <stdbool.h>
 
-t_command	*ft_command_new(const char *raw);
+t_command	ft_command_new(void);
 
 bool	ft_create_commands_from_pipes(t_token **token_list, int token_length);
 void	ft_debug_print_command(t_token *token_list, int token_length);

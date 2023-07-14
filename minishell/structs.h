@@ -65,22 +65,29 @@ typedef enum e_mode
 	MODE_APPEND
 }	t_mode;
 
-typedef struct s_command
+typedef struct s_subcommand
 {
 	int					in_fd;
 	int					out_fd;
-	char				*raw;
 	char				*path;
 	char				**args;
 	t_mode				mode;
 	bool				is_heredoc;
-	struct s_command	*next;
+	struct s_subcommand	*next;
+}	t_subcommand;
+
+typedef struct s_command
+{
+	t_token			*tokens;
+	int				token_count;
+	t_subcommand	*subcommands;
+	int				subcommand_count;
 }	t_command;
 
 typedef struct s_shell
 {
 	char		**env;
-	t_command	*current;
+	// t_command	*current;
 }	t_shell;
 
 #endif /* STRUCTS_H */

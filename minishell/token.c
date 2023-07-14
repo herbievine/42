@@ -17,6 +17,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+int	ft_next_pipe(t_token *token)
+{
+	int	i;
+
+	i = 0;
+	while (token)
+	{
+		if (token->type == TOKEN_PIPE)
+			return (i);
+		token = token->next;
+		i++;
+	}
+	return (-1);
+}
+
 bool	ft_append_token(t_token **tokens, t_token token)
 {
 	t_token	*head;
