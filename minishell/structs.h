@@ -87,7 +87,6 @@ typedef struct s_command
 typedef struct s_shell
 {
 	char		**env;
-	// t_command	*current;
 }	t_shell;
 
 #endif /* STRUCTS_H */

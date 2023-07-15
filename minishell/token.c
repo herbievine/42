@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:00:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/13 17:03:53 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/15 13:15:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-int	ft_next_pipe(t_token *token)
+int	ft_find_next_pipe(t_token *token)
 {
 	int	i;
 

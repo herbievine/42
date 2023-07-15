@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SUBCOMMANDS_H
-# define SUBCOMMANDS_H
+#ifndef SUBCOMMAND_H
+# define SUBCOMMAND_H
 
 # include "structs.h"
 # include <stdbool.h>
 
-bool	ft_create_subcommands(t_command *command, t_token **tokens, int token_length);
+bool	ft_create_subcommands(t_command *command);
 
-#endif /* SUBCOMMANDS_H */
+#endif /* SUBCOMMAND_H */

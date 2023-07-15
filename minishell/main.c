@@ -47,8 +47,7 @@ void	ft_build_command(char *buffer)
 			command.token_count++;
 		token = ft_lexer_next(&lexer);
 	}
-	// ft_debug_print_command(command.tokens, command.token_count);
-	ft_create_subcommands(&command, &command.tokens, command.token_count);
+	ft_create_subcommands(&command);
 	ft_clear_tokens(&command.tokens);
 }
 
