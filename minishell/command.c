@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:14:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/14 14:40:31 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/15 15:48:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-t_command	ft_command_new(void)
+t_command ft_command_new(void)
 {
-	t_command	command;
+	t_command command;
 
 	command.tokens = NULL;
-	command.token_count = 0;
+	command.token_length = 0;
 	command.subcommands = NULL;
-	command.subcommand_count = 0;
+	command.subcommand_length = 0;
 	return (command);
 }
 
@@ -129,10 +129,10 @@ t_command	ft_command_new(void)
 // }
 
 //! DEBUG ONLY
-void	ft_debug_print_command(t_token *token_list, int token_length)
+void ft_debug_print_command(t_token *token_list, int token_length)
 {
-	int		i;
-	t_token	*token;
+	int i;
+	t_token *token;
 
 	i = -1;
 	printf("--------------\n");

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/10 13:15:30 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/15 15:48:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,15 @@ typedef struct s_subcommand
 	struct s_subcommand	*next;
 }	t_subcommand;
 
+# define SUBCOMMAND_FMT "Subcommand(in_fd=%d, out_fd=%d, path='%s', mode=%d, is_heredoc=%d)\n"
+# define SUBCOMMAND_ARG(subcommand) subcommand.in_fd, subcommand.out_fd, subcommand.path, subcommand.mode, subcommand.is_heredoc
+
 typedef struct s_command
 {
 	t_token			*tokens;
-	int				token_count;
+	int				token_length;
 	t_subcommand	*subcommands;
-	int				subcommand_count;
+	int				subcommand_length;
 }	t_command;
 
 typedef struct s_shell
