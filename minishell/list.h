@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str.h                                              :+:      :+:    :+:   */
+/*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 16:13:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/20 18:17:16 by herbie           ###   ########.fr       */
+/*   Created: 2023/07/20 16:35:45 by herbie            #+#    #+#             */
+/*   Updated: 2023/07/20 16:39:03 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STR_H
-# define STR_H
+#ifndef LIST_H
+# define LIST_H
 
-# include <stdlib.h>
+# include "structs.h"
 
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+typedef struct s_anon_lst
+{
+	struct s_anon_lst	*next;
+}	t_anon_lst;
 
-#endif /* STR_H */
+void	*ft_lstfrom(t_anon_lst *lst, int index);
+
+#endif /* LIST_H */

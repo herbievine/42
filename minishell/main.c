@@ -27,11 +27,11 @@
 #include <stdio.h>
 #include <readline/readline.h>
 
-void ft_build_command(char *buffer)
+void	ft_build_command(char *buffer)
 {
-	t_command command;
-	t_lexer lexer;
-	t_token token;
+	t_command	command;
+	t_lexer		lexer;
+	t_token		token;
 
 	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
@@ -41,7 +41,7 @@ void ft_build_command(char *buffer)
 		if (token.type == TOKEN_INVALID)
 		{
 			ft_invalid_token(lexer, token);
-			break;
+			break ;
 		}
 		if (ft_append_token(&command.tokens, token))
 			command.token_length++;
@@ -51,9 +51,9 @@ void ft_build_command(char *buffer)
 	ft_clear_tokens(&command.tokens);
 }
 
-void ft_await_command_entry(void)
+void	ft_await_command_entry(void)
 {
-	char *buffer;
+	char	*buffer;
 
 	while (true)
 	{
@@ -69,7 +69,7 @@ void ft_await_command_entry(void)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;

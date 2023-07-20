@@ -76,8 +76,12 @@ typedef struct s_subcommand
 	struct s_subcommand	*next;
 }	t_subcommand;
 
-# define SUBCOMMAND_FMT "Subcommand(in_fd=%d, out_fd=%d, path='%s', mode=%d, is_heredoc=%d)\n"
-# define SUBCOMMAND_ARG(subcommand) subcommand.in_fd, subcommand.out_fd, subcommand.path, subcommand.mode, subcommand.is_heredoc
+// # define SUBCOMMAND_FMT 
+// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', 
+// 	mode=%d, is_heredoc=%d)\n"
+// # define SUBCOMMAND_ARG(subcommand) 
+// 	subcommand.in_fd, subcommand.out_fd, subcommand.path, 
+// 	subcommand.mode, subcommand.is_heredoc
 
 typedef struct s_command
 {
