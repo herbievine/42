@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/10 13:15:30 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/15 15:48:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,41 @@ typedef struct s_lexer
 	int				cursor;
 }	t_lexer;
 
+typedef enum e_mode
+{
+	MODE_WRITE,
+	MODE_APPEND
+}	t_mode;
+
+typedef struct s_subcommand
+{
+	int					in_fd;
+	int					out_fd;
+	char				*path;
+	char				**args;
+	t_mode				mode;
+	bool				is_heredoc;
+	struct s_subcommand	*next;
+}	t_subcommand;
+
+// # define SUBCOMMAND_FMT 
+// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', 
+// 	mode=%d, is_heredoc=%d)\n"
+// # define SUBCOMMAND_ARG(subcommand) 
+// 	subcommand.in_fd, subcommand.out_fd, subcommand.path, 
+// 	subcommand.mode, subcommand.is_heredoc
+
 typedef struct s_command
 {
-	const char		*raw;
 	t_token			*tokens;
 	int				token_length;
+	t_subcommand	*subcommands;
+	int				subcommand_length;
 }	t_command;
 
 typedef struct s_shell
 {
 	char		**env;
-	t_command	*current;
 }	t_shell;
 
 #endif /* STRUCTS_H */

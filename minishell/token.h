@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:38:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/15 16:02:11 by herbie           ###   ########.fr       */
+/*   Created: 2023/07/13 17:05:20 by herbie            #+#    #+#             */
+/*   Updated: 2023/07/15 13:15:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
-
-# define M "minishell: "
-# define ECMD "invalid command"
-# define EMALLOC "malloc error"
-# define EUKN "unknown error"
-# define ENOENT "no such file or directory"
-# define ESYN "syntax error near unexpected token"
+#ifndef TOKEN_H
+# define TOKEN_H
 
 # include "structs.h"
 
-// @deprecated
-void	old_ft_error(char *msg);
-void	ft_invalid_token(t_lexer lexer, t_token token);
+# define PIPE_NOT_FOUND -1
 
-#endif /* ERROR_H */
+int		ft_find_next_pipe(t_token *token);
+bool	ft_append_token(t_token **tokens, t_token token);
+bool	ft_clear_tokens(t_token **tokens);
+
+#endif /* TOKEN_H */

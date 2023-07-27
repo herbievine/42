@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/10 13:15:30 by herbie           ###   ########.fr       */
+/*   Updated: 2023/07/15 15:48:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,36 @@
 #include "error.h"
 #include "lexer.h"
 #include "command.h"
+#include "subcommand.h"
 #include "history.h"
+#include "token.h"
 #include "signals.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <readline/readline.h>
+
+# define SUBCOMMAND_FMT \
+	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
+	mode=%d, is_heredoc=%d)\n"
+# define SUBCOMMAND_ARG(subcommand) \
+	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
+	subcommand.mode, subcommand.is_heredoc
+	#include "mem.h"
+
+void	ft_print_subcommands(t_command *command)
+{
+	t_subcommand	*subcommand;
+
+	subcommand = command->subcommands;
+	while (subcommand)
+	{
+		t_subcommand tmp;
+		ft_memcpy(&tmp, subcommand, sizeof(t_subcommand));
+		printf(SUBCOMMAND_FMT, SUBCOMMAND_ARG(tmp));
+		subcommand = subcommand->next;
+	}
+}
 
 void	ft_build_command(char *buffer)
 {
@@ -31,7 +55,7 @@ void	ft_build_command(char *buffer)
 	t_lexer		lexer;
 	t_token		token;
 
-	command = ft_command_new(buffer);
+	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
 	while (token.type != TOKEN_EOF)
@@ -41,11 +65,13 @@ void	ft_build_command(char *buffer)
 			ft_invalid_token(lexer, token);
 			break ;
 		}
-		ft_append_token(&command, token);
+		if (ft_append_token(&command.tokens, token))
+			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	ft_debug_print_command(command);
-	ft_clear_tokens(&command);
+	if (ft_create_subcommands(&command))
+		ft_print_subcommands(&command);
+	ft_clear_tokens(&command.tokens);
 }
 
 void	ft_await_command_entry(void)

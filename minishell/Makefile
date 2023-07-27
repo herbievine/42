@@ -6,14 +6,14 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/12 15:35:09 by herbie           ###   ########.fr        #
+#    Updated: 2023/07/13 17:06:00 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -31,8 +31,10 @@ SRCS = \
 	lexer.c \
 	lexer_utils.c \
 	command.c \
+	subcommand.c \
 	history.c \
 	signals.c \
+	token.c \
 
 OBJS = $(SRCS:.c=.o)
 
