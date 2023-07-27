@@ -27,6 +27,28 @@
 #include <stdio.h>
 #include <readline/readline.h>
 
+# define SUBCOMMAND_FMT \
+	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
+	mode=%d, is_heredoc=%d)\n"
+# define SUBCOMMAND_ARG(subcommand) \
+	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
+	subcommand.mode, subcommand.is_heredoc
+	#include "mem.h"
+
+void	ft_print_subcommands(t_command *command)
+{
+	t_subcommand	*subcommand;
+
+	subcommand = command->subcommands;
+	while (subcommand)
+	{
+		t_subcommand tmp;
+		ft_memcpy(&tmp, subcommand, sizeof(t_subcommand));
+		printf(SUBCOMMAND_FMT, SUBCOMMAND_ARG(tmp));
+		subcommand = subcommand->next;
+	}
+}
+
 void	ft_build_command(char *buffer)
 {
 	t_command	command;
@@ -47,7 +69,8 @@ void	ft_build_command(char *buffer)
 			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	ft_create_subcommands(&command);
+	if (ft_create_subcommands(&command))
+		ft_print_subcommands(&command);
 	ft_clear_tokens(&command.tokens);
 }
 

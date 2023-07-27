@@ -15,17 +15,10 @@
 #include "mem.h"
 #include "error.h"
 #include "token.h"
-#include "list.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <fcntl.h>
-
-// 1. function to build new subcommand (malloc, set default values)
-// 2. function to append subcommand to command (linked lists)
-// 3. function to build subcommand from tokens (appropriate fd,
-// path, args, mode, etc...)
-// 4. function to create subcommands from tokens (split by pipes)
 
 t_subcommand	*ft_subcommand_new(void)
 {
@@ -70,6 +63,35 @@ bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token, int token_length)
 	return (true);
 }
 
+bool	ft_set_out_fd(t_subcommand *subcommand, t_token *token, int token_length)
+{
+	int		fd;
+	char	*path;
+
+	while (token && token_length > 0)
+	{
+		if (token->type == TOKEN_GT || token->type == TOKEN_GT_GT)
+		{
+			if (!token->next)
+				return (printf(M""ESYN" `newline'\n"), false);
+			if (token->next->type != TOKEN_SYMBOL)
+				return (printf(M""ESYN" `%s'\n", token->next->value), false);
+			path = (char *)token->next->value;
+			path[token->next->length] = '\0';
+			if (token->type == TOKEN_GT)
+				fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			else
+				fd = open(path, O_RDWR | O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+				printf(M"%s: "ENOENT"\n", token->next->value);
+			return (subcommand->out_fd = fd, true);
+		}
+		token = token->next;
+		token_length--;
+	}
+	return (true);
+}
+
 t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length)
 {
 	t_subcommand	*subcommand;
@@ -79,30 +101,10 @@ t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length)
 		return (NULL);
 	if (!ft_set_in_fd(subcommand, token_start, token_length))
 		return (free(subcommand), NULL);
+	if (!ft_set_out_fd(subcommand, token_start, token_length))
+		return (free(subcommand), NULL);
 	return (subcommand);
 }
-
-// bool	ft_append_subcommand(t_command *command)
-// {
-// 	t_subcommand	*subcommand;
-// 	t_subcommand	*head;
-
-// 	subcommand = ft_subcommand_new();
-// 	if (!subcommand)
-// 		return (false);
-// 	if (!command->subcommands)
-// 		command->subcommands = subcommand;
-// 	else
-// 	{
-// 		head = command->subcommands;
-// 		while (command->subcommands->next)
-// 			command->subcommands = command->subcommands->next;
-// 		command->subcommands->next = subcommand;
-// 		command->subcommands = head;
-// 	}
-// 	command->subcommand_length++;
-// 	return (true);
-// }
 
 t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index)
 {
@@ -134,10 +136,23 @@ bool	ft_create_subcommands(t_command *command)
 {
 	int				token_index;
 	t_subcommand	*subcommand;
+	t_subcommand	*head;
 
 	token_index = 0;
 	subcommand = ft_find_next_subcommand(command, &token_index);
 	while (subcommand)
+	{
+		if (!command->subcommands)
+			command->subcommands = subcommand;
+		else
+		{
+			head = command->subcommands;
+			while (command->subcommands->next)
+				command->subcommands = command->subcommands->next;
+			command->subcommands->next = subcommand;
+			command->subcommands = head;
+		}
 		subcommand = ft_find_next_subcommand(command, &token_index);
+	}
 	return (true);
 }
