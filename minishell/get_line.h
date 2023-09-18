@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/08/10 14:39:47 by juliencros        #+#    #+#             */
+/*   Updated: 2023/08/10 14:40:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef GET_LINE_H
+# define GET_LINE_H
 
 # include "structs.h"
-# include <stdbool.h>
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
-			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
+char	*ft_get_line(char *line, char limiter, int fd);
 
-#endif /* PARSE_H */
+#endif

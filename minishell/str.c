@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:14:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
+/*   Updated: 2023/08/17 18:39:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "str.h"
 #include "mem.h"
+#include "str2.h"
 #include <stdlib.h>
 
 /**
@@ -99,35 +100,4 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	while (s1[i] && s1[i] == s2[i] && i < n - 1)
 		i++;
 	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
-}
-
-/**
- * @brief The ft_substr funtion allocates (with malloc(3)) and returns a
- * substring from the string 's'. The substring begins at index 'start' and is of
- * maximum size 'len'.
- * 
- * @param s 
- * @param start 
- * @param len 
- * @return char* 
- */
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*str;
-
-	if (!s)
-		return (NULL);
-	if (ft_strlen(s) < start)
-		return (ft_calloc(1, sizeof(char)));
-	if (ft_strlen(s) < len + start)
-		str = (char *)ft_calloc(ft_strlen(s) - start + 1, sizeof(char));
-	else
-		str = (char *)ft_calloc(len + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	i = -1;
-	while (s[start + ++i] && i < len)
-		str[i] = s[start + i];
-	return (str);
 }

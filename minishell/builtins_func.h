@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   builtins_func.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/08/21 19:58:17 by juliencros        #+#    #+#             */
+/*   Updated: 2023/08/22 14:25:57 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef BUILTINS_FUNC_H
+# define BUILTINS_FUNC_H
 
 # include "structs.h"
-# include <stdbool.h>
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
-			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
-
-#endif /* PARSE_H */
+int		ft_echo(t_subcommand *subcommand, t_token *token);
+int		ft_export(t_subcommand *subcommand);
+int		ft_env(t_subcommand *subcommand);
+int		ft_unset(t_subcommand *subcommand);
+int		ft_pwd(t_subcommand *subcommand);
+int		ft_cd(t_subcommand *subcommand);
+int		ft_exit(t_subcommand *subcommand);
+#endif

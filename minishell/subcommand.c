@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subcommand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/15 16:02:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/08/21 20:24:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 #include "mem.h"
 #include "error.h"
 #include "token.h"
+#include "here_doc.h"
+#include "find_out_file.h"
+#include "find_in_file.h"
+#include "builtin.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <fcntl.h>
 
-t_subcommand	*ft_subcommand_new(void)
+t_subcommand	*ft_subcommand_new(char **envp)
 {
 	t_subcommand	*subcommand;
 
@@ -29,76 +33,25 @@ t_subcommand	*ft_subcommand_new(void)
 		return (NULL);
 	subcommand->in_fd = 0;
 	subcommand->out_fd = 1;
+	subcommand->builtin = 0;
 	subcommand->path = NULL;
 	subcommand->args = NULL;
+	subcommand->envp = envp;
 	subcommand->mode = MODE_WRITE;
 	subcommand->is_heredoc = false;
 	subcommand->next = NULL;
 	return (subcommand);
 }
 
-bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token, int token_length)
-{
-	int		fd;
-	char	*path;
-
-	while (token && token_length > 0)
-	{
-		if (token->type == TOKEN_LT)
-		{
-			if (!token->next)
-				return (printf(M""ESYN" `newline'\n"), false);
-			if (token->next->type != TOKEN_SYMBOL)
-				return (printf(M""ESYN" `%s'\n", token->next->value), false);
-			path = (char *)token->next->value;
-			path[token->next->length] = '\0';
-			fd = open(path, O_RDONLY);
-			if (fd == -1)
-				printf(M"%s: "ENOENT"\n", token->next->value);
-			return (subcommand->in_fd = fd, true);
-		}
-		token = token->next;
-		token_length--;
-	}
-	return (true);
-}
-
-bool	ft_set_out_fd(t_subcommand *subcommand, t_token *token, int token_length)
-{
-	int		fd;
-	char	*path;
-
-	while (token && token_length > 0)
-	{
-		if (token->type == TOKEN_GT || token->type == TOKEN_GT_GT)
-		{
-			if (!token->next)
-				return (printf(M""ESYN" `newline'\n"), false);
-			if (token->next->type != TOKEN_SYMBOL)
-				return (printf(M""ESYN" `%s'\n", token->next->value), false);
-			path = (char *)token->next->value;
-			path[token->next->length] = '\0';
-			if (token->type == TOKEN_GT)
-				fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			else
-				fd = open(path, O_RDWR | O_CREAT | O_APPEND, 0644);
-			if (fd == -1)
-				printf(M"%s: "ENOENT"\n", token->next->value);
-			return (subcommand->out_fd = fd, true);
-		}
-		token = token->next;
-		token_length--;
-	}
-	return (true);
-}
-
-t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length)
+t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length , char **envp)
 {
 	t_subcommand	*subcommand;
 
-	subcommand = ft_subcommand_new();
+	subcommand = ft_subcommand_new(envp);
 	if (!subcommand)
 		return (NULL);
+	if (!ft_set_here_doc(subcommand, token_start, token_length))
+		return (free(subcommand), NULL);
 	if (!ft_set_in_fd(subcommand, token_start, token_length))
 		return (free(subcommand), NULL);
 	if (!ft_set_out_fd(subcommand, token_start, token_length))
@@ -106,7 +59,7 @@ t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length)
 	return (subcommand);
 }
 
-t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index)
+t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index, char **envp)
 {
 	int				i;
 	t_token			*token;
@@ -122,24 +75,24 @@ t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index)
 	if (pipe_offset == PIPE_NOT_FOUND)
 	{
 		*token_index = command->token_length;
-		return (ft_build_subcommand(token, command->token_length));
+		return (ft_build_subcommand(token, command->token_length, envp));
 	}
 	else if (*token_index == 0 || pipe_offset > 0)
 	{
 		*token_index += pipe_offset + 1;
-		return (ft_build_subcommand(token, pipe_offset));
+		return (ft_build_subcommand(token, pipe_offset, envp));
 	}
 	return (NULL);
 }
 
-bool	ft_create_subcommands(t_command *command)
+bool	ft_create_subcommands(t_command *command , char **envp)
 {
 	int				token_index;
 	t_subcommand	*subcommand;
 	t_subcommand	*head;
 
 	token_index = 0;
-	subcommand = ft_find_next_subcommand(command, &token_index);
+	subcommand = ft_find_next_subcommand(command, &token_index , envp);
 	while (subcommand)
 	{
 		if (!command->subcommands)
@@ -152,7 +105,7 @@ bool	ft_create_subcommands(t_command *command)
 			command->subcommands->next = subcommand;
 			command->subcommands = head;
 		}
-		subcommand = ft_find_next_subcommand(command, &token_index);
+		subcommand = ft_find_next_subcommand(command, &token_index , envp);
 	}
 	return (true);
 }

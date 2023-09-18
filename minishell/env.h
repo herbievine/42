@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/08/21 20:11:48 by juliencros        #+#    #+#             */
+/*   Updated: 2023/08/21 20:34:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef ENV_H
+# define ENV_H
 
 # include "structs.h"
-# include <stdbool.h>
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
-			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
-
-#endif /* PARSE_H */
+char	*ft_get_env(char *name, t_subcommand *subcommand);
+int		ft_add_env(char *name, char *value, t_subcommand *subcommand);
+int		ft_remove_env(char *name, t_subcommand *subcommand);
+#endif

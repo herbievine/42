@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/07/13 17:06:00 by herbie           ###   ########.fr        #
+#    Updated: 2023/08/22 10:55:18 by juliencros       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,19 @@ SRCS = \
 	history.c \
 	signals.c \
 	token.c \
+	find_cmds.c \
+	str2.c \
+	split.c \
+	find_in_file.c \
+	find_out_file.c \
+	free.c \
+	here_doc.c \
+	get_line.c \
+	check_subcommands.c \
+	process.c \
+	builtin.c \
+	builtins_func.c \
+	env.c \
 
 OBJS = $(SRCS:.c=.o)
 
