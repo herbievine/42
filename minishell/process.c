@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/21 18:04:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/19 15:36:34 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <fcntl.h>
 
 bool	pipe_and_execute(t_subcommand *subcommand, int i);
-void ft_free_fd(int fd[2], t_subcommand *subcommand);
 
 bool	ft_fork_and_pipe(t_subcommand *subcommand, int fd[2], pid_t *pid, int i)
 {
@@ -35,10 +34,12 @@ bool	ft_fork_and_pipe(t_subcommand *subcommand, int fd[2], pid_t *pid, int i)
 	}
 	if (*pid == 0)
 	{
+		fd[0] = subcommand->in_fd;
+		fd[1] = subcommand->out_fd;
 		if (i == 0 || subcommand->in_fd != 0)
-			dup2(subcommand->in_fd, STDIN_FILENO);
+			dup2(fd[0], STDIN_FILENO);
 		if (!subcommand->next || subcommand->out_fd != 1)
-			dup2(subcommand->out_fd, STDOUT_FILENO);
+			dup2(fd[1], STDOUT_FILENO);
 		else
 			dup2(fd[1], STDOUT_FILENO);
 	}
@@ -57,17 +58,15 @@ bool	pipe_and_execute(t_subcommand *subcommand, int i)
 		return (false);
 	if (pid == 0)
 	{
-		if (subcommand->path)
-			execve(subcommand->path, subcommand->args, NULL);
-		ft_free_fd(fd, subcommand);
+		execve(subcommand->path, subcommand->args, NULL);
+		ft_free_subcommands(subcommand);
 		exit(0);
 	}
 	else
-		{
-			close(fd[0]);
-			close(fd[1]);
-			waitpid(pid, &indx, 0);
-		}
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
 	return (true);
 }
 
@@ -89,14 +88,4 @@ bool	execution(t_subcommand *subcommand)
 	while (++j < i)
 		wait(NULL);
 	return (true);
-}
-
-void ft_free_fd(int fd[2], t_subcommand *subcommand)
-{
-	int i;
-
-	i = 0;
-	while (i < 3)
-		close(i++);
-	ft_free_subcommands(subcommand);
 }

@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:19:05 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/22 11:03:03 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/19 20:22:14 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ int ft_strschr(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	while (s1[i])
+	while (s2[i])
 	{
 		j = 0;
-		if (s1[i] == s2[j])
+		if (s2[i] == s1[j])
 		{
-			while (s2[j] && s1[i] == s2[j])
+			while (s1[j] && s2[i] == s1[j])
 			{
 				i++;
 				j++;
 			}
-			if (j == ft_strlen(s2))
+			if (j == ft_strlen(s1))
 				return (i - j);
 		}
 		i++;

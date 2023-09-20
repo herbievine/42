@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/23 11:11:47 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/19 12:08:29 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "str.h"
 #include "str2.h"
 #include "builtins_func.h"
+#include "echo.h"
 #include  <stdio.h>
 
 
@@ -47,7 +48,7 @@ bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand, char *cmd)
 {
 	
 	if (ft_strncmp(cmd, "echo", 4) == 0 && token->next)
-		return (ft_echo(subcommand, token->next), true);
+		return (ft_echo(token->next, subcommand), true);
 	if (ft_strncmp(cmd, "cd", 2) == 0 && token->next && !token->next->next)
 		return (ft_cd(subcommand), true);
 	if (ft_strncmp(cmd, "pwd", 3) == 0 && !token->next)

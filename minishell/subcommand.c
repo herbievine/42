@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/21 20:24:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/20 13:31:35 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_subcommand	*ft_subcommand_new(char **envp)
 	subcommand->builtin = 0;
 	subcommand->path = NULL;
 	subcommand->args = NULL;
+	subcommand->out_file_name = NULL;
 	subcommand->envp = envp;
 	subcommand->mode = MODE_WRITE;
 	subcommand->is_heredoc = false;
@@ -54,8 +55,8 @@ t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length , char 
 		return (free(subcommand), NULL);
 	if (!ft_set_in_fd(subcommand, token_start, token_length))
 		return (free(subcommand), NULL);
-	if (!ft_set_out_fd(subcommand, token_start, token_length))
-		return (free(subcommand), NULL);
+	// if (!ft_set_out_fd(subcommand, token_start, token_length))
+		// return (free(subcommand), NULL);
 	return (subcommand);
 }
 
@@ -106,6 +107,7 @@ bool	ft_create_subcommands(t_command *command , char **envp)
 			command->subcommands = head;
 		}
 		subcommand = ft_find_next_subcommand(command, &token_index , envp);
+
 	}
 	return (true);
 }

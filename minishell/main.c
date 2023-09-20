@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/22 16:45:07 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/20 16:22:42 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "mem.h"
 #include "process.h"
 #include "check_subcommands.h"
+#include "str2.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -37,6 +38,21 @@
 #define SUBCOMMAND_ARG(subcommand) \
 	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
 	subcommand.builtin, subcommand.mode, subcommand.is_heredoc
+
+void	ft_print_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+	char *str;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		str = ft_substr(tmp->value, 0, tmp->length);
+		printf("token: %s   |   type: %d\n", str, tmp->type);
+		free(str);
+		tmp = tmp->next;
+	}
+}
 
 void	ft_print_subcommands(t_command *command)
 {
@@ -58,6 +74,8 @@ void	ft_print_subcommands(t_command *command)
 				i++;
 			}
 		}
+		else
+			printf("args = NULL\n");
 		subcommand = subcommand->next;
 	}
 }
@@ -78,7 +96,8 @@ void	ft_build_command(char *buffer, char **envp)
 		if (token.type == TOKEN_INVALID)
 		{
 			ft_invalid_token(lexer, token);
-			break ;
+			ft_clear_tokens(&command.tokens); // check if it's tokens have to be freed here julien 
+			return ;
 		}
 		if (ft_append_token(&command.tokens, token))
 			command.token_length++;
@@ -86,12 +105,15 @@ void	ft_build_command(char *buffer, char **envp)
 	}
 	if (ft_create_subcommands(&command, envp))
 	{
-		ft_parse(command.tokens, command.subcommands, NULL);
-		ft_print_subcommands(&command);
-		// if (ft_check_subcommands(command.subcommands, command.tokens))
-		// 	execution(command.subcommands);
-		ft_free_subcommands(command.subcommands);
+		// ft_print_tokens(command.tokens);
+		if (ft_parse(command.tokens, command.subcommands, NULL))
+		{
+			ft_print_subcommands(&command);
+			// if (ft_check_subcommands(command.subcommands, command.tokens))
+			// execution(command.subcommands);
+		}	
 	}
+	ft_free_subcommands(command.subcommands); // check if it's subcommands have to be freed here julien
 	ft_clear_tokens(&command.tokens);
 }
 
@@ -103,7 +125,9 @@ void	ft_await_command_entry(char **envp)
 	{
 		buffer = readline("minishell> ");
 		if (!buffer)
+		{
 			ft_handle_ctrl_d();
+		}
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
@@ -117,7 +141,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	global_env = envp;
 	
 	
 	ft_history_new();
@@ -125,3 +149,4 @@ int	main(int argc, char **argv, char **envp)
 	ft_await_command_entry(envp);
 	return (0);
 }
+

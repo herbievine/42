@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/21 20:04:06 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/20 13:25:04 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdbool.h>
 
-extern char	**environ;
+char **global_env;
 typedef enum e_token_types {
 	TOKEN_EOF,
 	TOKEN_INVALID,
@@ -77,6 +77,7 @@ typedef struct s_subcommand
 	char				*path;
 	char				**args;
 	char				**envp;
+	char				*out_file_name;
 	t_mode				mode;
 	bool				is_heredoc;
 	struct s_subcommand	*next;

@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/21 19:51:48 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/20 15:23:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ bool	ft_set_cmd(t_token *token, t_subcommand *subcommand)
 {
 	char	*path;
 	int		cmd_len;
-
 	if (ft_valid_token(token))
 		token = token->next->next;
-	if (!token || token->type == TOKEN_PIPE)
+	if (!token || token->type == TOKEN_PIPE || subcommand->builtin == 1)
 		return (true);
 	cmd_len = token->length;
 	path = (char *)token->value;
@@ -49,7 +48,7 @@ bool	ft_find_cmd(t_subcommand *subcommand, char *cmd)
 {
 	char	*full_path;
 
-	full_path = ft_find_path(environ, cmd);
+	full_path = ft_find_path(global_env, cmd);
 	if (!full_path)
 		return (false);
 	else

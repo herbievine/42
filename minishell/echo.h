@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_subcommands.c                                :+:      :+:    :+:   */
+/*   echo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/19 17:51:56 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/20 16:21:48 by juliencros       ###   ########.fr       */
+/*   Created: 2023/09/19 12:06:11 by juliencros        #+#    #+#             */
+/*   Updated: 2023/09/19 12:09:24 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "check_subcommands.h"
-#include "error.h"
-#include "parse.h"
-#include <stdio.h>
+#ifndef ECHO_H
+# define ECHO_H
 
-bool	ft_check_subcommands(t_subcommand *subcommand, t_token *token)
-{
-	if (!subcommand->path && !ft_valid_token(token))
-		return (printf("minishell: %.*s: command not found\n", token->length, token->value), false);
-	if (subcommand->builtin)
-		return(false);
-	return (true);
-}
+#include "structs.h"
+
+int	ft_echo(t_token *token, t_subcommand *subcommand);
+
+#endif

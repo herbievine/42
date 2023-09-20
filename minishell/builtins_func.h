@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:58:17 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/22 14:25:57 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/19 11:21:07 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structs.h"
 
-int		ft_echo(t_subcommand *subcommand, t_token *token);
+int		ft_echo(t_token *token, t_subcommand *subcommand);
 int		ft_export(t_subcommand *subcommand);
 int		ft_env(t_subcommand *subcommand);
 int		ft_unset(t_subcommand *subcommand);

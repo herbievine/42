@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/21 17:39:19 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/20 13:24:57 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include "error.h"
 #include <unistd.h>
 #include <fcntl.h>
-
-bool	ft_find_in_file(t_token *token, t_subcommand *subcommand,
-	t_subcommand *prev_subcommand)
-{
-	// if (prev_subcommand != NULL)
-	// 	return (subcommand->in_fd = prev_subcommand->out_fd, true);
-	return (true);
-}
 
 bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token, int token_length)
 {
