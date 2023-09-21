@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/18 10:18:20 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/20 17:05:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_get_env(char *name, t_subcommand *subcommand)
 		j = 0;
 		while (subcommand->envp[i][j] && subcommand->envp[i][j] != '=')
 			j++;
-		if (ft_strncmp(subcommand->envp[i], name, j) == 0)
+		if (ft_strncmp(subcommand->envp[i], name, ft_strlen(name)) == 0)
 			return (subcommand->envp[i] + j + 1);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/09/20 16:22:42 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/21 15:13:35 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	ft_build_command(char *buffer, char **envp)
 	}
 	if (ft_create_subcommands(&command, envp))
 	{
-		// ft_print_tokens(command.tokens);
+		ft_print_tokens(command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, NULL))
 		{
 			ft_print_subcommands(&command);
