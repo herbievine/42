@@ -22,40 +22,41 @@
 #include "history.h"
 #include "token.h"
 #include "signals.h"
+#include "mem.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <readline/readline.h>
 
-# define SUBCOMMAND_FMT \
-	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
-	mode=%d, is_heredoc=%d)\n"
-# define SUBCOMMAND_ARG(subcommand) \
-	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
-	subcommand.mode, subcommand.is_heredoc
-	#include "mem.h"
+# define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
+# define TOKEN_ARG(token) token.type, token.length, token.value
 
-void	ft_print_subcommands(t_command *command)
+// # define SUBCOMMAND_FMT \
+// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
+// 	mode=%d, is_heredoc=%d)\n"
+// # define SUBCOMMAND_ARG(subcommand) \
+// 	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
+// 	subcommand.mode, subcommand.is_heredoc
+
+// void	ft_print_subcommands(t_command *command)
+// {
+// 	t_subcommand	*subcommand;
+
+// 	subcommand = command->subcommands;
+// 	while (subcommand)
+// 	{
+// 		t_subcommand tmp;
+// 		ft_memcpy(&tmp, subcommand, sizeof(t_subcommand));
+// 		printf(SUBCOMMAND_FMT, SUBCOMMAND_ARG(tmp));
+// 		subcommand = subcommand->next;
+// 	}
+// }
+
+void	ft_retrieve_tokens(t_command *command, char *buffer)
 {
-	t_subcommand	*subcommand;
-
-	subcommand = command->subcommands;
-	while (subcommand)
-	{
-		t_subcommand tmp;
-		ft_memcpy(&tmp, subcommand, sizeof(t_subcommand));
-		printf(SUBCOMMAND_FMT, SUBCOMMAND_ARG(tmp));
-		subcommand = subcommand->next;
-	}
-}
-
-void	ft_build_command(char *buffer)
-{
-	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
 
-	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
 	while (token.type != TOKEN_EOF)
@@ -65,19 +66,18 @@ void	ft_build_command(char *buffer)
 			ft_invalid_token(lexer, token);
 			break ;
 		}
-		if (ft_append_token(&command.tokens, token))
-			command.token_length++;
+		if (ft_append_token(&command->tokens, token))
+			command->token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (ft_create_subcommands(&command))
-		ft_print_subcommands(&command);
-	ft_clear_tokens(&command.tokens);
 }
 
 void	ft_await_command_entry(void)
 {
-	char	*buffer;
+	char		*buffer;
+	t_command	command;
 
+	command = ft_command_new();
 	while (true)
 	{
 		buffer = readline("minishell> ");
@@ -86,10 +86,11 @@ void	ft_await_command_entry(void)
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
-			ft_build_command(buffer);
+			ft_retrieve_tokens(&command, buffer);
 		}
 		free(buffer);
 	}
+	ft_clear_tokens(&command.tokens);
 }
 
 int	main(int argc, char **argv, char **envp)

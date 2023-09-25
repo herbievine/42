@@ -21,7 +21,7 @@ mlx
 .vscode
 
 # Log files
-*.log
+*.log*
 *.logs
 
 # Prerequisites
