@@ -1,6 +1,9 @@
 name = "minishell"
 
 [scripts]
+run = [
+	{ cmd = "valgrind --leak-check=full --show-reachable=yes --error-limit=no --suppressions=./valgrind-readline.supp --gen-suppressions=all --log-file=minishell.log ./minishell" }
+]
 build = { cmd = "make" }
 clean = { cmd = "make fclean" }
 lint = { cmd = "norminette ." }
