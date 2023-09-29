@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/19 15:36:34 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/29 08:41:37 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,29 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <stdbool.h>
+#include "str2.h"
+#include "token.h"
 
-bool	pipe_and_execute(t_subcommand *subcommand, int i);
+
+bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens);
+
+bool	ft_setup(t_subcommand *subcommand, int fd[2], int i, pid_t *pid)
+{
+	if (*pid == 0)
+	{
+		if (i == 0 && subcommand->in_fd != 0)
+			printf ("when = 0 dup2 = %d\n", dup2(subcommand->in_fd, STDIN_FILENO));
+		if (!subcommand->next)
+			printf ("when lst dup2 = %d\n",dup2(subcommand->out_fd, STDOUT_FILENO));
+		else
+			dup2(fd[1], STDOUT_FILENO);
+	}
+	else
+		dup2(fd[0], STDIN_FILENO);
+	return (true);	
+}
+
 
 bool	ft_fork_and_pipe(t_subcommand *subcommand, int fd[2], pid_t *pid, int i)
 {
@@ -32,33 +53,35 @@ bool	ft_fork_and_pipe(t_subcommand *subcommand, int fd[2], pid_t *pid, int i)
 		close(fd[1]);
 		return (false);
 	}
-	if (*pid == 0)
-	{
-		fd[0] = subcommand->in_fd;
-		fd[1] = subcommand->out_fd;
-		if (i == 0 || subcommand->in_fd != 0)
-			dup2(fd[0], STDIN_FILENO);
-		if (!subcommand->next || subcommand->out_fd != 1)
-			dup2(fd[1], STDOUT_FILENO);
-		else
-			dup2(fd[1], STDOUT_FILENO);
-	}
-	else
-		dup2(fd[0], STDIN_FILENO);
+	
 	return (true);
 }
 
-bool	pipe_and_execute(t_subcommand *subcommand, int i)
+bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens)
 {
 	pid_t	pid;
 	int		fd[2];
-	int		indx = -1;
 
 	if (!ft_fork_and_pipe(subcommand, fd, &pid, i))
-		return (false);
-	if (pid == 0)
+		return (printf("error fork and pipe\n"), false);
+	if (!ft_setup(subcommand, fd, i, &pid))
+		return (printf ("error setup\n"), false);	
+	printf ("[%d] before pid = %d\n", pid, pid);
+	if (pid == PID_CHILD)
 	{
-		execve(subcommand->path, subcommand->args, NULL);
+		printf("[%d] in_fd = %d\n",pid, subcommand->in_fd);
+		if (!subcommand->args)
+		{	
+			execve(subcommand->path, NULL, NULL);
+		}
+		else
+		{
+			execve(subcommand->path, subcommand->args, global_env);
+		}
+		printf ("[%d] after execve\n", pid);
+		close(fd[0]);
+		close(fd[1]);
+		ft_clear_tokens(tokens);
 		ft_free_subcommands(subcommand);
 		exit(0);
 	}
@@ -66,26 +89,42 @@ bool	pipe_and_execute(t_subcommand *subcommand, int i)
 	{
 		close(fd[0]);
 		close(fd[1]);
+		int returnStatus;
+		printf ("[%d] prent waitiong pid = %d\n", pid, pid);
+		waitpid(pid, &returnStatus, 0);
+		printf("[%d] after waiting pid = %d\n", pid, pid);
+		if (returnStatus == 0)
+		{
+		printf("The child process terminated normally.");
+		}
+		if (returnStatus == 1)      
+		{
+		printf("The child process terminated with an error!.");    
+		}
 	}
 	return (true);
 }
 
-bool	execution(t_subcommand *subcommand)
+int	execution(t_subcommand *subcommand, t_token **tokens)
 {
 	int				i;
 	int				j;
 	t_subcommand	*tmp;
 
 	i = 0;
-	j = -1;
-
-	while (subcommand != NULL)
+	j = 0;
+	// subcommand->args = malloc(sizeof(char *) * 2);s
+	// subcommand->args[0] = ft_strdup(subcommand->path);
+	// printf ("subcommand->path = %s\n", subcommand->path);
+	tmp = subcommand;
+	while (tmp != NULL)
 	{
-		pipe_and_execute(subcommand, i);
-		subcommand = subcommand->next;
+		// if (!pipe_and_execute(tmp, i, tokens))
+		// 	return (printf("pas bon\n"), false);
+		printf
+		tmp = tmp->next;
 		i++;
 	}
-	while (++j < i)
-		wait(NULL);
+
 	return (true);
 }

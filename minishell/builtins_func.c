@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/19 12:07:20 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/21 17:14:53 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,51 @@ int		ft_pwd(t_subcommand *subcommand)
 	return (0);
 }
 
-int		ft_export(t_subcommand *subcommand)
+// int		ft_export(t_subcommand *subcommand)
+// {
+// 	char **args;
+// 	int i;
+// 	int j;
+
+// 	args = subcommand->args;
+// 	i = 0;
+// 	j = 0;
+// 	if (!args)
+// 		ft_env(subcommand);
+// 	if (args && !args[i+1] && ft_strncmp(args[i], "=", 1) != 0)
+// 		ft_add_env(args[i], "", subcommand);
+// 	while (args && args[i] && ft_strncmp(args[i], "=", 1) != 0)
+// 		i++;
+// 	while (args && args[i + j])
+// 	{
+// 		if (ft_strchr(args[i], '='))
+// 			ft_add_env(args[i-1], args[i+1], subcommand);
+// 		i++;
+// 	}
+// 	else
+// 		ft_putstr_fd("export: not a valid identifier\n", 2);
+// 	return (0);
+// }
+
+int ft_export(t_subcommand *subcommand)
 {
 	char **args;
 	int i;
+	int j;
 
 	args = subcommand->args;
-	i = 0;
-	while (args && args[i])
-	{
-		printf("args[%d] = %s\n", i, args[i]);
-		if (ft_strchr(args[i], '='))
-			ft_add_env(args[i], args[i+1], subcommand);
-		i++;
-	}
+	i = -1;
+	j = 0;
+	if (!args)
+		return (ft_env(subcommand));
+	while (args[++i] && ft_strncmp(args[i], "=", 1) != 0)
+			ft_add_env(args[i], "", subcommand);
+	if (args[i] && ft_strncmp(args[i], "=", 1) == 0 && i == 1 && !args[i++])
+		ft_add_env(args[i], args[i], subcommand);
+	if (args[i+1])
+		ft_putstr_fd("export: bad assignment\n", 2);
 	return (0);
+	
 }
 
 int		ft_unset(t_subcommand *subcommand)
@@ -90,9 +120,9 @@ int		ft_env(t_subcommand *subcommand)
 	int		i;
 
 	i = 0;
-	while (subcommand->envp[i])
+	while (global_env[i])
 	{
-		ft_putstr_fd(subcommand->envp[i], subcommand->out_fd);
+		ft_putstr_fd(global_env[i], subcommand->out_fd);
 		ft_putstr_fd("\n", subcommand->out_fd);
 		i++;
 	}

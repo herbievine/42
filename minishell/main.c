@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/09/25 20:42:58 by herbie           ###   ########.fr       */
+/*   Updated: 2023/09/29 08:43:46 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <readline/readline.h>
+#include "display.h"
+#include <fcntl.h>
 
 // # define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
 // # define TOKEN_ARG(token) token.type, token.length, token.value

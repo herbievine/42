@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/09/20 13:25:04 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/29 08:30:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ typedef struct s_shell
 {
 	char		**env;
 }	t_shell;
+
+#define PID_CHILD 0
+#define PID_ERROR 1
 
 #endif /* STRUCTS_H */
