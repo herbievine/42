@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/29 08:41:37 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/09/29 09:09:44 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,31 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include "str.h"
+#include "mem.h"
 #include "str2.h"
 #include "token.h"
+
+// # define SUBCOMMAND_FMT \
+// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
+// 	mode=%d, is_heredoc=%d)\n"
+// # define SUBCOMMAND_ARG(subcommand) \
+// 	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
+// 	subcommand.mode, subcommand.is_heredoc
+
+// void	ft_print_subcommands(t_subcommand *subcommand)
+// {
+// 	t_subcommand	*head;
+
+// 	head = subcommand;
+// 	while (head)
+// 	{
+// 		t_subcommand tmp;
+// 		ft_memcpy(&tmp, head, sizeof(t_subcommand));
+// 		dprintf(2, SUBCOMMAND_FMT, SUBCOMMAND_ARG(tmp));
+// 		head = head->next;
+// 	}
+// }
 
 
 bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens);
@@ -92,6 +115,7 @@ bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens)
 		int returnStatus;
 		printf ("[%d] prent waitiong pid = %d\n", pid, pid);
 		waitpid(pid, &returnStatus, 0);
+		printf("returnStatus = %d\n", returnStatus);
 		printf("[%d] after waiting pid = %d\n", pid, pid);
 		if (returnStatus == 0)
 		{
@@ -105,7 +129,7 @@ bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens)
 	return (true);
 }
 
-int	execution(t_subcommand *subcommand, t_token **tokens)
+int	ft_execution(t_subcommand *subcommand, t_token **tokens)
 {
 	int				i;
 	int				j;
@@ -116,12 +140,13 @@ int	execution(t_subcommand *subcommand, t_token **tokens)
 	// subcommand->args = malloc(sizeof(char *) * 2);s
 	// subcommand->args[0] = ft_strdup(subcommand->path);
 	// printf ("subcommand->path = %s\n", subcommand->path);
+	// ft_print_subcommands(subcommand);
 	tmp = subcommand;
 	while (tmp != NULL)
 	{
-		// if (!pipe_and_execute(tmp, i, tokens))
-		// 	return (printf("pas bon\n"), false);
-		printf
+		if (!pipe_and_execute(tmp, i, tokens))
+			return (printf("pas bon\n"), false);
+		dprintf(2, "tmp->path = %s\n", tmp->path);
 		tmp = tmp->next;
 		i++;
 	}
