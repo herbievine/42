@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 11:44:18 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/11 11:44:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/29 09:13:36 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	ft_handle_ctrl_d(void)
 	exit(EXIT_SUCCESS);
 }
 
-// static void	ft_handle_ctrl_c(int signal)
-// {
-// 	(void)signal;
-// 	printf("\n");
-// 	rl_on_new_line();
-// 	rl_redisplay();
-// }
+static void	ft_handle_ctrl_c(int signal)
+{
+	(void)signal;
+	printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
+}
 
 static void	ft_handle_ctrl_slash(int signal)
 {

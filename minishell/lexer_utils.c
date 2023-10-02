@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 21:52:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/07 21:52:58 by herbie           ###   ########.fr       */
+/*   Updated: 2023/09/29 08:56:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_bash_token_map	*ft_get_token_map(void)
 bool	ft_is_valid_symbol(char c)
 {
 	if (ft_isalnum(c) || c == '-' || c == '$' || c == '_' || c == '.'
-		|| c == '/' || c == '~' || c == '*' || c == '!' || c == '?')
+		|| c == '/' || c == '~' || c == '*' || c == '!' || c == '?' )
 		return (true);
 	return (false);
 }

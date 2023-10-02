@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   find_in_file.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/08/09 15:02:08 by juliencros        #+#    #+#             */
+/*   Updated: 2023/08/19 19:34:34 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef FIND_IN_FILE_H
+# define FIND_IN_FILE_H
 
 # include "structs.h"
 # include <stdbool.h>
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
+bool	ft_find_in_file(t_token *token, t_subcommand *subcommand,
 			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
+bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token,
+			int token_length);
 
-#endif /* PARSE_H */
+#endif

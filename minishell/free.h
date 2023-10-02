@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/08/10 13:56:20 by juliencros        #+#    #+#             */
+/*   Updated: 2023/08/19 10:12:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef FREE_H
+# define FREE_H
 
 # include "structs.h"
-# include <stdbool.h>
+# include <stdlib.h>
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
-			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
+void	ft_free_subcommands(t_subcommand *subcommand);
+void	ft_free_cmds(char **split, size_t j);
 
-#endif /* PARSE_H */
+#endif

@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   echo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/09/19 12:06:11 by juliencros        #+#    #+#             */
+/*   Updated: 2023/09/19 12:09:24 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef ECHO_H
+# define ECHO_H
 
-# include "structs.h"
-# include <stdbool.h>
+#include "structs.h"
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
-			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
+int	ft_echo(t_token *token, t_subcommand *subcommand);
 
-#endif /* PARSE_H */
+#endif

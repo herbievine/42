@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/08/21 19:37:36 by juliencros        #+#    #+#             */
+/*   Updated: 2023/08/22 14:25:24 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
 # include "structs.h"
+#include "builtins_func.h"
 # include <stdbool.h>
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
-			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
+typedef struct s_builtin
+{
+	int		(*func)(t_subcommand *subcommand, t_token *token);
+}	t_builtin;
 
-#endif /* PARSE_H */
+bool	ft_builtin(t_subcommand *s_command, t_token *token);
+bool	ft_if_builtin(char *cmd);
+bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand, char *cmd);
+
+#endif

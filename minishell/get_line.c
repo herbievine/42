@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 15:33:32 by herbie            #+#    #+#             */
-/*   Updated: 2023/08/19 11:26:55 by juliencros       ###   ########.fr       */
+/*   Created: 2023/08/10 14:39:30 by juliencros        #+#    #+#             */
+/*   Updated: 2023/08/17 18:40:31 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "get_line.h"
+#include <stdio.h>
+#include <unistd.h>
 
-# include "structs.h"
-# include <stdbool.h>
+char	*ft_get_line(char *line, char limiter, int fd)
+{
+	int		i;
+	char	buffer;
 
-bool	ft_parse(t_token *token, t_subcommand *subcommand,
-			t_subcommand *prev_subcommand);
-bool	ft_valid_token(t_token *token);
-
-#endif /* PARSE_H */
+	i = 0;
+	if (!line)
+		return (NULL);
+	while (read(fd, &buffer, 1) > 0 && buffer != limiter)
+	{
+		line[i] = buffer;
+		i++;
+	}
+	line[i] = '\n';
+	line[i + 1] = '\0';
+	return (line);
+}
