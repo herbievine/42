@@ -69,7 +69,7 @@
 // 	token = ft_lexer_next(&lexer);
 // 	while (token.type != TOKEN_EOF)
 // 	{
-		
+
 // 		if (token.type == TOKEN_INVALID)
 // 		{
 // 			ft_invalid_token(lexer, token);
@@ -103,7 +103,7 @@
 // 			ft_parse(command.tokens, command.subcommands, NULL);
 // 			if (command.subcommands)
 // 				ft_print_subcommands(&command);
-// 			else 
+// 			else
 // 				printf("no subcommands\n");
 // 			printf("parse");
 // 			ft_execution(command.subcommands, &command.tokens);
@@ -118,7 +118,7 @@
 // {
 // 	(void)argc;
 // 	(void)argv;
-// 	global_env = envp;
+// 	g_env = envp;
 // 	ft_history_new();
 // 	ft_signals_register();
 // 	ft_await_command_entry(envp);
@@ -162,13 +162,13 @@
 #define SUBCOMMAND_FMT \
 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
 	builtin=%d, mode=%d, is_heredoc=%d)\n"
-#define SUBCOMMAND_ARG(subcommand) \
+#define SUBCOMMAND_ARG(subcommand)                      \
 	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
-	subcommand.builtin, subcommand.mode, subcommand.is_heredoc
+			subcommand.builtin, subcommand.mode, subcommand.is_heredoc
 
-void	ft_print_tokens(t_token *tokens)
+void ft_print_tokens(t_token *tokens)
 {
-	t_token	*tmp;
+	t_token *tmp;
 	char *str;
 
 	tmp = tokens;
@@ -181,11 +181,11 @@ void	ft_print_tokens(t_token *tokens)
 	}
 }
 
-void	ft_print_subcommands(t_command *command)
+void ft_print_subcommands(t_command *command)
 {
-	t_subcommand	*subcommand;
-	t_subcommand	tmp;
-	int				i;
+	t_subcommand *subcommand;
+	t_subcommand tmp;
+	int i;
 
 	subcommand = command->subcommands;
 	while (subcommand)
@@ -208,11 +208,11 @@ void	ft_print_subcommands(t_command *command)
 	}
 }
 
-void	ft_build_command(char *buffer, char **envp)
+void ft_build_command(char *buffer, char **envp)
 {
-	t_command	command;
-	t_lexer		lexer;
-	t_token		token;
+	t_command command;
+	t_lexer lexer;
+	t_token token;
 	int i;
 
 	i = 0;
@@ -224,8 +224,8 @@ void	ft_build_command(char *buffer, char **envp)
 		if (token.type == TOKEN_INVALID)
 		{
 			ft_invalid_token(lexer, token);
-			ft_clear_tokens(&command.tokens); // check if it's tokens have to be freed here julien 
-			return ;
+			ft_clear_tokens(&command.tokens); // check if it's tokens have to be freed here julien
+			return;
 		}
 		if (ft_append_token(&command.tokens, token))
 			command.token_length++;
@@ -238,16 +238,16 @@ void	ft_build_command(char *buffer, char **envp)
 		{
 			ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-			ft_execution(command.subcommands, &command.tokens);
-		}	
+				ft_execution(command.subcommands, &command.tokens);
+		}
 	}
 	ft_free_subcommands(command.subcommands); // check if it's subcommands have to be freed here julien
 	ft_clear_tokens(&command.tokens);
 }
 
-void	ft_await_command_entry(char **envp)
+void ft_await_command_entry(char **envp)
 {
-	char	*buffer;
+	char *buffer;
 
 	while (true)
 	{
@@ -265,13 +265,12 @@ void	ft_await_command_entry(char **envp)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	global_env = envp;
-	
-	
+	g_env = envp;
+
 	ft_history_new();
 	ft_signals_register();
 	ft_await_command_entry(envp);

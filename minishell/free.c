@@ -74,3 +74,25 @@ void	ft_free_cmds(char **split, size_t j)
 		while (*split)
 			free(*split++);
 }
+
+/**
+ * @brief The ft_free_array function takes in an array and frees all memory.
+ * If n if provided, it will only free the memory of the first n elements.
+ *
+ * @param array
+ * @param n
+ */
+void	ft_free_array(char **array, int n)
+{
+	int	i;
+
+	i = -1;
+	if (n == -1)
+		while (array[++i])
+			free(array[i]);
+	else
+		while (++i < n)
+			if (array[i])
+				free(array[i]);
+	free(array);
+}

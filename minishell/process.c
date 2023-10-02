@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/29 09:09:44 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/02 11:30:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,25 @@
 // 	}
 // }
 
+bool pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens);
 
-bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens);
-
-bool	ft_setup(t_subcommand *subcommand, int fd[2], int i, pid_t *pid)
+bool ft_setup(t_subcommand *subcommand, int fd[2], int i, pid_t *pid)
 {
 	if (*pid == 0)
 	{
 		if (i == 0 && subcommand->in_fd != 0)
-			printf ("when = 0 dup2 = %d\n", dup2(subcommand->in_fd, STDIN_FILENO));
+			printf("when = 0 dup2 = %d\n", dup2(subcommand->in_fd, STDIN_FILENO));
 		if (!subcommand->next)
-			printf ("when lst dup2 = %d\n",dup2(subcommand->out_fd, STDOUT_FILENO));
+			printf("when lst dup2 = %d\n", dup2(subcommand->out_fd, STDOUT_FILENO));
 		else
 			dup2(fd[1], STDOUT_FILENO);
 	}
 	else
 		dup2(fd[0], STDIN_FILENO);
-	return (true);	
+	return (true);
 }
 
-
-bool	ft_fork_and_pipe(t_subcommand *subcommand, int fd[2], pid_t *pid, int i)
+bool ft_fork_and_pipe(t_subcommand *subcommand, int fd[2], pid_t *pid, int i)
 {
 	if (pipe(fd) == -1)
 		return (false);
@@ -76,32 +74,32 @@ bool	ft_fork_and_pipe(t_subcommand *subcommand, int fd[2], pid_t *pid, int i)
 		close(fd[1]);
 		return (false);
 	}
-	
+
 	return (true);
 }
 
-bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens)
+bool pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens)
 {
-	pid_t	pid;
-	int		fd[2];
+	pid_t pid;
+	int fd[2];
 
 	if (!ft_fork_and_pipe(subcommand, fd, &pid, i))
 		return (printf("error fork and pipe\n"), false);
 	if (!ft_setup(subcommand, fd, i, &pid))
-		return (printf ("error setup\n"), false);	
-	printf ("[%d] before pid = %d\n", pid, pid);
+		return (printf("error setup\n"), false);
+	printf("[%d] before pid = %d\n", pid, pid);
 	if (pid == PID_CHILD)
 	{
-		printf("[%d] in_fd = %d\n",pid, subcommand->in_fd);
+		printf("[%d] in_fd = %d\n", pid, subcommand->in_fd);
 		if (!subcommand->args)
-		{	
+		{
 			execve(subcommand->path, NULL, NULL);
 		}
 		else
 		{
-			execve(subcommand->path, subcommand->args, global_env);
+			execve(subcommand->path, subcommand->args, g_env);
 		}
-		printf ("[%d] after execve\n", pid);
+		printf("[%d] after execve\n", pid);
 		close(fd[0]);
 		close(fd[1]);
 		ft_clear_tokens(tokens);
@@ -113,27 +111,27 @@ bool	pipe_and_execute(t_subcommand *subcommand, int i, t_token **tokens)
 		close(fd[0]);
 		close(fd[1]);
 		int returnStatus;
-		printf ("[%d] prent waitiong pid = %d\n", pid, pid);
+		printf("[%d] prent waitiong pid = %d\n", pid, pid);
 		waitpid(pid, &returnStatus, 0);
 		printf("returnStatus = %d\n", returnStatus);
 		printf("[%d] after waiting pid = %d\n", pid, pid);
 		if (returnStatus == 0)
 		{
-		printf("The child process terminated normally.");
+			printf("The child process terminated normally.");
 		}
-		if (returnStatus == 1)      
+		if (returnStatus == 1)
 		{
-		printf("The child process terminated with an error!.");    
+			printf("The child process terminated with an error!.");
 		}
 	}
 	return (true);
 }
 
-int	ft_execution(t_subcommand *subcommand, t_token **tokens)
+int ft_execution(t_subcommand *subcommand, t_token **tokens)
 {
-	int				i;
-	int				j;
-	t_subcommand	*tmp;
+	int i;
+	int j;
+	t_subcommand *tmp;
 
 	i = 0;
 	j = 0;

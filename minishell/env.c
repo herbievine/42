@@ -3,82 +3,103 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/21 17:04:12 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/02 12:14:21 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "str.h"
+#include "split.h"
 #include <stdlib.h>
 
-
-char	*ft_get_env(char *name, t_subcommand *subcommand)
+/**
+ * @brief The ft_get_env function returns the value of the environment variable
+ * stored in the g_env variable. If the variable does not exist, NULL is
+ * returned.
+ *
+ * @param key
+ * @param envp
+ * @return char*
+ */
+char	*ft_get_env(char *key)
 {
 	int		i;
-	int		j;
-	char	*env;
+	char	**envp;
 
-	i = 0;
-	while (global_env[i])
-	{
-		j = 0;
-		while (global_env[i][j] && global_env[i][j] != '=')
-			j++;
-		if (ft_strncmp(global_env[i], name, ft_strlen(name)) == 0)
-			return (global_env[i] + j + 1);
-		i++;
-	}
+	i = -1;
+	envp = g_env;
+	while (envp[++i])
+		if (ft_strncmp(key, envp[i], ft_strlen(key)) == 0
+			&& envp[i][ft_strlen(key)] == '=')
+			return (ft_strchr(envp[i], '=') + 1);
 	return (NULL);
 }
 
-int	ft_add_env(char *name, char *value, t_subcommand *subcommand)
+void	ft_set_env(char *key, char *value)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
-	while (global_env[i])
+	while (g_env[i])
 	{
 		j = 0;
-		while (global_env[i][j] && global_env[i][j] != '=')
+		while (g_env[i][j] && g_env[i][j] != '=')
 			j++;
-		if (ft_strncmp(global_env[i], name, j) == 0)
+		if (ft_strncmp(g_env[i], key, j) == 0)
 		{
-			free(global_env[i]);
-			global_env[i] = ft_strjoin(name, value);
-			return (0);
+			free(g_env[i]); // TODO make sure this gets added
+			g_env[i] = ft_strjoin(key, value);
+			return ;
 		}
 		i++;
 	}
-	return (0);
+	return ;
 }
 
-int	ft_remove_env(char *name, t_subcommand *subcommand)
+void	ft_remove_env(char *key)
 {
-	int		i;
-	int		j;
-	char	*env;
+	int	i;
+	int	j;
 
 	i = 0;
-	while (global_env[i])
+	while (g_env[i])
 	{
 		j = 0;
-		while (global_env[i][j] && global_env[i][j] != '=')
+		while (g_env[i][j] && g_env[i][j] != '=')
 			j++;
-		if (ft_strncmp(global_env[i], name, j) == 0)
+		if (ft_strncmp(g_env[i], key, j) == 0)
 		{
-			free(global_env[i]);
-			while (global_env[i])
+			free(g_env[i]); // TODO make sure this gets removed
+			while (g_env[i])
 			{
-				global_env[i] = global_env[i + 1];
+				g_env[i] = g_env[i + 1];
 				i++;
 			}
-			return (0);
+			return ;
 		}
 		i++;
 	}
-	return (0);
+	return ;
+}
+
+/**
+ * @brief The ft_get_paths function returns an array of strings containing the
+ * paths in the PATH environment variable. If the variable does not exist, NULL
+ * is returned.
+ * 
+ * @param envp 
+ * @return char** 
+ */
+char	**ft_get_paths(void)
+{
+	char	*path;
+
+	path = ft_get_env("PATH");
+	if (!path)
+		return (NULL);
+	return (ft_split(path, ':'));
 }
