@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/02 11:25:55 by herbie           ###   ########.fr       */
+/*   Updated: 2023/10/03 13:19:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool ft_parse(t_token *tokens, t_subcommand *subcommand,
 	// 	return (ft_builtin(subcommand, tokens), true);
 	// }
 	// free(path);
-	if (!ft_set_cmd(tokens, subcommand) || !ft_set_out_file(tokens, subcommand))
+	if (!ft_set_path(subcommand, tokens) || !ft_set_out_file(tokens, subcommand))
 		return (false);
 	subcommand->args = ft_fill_args(&tokens, subcommand);
 	while (tokens->next != NULL && tokens->type != TOKEN_PIPE)

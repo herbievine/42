@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:26 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/17 18:21:13 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/03 13:19:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "structs.h"
 # include <stdbool.h>
 
-bool	ft_set_cmd(t_token *token, t_subcommand *subcommand);
+bool	ft_set_path(t_subcommand *subcommand, t_token *token);
 
 #endif
