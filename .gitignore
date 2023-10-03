@@ -13,6 +13,7 @@ mlx
 # Ignore code testers
 **/tester
 **/checker
+**/*test*
 
 # MacOS
 .DS_Store
