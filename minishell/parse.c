@@ -25,7 +25,7 @@
 
 char **ft_fill_args(t_token **token, t_subcommand *subcommand);
 int ft_args_count(t_token *token, char *path);
-bool ft_valid_token(t_token *token);
+bool ft_is_io_symbol(t_token *token);
 
 bool ft_parse(t_token *tokens, t_subcommand *subcommand,
 							t_subcommand *prev_subcommand)
@@ -72,7 +72,7 @@ char **ft_fill_args(t_token **token, t_subcommand *subcommand)
 	while (head != NULL && head->type != TOKEN_PIPE)
 	{
 		path = ft_substr(head->value, 0, head->length);
-		if (ft_valid_token(head))
+		if (ft_is_io_symbol(head))
 			head = head->next->next;
 		if (!head || head->type == TOKEN_PIPE)
 			break;
@@ -98,7 +98,7 @@ int ft_args_count(t_token *token, char *path)
 		i -= 1;
 	while (token != NULL && token->type != TOKEN_PIPE)
 	{
-		if (ft_valid_token(token))
+		if (ft_is_io_symbol(token))
 			i -= 2;
 		token = token->next;
 		i++;
@@ -106,9 +106,10 @@ int ft_args_count(t_token *token, char *path)
 	return (i);
 }
 
-bool ft_valid_token(t_token *token)
+bool	ft_is_io_symbol(t_token *token)
 {
-	if (token->type == TOKEN_LT || token->type == TOKEN_LT_LT || token->type == TOKEN_GT || token->type == TOKEN_GT_GT)
+	if (token->type == TOKEN_LT || token->type == TOKEN_LT_LT
+		|| token->type == TOKEN_GT || token->type == TOKEN_GT_GT)
 		return (true);
 	else
 		return (false);
