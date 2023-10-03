@@ -3,110 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/20 15:23:51 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/03 12:56:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "find_cmds.h"
 #include "split.h"
 #include "str.h"
+#include "str2.h"
 #include "free.h"
+#include "mem.h"
 #include "parse.h"
+#include "env.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 
-bool		ft_find_cmd(t_subcommand *subcommand, char *cmd);
-char		*ft_find_path(char **envp, char *cmd);
-char		**ft_create_path(char **envp);
-char		*ft_strjoins(char *s1, char *s2, char *s3);
+static char	*ft_find_path(char *cmd);
+static char	*ft_fmt_path(char *path, char *cmd);
 
-bool	ft_set_cmd(t_token *token, t_subcommand *subcommand)
+/**
+ * @brief The ft_set_path function sets the path of the command.
+ * If the command is a builtin, the path is set to NULL. If the command
+ * is not a builtin, the path is set to the full path of the command
+ * found in the PATH environment variable.
+ * 
+ * @param subcommand 
+ * @param token 
+ * @return bool 
+ */
+bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 {
+	char	*cmd;
 	char	*path;
 	int		cmd_len;
-	if (ft_valid_token(token))
+
+	if (ft_is_io_symbol(token))
 		token = token->next->next;
 	if (!token || token->type == TOKEN_PIPE || subcommand->builtin == 1)
 		return (true);
-	cmd_len = token->length;
-	path = (char *)token->value;
-	path[cmd_len] = '\0';
-	if (ft_strncmp(path, "/bin/", 5) == 0)
+	cmd = ft_substr(token->value, 0, token->length);
+	if (ft_strncmp(cmd, "/bin/", 5) == 0)
 	{
-		if (access(path, F_OK) != -1)
-			return (subcommand->path = path, true);
+		if (access(cmd, F_OK) != -1)
+			return (subcommand->path = cmd, true);
 	}
-	ft_find_cmd(subcommand, path);
-	return (true);
-}
-
-bool	ft_find_cmd(t_subcommand *subcommand, char *cmd)
-{
-	char	*full_path;
-
-	full_path = ft_find_path(global_env, cmd);
-	if (!full_path)
+	path = ft_find_path(cmd);
+	if (!path)
 		return (false);
-	else
-		return (subcommand->path = full_path, true);
+	return (subcommand->path = path, true);
 }
 
-char	**ft_create_path(char **envp)
-{
-	char	**paths;
-
-	if (!envp)
-		return (NULL);
-	while (ft_strncmp(*envp, "PATH=", 5) != 0)
-		envp++;
-	paths = ft_split(*envp, ':');
-	if (!paths)
-		return (NULL); 
-	return (paths);
-}
-
-char	*ft_find_path(char **envp, char *cmd)
+/**
+ * @brief The ft_find_path function finds the path of the command
+ * in the PATH environment variable.
+ *
+ * @param cmd
+ * @return char*
+ */
+static char	*ft_find_path(char *cmd)
 {
 	char	**paths;
 	char	*path;
 	int		i;
 
-	paths = ft_create_path(envp);
+	if (access(cmd, F_OK) == 0)
+		return (ft_substr(cmd, 0, ft_strlen(cmd)));
+	paths = ft_get_paths();
 	if (!paths)
 		return (NULL);
 	i = -1;
-	while (paths[++i]) 
+	while (paths[++i])
 	{
-		path = ft_strjoins(paths[i], "/", cmd);
+		path = ft_fmt_path(paths[i], cmd);
 		if (!path)
-			return (ft_free_cmds(paths, -1), free(path), NULL);
+			return (ft_free_array(paths, -1), NULL);
 		if (access(path, F_OK) == 0)
-			return (ft_free_cmds(paths, -1), path);
+			return (ft_free_array(paths, -1), path);
 		free(path);
 	}
-	return (ft_free_cmds(paths, -1), NULL);
+	return (ft_free_array(paths, -1), NULL);
 }
 
-char	*ft_strjoins(char *s1, char *s2, char *s3)
+/**
+ * @brief The ft_fmt_path function returns the full path of the command.
+ *
+ * @param path
+ * @param cmd
+ * @return char*
+ */
+static char	*ft_fmt_path(char *path, char *cmd)
 {
-	char	*final_str;
+	char	*str;
+	int		len;
 	int		i;
 
-	i = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
-	final_str = malloc(sizeof(char) * i + 1);
-	if (!final_str)
+	len = ft_strlen(path) + ft_strlen(cmd) + ft_strlen("/");
+	str = ft_calloc(len + 1, sizeof(char));
+	if (!str)
 		return (NULL);
+	str[len] = '\0';
 	i = 0;
-	while (*s1)
-		final_str[i++] = *s1++;
-	while (*s2)
-		final_str[i++] = *s2++;
-	while (*s3)
-		final_str[i++] = *s3++;
-	final_str[i] = '\0';
-	return (final_str);
+	while (*path)
+		str[i++] = *path++;
+	str[i++] = '/';
+	while (*cmd)
+		str[i++] = *cmd++;
+	str[i] = '\0';
+	return (str);
 }

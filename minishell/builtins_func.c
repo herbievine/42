@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/21 17:14:53 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/02 11:38:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_cd(t_subcommand *subcommand)
 
 	ret = 0;
 	if (!subcommand->args)
-		path = ft_get_env("HOME", subcommand);
+		path = ft_get_env("HOME");
 	else
 		path = subcommand->args[0];
 	if (chdir(path) == -1)
@@ -65,13 +65,13 @@ int		ft_pwd(t_subcommand *subcommand)
 // 	if (!args)
 // 		ft_env(subcommand);
 // 	if (args && !args[i+1] && ft_strncmp(args[i], "=", 1) != 0)
-// 		ft_add_env(args[i], "", subcommand);
+// 		ft_set_env(args[i], "", subcommand);
 // 	while (args && args[i] && ft_strncmp(args[i], "=", 1) != 0)
 // 		i++;
 // 	while (args && args[i + j])
 // 	{
 // 		if (ft_strchr(args[i], '='))
-// 			ft_add_env(args[i-1], args[i+1], subcommand);
+// 			ft_set_env(args[i-1], args[i+1], subcommand);
 // 		i++;
 // 	}
 // 	else
@@ -91,9 +91,9 @@ int ft_export(t_subcommand *subcommand)
 	if (!args)
 		return (ft_env(subcommand));
 	while (args[++i] && ft_strncmp(args[i], "=", 1) != 0)
-			ft_add_env(args[i], "", subcommand);
+			ft_set_env(args[i], "");
 	if (args[i] && ft_strncmp(args[i], "=", 1) == 0 && i == 1 && !args[i++])
-		ft_add_env(args[i], args[i], subcommand);
+		ft_set_env(args[i], args[i]);
 	if (args[i+1])
 		ft_putstr_fd("export: bad assignment\n", 2);
 	return (0);
@@ -109,7 +109,7 @@ int		ft_unset(t_subcommand *subcommand)
 	i = 0;
 	while (args[i])
 	{
-		ft_remove_env(args[i], subcommand);
+		ft_remove_env(args[i]);
 		i++;
 	}
 	return (0);
@@ -120,9 +120,9 @@ int		ft_env(t_subcommand *subcommand)
 	int		i;
 
 	i = 0;
-	while (global_env[i])
+	while (g_env[i])
 	{
-		ft_putstr_fd(global_env[i], subcommand->out_fd);
+		ft_putstr_fd(g_env[i], subcommand->out_fd);
 		ft_putstr_fd("\n", subcommand->out_fd);
 		i++;
 	}

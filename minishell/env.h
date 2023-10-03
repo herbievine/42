@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:48 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/21 20:34:01 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/02 11:44:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "structs.h"
 
-char	*ft_get_env(char *name, t_subcommand *subcommand);
-int		ft_add_env(char *name, char *value, t_subcommand *subcommand);
-int		ft_remove_env(char *name, t_subcommand *subcommand);
+char	*ft_get_env(char *key);
+void	ft_set_env(char *key, char *value);
+void	ft_remove_env(char *key);
+char	**ft_get_paths(void);
+
 #endif

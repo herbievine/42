@@ -72,7 +72,7 @@ int	ft_print_the_path(char *arg, int out_fd, t_subcommand *subcommand, int type)
 	while (arg[i + j] && arg[i + j] != ' ' && !ft_is_antislash(arg[i + j], type, 0))
 		j++;
 	path = ft_substr(arg, i+1, j-1);
-	env_path = ft_get_env(path, subcommand);
+	env_path = ft_get_env(path);
 	if (env_path != NULL)
 		ft_putstr_fd(env_path, out_fd);
 	free(path);

@@ -18,5 +18,6 @@
 
 void	ft_free_subcommands(t_subcommand *subcommand);
 void	ft_free_cmds(char **split, size_t j);
+void	ft_free_array(char **array, int n);
 
 #endif
