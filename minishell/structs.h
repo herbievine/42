@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/02 11:30:30 by herbie           ###   ########.fr       */
+/*   Updated: 2023/10/03 20:21:09 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,11 @@ typedef struct s_shell
 	char **env;
 } t_shell;
 
-#define PID_CHILD 0
-#define PID_ERROR 1
+// Constants
+
+# define PIPE_ERROR -1
+
+# define PID_CHILD 0
+# define PID_ERROR -1
 
 #endif /* STRUCTS_H */

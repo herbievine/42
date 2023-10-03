@@ -236,9 +236,9 @@ void ft_build_command(char *buffer, char **envp)
 		// ft_print_tokens(command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, NULL))
 		{
-			ft_print_subcommands(&command);
+			// ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				ft_execution(command.subcommands, &command.tokens);
+				ft_exec_cmds(command.subcommands, &command.tokens);
 		}
 	}
 	ft_free_subcommands(command.subcommands); // check if it's subcommands have to be freed here julien
