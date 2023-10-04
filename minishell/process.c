@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/04 13:27:29 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/04 13:31:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ bool	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, int idx)
 	{
 		execve(subcommand->path, subcommand->args, g_env);
 		// TODO Free everything
-		
 		ft_free_subcommands(subcommand);
 		exit(0);
 	}
