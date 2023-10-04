@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/03 13:19:26 by herbie           ###   ########.fr       */
+/*   Updated: 2023/10/04 13:20:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 	head = *token;
 	if (ft_arg_count(head, subcommand->path) < 1 || !head)
 		return (NULL);
-	args = ft_calloc(ft_arg_count(head, subcommand->path), sizeof(char *));
+	args = ft_calloc(ft_arg_count(head, subcommand->path) + 1, sizeof(char *));
 	if (!args)
 		return (NULL);
 	i = 0;
