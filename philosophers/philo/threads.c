@@ -49,10 +49,6 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 	}
 	pthread_mutex_lock(&data->data_mutex);
 	data->start_time = ft_get_time_in_ms();
-	i = -1;
-	while (++i < data->philo_count)
-		philos[i].last_meal_time = data->start_time;
-	data->is_ready = true;
 	pthread_mutex_unlock(&data->data_mutex);
 	ft_wait_for_exit(data, philos);
 	ft_destroy_threads(data, philos);

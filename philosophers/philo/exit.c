@@ -37,7 +37,7 @@ void	ft_wait_for_exit(t_data *data, t_philo *philos)
 		{
 			if (ft_did_die(data, &philos[i]))
 				return ;
-			if (ft_did_eat(data, &philos[i]))
+			if (ft_did_eat(data, philos))
 				return ;
 		}
 	}
@@ -60,7 +60,7 @@ static t_bool	ft_did_die(t_data *data, t_philo *philo)
 	{
 		pthread_mutex_lock(&data->print_mutex);
 		printf("[%dms] %d died\n",
-			ft_get_rounded_time_diff(data->start_time, data->time_die_in_ms),
+			ft_get_rounded_time_diff(philo->start_time, data->time_die_in_ms),
 			philo->id);
 		data->is_game_over = true;
 		pthread_mutex_unlock(&data->print_mutex);
