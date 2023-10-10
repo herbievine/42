@@ -15,6 +15,7 @@
 
 # include <sys/time.h>
 # include <pthread.h>
+# include <stdint.h>
 
 typedef enum e_bool
 {
@@ -31,7 +32,7 @@ typedef struct s_data
 	int				time_eat_in_ms;
 	int				time_sleep_in_ms;
 	int				max_eat;
-	unsigned long	start_time;
+	uint64_t		start_time;
 	t_bool			is_game_over;
 	pthread_mutex_t	data_mutex;
 	pthread_mutex_t	meal_mutex;
@@ -42,8 +43,8 @@ typedef struct s_philo
 {
 	int				id;
 	int				eat_count;
-	unsigned long	last_meal_time;
-	unsigned long	start_time;
+	uint64_t		last_meal_time;
+	uint64_t		start_time;
 	t_data			*data;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;

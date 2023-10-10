@@ -40,16 +40,20 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 
 	if (!ft_init_mutexes(data, philos))
 		return (false);
+	pthread_mutex_lock(&data->data_mutex);
+	data->start_time = ft_get_unix_time();
+	pthread_mutex_unlock(&data->data_mutex);
 	i = -1;
 	while (++i < data->philo_count)
 	{
+		pthread_mutex_lock(&data->data_mutex);
+		philos[i].start_time = ft_get_unix_time();
+		philos[i].last_meal_time = ft_get_unix_time();
+		pthread_mutex_unlock(&data->data_mutex);
 		if (pthread_create(&philos[i].thread, NULL,
 				&ft_redirect_philo, &philos[i]))
 			return (false);
 	}
-	pthread_mutex_lock(&data->data_mutex);
-	data->start_time = ft_get_time_in_ms();
-	pthread_mutex_unlock(&data->data_mutex);
 	ft_wait_for_exit(data, philos);
 	ft_destroy_threads(data, philos);
 	return (true);

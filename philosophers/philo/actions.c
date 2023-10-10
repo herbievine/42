@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:14:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/01 18:16:40 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/10 13:45:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 /**
  * @brief The ft_single_philo function is used when there is only one
  * philosopher. It is used to print the first message.
- * 
- * @param arg 
- * @return void* 
+ *
+ * @param arg
+ * @return void*
  */
 void	*ft_single_philo(void *arg)
 {
@@ -40,9 +40,9 @@ void	*ft_single_philo(void *arg)
  * @brief The ft_multiple_philos function waits for the start of the game,
  * then the odd philosophers wait for the even ones to eat, and then they
  * start their cycle.
- * 
- * @param arg 
- * @return void* 
+ *
+ * @param arg
+ * @return void*
  */
 void	*ft_multiple_philos(void *arg)
 {
@@ -50,8 +50,8 @@ void	*ft_multiple_philos(void *arg)
 
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->data_mutex);
-	philo->start_time = ft_get_time_in_ms();
-	philo->last_meal_time = philo->start_time;
+	philo->start_time = ft_get_unix_time();
+	philo->last_meal_time = ft_get_unix_time();
 	pthread_mutex_unlock(&philo->data->data_mutex);
 	if (philo->id & 1)
 	{
@@ -114,7 +114,7 @@ void	ft_eat(t_philo *philo)
 	ft_print(philo, "has taken a fork", eat_time);
 	ft_print(philo, "is eating", eat_time);
 	pthread_mutex_lock(&philo->data->meal_mutex);
-	philo->last_meal_time = ft_get_time_in_ms();
+	philo->last_meal_time = ft_get_unix_time();
 	philo->eat_count++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
 	ft_usleep(eat_time);

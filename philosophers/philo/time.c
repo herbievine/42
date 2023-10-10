@@ -15,19 +15,20 @@
 #include <sys/time.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdint.h>
 
 /**
- * @brief The ft_get_time_in_ms function returns the current time in
+ * @brief The ft_get_unix_time function returns the current time in
  * milliseconds.
  * 
- * @return unsigned long 
+ * @return uint64_t 
  */
-unsigned long	ft_get_time_in_ms(void)
+uint64_t	ft_get_unix_time(void)
 {
 	t_timeval	time;
 
 	gettimeofday(&time, NULL);
-	return ((unsigned long)(time.tv_sec * 1000 + time.tv_usec / 1000));
+	return ((time.tv_sec * (uint64_t)1000) + (time.tv_usec / 1000));
 }
 
 /**
@@ -37,11 +38,11 @@ unsigned long	ft_get_time_in_ms(void)
  * @param time
  * @return int 
  */
-int	ft_get_time_diff(unsigned long time)
+int	ft_get_time_diff(uint64_t time)
 {
-	unsigned long	current_time;
+	uint64_t	current_time;
 
-	current_time = ft_get_time_in_ms();
+	current_time = ft_get_unix_time();
 	return ((int)(current_time - time));
 }
 
@@ -54,11 +55,11 @@ int	ft_get_time_diff(unsigned long time)
  * @param round 
  * @return int 
  */
-int	ft_get_rounded_time_diff(unsigned long time, int round)
+int	ft_get_rounded_time_diff(uint64_t time, int round)
 {
-	unsigned long	current_time;
+	uint64_t	current_time;
 
-	current_time = ft_get_time_in_ms();
+	current_time = ft_get_unix_time();
 	return ((int)(current_time - time) - ((int)(current_time - time) % round));
 }
 
@@ -68,11 +69,11 @@ int	ft_get_rounded_time_diff(unsigned long time, int round)
  *
  * @param time
  */
-void	ft_usleep(unsigned long time)
+void	ft_usleep(uint64_t time)
 {
-	unsigned long	start_time;
+	uint64_t	start_time;
 
-	start_time = ft_get_time_in_ms();
-	while ((unsigned long)ft_get_time_diff(start_time) < time)
+	start_time = ft_get_unix_time();
+	while ((uint64_t)ft_get_time_diff(start_time) < time)
 		usleep(100);
 }
