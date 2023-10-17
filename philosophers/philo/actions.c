@@ -49,14 +49,10 @@ void	*ft_multiple_philos(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(&philo->data->data_mutex);
-	philo->start_time = ft_get_unix_time();
-	philo->last_meal_time = ft_get_unix_time();
-	pthread_mutex_unlock(&philo->data->data_mutex);
 	if (philo->id & 1)
 	{
 		pthread_mutex_lock(&philo->data->data_mutex);
-		usleep(philo->data->time_eat_in_ms * 0.9 + 1);
+		usleep(1);
 		pthread_mutex_unlock(&philo->data->data_mutex);
 	}
 	while (pthread_mutex_lock(&philo->data->meal_mutex) == 0
@@ -83,7 +79,7 @@ void	ft_print(t_philo *philo, char *msg, int arg_ms)
 	{
 		pthread_mutex_lock(&philo->data->print_mutex);
 		printf("[%dms] %d %s\n",
-			ft_get_rounded_time_diff(philo->start_time, arg_ms),
+			ft_get_rounded_time_diff(philo->data->start_time, arg_ms),
 			philo->id, msg);
 		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
