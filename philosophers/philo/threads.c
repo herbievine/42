@@ -50,7 +50,8 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 				&ft_redirect_philo, &philos[i]))
 			return (false);
 	}
-	ft_wait_for_exit(data, philos);
+	if (data->philo_count > 1)
+		ft_wait_for_exit(data, philos);
 	ft_destroy_threads(data, philos);
 	return (true);
 }
