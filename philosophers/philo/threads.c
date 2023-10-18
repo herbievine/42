@@ -41,7 +41,7 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 	if (!ft_init_mutexes(data, philos))
 		return (false);
 	pthread_mutex_lock(&data->data_mutex);
-	data->start_time = ft_get_unix_time() + data->philo_count * 50;
+	data->start_time = ft_get_unix_time() + data->philo_count * 20;
 	pthread_mutex_unlock(&data->data_mutex);
 	i = -1;
 	while (++i < data->philo_count)
