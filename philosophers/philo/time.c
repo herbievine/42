@@ -69,13 +69,19 @@ int	ft_get_rounded_time_diff(uint64_t time, int round)
  *
  * @param time
  */
-void	ft_usleep(uint64_t time)
+void	ft_usleep(uint64_t time, t_data *data)
 {
 	uint64_t	start_time;
 
 	start_time = ft_get_unix_time();
 	while ((uint64_t)ft_get_time_diff(start_time) < time)
+	{
+		pthread_mutex_lock(&data->meal_mutex);
+		if (data->is_game_over)
+			return (pthread_mutex_unlock(&data->meal_mutex), (void)0);
+		pthread_mutex_unlock(&data->meal_mutex);
 		usleep(100);
+	}
 }
 
 void	ft_wait_until(uint64_t time)

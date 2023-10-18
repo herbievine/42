@@ -14,11 +14,12 @@
 # define TIME_H
 
 # include <stdint.h>
+# include "structs.h"
 
 uint64_t	ft_get_unix_time(void);
 int			ft_get_time_diff(uint64_t time);
 int			ft_get_rounded_time_diff(uint64_t time, int round);
-void		ft_usleep(uint64_t time);
+void		ft_usleep(uint64_t time, t_data *data);
 void		ft_wait_until(uint64_t time);
 
 #endif /* TIME_H */

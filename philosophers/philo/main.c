@@ -25,6 +25,8 @@ int	main(int argc, char *argv[])
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 
+	if (argc < 5 || argc > 6)
+		return (ft_err(EHELP));
 	ft_init_data(&data);
 	if (!ft_parse_args(argc, argv, &data))
 		return (ft_err(EARGS));

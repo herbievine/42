@@ -26,8 +26,6 @@
  */
 t_bool	ft_parse_args(int argc, char **argv, t_data *data)
 {
-	if (argc < 5 || argc > 6)
-		return (false);
 	data->philo_count = ft_atoi(argv[1]);
 	data->time_die_in_ms = ft_atoi(argv[2]);
 	data->time_eat_in_ms = ft_atoi(argv[3]);

@@ -34,7 +34,7 @@ void	*ft_single_philo(void *arg)
 	printf("[0ms] %d has taken a fork\n", philo->id);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	pthread_mutex_lock(&philo->data->meal_mutex);
-	ft_usleep(philo->data->time_die_in_ms);
+	ft_usleep(philo->data->time_die_in_ms, philo->data);
 	pthread_mutex_lock(&philo->data->print_mutex);
 	printf("[%dms] %d died\n",
 		ft_get_rounded_time_diff(philo->data->start_time,
@@ -118,7 +118,7 @@ void	ft_eat(t_philo *philo)
 	philo->last_meal_time = ft_get_unix_time();
 	philo->eat_count++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	ft_usleep(eat_time);
+	ft_usleep(eat_time, philo->data);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
@@ -136,6 +136,6 @@ void	ft_sleep_and_think(t_philo *philo)
 	sleep_time = philo->data->time_sleep_in_ms;
 	pthread_mutex_unlock(&philo->data->data_mutex);
 	ft_print(philo, "is sleeping", sleep_time);
-	ft_usleep(sleep_time);
+	ft_usleep(sleep_time, philo->data);
 	ft_print(philo, "is thinking", sleep_time);
 }

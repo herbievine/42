@@ -31,9 +31,9 @@ void	ft_wait_for_exit(t_data *data, t_philo *philos)
 	int	i;
 
 	ft_wait_until(data->start_time);
-	ft_usleep(10);
 	while (true)
 	{
+		ft_usleep(10, data);
 		i = -1;
 		while (++i < data->philo_count)
 		{
@@ -42,7 +42,6 @@ void	ft_wait_for_exit(t_data *data, t_philo *philos)
 			if (ft_did_eat(data, philos))
 				return ;
 		}
-		ft_usleep(10);
 	}
 }
 
@@ -60,7 +59,6 @@ static t_bool	ft_did_die(t_data *data, t_philo *philo)
 	pthread_mutex_lock(&data->meal_mutex);
 	if (ft_get_time_diff(philo->last_meal_time) > data->time_die_in_ms)
 	{
-		printf("last_meal_time: %lu\n", philo->last_meal_time);
 		pthread_mutex_lock(&data->print_mutex);
 		printf("[%dms] %d died\n",
 			ft_get_rounded_time_diff(data->start_time, data->time_die_in_ms),
