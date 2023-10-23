@@ -19,10 +19,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
-static void		*ft_redirect_philo(void *arg);
-static t_bool	ft_init_mutexes(t_data *data, t_philo *philos);
-static void		ft_destroy_threads(t_data *data, t_philo *philos);
+static void	*ft_redirect_philo(void *arg);
+static bool	ft_init_mutexes(t_data *data, t_philo *philos);
+static void	ft_destroy_threads(t_data *data, t_philo *philos);
 
 /**
  * @brief The ft_spawn_threads function creates the threads and initializes
@@ -32,9 +33,9 @@ static void		ft_destroy_threads(t_data *data, t_philo *philos);
  * 
  * @param data 
  * @param philos 
- * @return t_bool 
+ * @return bool 
  */
-t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
+bool	ft_spawn_threads(t_data *data, t_philo *philos)
 {
 	int	i;
 
@@ -87,9 +88,9 @@ static void	*ft_redirect_philo(void *arg)
  * 
  * @param data 
  * @param philos 
- * @return t_bool 
+ * @return bool 
  */
-static t_bool	ft_init_mutexes(t_data *data, t_philo *philos)
+static bool	ft_init_mutexes(t_data *data, t_philo *philos)
 {
 	int	i;
 

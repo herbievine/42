@@ -15,9 +15,10 @@
 #include "structs.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <stdbool.h>
 
-static t_bool	ft_did_die(t_data *data, t_philo *philo);
-static t_bool	ft_did_eat(t_data *data, t_philo *philos);
+static bool	ft_did_die(t_data *data, t_philo *philo);
+static bool	ft_did_eat(t_data *data, t_philo *philos);
 
 /**
  * @brief The ft_wait_for_exit function waits for a philosopher to die or for
@@ -51,9 +52,9 @@ void	ft_wait_for_exit(t_data *data, t_philo *philos)
  *
  * @param data
  * @param philo
- * @return t_bool
+ * @return bool
  */
-static t_bool	ft_did_die(t_data *data, t_philo *philo)
+static bool	ft_did_die(t_data *data, t_philo *philo)
 {
 	pthread_mutex_lock(&data->meal_mutex);
 	if (ft_get_time_diff(philo->last_meal_time) > data->time_die_in_ms)
@@ -78,9 +79,9 @@ static t_bool	ft_did_die(t_data *data, t_philo *philo)
  *
  * @param data
  * @param philos
- * @return t_bool
+ * @return bool
  */
-static t_bool	ft_did_eat(t_data *data, t_philo *philos)
+static bool	ft_did_eat(t_data *data, t_philo *philos)
 {
 	int	i;
 	int	have_all_eaten;

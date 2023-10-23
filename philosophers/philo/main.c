@@ -32,10 +32,10 @@ int	main(int argc, char *argv[])
 		return (ft_err(EARGS));
 	forks = malloc(sizeof(pthread_mutex_t) * data.philo_count);
 	if (!forks)
-		return (ft_err(EUNKN), 1);
+		return (ft_err(EUNKN));
 	philos = malloc(sizeof(t_philo) * data.philo_count);
 	if (!philos)
-		return (free(forks), ft_err(EUNKN), 1);
+		return (free(forks), ft_err(EUNKN));
 	ft_init_philos(philos, &data, forks);
 	if (!ft_spawn_threads(&data, philos))
 		return (free(forks), free(philos), ft_err(ETHRD));

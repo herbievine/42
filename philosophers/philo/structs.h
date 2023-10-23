@@ -16,12 +16,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdint.h>
-
-typedef enum e_bool
-{
-	false,
-	true
-}	t_bool;
+# include <stdbool.h>
 
 typedef struct timeval	t_timeval;
 
@@ -33,7 +28,7 @@ typedef struct s_data
 	int				time_sleep_in_ms;
 	int				max_eat;
 	uint64_t		start_time;
-	t_bool			is_game_over;
+	bool			is_game_over;
 	pthread_mutex_t	data_mutex;
 	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	print_mutex;

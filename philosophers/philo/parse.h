@@ -14,7 +14,8 @@
 # define PARSE_H
 
 # include "structs.h"
+# include <stdbool.h>
 
-t_bool	ft_parse_args(int argc, char **argv, t_data *data);
+bool	ft_parse_args(int argc, char **argv, t_data *data);
 
 #endif /* PARSE_H */

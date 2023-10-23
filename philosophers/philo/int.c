@@ -39,7 +39,7 @@ int	ft_atoi(char *str)
  * @brief This function checks if a character is a digit.
  * 
  * @param c
- * @return t_bool 
+ * @return bool 
  */
 bool	ft_isdigit(char c)
 {
@@ -53,7 +53,7 @@ bool	ft_isdigit(char c)
  * @brief This function checks if a string is a number.
  * 
  * @param str
- * @return t_bool 
+ * @return bool 
  */
 bool	ft_isdigit_str(char *str)
 {

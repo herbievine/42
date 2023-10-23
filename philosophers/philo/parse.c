@@ -13,6 +13,7 @@
 #include "parse.h"
 #include "int.h"
 #include "structs.h"
+#include <stdbool.h>
 
 /**
  * @brief The ft_parse_args function parses the command line arguments and
@@ -22,9 +23,9 @@
  * @param argc 
  * @param argv 
  * @param data 
- * @return t_bool 
+ * @return bool 
  */
-t_bool	ft_parse_args(int argc, char **argv, t_data *data)
+bool	ft_parse_args(int argc, char **argv, t_data *data)
 {
 	int	i;
 

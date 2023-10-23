@@ -27,12 +27,8 @@
  */
 void	*ft_single_philo(void *arg)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
-	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("0 %d has taken a fork\n", philo->id);
-	pthread_mutex_unlock(&philo->data->print_mutex);
+	(void)arg;
+	printf("0 1 has taken a fork\n");
 	return (NULL);
 }
 
