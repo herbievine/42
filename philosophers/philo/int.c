@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "int.h"
+#include <stdbool.h>
 
 /**
  * @brief The ft_atoi funtion converts the initial portion of the string
@@ -32,4 +33,35 @@ int	ft_atoi(char *str)
 	while (*str >= '0' && *str <= '9')
 		n = n * 10 + *str++ - 48;
 	return (n * s);
+}
+
+/**
+ * @brief This function checks if a character is a digit.
+ * 
+ * @param c
+ * @return t_bool 
+ */
+bool	ft_isdigit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+/**
+ * @brief This function checks if a string is a number.
+ * 
+ * @param str
+ * @return t_bool 
+ */
+bool	ft_isdigit_str(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (!ft_isdigit(str[i]))
+			return (false);
+	return (true);
 }

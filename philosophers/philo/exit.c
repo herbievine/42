@@ -30,10 +30,9 @@ void	ft_wait_for_exit(t_data *data, t_philo *philos)
 {
 	int	i;
 
-	ft_wait_until(data->start_time);
 	while (true)
 	{
-		ft_usleep(10, data);
+		ft_usleep(5, data);
 		i = -1;
 		while (++i < data->philo_count)
 		{
@@ -60,8 +59,8 @@ static t_bool	ft_did_die(t_data *data, t_philo *philo)
 	if (ft_get_time_diff(philo->last_meal_time) > data->time_die_in_ms)
 	{
 		pthread_mutex_lock(&data->print_mutex);
-		printf("[%dms] %d died\n",
-			ft_get_rounded_time_diff(data->start_time, data->time_die_in_ms),
+		printf("%d %d died\n",
+			ft_get_time_diff(data->start_time),
 			philo->id);
 		data->is_game_over = true;
 		pthread_mutex_unlock(&data->print_mutex);
@@ -95,8 +94,8 @@ static t_bool	ft_did_eat(t_data *data, t_philo *philos)
 	if (have_all_eaten == data->philo_count)
 	{
 		pthread_mutex_lock(&data->print_mutex);
-		printf("[%dms] all philosophers have eaten %d times\n",
-			ft_get_rounded_time_diff(data->start_time, data->time_eat_in_ms),
+		printf("%d all philosophers have eaten %d times\n",
+			ft_get_time_diff(data->start_time),
 			data->max_eat);
 		data->is_game_over = true;
 		pthread_mutex_unlock(&data->print_mutex);

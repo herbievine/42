@@ -35,10 +35,11 @@ int	main(int argc, char *argv[])
 		return (ft_err(EUNKN), 1);
 	philos = malloc(sizeof(t_philo) * data.philo_count);
 	if (!philos)
-		return (ft_err(EUNKN), 1);
+		return (free(forks), ft_err(EUNKN), 1);
 	ft_init_philos(philos, &data, forks);
 	if (!ft_spawn_threads(&data, philos))
-		return (ft_err(ETHRD));
+		return (free(forks), free(philos), ft_err(ETHRD));
 	free(forks);
+	free(philos);
 	return (0);
 }

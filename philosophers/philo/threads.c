@@ -41,7 +41,7 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 	if (!ft_init_mutexes(data, philos))
 		return (false);
 	pthread_mutex_lock(&data->data_mutex);
-	data->start_time = ft_get_unix_time() + data->philo_count * 20;
+	data->start_time = ft_get_unix_time();
 	pthread_mutex_unlock(&data->data_mutex);
 	i = -1;
 	while (++i < data->philo_count)
@@ -50,8 +50,7 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 				&ft_redirect_philo, &philos[i]))
 			return (false);
 	}
-	if (data->philo_count > 1)
-		ft_wait_for_exit(data, philos);
+	ft_wait_for_exit(data, philos);
 	ft_destroy_threads(data, philos);
 	return (true);
 }
@@ -74,7 +73,6 @@ static void	*ft_redirect_philo(void *arg)
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = ft_get_unix_time();
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	ft_wait_until(philo->data->start_time);
 	if (philo->data->philo_count == 1)
 		ft_single_philo(philo);
 	else

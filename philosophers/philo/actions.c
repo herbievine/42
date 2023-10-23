@@ -33,15 +33,6 @@ void	*ft_single_philo(void *arg)
 	pthread_mutex_lock(&philo->data->print_mutex);
 	printf("[0ms] %d has taken a fork\n", philo->id);
 	pthread_mutex_unlock(&philo->data->print_mutex);
-	pthread_mutex_lock(&philo->data->meal_mutex);
-	ft_usleep(philo->data->time_die_in_ms, philo->data);
-	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("[%dms] %d died\n",
-		ft_get_rounded_time_diff(philo->data->start_time,
-			philo->data->time_die_in_ms),
-		philo->id);
-	pthread_mutex_unlock(&philo->data->print_mutex);
-	pthread_mutex_unlock(&philo->data->meal_mutex);
 	return (NULL);
 }
 
@@ -58,8 +49,8 @@ void	*ft_multiple_philos(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->id & 1)
-		usleep(1);
+	if (philo->id % 2)
+		ft_usleep(philo->data->time_eat_in_ms, philo->data);
 	while (pthread_mutex_lock(&philo->data->meal_mutex) == 0
 		&& !philo->data->is_game_over)
 	{
@@ -77,14 +68,14 @@ void	*ft_multiple_philos(void *arg)
  * @param philo
  * @param msg
  */
-void	ft_print(t_philo *philo, char *msg, int arg_ms)
+void	ft_print(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	if (!philo->data->is_game_over)
 	{
 		pthread_mutex_lock(&philo->data->print_mutex);
-		printf("[%dms] %d %s\n",
-			ft_get_rounded_time_diff(philo->data->start_time, arg_ms),
+		printf("%d %d %s\n",
+			ft_get_time_diff(philo->data->start_time),
 			philo->id, msg);
 		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
@@ -103,17 +94,17 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->data->data_mutex);
 	eat_time = philo->data->time_eat_in_ms;
 	pthread_mutex_unlock(&philo->data->data_mutex);
-	if (philo->id & 1)
+	if (philo->id % 2)
 		pthread_mutex_lock(philo->right_fork);
 	else
 		pthread_mutex_lock(philo->left_fork);
-	ft_print(philo, "has taken a fork", eat_time);
-	if (philo->id & 1)
+	ft_print(philo, "has taken a fork");
+	if (philo->id % 2)
 		pthread_mutex_lock(philo->left_fork);
 	else
 		pthread_mutex_lock(philo->right_fork);
-	ft_print(philo, "has taken a fork", eat_time);
-	ft_print(philo, "is eating", eat_time);
+	ft_print(philo, "has taken a fork");
+	ft_print(philo, "is eating");
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = ft_get_unix_time();
 	philo->eat_count++;
@@ -135,7 +126,11 @@ void	ft_sleep_and_think(t_philo *philo)
 	pthread_mutex_lock(&philo->data->data_mutex);
 	sleep_time = philo->data->time_sleep_in_ms;
 	pthread_mutex_unlock(&philo->data->data_mutex);
-	ft_print(philo, "is sleeping", sleep_time);
+	ft_print(philo, "is sleeping");
 	ft_usleep(sleep_time, philo->data);
-	ft_print(philo, "is thinking", sleep_time);
+	ft_print(philo, "is thinking");
+	if (philo->data->time_eat_in_ms > philo->data->time_sleep_in_ms)
+		ft_usleep(philo->data->time_eat_in_ms - philo->data->time_sleep_in_ms,
+			philo->data);
+	ft_usleep(5, philo->data);
 }

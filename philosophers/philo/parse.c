@@ -26,6 +26,12 @@
  */
 t_bool	ft_parse_args(int argc, char **argv, t_data *data)
 {
+	int	i;
+
+	i = 0;
+	while (++i < argc)
+		if (!ft_isdigit_str(argv[i]))
+			return (false);
 	data->philo_count = ft_atoi(argv[1]);
 	data->time_die_in_ms = ft_atoi(argv[2]);
 	data->time_eat_in_ms = ft_atoi(argv[3]);

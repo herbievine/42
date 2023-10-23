@@ -47,23 +47,6 @@ int	ft_get_time_diff(uint64_t time)
 }
 
 /**
- * @brief The ft_get_rounded_time_diff function returns the difference
- * between the current time and the time passed in milliseconds rounded
- * to the nearest multiple of the round parameter.
- * 
- * @param time 
- * @param round 
- * @return int 
- */
-int	ft_get_rounded_time_diff(uint64_t time, int round)
-{
-	uint64_t	current_time;
-
-	current_time = ft_get_unix_time();
-	return ((int)(((current_time - time) / round) * round));
-}
-
-/**
  * @brief The ft_usleep function sleeps for the specified time in
  * milliseconds.
  *
@@ -82,10 +65,4 @@ void	ft_usleep(uint64_t time, t_data *data)
 		pthread_mutex_unlock(&data->meal_mutex);
 		usleep(100);
 	}
-}
-
-void	ft_wait_until(uint64_t time)
-{
-	while (ft_get_unix_time() < time)
-		continue ;
 }
