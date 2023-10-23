@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:14:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/10 13:45:31 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/23 14:31:46 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@
  */
 void	*ft_single_philo(void *arg)
 {
-	(void)arg;
-	printf("0 1 has taken a fork\n");
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	ft_print(philo, "has taken a fork");
 	return (NULL);
 }
 

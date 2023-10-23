@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:19:23 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/01 18:16:40 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/23 14:39:08 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	ft_usleep(uint64_t time, t_data *data)
 		if (data->is_game_over)
 			return (pthread_mutex_unlock(&data->meal_mutex), (void)0);
 		pthread_mutex_unlock(&data->meal_mutex);
-		usleep(100);
+		usleep(1000);
 	}
 }

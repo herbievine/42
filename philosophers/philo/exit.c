@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hvine <hvine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 18:31:57 by codespace         #+#    #+#             */
-/*   Updated: 2023/10/15 17:03:31 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/23 14:08:28 by hvine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_wait_for_exit(t_data *data, t_philo *philos)
 {
 	int	i;
 
+	ft_usleep(3, data);
 	while (true)
 	{
 		ft_usleep(5, data);
