@@ -6,18 +6,18 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:19:21 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/01 18:16:40 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/10 13:45:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TIME_H
 # define TIME_H
 
+# include <stdint.h>
 # include "structs.h"
 
-unsigned long	ft_get_time_in_ms(void);
-int				ft_get_time_diff(unsigned long time);
-int				ft_get_rounded_time_diff(unsigned long time, int round);
-void			ft_usleep(unsigned long time);
+uint64_t	ft_get_unix_time(void);
+int			ft_get_time_diff(uint64_t time);
+void		ft_usleep(uint64_t time, t_data *data);
 
 #endif /* TIME_H */

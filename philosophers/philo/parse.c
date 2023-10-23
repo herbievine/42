@@ -13,6 +13,7 @@
 #include "parse.h"
 #include "int.h"
 #include "structs.h"
+#include <stdbool.h>
 
 /**
  * @brief The ft_parse_args function parses the command line arguments and
@@ -22,12 +23,16 @@
  * @param argc 
  * @param argv 
  * @param data 
- * @return t_bool 
+ * @return bool 
  */
-t_bool	ft_parse_args(int argc, char **argv, t_data *data)
+bool	ft_parse_args(int argc, char **argv, t_data *data)
 {
-	if (argc < 5 || argc > 6)
-		return (false);
+	int	i;
+
+	i = 0;
+	while (++i < argc)
+		if (!ft_isdigit_str(argv[i]))
+			return (false);
 	data->philo_count = ft_atoi(argv[1]);
 	data->time_die_in_ms = ft_atoi(argv[2]);
 	data->time_eat_in_ms = ft_atoi(argv[3]);
