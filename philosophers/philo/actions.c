@@ -31,7 +31,7 @@ void	*ft_single_philo(void *arg)
 
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("[0ms] %d has taken a fork\n", philo->id);
+	printf("0 %d has taken a fork\n", philo->id);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	return (NULL);
 }
