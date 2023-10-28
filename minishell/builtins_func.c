@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/28 11:29:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/28 13:14:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int ft_export(t_subcommand *subcommand)
 	{
 		if (ft_strchr(subcommand->args[i], '='))
 		{
-			str = ft_substr(subcommand->args[i], 0, ft_position(subcommand->args[i], '=') + 1);
+			str = ft_substr(subcommand->args[i], 0, ft_position(subcommand->args[i], '='));
+			printf("str = %s\n", str);
 		 	ft_add_cpy_env_var(subcommand, str);
 			free(str);
 		}
@@ -79,6 +80,11 @@ int ft_export(t_subcommand *subcommand)
 		ft_add_cpy_env_var(subcommand, subcommand->args[i-1]);
 	if (subcommand->args[i])
 		ft_putstr_fd("export: bad assignment\n", 2);
+	i = 0;
+	while (subcommand->cpy_envp[i])
+		i++;
+	printf("i = %d\n", i);
+	
 	return (0);
 }
 

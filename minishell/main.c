@@ -213,18 +213,16 @@ void ft_print_subcommands(t_command *command)
 	}
 }
 
-void ft_build_command(char *buffer, char **envp)
+void ft_build_command(char *buffer, char **envp, char **cpy_envp)
 {
 	t_command command;
 	t_lexer lexer;
 	t_token token;
-	char **cpy_envp;
 	int i = 0;
 
 	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
-	cpy_envp = ft_cpy_env(envp);
 	while (token.type != TOKEN_EOF)
 	{
 		if (token.type == TOKEN_INVALID)
@@ -255,7 +253,9 @@ void ft_build_command(char *buffer, char **envp)
 void ft_await_command_entry(char **envp)
 {
 	char *buffer;
+	char **cpy_envp;
 
+	cpy_envp = ft_cpy_env(envp);
 	while (true)
 	{
 		buffer = readline("minishell> ");
@@ -266,7 +266,7 @@ void ft_await_command_entry(char **envp)
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
-			ft_build_command(buffer, envp);
+			ft_build_command(buffer, envp, cpy_envp);
 		}
 		free(buffer);
 	}

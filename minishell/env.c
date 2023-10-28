@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/28 11:29:30 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/28 13:02:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,11 @@ void	ft_add_cpy_env_var(t_subcommand *subcommand, char *value)
 	char *tmp;
 
 	i = 0;
+	key = NULL;
 	if (ft_strchr(value, '='))
+	{
 		key  = ft_substr(value, 0, ft_strchr(value, '=') - value + 1);
+	}
 	while(subcommand->cpy_envp[i])
 	{
 		if (key && ft_strncmp(subcommand->cpy_envp[i], key, ft_strlen(key)) == 0)
@@ -182,6 +185,7 @@ void	ft_add_cpy_env_var(t_subcommand *subcommand, char *value)
 		new_cpy_envp[i] = ft_strdup(subcommand->cpy_envp[i]);
 	new_cpy_envp[i++] = ft_strjoin(value, "=");
 	new_cpy_envp[i] = NULL;
+	printf("i = %d\n", i);
 	ft_free_array(subcommand->cpy_envp, -1);
 	subcommand->cpy_envp = new_cpy_envp;
 	return ;
