@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/21 16:09:45 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/26 17:59:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,22 @@ bool	ft_if_builtin(char *cmd)
 
 bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand, char *cmd)
 {
-	
+	if (subcommand->out_fd == -1)
+		subcommand->out_fd = 1;
 	if (ft_strncmp(cmd, "echo", 4) == 0 && token->next)
-		return (ft_echo(token->next, subcommand), true);
-	if (ft_strncmp(cmd, "cd", 2) == 0 && token->next && !token->next->next)
-		return (ft_cd(subcommand), true);
-	if (ft_strncmp(cmd, "pwd", 3) == 0 && !token->next)
-		return (ft_pwd(subcommand), true);
-	if (ft_strncmp(cmd, "export", 6) == 0)
-		return (ft_export(subcommand), true);
-	if (ft_strncmp(cmd, "unset", 5) == 0 && token->next && !token->next->next)
-		return (ft_unset(subcommand), true);
-	if (ft_strncmp(cmd, "env", 3) == 0	)
-		return (ft_env(subcommand), true);
-	if (ft_strncmp(cmd, "exit", 4) == 0 && token->next && !token->next->next || !token->next)
-		return (ft_exit(subcommand), true);
-	return (false);
+		ft_echo(token->next, subcommand);
+	else if (ft_strncmp(cmd, "cd", 2) == 0 && token->next && !token->next->next)
+		ft_cd(subcommand);
+	else if (ft_strncmp(cmd, "pwd", 3) == 0 && !token->next)
+		ft_pwd(subcommand);
+	else if (ft_strncmp(cmd, "export", 6) == 0)
+		ft_export(subcommand);
+	else if (ft_strncmp(cmd, "unset", 5) == 0 && token->next && !token->next->next)
+		ft_unset(subcommand);
+	else if (ft_strncmp(cmd, "env", 3) == 0	)
+		ft_env(subcommand);
+	else if (ft_strncmp(cmd, "exit", 4) == 0 && token->next && !token->next->next || !token->next)
+		ft_exit(subcommand);
+	subcommand->out_fd = -1;
+	return (true);
 }

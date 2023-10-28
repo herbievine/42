@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:56:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/20 15:29:16 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/27 15:23:53 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	ft_free_subcommands(t_subcommand *subcommand)
 			close(subcommand->in_fd);
 			unlink(".here_doc_fd");
 		}
-		if ((subcommand->in_fd != 0) && (subcommand->in_fd != -1) && (!subcommand->is_heredoc) && (subcommand->out_fd != subcommand->in_fd))
+		if ((subcommand->in_fd > 1) && (subcommand->in_fd != -1) && (!subcommand->is_heredoc) && (subcommand->out_fd != subcommand->in_fd))
 			close(subcommand->in_fd);
-		if (subcommand->out_fd != 1)
+		if (subcommand->out_fd > 1)
 		{
 			close(subcommand->out_fd);
 			if (ft_strncmp(subcommand->out_file_name, "tmp", 3) == 0)
@@ -41,6 +41,7 @@ void	ft_free_subcommands(t_subcommand *subcommand)
 			free(subcommand->path);
 		if (subcommand->args != NULL)
 			ft_free_tab(subcommand->args);
+		ft_free_array(subcommand->cpy_envp, -1);
 		subcommand = subcommand->next;
 	}
 	return ;
@@ -95,4 +96,10 @@ void	ft_free_array(char **array, int n)
 			if (array[i])
 				free(array[i]);
 	free(array);
+}
+
+void	ft_free_fd(int fd)
+{
+	if (fd > 1)
+		close(fd);
 }

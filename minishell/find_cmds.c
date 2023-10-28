@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/03 12:56:38 by herbie           ###   ########.fr       */
+/*   Updated: 2023/10/24 18:01:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "find_cmds.h"
+#include "error.h"
 #include "split.h"
 #include "str.h"
 #include "str2.h"
@@ -22,7 +23,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static char	*ft_find_path(char *cmd);
+static char	*ft_find_path(t_subcommand *subcommand, char *cmd);
 static char	*ft_fmt_path(char *path, char *cmd);
 
 /**
@@ -51,9 +52,9 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 		if (access(cmd, F_OK) != -1)
 			return (subcommand->path = cmd, true);
 	}
-	path = ft_find_path(cmd);
+	path = ft_find_path(subcommand, cmd);
 	if (!path)
-		return (false);
+		return (true);
 	return (subcommand->path = path, true);
 }
 
@@ -64,7 +65,7 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
  * @param cmd
  * @return char*
  */
-static char	*ft_find_path(char *cmd)
+static char	*ft_find_path(t_subcommand *subcommand, char *cmd)
 {
 	char	**paths;
 	char	*path;
@@ -72,7 +73,7 @@ static char	*ft_find_path(char *cmd)
 
 	if (access(cmd, F_OK) == 0)
 		return (ft_substr(cmd, 0, ft_strlen(cmd)));
-	paths = ft_get_paths();
+	paths = ft_get_paths(subcommand);
 	if (!paths)
 		return (NULL);
 	i = -1;

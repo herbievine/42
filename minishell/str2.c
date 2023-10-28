@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:19:05 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/19 20:22:14 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/28 10:59:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,15 @@ int	ft_atoi(const char *str)
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 		nb = nb * 10 + (str[i++] - '0');
 	return (nb * neg);
+}
+
+
+int ft_position(char *str, char limitter)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != limitter)
+		i++;
+	return (i);
 }

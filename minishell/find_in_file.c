@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_in_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/20 13:24:57 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/24 17:41:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

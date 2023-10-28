@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/04 13:31:02 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/24 15:35:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, int idx)
 		return (false);
 	if (pid == PID_CHILD)
 	{
-		execve(subcommand->path, subcommand->args, g_env);
+		execve(subcommand->path, subcommand->args, subcommand->envp);
 		// TODO Free everything
 		ft_free_subcommands(subcommand);
 		exit(0);
@@ -85,6 +85,7 @@ bool	ft_exec_cmds(t_subcommand *subcommand, t_token **tokens)
 			return (false);
 		head = head->next;
 	}
+
 	while (i-- > 0)
 		wait(NULL);
 	return (true);

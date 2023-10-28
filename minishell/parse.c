@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/04 13:20:51 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/28 11:31:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,30 @@
 static char	**ft_fill_args(t_token **token, t_subcommand *subcommand);
 static int	ft_arg_count(t_token *token, char *path);
 
-bool	ft_parse(t_token *tokens, t_subcommand *subcommand,
-	t_subcommand *prev_subcommand)
+bool	ft_parse(t_token *tokens, t_subcommand *subcommand)
 {
 	char	*path;
 
-	if (prev_subcommand != NULL && subcommand->in_fd == 0)
-		subcommand->in_fd = prev_subcommand->out_fd;
-	// path = ft_substr(tokens->value, 0, tokens->length);
-	// if (ft_if_builtin(path))
-	// {
-	// 	subcommand->builtin = 1;
-	// 	subcommand->path = ft_strdup(path);
-	// 	free(path);
-	// 	t_token *tmp = tokens->next;
-	// 	subcommand->args = ft_fill_args(&tokens, subcommand);
-	// 	return (ft_builtin(subcommand, tokens), true);
-	// }
-	// free(path);
+	path = ft_substr(tokens->value, 0, tokens->length);
+	if (ft_if_builtin(path))
+	{
+		subcommand->builtin = 1;
+		subcommand->path = ft_strdup(path);
+		free(path);
+		t_token *tmp = tokens->next;
+		subcommand->args = ft_fill_args(&tokens, subcommand);
+		return (ft_builtin(subcommand, tokens), true);
+	}
+	free(path);
 	if (!ft_set_path(subcommand, tokens) || !ft_set_out_file(tokens, subcommand))
+		return (false);
+	if (!ft_set_in_fd(subcommand, tokens, tokens->length))
 		return (false);
 	subcommand->args = ft_fill_args(&tokens, subcommand);
 	while (tokens->next != NULL && tokens->type != TOKEN_PIPE)
 		tokens = tokens->next;
 	if (tokens->next && tokens->type == TOKEN_PIPE && subcommand->next)
-		return (ft_parse(tokens->next, subcommand->next, subcommand));
+		return (ft_parse(tokens->next, subcommand->next));
 	return (true);
 }
 
@@ -77,10 +76,10 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 	if (!args)
 		return (NULL);
 	i = 0;
-	while (head != NULL && head->type != TOKEN_PIPE)
-	{
-		if (ft_is_io_symbol(head))
+	while (ft_is_io_symbol(head))
 			head = head->next->next;
+	while (head != NULL && head->type != TOKEN_PIPE && head->type && !ft_is_io_symbol(head))
+	{
 		if (!head || head->type == TOKEN_PIPE)
 			break ;
 		args[i] = ft_substr(head->value, 0, head->length);
