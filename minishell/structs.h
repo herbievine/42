@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/02 11:30:30 by herbie           ###   ########.fr       */
+/*   Updated: 2023/10/27 14:31:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #define STRUCTS_H
 
 #include <stdbool.h>
+#include <sys/types.h>
 
-char **g_env;
+extern int g_signal;
 
 typedef enum e_token_types
 {
@@ -80,18 +81,12 @@ typedef struct s_subcommand
 	char *path;
 	char **args;
 	char **envp;
+	char **cpy_envp;
 	char *out_file_name;
 	t_mode mode;
 	bool is_heredoc;
 	struct s_subcommand *next;
 } t_subcommand;
-
-// # define SUBCOMMAND_FMT
-// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s',
-// 	mode=%d, is_heredoc=%d)\n"
-// # define SUBCOMMAND_ARG(subcommand)
-// 	subcommand.in_fd, subcommand.out_fd, subcommand.path,
-// 	subcommand.mode, subcommand.is_heredoc
 
 typedef struct s_command
 {
@@ -101,12 +96,22 @@ typedef struct s_command
 	int subcommand_length;
 } t_command;
 
+// # define SUBCOMMAND_FMT
+// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s',
+// 	mode=%d, is_heredoc=%d)\n"
+// # define SUBCOMMAND_ARG(subcommand)
+// 	subcommand.in_fd, subcommand.out_fd, subcommand.path,
+// 	subcommand.mode, subcommand.is_heredoc
 typedef struct s_shell
 {
 	char **env;
 } t_shell;
 
-#define PID_CHILD 0
-#define PID_ERROR 1
+// Constants
+
+# define PIPE_ERROR -1
+
+# define PID_CHILD 0
+# define PID_ERROR -1
 
 #endif /* STRUCTS_H */

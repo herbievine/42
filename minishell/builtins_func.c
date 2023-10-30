@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/02 11:38:48 by herbie           ###   ########.fr       */
+/*   Updated: 2023/10/28 13:14:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int		ft_cd(t_subcommand *subcommand)
 	int		ret;
 
 	ret = 0;
-	if (!subcommand->args)
-		path = ft_get_env("HOME");
+	if (!subcommand->args[1])
+		path = ft_get_cpy_env(subcommand, "HOME");
 	else
-		path = subcommand->args[0];
+		path = subcommand->args[1];
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
@@ -53,65 +53,48 @@ int		ft_pwd(t_subcommand *subcommand)
 	return (0);
 }
 
-// int		ft_export(t_subcommand *subcommand)
-// {
-// 	char **args;
-// 	int i;
-// 	int j;
-
-// 	args = subcommand->args;
-// 	i = 0;
-// 	j = 0;
-// 	if (!args)
-// 		ft_env(subcommand);
-// 	if (args && !args[i+1] && ft_strncmp(args[i], "=", 1) != 0)
-// 		ft_set_env(args[i], "", subcommand);
-// 	while (args && args[i] && ft_strncmp(args[i], "=", 1) != 0)
-// 		i++;
-// 	while (args && args[i + j])
-// 	{
-// 		if (ft_strchr(args[i], '='))
-// 			ft_set_env(args[i-1], args[i+1], subcommand);
-// 		i++;
-// 	}
-// 	else
-// 		ft_putstr_fd("export: not a valid identifier\n", 2);
-// 	return (0);
-// }
-
 int ft_export(t_subcommand *subcommand)
 {
-	char **args;
-	int i;
-	int j;
+	int		i;
+	int		j;
+	char	*str;
 
-	args = subcommand->args;
-	i = -1;
+	i = 1;
 	j = 0;
-	if (!args)
+	if (!subcommand->args[1])
 		return (ft_env(subcommand));
-	while (args[++i] && ft_strncmp(args[i], "=", 1) != 0)
-			ft_set_env(args[i], "");
-	if (args[i] && ft_strncmp(args[i], "=", 1) == 0 && i == 1 && !args[i++])
-		ft_set_env(args[i], args[i]);
-	if (args[i+1])
+	while (subcommand->args[i] && subcommand->args[i][j])
+	{
+		if (ft_strchr(subcommand->args[i], '='))
+		{
+			str = ft_substr(subcommand->args[i], 0, ft_position(subcommand->args[i], '='));
+			printf("str = %s\n", str);
+		 	ft_add_cpy_env_var(subcommand, str);
+			free(str);
+		}
+		else
+			ft_add_cpy_env_var(subcommand, subcommand->args[i]);
+		i++;
+	}
+	if (i == 2 && ft_strchr(subcommand->args[i - 1], '='))
+		ft_add_cpy_env_var(subcommand, subcommand->args[i-1]);
+	if (subcommand->args[i])
 		ft_putstr_fd("export: bad assignment\n", 2);
-	return (0);
+	i = 0;
+	while (subcommand->cpy_envp[i])
+		i++;
+	printf("i = %d\n", i);
 	
+	return (0);
 }
 
 int		ft_unset(t_subcommand *subcommand)
 {
-	char **args;
-	int i;
-
+	char	**args;
+	
 	args = subcommand->args;
-	i = 0;
-	while (args[i])
-	{
-		ft_remove_env(args[i]);
-		i++;
-	}
+	if (args[1])
+		ft_remove_cpy_env_var(subcommand->cpy_envp, args[1]);
 	return (0);
 }
 
@@ -120,9 +103,9 @@ int		ft_env(t_subcommand *subcommand)
 	int		i;
 
 	i = 0;
-	while (g_env[i])
+	while (subcommand->cpy_envp[i])
 	{
-		ft_putstr_fd(g_env[i], subcommand->out_fd);
+		ft_putstr_fd(subcommand->cpy_envp[i], subcommand->out_fd);
 		ft_putstr_fd("\n", subcommand->out_fd);
 		i++;
 	}

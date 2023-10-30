@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_out_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/20 12:28:36 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/24 17:41:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ bool	ft_set_out_file(t_token *token, t_subcommand *subcommand)
 	int		fd;
 	t_token	*first_token;
 
-	if (!token || token->type == TOKEN_PIPE 
-		|| subcommand->in_fd == -1 || ft_check_if_others_pipe(token))
+	if (!token || token->type == TOKEN_PIPE ||
+		ft_check_if_others_pipe(token))
 		return (true);
 	first_token = token;
 	while (first_token->next != NULL && first_token->type != TOKEN_PIPE)
@@ -90,5 +90,6 @@ bool	ft_set_out_fd(t_subcommand *subcommand,
 		token = token->next;
 		token_length--;
 	}
+	subcommand->out_fd = 1;
 	return (true);
 }

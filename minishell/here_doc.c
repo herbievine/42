@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/21 19:54:44 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/25 14:36:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,16 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-static int	ft_init_here_doc(t_subcommand *subcommand, int is_pipe);
-static void	ft_print_heredoc(char *line, int fd, int is_pipe);
+static int	ft_init_here_doc(t_subcommand *subcommand);
+static void	ft_print_heredoc(char *line, int fd);
 bool		ft_here_doc(t_subcommand *subcommand,
-				char *limiter, int is_pipe);
-int			ft_find_pipe(t_token *token);
+				char *limiter);
 
 bool	ft_set_here_doc(t_subcommand *subcommand,
 	t_token *token, int token_length)
 {
 	char	*path;
-	int		is_pipe;
 
-	is_pipe = ft_find_pipe(token);
 	while (token && token_length > 0)
 	{
 		if (token->type == TOKEN_LT_LT)
@@ -45,7 +42,7 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 			path = (char *)token->next->value;
 			path[token->next->length] = '\0';
 			token->next->type = TOKEN_EOF;
-			if (ft_here_doc(subcommand, path, is_pipe))
+			if (ft_here_doc(subcommand, path))
 				return (true);
 			else
 				return (false);
@@ -56,11 +53,11 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 	return (true);
 }
 
-bool	ft_here_doc(t_subcommand *subcommand, char *limiter, int is_pipe)
+bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 {
 	char	*buffer;
 
-	if (ft_init_here_doc(subcommand, is_pipe) != 0)
+	if (ft_init_here_doc(subcommand) != 0)
 		return (false);
 	while (subcommand->in_fd > 0)
 	{
@@ -76,7 +73,7 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter, int is_pipe)
 				break ;
 			}
 			else
-				ft_print_heredoc(buffer, subcommand->in_fd, is_pipe);
+				ft_print_heredoc(buffer, subcommand->in_fd);
 			free(buffer);
 		}
 	}
@@ -85,7 +82,7 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter, int is_pipe)
 	return (true);
 }
 
-static int	ft_init_here_doc(t_subcommand *subcommand, int is_pipe)
+static int	ft_init_here_doc(t_subcommand *subcommand)
 {
 	int	i;
 
@@ -95,34 +92,16 @@ static int	ft_init_here_doc(t_subcommand *subcommand, int is_pipe)
 	if (!subcommand->in_fd)
 		return (-1);
 	subcommand->is_heredoc = true;
-	while (++i < is_pipe)
-		write (1, "pipe ", 5);
 	write(1, "heredoc>", 9);
 	return (0);
 }
 
-static	void	ft_print_heredoc(char *line, int fd, int is_pipe)
+static	void	ft_print_heredoc(char *line, int fd)
 {
 	int	i;
 
 	i = -1;
 	if (line)
 		ft_putstr_fd(line, fd);
-	while (++i < is_pipe)
-		write(1, "pipe ", 5);
 	write(1, "heredoc>", 9);
-}
-
-int	ft_find_pipe(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token)
-	{
-		if (token->type == TOKEN_PIPE)
-			i++;
-		token = token->next;
-	}
-	return (i);
 }

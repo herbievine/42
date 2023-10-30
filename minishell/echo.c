@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 12:07:23 by juliencros        #+#    #+#             */
-/*   Updated: 2023/09/21 15:11:31 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/10/26 12:23:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "str2.h"
 #include "env.h"
 #include "display.h"
+#include "expand.h"
 #include <stdio.h>
 
 
@@ -29,12 +30,12 @@ int	ft_echo(t_token *token, t_subcommand *subcommand)
 	int j;
 	int type;
 
-	i = 0;
+	i = 1;
 	j = 0;
 	type = 2;
 	if ((subcommand->args[0][0] == '-') && ((subcommand->args[0][1] == 'n' || subcommand->args[0][1] == 'e' || subcommand->args[0][1] == 'E'))) //  && !subcommand->args[1]) je sais pas pourquoi
 		option = subcommand->args[i++][1];
-	while (subcommand->args[i])
+	while (subcommand->args[i] && token)
 	{
 		j = 0;
 		while (subcommand->args[i][j])
@@ -54,7 +55,7 @@ int	ft_echo(t_token *token, t_subcommand *subcommand)
 		token = token->next;
 	}
 	if (!option || option != 'n')
-		ft_putchar_fd('\n', subcommand->out_fd);
+		ft_putchar_fd('\n', 1);
 	return (true);
 }
 
@@ -71,8 +72,8 @@ int	ft_print_the_path(char *arg, int out_fd, t_subcommand *subcommand, int type)
 		i++;
 	while (arg[i + j] && arg[i + j] != ' ' && !ft_is_antislash(arg[i + j], type, 0))
 		j++;
-	path = ft_substr(arg, i+1, j-1);
-	env_path = ft_get_env(path);
+	path = ft_substr(arg, i, j);
+	env_path = ft_expand_dollar(subcommand, path);
 	if (env_path != NULL)
 		ft_putstr_fd(env_path, out_fd);
 	free(path);

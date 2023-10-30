@@ -154,10 +154,15 @@
 #include "process.h"
 #include "check_subcommands.h"
 #include "str2.h"
+#include "expand.h"
+#include "env.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <readline/readline.h>
+#include <signal.h>
+
+int	g_signal;
 
 #define SUBCOMMAND_FMT \
 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
@@ -208,14 +213,13 @@ void ft_print_subcommands(t_command *command)
 	}
 }
 
-void ft_build_command(char *buffer, char **envp)
+void ft_build_command(char *buffer, char **envp, char **cpy_envp)
 {
 	t_command command;
 	t_lexer lexer;
 	t_token token;
-	int i;
+	int i = 0;
 
-	i = 0;
 	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
@@ -231,14 +235,15 @@ void ft_build_command(char *buffer, char **envp)
 			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (ft_create_subcommands(&command, envp))
+	if (ft_create_subcommands(&command, envp, cpy_envp))
 	{
-		// ft_print_tokens(command.tokens);
-		if (ft_parse(command.tokens, command.subcommands, NULL))
+		if (ft_parse(command.tokens, command.subcommands))
 		{
-			ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				ft_execution(command.subcommands, &command.tokens);
+			{
+				ft_print_subcommands(&command);
+				ft_exec_cmds(command.subcommands, &command.tokens);
+			}
 		}
 	}
 	ft_free_subcommands(command.subcommands); // check if it's subcommands have to be freed here julien
@@ -248,7 +253,9 @@ void ft_build_command(char *buffer, char **envp)
 void ft_await_command_entry(char **envp)
 {
 	char *buffer;
+	char **cpy_envp;
 
+	cpy_envp = ft_cpy_env(envp);
 	while (true)
 	{
 		buffer = readline("minishell> ");
@@ -259,7 +266,7 @@ void ft_await_command_entry(char **envp)
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
-			ft_build_command(buffer, envp);
+			ft_build_command(buffer, envp, cpy_envp);
 		}
 		free(buffer);
 	}
@@ -269,7 +276,6 @@ int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	g_env = envp;
 
 	ft_history_new();
 	ft_signals_register();
