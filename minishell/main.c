@@ -213,7 +213,7 @@ void ft_print_subcommands(t_command *command)
 	}
 }
 
-void ft_build_command(char *buffer, char **envp, char **cpy_envp)
+void ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 {
 	t_command command;
 	t_lexer lexer;
@@ -228,16 +228,16 @@ void ft_build_command(char *buffer, char **envp, char **cpy_envp)
 		if (token.type == TOKEN_INVALID)
 		{
 			ft_invalid_token(lexer, token);
-			ft_clear_tokens(&command.tokens); // check if it's tokens have to be freed here julien
+		ft_clear_tokens(&command.tokens); // check if it's tokens have to be freed here julien
 			return;
 		}
 		if (ft_append_token(&command.tokens, token))
 			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (ft_create_subcommands(&command, envp, cpy_envp))
+	if (ft_create_subcommands(&command, envp, *cpy_envp))
 	{
-		if (ft_parse(command.tokens, command.subcommands))
+		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
 		{
 			if (ft_check_subcommands(command.subcommands, command.tokens))
 			{
@@ -266,7 +266,7 @@ void ft_await_command_entry(char **envp)
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
-			ft_build_command(buffer, envp, cpy_envp);
+			ft_build_command(buffer, envp, &cpy_envp);
 		}
 		free(buffer);
 	}

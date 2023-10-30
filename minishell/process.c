@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/24 15:35:49 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/30 08:58:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ bool	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, int idx)
 	if (pid == PID_CHILD)
 	{
 		execve(subcommand->path, subcommand->args, subcommand->envp);
+		dprintf(2, "pid: %d\n", pid);
 		// TODO Free everything
 		ft_free_subcommands(subcommand);
 		exit(0);
