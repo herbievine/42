@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/28 13:02:38 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/30 08:18:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,44 +149,38 @@ char	**ft_remove_cpy_env_var(char **cpy_envp, char *key)
 	return (cpy_envp);
 }
 
-void	ft_add_cpy_env_var(t_subcommand *subcommand, char *value)
+char	**ft_add_cpy_env_var(t_subcommand *subcommand, char *value, char ***envp)
 {
 	int		i;
-	int		j;
 	char	**new_cpy_envp;
 	char *key;
-	char *tmp;
+	char **head;
 
 	i = 0;
 	key = NULL;
-	if (ft_strchr(value, '='))
+	head = *envp;
+	key  = ft_substr(value, 0, ft_strchr(value, '=') - value + 1);
+	while(head[i])
 	{
-		key  = ft_substr(value, 0, ft_strchr(value, '=') - value + 1);
-	}
-	while(subcommand->cpy_envp[i])
-	{
-		if (key && ft_strncmp(subcommand->cpy_envp[i], key, ft_strlen(key)) == 0)
+		if (key && ft_strncmp(head[i], key, ft_strlen(key)) == 0)
 		{
-			tmp = subcommand->cpy_envp[i];
 			free(key);
 			key = ft_substr(value, ft_position(value, '=') + 1, ft_strlen(value) - ft_position(value, '=') + 1);
-			subcommand->cpy_envp[i] = ft_strjoin(subcommand->cpy_envp[i], key);
-			free(tmp);
+			head[i] = ft_strjoin(head[i], key);
 			free(key);
-			return ;
+			return (*envp);
 		}
 		i++;
 	}
 	new_cpy_envp = malloc(sizeof(char *) * (i + 2));
 	if (!new_cpy_envp)
-		return ;
+		return (*envp);
 	i = -1;
-	while (subcommand->cpy_envp[++i])
-		new_cpy_envp[i] = ft_strdup(subcommand->cpy_envp[i]);
+	while (head[++i])
+		new_cpy_envp[i] = ft_strdup(head[i]);
 	new_cpy_envp[i++] = ft_strjoin(value, "=");
 	new_cpy_envp[i] = NULL;
-	printf("i = %d\n", i);
-	ft_free_array(subcommand->cpy_envp, -1);
-	subcommand->cpy_envp = new_cpy_envp;
-	return ;
+	ft_free_array(*envp, -1);
+	*envp = new_cpy_envp;
+	return (new_cpy_envp);
 }

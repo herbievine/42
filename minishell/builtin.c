@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/26 17:59:54 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/30 09:27:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 
 
-bool	ft_builtin(t_subcommand *subcommand, t_token *token)
+bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
+
 {
 	t_builtin	*builtin;
 	char 		*path;
@@ -27,7 +28,7 @@ bool	ft_builtin(t_subcommand *subcommand, t_token *token)
 	path = (char *)token->value;
 	path[token->length] = '\0';
 	if (ft_if_builtin(path))
-		return (ft_builtin_valid(token, subcommand, path), true);
+		return (ft_builtin_valid(token, subcommand, path, envp), true);
 	return (false);
 }
 
@@ -44,22 +45,22 @@ bool	ft_if_builtin(char *cmd)
 	return (false);
 }
 
-bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand, char *cmd)
+bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand, char *cmd, char ***envp)
 {
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
 	if (ft_strncmp(cmd, "echo", 4) == 0 && token->next)
 		ft_echo(token->next, subcommand);
-	else if (ft_strncmp(cmd, "cd", 2) == 0 && token->next && !token->next->next)
+	else if (ft_strncmp(cmd, "cd", 2) == 0)
 		ft_cd(subcommand);
 	else if (ft_strncmp(cmd, "pwd", 3) == 0 && !token->next)
 		ft_pwd(subcommand);
 	else if (ft_strncmp(cmd, "export", 6) == 0)
-		ft_export(subcommand);
+		ft_export(subcommand, envp);
 	else if (ft_strncmp(cmd, "unset", 5) == 0 && token->next && !token->next->next)
-		ft_unset(subcommand);
+		ft_unset(subcommand, envp);
 	else if (ft_strncmp(cmd, "env", 3) == 0	)
-		ft_env(subcommand);
+		ft_env(envp);
 	else if (ft_strncmp(cmd, "exit", 4) == 0 && token->next && !token->next->next || !token->next)
 		ft_exit(subcommand);
 	subcommand->out_fd = -1;

@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/10/26 09:25:12 by codespace        ###   ########.fr        #
+#    Updated: 2023/10/30 08:42:26 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCS = \
 	env.c \
 	echo.c \
 	expand.c \
+	builtins_func_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 

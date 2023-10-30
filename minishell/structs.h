@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/27 14:31:12 by codespace        ###   ########.fr       */
+/*   Updated: 2023/10/28 16:04:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_subcommand
 	char **args;
 	char **envp;
 	char **cpy_envp;
-	char *out_file_name;
+char *out_file_name;
 	t_mode mode;
 	bool is_heredoc;
 	struct s_subcommand *next;
