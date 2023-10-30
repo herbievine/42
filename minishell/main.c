@@ -240,10 +240,7 @@ void ft_build_command(char *buffer, char **envp, char **cpy_envp)
 		if (ft_parse(command.tokens, command.subcommands))
 		{
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-			{
-				ft_print_subcommands(&command);
 				ft_exec_cmds(command.subcommands, &command.tokens);
-			}
 		}
 	}
 	ft_free_subcommands(command.subcommands); // check if it's subcommands have to be freed here julien
@@ -261,6 +258,7 @@ void ft_await_command_entry(char **envp)
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
+			printf("test\n");
 			ft_handle_ctrl_d();
 		}
 		if (ft_strlen(buffer) > 0)
