@@ -162,7 +162,7 @@
 #include <readline/readline.h>
 #include <signal.h>
 
-int	g_signal;
+int g_signal;
 
 #define SUBCOMMAND_FMT \
 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
@@ -240,7 +240,7 @@ void ft_build_command(char *buffer, char **envp, char **cpy_envp)
 		if (ft_parse(command.tokens, command.subcommands))
 		{
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				ft_exec_cmds(command.subcommands, &command.tokens);
+				ft_execute(command.subcommands, &command.tokens);
 		}
 	}
 	ft_free_subcommands(command.subcommands); // check if it's subcommands have to be freed here julien
@@ -250,21 +250,19 @@ void ft_build_command(char *buffer, char **envp, char **cpy_envp)
 void ft_await_command_entry(char **envp)
 {
 	char *buffer;
-	char **cpy_envp;
 
-	cpy_envp = ft_cpy_env(envp);
 	while (true)
 	{
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
-			printf("test\n");
+			printf("test: %p\n", buffer);
 			ft_handle_ctrl_d();
 		}
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
-			ft_build_command(buffer, envp, cpy_envp);
+			ft_build_command(buffer, envp, ft_cpy_env(envp));
 		}
 		free(buffer);
 	}
