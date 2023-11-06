@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:26 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/03 13:19:26 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/03 11:41:13 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 # include <stdbool.h>
 
 bool	ft_set_path(t_subcommand *subcommand, t_token *token);
+char	*ft_fmt_path(char *s1, char *s2, char *s3);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:58:17 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/30 08:19:55 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 10:13:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 int		ft_echo(t_token *token, t_subcommand *subcommand);
 int		ft_export(t_subcommand *subcommand, char ***envp);
-int		ft_env(char ***envp);
+int		ft_env(char ***envp, int is_export);
 int		ft_unset(t_subcommand *subcommand, char ***envp);
-int		ft_pwd(t_subcommand *subcommand);
+void	ft_pwd(t_subcommand *subcommand);
 int		ft_cd(t_subcommand *subcommand);
-int		ft_exit(t_subcommand *subcommand);
+int		ft_exit(t_subcommand *subcommand, char ***envp, t_token *token);
 #endif

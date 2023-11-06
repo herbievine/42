@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   char.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 13:58:37 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/07 13:58:37 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/03 10:20:36 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	ft_isalpha(int c)
  */
 int	ft_isalnum(int c)
 {
+	if (!c)
+		return (1);
 	return (ft_isalpha(c) || ft_isdigit(c));
 }
 
