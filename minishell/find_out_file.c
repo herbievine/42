@@ -90,6 +90,5 @@ bool	ft_set_out_fd(t_subcommand *subcommand,
 		token = token->next;
 		token_length--;
 	}
-	subcommand->out_fd = 1;
 	return (true);
 }
