@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
 /*   Updated: 2023/11/07 14:39:29 by juliencros       ###   ########.fr       */
@@ -34,7 +34,7 @@
 #include <readline/readline.h>
 #include <signal.h>
 
-int	g_signal;
+int g_signal;
 
 #define SUBCOMMAND_FMT \
 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
@@ -113,10 +113,7 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 		{
 			ft_expand_token(command.subcommands, command.tokens);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-			{
-				ft_print_subcommands(&command);
-				ft_exec_cmds(command.subcommands, &command.tokens);
-			}
+				ft_execute(command.subcommands, &command.tokens);
 			ft_change_exit_status(command.subcommands);
 		}
 	}
@@ -129,12 +126,12 @@ void	ft_await_command_entry(char **envp)
 	char	*buffer;
 	char	**cpy_envp;
 
-	cpy_envp = ft_cpy_env(envp);
 	while (true)
 	{
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
+			printf("test: %p\n", buffer);
 			ft_handle_ctrl_d();
 			ft_free_array(cpy_envp, -1);
 		}

@@ -19,6 +19,7 @@
 # define EUKN "unknown error"
 # define ENOENT "no such file or directory"
 # define ESYN "syntax error near unexpected token"
+# define ECNF "command not found"
 
 # include "structs.h"
 
