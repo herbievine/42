@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/28 13:02:38 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 14:21:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "str.h"
-#include "str2.h"
 #include "split.h"
 #include "free.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 /**
- * @brief The ft_get_cpy_env function returns the value of the environment variable
- * stored in the g_env variable. If the variable does not exist, NULL is
- * returned.
+ * @brief The ft_get_cpy_env function returns the value of 
+ * the environment variable stored in the g_env variable. 
+ * If the variable does not exist, NULL is returned.
  *
  * @param key
  * @param envp
@@ -52,7 +51,7 @@ void	ft_set_cpy_env(t_subcommand *subcommand, char *key, char *value)
 			j++;
 		if (ft_strncmp(subcommand->cpy_envp[i], key, j) == 0)
 		{
-			free(subcommand->cpy_envp[i]); // TODO make sure this gets added
+			free(subcommand->cpy_envp[i]);
 			subcommand->cpy_envp[i] = ft_strjoin(key, value);
 			return ;
 		}
@@ -60,32 +59,6 @@ void	ft_set_cpy_env(t_subcommand *subcommand, char *key, char *value)
 	}
 	return ;
 }
-
-// void	ft_remove_cpy_env(t_subcommand *subcommand, char *key)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (subcommand->cpy_envp[i])
-// 	{
-// 		j = 0;
-// 		while (subcommand->cpy_envp[i][j] && subcommand->cpy_envp[i][j] != '=')
-// 			j++;
-// 		if (ft_strncmp(subcommand->cpy_envp[i], key, j) == 0)
-// 		{
-// 			free(subcommand->cpy_envp[i]); // TODO make sure this gets removed
-// 			while (subcommand->cpy_envp[i])
-// 			{
-// 				subcommand->cpy_envp[i] = subcommand->cpy_envp[i + 1];
-// 				i++;
-// 			}
-// 			return ;
-// 		}
-// 		i++;
-// 	}
-// 	return ;
-// }
 
 /**
  * @brief The ft_get_paths function returns an array of strings containing the
@@ -113,20 +86,24 @@ char	**ft_cpy_env(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	cpy_envp = malloc(sizeof(char *) * (i + 1));
+	cpy_envp = malloc(sizeof(char *) * (i + 2));
 	if (!cpy_envp)
 		return (NULL);
-	i = -1;
-	while (envp[++i])
+	i = 0;
+	while (envp[i])
+	{
 		cpy_envp[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	cpy_envp[i++] = ft_strdup("?=0");
 	cpy_envp[i] = NULL;
 	return (cpy_envp);
 }
 
 char	**ft_remove_cpy_env_var(char **cpy_envp, char *key)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (cpy_envp[i])
@@ -147,46 +124,4 @@ char	**ft_remove_cpy_env_var(char **cpy_envp, char *key)
 		i++;
 	}
 	return (cpy_envp);
-}
-
-void	ft_add_cpy_env_var(t_subcommand *subcommand, char *value)
-{
-	int		i;
-	int		j;
-	char	**new_cpy_envp;
-	char *key;
-	char *tmp;
-
-	i = 0;
-	key = NULL;
-	if (ft_strchr(value, '='))
-	{
-		key  = ft_substr(value, 0, ft_strchr(value, '=') - value + 1);
-	}
-	while(subcommand->cpy_envp[i])
-	{
-		if (key && ft_strncmp(subcommand->cpy_envp[i], key, ft_strlen(key)) == 0)
-		{
-			tmp = subcommand->cpy_envp[i];
-			free(key);
-			key = ft_substr(value, ft_position(value, '=') + 1, ft_strlen(value) - ft_position(value, '=') + 1);
-			subcommand->cpy_envp[i] = ft_strjoin(subcommand->cpy_envp[i], key);
-			free(tmp);
-			free(key);
-			return ;
-		}
-		i++;
-	}
-	new_cpy_envp = malloc(sizeof(char *) * (i + 2));
-	if (!new_cpy_envp)
-		return ;
-	i = -1;
-	while (subcommand->cpy_envp[++i])
-		new_cpy_envp[i] = ft_strdup(subcommand->cpy_envp[i]);
-	new_cpy_envp[i++] = ft_strjoin(value, "=");
-	new_cpy_envp[i] = NULL;
-	printf("i = %d\n", i);
-	ft_free_array(subcommand->cpy_envp, -1);
-	subcommand->cpy_envp = new_cpy_envp;
-	return ;
 }

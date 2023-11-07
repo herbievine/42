@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subcommand.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:28 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/27 14:41:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:36:34 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "structs.h"
 # include <stdbool.h>
 
-bool	ft_create_subcommands(t_command *command , char **envp, char **cpy_envp);
+bool	ft_create_subcommands(t_command *command, char **envp, char **cpy_envp);
 
 #endif /* SUBCOMMAND_H */

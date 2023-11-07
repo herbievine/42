@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:56:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/28 13:10:29 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:46:33 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,20 @@ void	ft_free_subcommands(t_subcommand *subcommand)
 {
 	while (subcommand != NULL)
 	{
-		if (subcommand->is_heredoc)
-		{
-			close(subcommand->in_fd);
+		if (subcommand->is_heredoc && close(subcommand->in_fd))
 			unlink(".here_doc_fd");
-		}
-		if ((subcommand->in_fd > 1) && (subcommand->in_fd != -1) && (!subcommand->is_heredoc) && (subcommand->out_fd != subcommand->in_fd))
+		if ((subcommand->in_fd > 1) && (subcommand->in_fd != -1)
+			&& (!subcommand->is_heredoc)
+			&& (subcommand->out_fd != subcommand->in_fd))
 			close(subcommand->in_fd);
 		if (subcommand->out_fd > 1)
 		{
 			close(subcommand->out_fd);
 			if (ft_strncmp(subcommand->out_file_name, "tmp", 3) == 0)
 				unlink("tmp");
-			
 		}
 		if (subcommand->out_file_name != NULL)
-			free(subcommand->out_file_name);	
+			free(subcommand->out_file_name);
 		if (subcommand->path != NULL)
 			free(subcommand->path);
 		if (subcommand->args != NULL)

@@ -14,7 +14,6 @@
 #include "free.h"
 #include "str.h"
 #include "mem.h"
-#include "str2.h"
 #include "token.h"
 #include "error.h"
 #include <stdlib.h>

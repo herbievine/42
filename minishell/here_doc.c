@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/25 14:36:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:28:21 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 #include "mem.h"
 #include "get_line.h"
 #include "str.h"
-#include "str2.h"
 #include "error.h"
 #include "display.h"
+#include "expand.h"
+#include "lexer_utils.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
 
 static int	ft_init_here_doc(t_subcommand *subcommand);
-static void	ft_print_heredoc(char *line, int fd);
+static void	ft_print_heredoc(t_subcommand *subcommand, char *line, int fd);
 bool		ft_here_doc(t_subcommand *subcommand,
 				char *limiter);
 
@@ -73,7 +74,7 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 				break ;
 			}
 			else
-				ft_print_heredoc(buffer, subcommand->in_fd);
+				ft_print_heredoc(subcommand, buffer, subcommand->in_fd);
 			free(buffer);
 		}
 	}
@@ -96,12 +97,28 @@ static int	ft_init_here_doc(t_subcommand *subcommand)
 	return (0);
 }
 
-static	void	ft_print_heredoc(char *line, int fd)
+static	void	ft_print_heredoc(t_subcommand *subcommand, char *line, int fd)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = -1;
 	if (line)
-		ft_putstr_fd(line, fd);
+	{
+		while (line[++i])
+		{
+			if (line[i] == '$')
+			{
+				tmp = ft_expand_dollar(subcommand, line);
+				if (tmp)
+					ft_putstr_fd(tmp, fd);
+				while (line[i] && (ft_is_valid_symbol(line[i])))
+					i++;
+				i--;
+			}
+			else
+				ft_putchar_fd(line[i], fd);
+		}
+	}
 	write(1, "heredoc>", 9);
 }
