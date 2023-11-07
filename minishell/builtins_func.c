@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/07 09:07:28 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/07 15:01:21 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "builtins_func_utils.h"
 #include "signals.h"
 #include "token.h"
+#include "error.h"
 #include "free.h"
 #include "history.h"
 #include "find_cmds.h"
@@ -46,12 +47,7 @@ int	ft_cd(t_subcommand *subcommand)
 		return (ft_putstr_fd("cd: too many arguments\n", 2), 1);
 	path = subcommand->args[1];
 	if (chdir(path) == -1)
-	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (1);
-	}
+		return (printf("cd: %s: "ENOENT"\n", path), 1);
 	return (0);
 }
 
@@ -119,11 +115,9 @@ int	ft_exit(t_subcommand *subcommand, char ***envp, t_token *tokens)
 		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
 	if (!exit_value && subcommand->args[1])
 		exit_value = ft_atoi(subcommand->args[1]);
-	if (i >= 256)
-		i -= 256;
 	ft_clear_tokens(&tokens);
 	ft_free_array(*envp, -1);
 	ft_free_subcommands(subcommand);
 	ft_history_clear();
-	exit(exit_value);
+	exit(exit_value % 256);
 }
