@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/30 08:58:04 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:40:19 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 #include <stdbool.h>
 #include "str.h"
 #include "mem.h"
-#include "str2.h"
 #include "token.h"
 
 bool	ft_fork_and_pipe(t_subcommand *subcommand,
@@ -60,8 +59,6 @@ bool	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, int idx)
 	if (pid == PID_CHILD)
 	{
 		execve(subcommand->path, subcommand->args, subcommand->envp);
-		dprintf(2, "pid: %d\n", pid);
-		// TODO Free everything
 		ft_free_subcommands(subcommand);
 		exit(0);
 	}
@@ -86,7 +83,6 @@ bool	ft_exec_cmds(t_subcommand *subcommand, t_token **tokens)
 			return (false);
 		head = head->next;
 	}
-
 	while (i-- > 0)
 		wait(NULL);
 	return (true);

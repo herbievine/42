@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/10/30 08:42:26 by codespace        ###   ########.fr        #
+#    Updated: 2023/11/06 09:23:33 by juliencros       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS = \
 	token.c \
 	find_cmds.c \
 	str2.c \
+	str3.c \
 	split.c \
 	find_in_file.c \
 	find_out_file.c \
@@ -49,8 +50,11 @@ SRCS = \
 	builtins_func.c \
 	env.c \
 	echo.c \
+	echo_utils.c \
 	expand.c \
 	builtins_func_utils.c \
+	env2.c \
+	builtins_func2.c \
 
 OBJS = $(SRCS:.c=.o)
 

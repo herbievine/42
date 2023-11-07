@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   str2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:19:05 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/28 10:59:08 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:41:13 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "str2.h"
 #include "str.h"
 #include "mem.h"
 #include <stdio.h>
@@ -70,7 +69,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-int ft_strschr(char *s1, char *s2)
+int	ft_strschr(char *s1, char *s2)
 {
 	int	i;
 	int	j;
@@ -104,8 +103,8 @@ int	ft_atoi(const char *str)
 	i = 0;
 	neg = 1;
 	nb = 0;
-	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\v' ||
-	str[i] == '\f' || str[i] == '\r' || str[i] == ' '))
+	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
+			|| str[i] == '\f' || str[i] == '\r' || str[i] == ' '))
 		i++;
 	if (str[i] && (str[i] == '-' || str[i] == '+'))
 	{
@@ -118,10 +117,9 @@ int	ft_atoi(const char *str)
 	return (nb * neg);
 }
 
-
-int ft_position(char *str, char limitter)
+int	ft_position(char *str, char limitter)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != limitter)

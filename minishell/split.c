@@ -6,14 +6,13 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/17 18:50:43 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/04 13:28:46 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "split.h"
 #include "mem.h"
 #include "str.h"
-#include "str2.h"
 #include <stdlib.h>
 
 static char		**ft_init_split(char const *s, char c);

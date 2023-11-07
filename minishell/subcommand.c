@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subcommand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/10/28 16:51:48 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 12:26:41 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ t_subcommand	*ft_subcommand_new(char **envp, char **cpy_envp)
 	return (subcommand);
 }
 
-t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length , char **envp, char **cpy_envp)
+t_subcommand	*ft_build_subcommand(t_token *token_start,
+	int token_length, char **envp, char **cpy_envp)
 {
 	t_subcommand	*subcommand;
 
@@ -61,7 +62,8 @@ t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length , char 
 	return (subcommand);
 }
 
-t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index, char **envp, char **cpy_envp)
+t_subcommand	*ft_find_next_subcommand(t_command *command,
+	int *token_index, char **envp, char **cpy_envp)
 {
 	int				i;
 	t_token			*token;
@@ -77,7 +79,8 @@ t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index, char
 	if (pipe_offset == PIPE_NOT_FOUND)
 	{
 		*token_index = command->token_length;
-		return (ft_build_subcommand(token, command->token_length, envp, cpy_envp));
+		return (ft_build_subcommand(token,
+				command->token_length, envp, cpy_envp));
 	}
 	else if (*token_index == 0 || pipe_offset > 0)
 	{
@@ -87,14 +90,14 @@ t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index, char
 	return (NULL);
 }
 
-bool	ft_create_subcommands(t_command *command , char **envp, char **cpy_envp)
+bool	ft_create_subcommands(t_command *command, char **envp, char **cpy_envp)
 {
 	int				token_index;
 	t_subcommand	*subcommand;
 	t_subcommand	*head;
 
 	token_index = 0;
-	subcommand = ft_find_next_subcommand(command, &token_index , envp, cpy_envp);
+	subcommand = ft_find_next_subcommand(command, &token_index, envp, cpy_envp);
 	while (subcommand)
 	{
 		if (!command->subcommands)
@@ -107,7 +110,8 @@ bool	ft_create_subcommands(t_command *command , char **envp, char **cpy_envp)
 			command->subcommands->next = subcommand;
 			command->subcommands = head;
 		}
-		subcommand = ft_find_next_subcommand(command, &token_index , envp, cpy_envp);
+		subcommand = ft_find_next_subcommand(command,
+				&token_index, envp, cpy_envp);
 	}
 	return (true);
 }

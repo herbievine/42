@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_in_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/24 17:41:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 09:50:34 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token, int token_length)
 			path[token->next->length] = '\0';
 			fd = open(path, O_RDONLY);
 			if (fd == -1)
+			{
 				printf(M"%s: "ENOENT"\n", token->next->value);
+				g_signal = 1;
+			}
 			return (subcommand->in_fd = fd, true);
 		}
 		token = token->next;

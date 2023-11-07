@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:48 by juliencros        #+#    #+#             */
-/*   Updated: 2023/10/29 15:22:36 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:39:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_set_cpy_env(t_subcommand *subcommand, char *key, char *value);
 char	**ft_get_paths(t_subcommand *subcommand);
 char	**ft_cpy_env(char **envp);
 char	**ft_remove_cpy_env_var(char **cpy_envp, char *key);
-char	**ft_add_cpy_env_var(t_subcommand *subcommand, char *value, char ***envp);
+char	**ft_add_cpy_env_var(char *key, char *value, char ***envp);
+void	ft_change_exit_status(t_subcommand *subcommand);
+char	**ft_create_cpy_var(char *key, char *value, char ***envp, int i);
 
 #endif
