@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/04 13:52:33 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/07 09:07:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,16 @@ int	ft_cd(t_subcommand *subcommand)
 	char	*path;
 
 	if (!subcommand->args[1])
-		return (ft_get_cpy_env(subcommand, "HOME"), 0);
+	{
+		path = ft_get_cpy_env(subcommand, "HOME");
+		if (!path)
+		{
+			path = ft_strjoin("/Users/", ft_get_cpy_env(subcommand, "USER"));
+			return (chdir(path), free(path), 0);
+		}
+		else 
+			return (chdir(path), 0);
+	}
 	else if (subcommand->args[2])
 		return (ft_putstr_fd("cd: too many arguments\n", 2), 1);
 	path = subcommand->args[1];
