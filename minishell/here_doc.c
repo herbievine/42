@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/04 13:28:21 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/08 15:18:38 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "display.h"
 #include "expand.h"
 #include "lexer_utils.h"
+#include "find_in_file.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -43,9 +44,8 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 			path = (char *)token->next->value;
 			path[token->next->length] = '\0';
 			token->next->type = TOKEN_EOF;
-			if (ft_here_doc(subcommand, path))
-				return (true);
-			else
+			ft_close_in_files(subcommand);
+			if (!ft_here_doc(subcommand, path))
 				return (false);
 		}
 		token = token->next;

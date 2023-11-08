@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/06 09:41:19 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/08 10:48:13 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	ft_set_out_file(t_token *token, t_subcommand *subcommand)
 					first_token, first_token->length), true);
 		first_token = first_token->next;
 	}
-	create_out_fd_without_gt(subcommand);
+	// create_out_fd_without_gt(subcommand);
 	return (true);
 }
 

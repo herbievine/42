@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/07 18:47:16 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/08 16:46:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,17 @@ bool	ft_fork_and_pipe(t_subcommand *subcommand,
 	}
 	if (*pid == PID_CHILD)
 	{
-		if (idx == 0 && subcommand->in_fd != -1)
+		if (subcommand->in_fd != -1)
 			dup2(subcommand->in_fd, STDIN_FILENO);
 		else
-			dup2(fd[READ], STDIN_FILENO);
+			 dup2(fd[READ], STDIN_FILENO);
 		close(fd[READ]);
-		if (!subcommand->next && subcommand->out_fd != -1)
+		if (subcommand->out_fd != -1)
 			dup2(subcommand->out_fd, STDOUT_FILENO);
 		else
 			dup2(fd[WRITE], STDOUT_FILENO);
 		close(fd[WRITE]);
 	}
-	else
-		close(fd[WRITE]);
 	return (true);
 }
 
@@ -70,14 +68,24 @@ bool	ft_spawn_child(t_subcommand *subcommand, t_token **tokens,
 		return (false);
 	if (pid == PID_CHILD)
 	{
-		dprintf(2, "execve: %s\n", subcommand->path);
-		execve(subcommand->path, subcommand->args, subcommand->envp);
+		close(fd[READ]);
+		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
 		ft_free_subcommands(subcommand);
 		perror("execve");
 		exit(1);
 	}
 	else 
-		close(fd[READ]);
+	{
+		waitpid(pid, NULL, 0);
+		close(fd[WRITE]);
+		if (subcommand->next)
+			subcommand->next->in_fd = fd[READ];
+		if (subcommand->next)
+			ft_spawn_child(subcommand->next, tokens, idx + 1);
+		else 
+			close(fd[READ]);
+	}
+
 	return (true);
 }
 
@@ -89,30 +97,33 @@ bool	ft_single_command(t_subcommand *subcommand)
 	if (pid == PID_ERROR)
 		return (false);
 	if (pid == PID_CHILD)
-		execve(subcommand->path, subcommand->args, subcommand->envp);
+	{
+		if (subcommand->in_fd != -1)
+			dup2(subcommand->in_fd, STDIN_FILENO);
+		if (subcommand->out_fd != -1)
+			dup2(subcommand->out_fd, STDOUT_FILENO);
+		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
+		exit(1);
+	}
 	waitpid(pid, NULL, 0);
 	return (true);
 }
 
-bool	ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
+bool ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
 {
 	int				i;
 	t_subcommand	*head;
 
 	i = 0;
 	head = subcommand;
-	while (head != NULL)
+	while (head->next != NULL)
 	{
+		i++;
+		head = head->next;
+	}
+	head = subcommand;
 		if (!ft_spawn_child(head, tokens, i))
 			return (false);
-		head = head->next;
-		i++;
-	}
-	while (i > 0)
-	{
-		wait(NULL);
-		i--;
-	}
 	return (true);
 }
 
