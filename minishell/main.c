@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/07 14:39:29 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/08 16:43:40 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 	}
 	if (ft_create_subcommands(&command, envp, *cpy_envp))
 	{
-		// ft_print_subcommands(&command);
 		// ft_print_tokens(command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
 		{
+			// ft_print_subcommands(&command);
 			ft_expand_token(command.subcommands, command.tokens);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
 				ft_execute(command.subcommands, &command.tokens);
@@ -126,6 +126,7 @@ void	ft_await_command_entry(char **envp)
 	char	*buffer;
 	char	**cpy_envp;
 
+	cpy_envp = ft_cpy_env(envp);
 	while (true)
 	{
 		buffer = readline("minishell> ");
