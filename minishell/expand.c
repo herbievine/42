@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/04 14:21:02 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 14:23:14 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 		if (tokens->type == TOKEN_SQ)
 			is_sq = !is_sq; 
 		str = ft_substr(tokens->value, 0, tokens->length);
-		if (ft_strchr(str, '$') && !is_sq)
+		if (ft_strchr(str, '$') && !is_sq && ft_strlen(str) > 1)
 		{
 			tokens->value = ft_expand_dollar(subcommand, str);
 			tokens->length = ft_strlen(ft_expand_dollar(subcommand, str));

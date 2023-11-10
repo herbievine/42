@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:38:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/15 16:02:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/09 11:01:52 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # define ECMD "invalid command"
 # define EMALLOC "malloc error"
 # define EUKN "unknown error"
-# define ENOENT "no such file or directory"
+# define ENOENT "No such file or directory"
 # define ESYN "syntax error near unexpected token"
 # define ECNF "command not found"
+# define EACCES "permission denied"
 
 # include "structs.h"
 

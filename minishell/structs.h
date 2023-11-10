@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/04 13:17:29 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 10:00:19 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_subcommand
 	char				**cpy_envp;
 	char				*out_file_name;
 	t_mode				mode;
+	bool				is_executable;
 	bool				is_heredoc;
 	struct s_subcommand	*next;
 }	t_subcommand;

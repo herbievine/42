@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/08 16:39:15 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 17:23:41 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,12 @@ bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token)
 			path = ft_substr(token->next->value, 0, token->next->length);
 			ft_close_in_files(subcommand);
 			fd = open(path, O_RDONLY);
-			free(path);
 			if (fd == -1)
-				printf(M"%s: "ENOENT"\n", token->next->value);
+			{
+				g_signal = 1;
+				return (printf(M"%s: "ENOENT"\n", path), free(path), false);
+			}
+			free(path);
 			subcommand->in_fd = fd;
 		}
 		token = token->next;

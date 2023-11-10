@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/08 14:46:21 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 17:31:45 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_subcommand	*ft_subcommand_new(char **envp, char **cpy_envp)
 	subcommand->envp = envp;
 	subcommand->cpy_envp = cpy_envp;
 	subcommand->mode = MODE_WRITE;
+	subcommand->is_executable = true;
 	subcommand->is_heredoc = false;
 	subcommand->next = NULL;
 	return (subcommand);
@@ -55,10 +56,6 @@ t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length,
 		return (NULL);
 	if (!ft_set_here_doc(subcommand, token_start, token_length))
 		return (free(subcommand), NULL);
-	// if (!ft_set_in_fd(subcommand, token_start, token_length))
-		// return (free(subcommand), NULL);
-	// if (!ft_set_out_fd(subcommand, token_start, token_length))
-		// return (free(subcommand), NULL);
 	return (subcommand);
 }
 
