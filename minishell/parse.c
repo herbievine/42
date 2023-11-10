@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/08 16:42:19 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 17:17:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 	{
 		subcommand->builtin = 1;
 		subcommand->path = ft_strdup(path);
-		free(path);
+		subcommand->is_executable = false;
 		subcommand->args = ft_fill_args(&tokens, subcommand);
-		return (ft_builtin(subcommand, tokens, envp), true);
+		return (ft_builtin(subcommand, tokens, envp), free(path), true);
 	}
 	free(path);
-	if (!ft_set_path(subcommand, tokens)
-		|| !ft_set_out_file(tokens, subcommand))
-		return (false);
-	ft_set_in_fd(subcommand, tokens);
+	if (!ft_set_in_fd(subcommand, tokens)
+		|| !ft_set_out_file(tokens, subcommand)
+		|| !ft_set_path(subcommand, tokens))
+		subcommand->is_executable = false;
 	subcommand->args = ft_fill_args(&tokens, subcommand);
 	while (tokens->next != NULL && tokens->type != TOKEN_PIPE)
 		tokens = tokens->next;
@@ -84,12 +84,10 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 			head = head->next;
 		if (!head || head->type == TOKEN_PIPE)
 			break ;
-		args[i] = ft_substr(head->value, 0, head->length);
+		args[i++] = ft_substr(head->value, 0, head->length);
 		head = head->next;
-		i++;
 	}
-	args[i] = NULL;
-	return (args);
+	return (args[i] = NULL, args);
 }
 
 static int	ft_arg_count(t_token *token, char *path)

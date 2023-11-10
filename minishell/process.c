@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/08 16:46:02 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 17:30:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "mem.h"
 #include "token.h"
 #include "error.h"
+#include "exit.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <strings.h>
@@ -23,6 +24,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <errno.h>
 
 #define READ 0
 #define WRITE 1
@@ -36,18 +38,14 @@ bool	ft_fork_and_pipe(t_subcommand *subcommand,
 	if (*pid == PID_ERROR)
 	{
 		if (subcommand->next)
-		{
-			close(fd[READ]);
-			close(fd[WRITE]);
-		}
-		return (false);
+			return (close(fd[READ]), close(fd[WRITE]), false);
 	}
 	if (*pid == PID_CHILD)
 	{
 		if (subcommand->in_fd != -1)
 			dup2(subcommand->in_fd, STDIN_FILENO);
 		else
-			 dup2(fd[READ], STDIN_FILENO);
+			dup2(fd[READ], STDIN_FILENO);
 		close(fd[READ]);
 		if (subcommand->out_fd != -1)
 			dup2(subcommand->out_fd, STDOUT_FILENO);
@@ -58,63 +56,80 @@ bool	ft_fork_and_pipe(t_subcommand *subcommand,
 	return (true);
 }
 
-bool	ft_spawn_child(t_subcommand *subcommand, t_token **tokens,
+int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens,
 	int idx)
 {
 	pid_t	pid;
+	int		return_status;
 	int		fd[2];
 
+	return_status = 0;
 	if (!ft_fork_and_pipe(subcommand, fd, &pid, idx))
 		return (false);
 	if (pid == PID_CHILD)
 	{
 		close(fd[READ]);
+		if (!subcommand->is_executable || !subcommand->path)
+			exit(1);
 		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
+		return_status = ft_define_exit_status(strerror(errno),
+				subcommand->path);
+		dprintf(2, "minishell: %s: %s\n", subcommand->path, strerror(errno));
 		ft_free_subcommands(subcommand);
-		perror("execve");
+		ft_clear_tokens(tokens);
 		exit(1);
 	}
 	else 
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &return_status, 0);
 		close(fd[WRITE]);
 		if (subcommand->next)
 			subcommand->next->in_fd = fd[READ];
 		if (subcommand->next)
-			ft_spawn_child(subcommand->next, tokens, idx + 1);
+			return_status = ft_spawn_child(subcommand->next, tokens, idx + 1);
 		else 
 			close(fd[READ]);
 	}
-
-	return (true);
+	return (return_status);
 }
 
-bool	ft_single_command(t_subcommand *subcommand)
+int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 {
 	pid_t	pid;
+	int		return_status;
 
 	pid = fork();
+	return_status = 0;
 	if (pid == PID_ERROR)
 		return (false);
 	if (pid == PID_CHILD)
 	{
+		if (!subcommand->is_executable || !subcommand->path)
+			exit(1);
 		if (subcommand->in_fd != -1)
 			dup2(subcommand->in_fd, STDIN_FILENO);
 		if (subcommand->out_fd != -1)
 			dup2(subcommand->out_fd, STDOUT_FILENO);
 		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
+		return_status = ft_define_exit_status(strerror(errno),
+				subcommand->path);
+		dprintf(2, "minishell: %s: %s\n", subcommand->path, strerror(errno));
+		ft_free_subcommands(subcommand);
+		ft_clear_tokens(tokens);
 		exit(1);
 	}
-	waitpid(pid, NULL, 0);
-	return (true);
+	waitpid(pid, &return_status, 0);
+	return (return_status);
 }
 
-bool ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
+int	ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
 {
 	int				i;
 	t_subcommand	*head;
+	int				return_status;
 
 	i = 0;
+	return_status = 0;
 	head = subcommand;
 	while (head->next != NULL)
 	{
@@ -122,14 +137,12 @@ bool ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
 		head = head->next;
 	}
 	head = subcommand;
-		if (!ft_spawn_child(head, tokens, i))
-			return (false);
-	return (true);
+	return (ft_spawn_child(head, tokens, i));
 }
 
-bool	ft_execute(t_subcommand *subcommand, t_token **tokens)
+int	ft_execute(t_subcommand *subcommand, t_token **tokens)
 {
 	if (!subcommand->next)
-		return (ft_single_command(subcommand));
+		return (ft_single_command(subcommand, tokens));
 	return (ft_multiple_commands(subcommand, tokens));
 }

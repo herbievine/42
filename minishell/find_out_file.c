@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/08 10:48:13 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 17:15:19 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@ bool	ft_set_out_file(t_token *token, t_subcommand *subcommand)
 					first_token, first_token->length), true);
 		first_token = first_token->next;
 	}
-	// create_out_fd_without_gt(subcommand);
-	return (true);
-}
-
-bool	create_out_fd_without_gt(t_subcommand *subcommand)
-{
-	subcommand->out_fd = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	subcommand->out_file_name = ft_strdup("tmp");
-	if (!subcommand->out_fd)
-		return (false);
 	return (true);
 }
 
@@ -66,6 +56,7 @@ static void	ft_error_out_file(t_token *token)
 		printf(M""ESYN" `newline'\n");
 	else if (token->next->type != TOKEN_SYMBOL)
 		printf(M""ESYN" `%s'\n", token->next->value);
+	g_signal = 1;
 }
 
 bool	ft_set_out_fd(t_subcommand *subcommand,
@@ -86,10 +77,14 @@ bool	ft_set_out_fd(t_subcommand *subcommand,
 			else
 				fd = open(path, O_RDWR | O_CREAT | O_APPEND, 0644);
 			if (fd == -1)
-				printf(M"%s: "ENOENT"\n", token->next->value);
+			{
+				printf(M"%s: "EUKN"\n", token->next->value);
+				g_signal = 1;
+			}
 			else
 				subcommand->out_file_name = ft_strdup(path);
-			return (subcommand->out_fd = fd, free(path), true);
+			free(path);
+			return (subcommand->out_fd = fd, true);
 		}
 		token = token->next;
 		token_length--;

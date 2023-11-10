@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/08 16:43:40 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 17:21:25 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@
 #include "check_subcommands.h"
 #include "expand.h"
 #include "env.h"
+#include "builtin.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <signal.h>
 
-int g_signal;
+int	g_signal;
 
 #define SUBCOMMAND_FMT \
 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
@@ -99,6 +100,8 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 		{
 			ft_invalid_token(lexer, token);
 			ft_clear_tokens(&command.tokens);
+			g_signal = 1;
+			ft_change_exit_status(cpy_envp);
 			return ;
 		}
 		if (ft_append_token(&command.tokens, token))
@@ -107,16 +110,15 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 	}
 	if (ft_create_subcommands(&command, envp, *cpy_envp))
 	{
-		// ft_print_tokens(command.tokens);
+		ft_expand_token(command.subcommands, command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
 		{
-			// ft_print_subcommands(&command);
-			ft_expand_token(command.subcommands, command.tokens);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				ft_execute(command.subcommands, &command.tokens);
-			ft_change_exit_status(command.subcommands);
+				if (ft_execute(command.subcommands, &command.tokens) == 0)
+					g_signal = 0;
 		}
 	}
+	ft_change_exit_status(cpy_envp);
 	ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
 }
@@ -132,7 +134,6 @@ void	ft_await_command_entry(char **envp)
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
-			printf("test: %p\n", buffer);
 			ft_handle_ctrl_d();
 			ft_free_array(cpy_envp, -1);
 		}
@@ -150,6 +151,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
+	g_signal = 0;
 	ft_history_new();
 	ft_signals_register();
 	ft_await_command_entry(envp);

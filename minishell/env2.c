@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/04 13:34:53 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 16:57:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,27 @@ char	**ft_create_cpy_var(char *key, char *value, char ***envp, int i)
 	return (new_cpy_envp);
 }
 
-void	ft_change_exit_status(t_subcommand *subcommand)
+void	ft_change_exit_status(char ***envp)
 {
 	char	*str;
+	char	**head;
+	int		i;
 
+	i = 0;
 	str = ft_itoa(g_signal);
-	ft_add_cpy_env_var("?=", str, &subcommand->cpy_envp);
+	head = *envp;
+	while (head[i])
+	{
+		if (ft_strncmp(head[i], "?=", 2) == 0)
+		{
+			free(head[i]);
+			printf("str = %s\n", str);
+			head[i] = ft_strjoin("?=", str);
+			return ;
+		}
+		i++;
+	}
+	printf("str = %s\n", str);
+	ft_create_cpy_var("?", str, envp, i);
 	free(str);
 }

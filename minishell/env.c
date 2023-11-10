@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/08 09:41:21 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/10 17:21:49 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,11 @@ char	**ft_cpy_env(char **envp)
 	cpy_envp = malloc(sizeof(char *) * (i + 2));
 	if (!cpy_envp)
 		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
+	i = -1;
+	while (envp[++i])
 		cpy_envp[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	cpy_envp[i++] = ft_strdup("?=0");
-	cpy_envp[i] = NULL;
+	cpy_envp[i] = ft_strdup("?=0");
+	cpy_envp[i + 1] = NULL;
 	return (cpy_envp);
 }
 
