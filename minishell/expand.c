@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/10 14:23:14 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/11 14:17:12 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,54 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 	char	*expanded;
 	char	*key;
 	int		length;
+	int 	i;
 
 	length = 0;
-	while (str && str[length] != '$')
+	i = 0;
+	while (str && str[i] != '$')
+		i++;
+	while (str[i + length] && ft_is_valid_symbol(str[length]))
 		length++;
-	while (ft_is_valid_symbol(str[length]))
-		length++;
-	key = ft_substr(str, 1, length - 1);
+	if (length == 1)
+		return (ft_strdup("$"));
+	if (str[i + 1] == '?')
+		length = 1;
+	key = ft_substr(str, i+1, length);
 	expanded = ft_get_cpy_env(subcommand, key);
 	free(key);
 	if (expanded)
 		return (expanded);
-	return ("");
+	return (ft_strdup("")); // TODO: check if this is the right thing to do
 }
 
 int	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 {
 	char	*str;
-	bool	is_sq;
+	int		i;
+	int 	j;
+	char	*expanded;
 
-	is_sq = false;
+	i = 0;
+	j = 0;
 	while (tokens)
 	{
 		if (tokens->type == TOKEN_SQ)
-			is_sq = !is_sq; 
+			return (true);
 		str = ft_substr(tokens->value, 0, tokens->length);
-		if (ft_strchr(str, '$') && !is_sq && ft_strlen(str) > 1)
+		while (str[i] && str[i] != '$')
+			i++;
+		while (str[i + j] && str[i + j] != ' ')
+			j++;
+		free(str);
+		str = ft_substr(tokens->value, i, j);
+		if (str && ft_strchr(str, '$') && ft_strlen(str) > 1)
 		{
-			tokens->value = ft_expand_dollar(subcommand, str);
-			tokens->length = ft_strlen(ft_expand_dollar(subcommand, str));
+			expanded = ft_strjoin(ft_substr(tokens->value, 0, i), ft_expand_dollar(subcommand, str));
+			free(str);
+			str = ft_strjoin(expanded, ft_substr(tokens->value, i + j, ft_strlen(tokens->value) - i - j));
+			tokens->length = ft_strlen(str);
+			// free(tokens->value);
+			tokens->value = ft_strdup(str);
 		}
 		tokens = tokens->next;
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/10 17:30:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/12 08:44:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens,
 	}
 	else 
 	{
-		waitpid(pid, &return_status, 0);
+		// waitpid(pid, &return_status, 0);
 		close(fd[WRITE]);
 		if (subcommand->next)
 			subcommand->next->in_fd = fd[READ];
@@ -142,7 +142,22 @@ int	ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
 
 int	ft_execute(t_subcommand *subcommand, t_token **tokens)
 {
+	int	i;
+	t_subcommand *head;
+	int return_status;
+
+	i = 0;
+	head = subcommand;
+	while (head)
+	{
+		if (head->is_executable)
+			i++;
+		head = head->next;
+	}
 	if (!subcommand->next)
 		return (ft_single_command(subcommand, tokens));
-	return (ft_multiple_commands(subcommand, tokens));
+	return_status = ft_multiple_commands(subcommand, tokens);
+	while (i--)
+		wait(NULL);
+	return (return_status);
 }

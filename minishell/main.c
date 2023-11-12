@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/10 17:21:25 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/12 09:14:19 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_print_tokens(t_token *tokens)
 	while (tmp)
 	{
 		str = ft_substr(tmp->value, 0, tmp->length);
-		printf("token: %s   |   type: %d\n", str, tmp->type);
+		printf("token: %s   |   type: %d   |   len:%d\n", str, tmp->type, tmp->length);
 		free(str);
 		tmp = tmp->next;
 	}
@@ -110,9 +110,11 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 	}
 	if (ft_create_subcommands(&command, envp, *cpy_envp))
 	{
+		ft_print_tokens(command.tokens);
 		ft_expand_token(command.subcommands, command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
 		{
+			ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
 				if (ft_execute(command.subcommands, &command.tokens) == 0)
 					g_signal = 0;

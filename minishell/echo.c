@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 12:07:23 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/06 09:28:14 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/11 17:44:08 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "expand.h"
 #include <stdio.h>
 
-static int	ft_print_the_path(char *arg, int out_fd,
+static int	ft_print_the_path(char *arg, int i,
 				t_subcommand *subcommand, int type);
 static int	ft_print_antislash(char *args, int i, int out_fd, int type);
 static bool	ft_what_to_print(t_subcommand *subcommand,
@@ -30,7 +30,7 @@ int	ft_echo(t_token *token, t_subcommand *subcommand)
 	int		type;
 
 	i = 0;
-	type = token->type;
+	type = 2;
 	option = 0;
 	if (subcommand->args[1] && ft_strncmp(subcommand->args[1], "-n", 2) == 0
 		&& ft_strlen(subcommand->args[1]) == 2)
@@ -38,6 +38,10 @@ int	ft_echo(t_token *token, t_subcommand *subcommand)
 	while (subcommand->args[++i] && token)
 	{
 		type = ft_type_token(token, type);
+		// printf ("type = %d\n", type);
+		// printf("subcommand->args[%d] = %s\n", i, subcommand->args[i]);
+		// printf("token->value = %s\n", token->value);
+		// printf("token->type = %d\n", token->type);
 		ft_what_to_print(subcommand, token, i, type);
 		token = token->next;
 	}
@@ -56,38 +60,39 @@ bool	ft_what_to_print(t_subcommand *subcommand,
 	{
 		if (type != TOKEN_SQ && subcommand->args[i][j] == '$')
 			j += ft_print_the_path(subcommand->args[i],
-					subcommand->out_fd, subcommand, type);
+					j, subcommand, type);
 		else
 			j += ft_print_antislash(subcommand->args[i],
 					j, subcommand->out_fd, type);
 	}
-	if (subcommand->args[i][0] != '\"' && subcommand->args[i][0] != '\'' 
-		&& j > 0 && subcommand->args[i + 1])
+	if (token && token->next && token->type != TOKEN_SQ && token->type != TOKEN_DQ 
+		&& token->next->type != TOKEN_SQ && token->next->type != TOKEN_DQ
+		&& j > 0 && subcommand->args[i] && subcommand->args[i + 1])
 		ft_putchar_fd(' ', subcommand->out_fd);
 	return (true);
 }
 
-static int	ft_print_the_path(char *arg, int out_fd,
+static int	ft_print_the_path(char *arg, int i,
 				t_subcommand *subcommand, int type)
 {
-	int		i;
 	int		j;
 	char	*path;
 	char	*env_path;
 
-	i = 0;
 	j = 1;
 	env_path = NULL;
 	while (arg[i] && arg[i] != '$')
 		i++;
-	while (arg[i + j] && arg[i + j] != ' '
+	while (arg[i] && arg[i + j] && arg[i + j] != ' '
 		&& !ft_is_antislash(arg[i + j], type, 0))
 		j++;
+	if (arg[i + 1] == '?')
+		j = 2;
 	path = ft_substr(arg, i, j);
 	env_path = ft_expand_dollar(subcommand, path);
 	free(path);
 	if (env_path)
-		ft_putstr_fd(env_path, out_fd);
+		ft_putstr_fd(env_path, subcommand->out_fd);
 	return (j);
 }
 

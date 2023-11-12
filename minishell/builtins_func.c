@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/07 15:01:21 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/12 09:04:49 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "history.h"
 #include "find_cmds.h"
 #include "char.h"
+#include "expand.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -44,8 +45,17 @@ int	ft_cd(t_subcommand *subcommand)
 			return (chdir(path), 0);
 	}
 	else if (subcommand->args[2])
-		return (ft_putstr_fd("cd: too many arguments\n", 2), 1);
-	path = subcommand->args[1];
+		return (0);
+	if (ft_strncmp(subcommand->args[1], "-", ft_strlen(subcommand->args[1])) == 0)
+	{
+		path = ft_get_cpy_env(subcommand, "OLDPWD");
+		if (!path)
+			return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
+	}
+	if (subcommand->args[1][0] == '$')
+		path = ft_expand_dollar(subcommand, subcommand->args[1]);
+	else
+		path = subcommand->args[1];
 	if (chdir(path) == -1)
 		return (printf("cd: %s: "ENOENT"\n", path), 1);
 	return (0);
@@ -90,8 +100,10 @@ int	ft_check_digit(char *str)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i] && (str[i] == '-' || str[i] == '+'))
+		i++;
+	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 		{
@@ -100,6 +112,7 @@ int	ft_check_digit(char *str)
 			ft_putstr_fd(": numeric argument required\n", 2);
 			return (1);
 		}
+		i++;
 	}
 	return (0);
 }

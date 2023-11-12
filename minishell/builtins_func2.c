@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:57:47 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/06 10:24:55 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/11 20:07:17 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ bool	ft_set_key_value(t_subcommand *subcommand, char ***envp, int i)
 	char	*key;
 	char	*value;
 
-	if (!ft_check_is_valid_identifier(subcommand->args[i]))
-		return (ft_putstr_fd("export: not a valid identifier\n", 2), false);
 	if ((ft_position(subcommand->args[i], '='))
 		< ft_strlen(subcommand->args[i]))
 		key = ft_substr(subcommand->args[i],
@@ -51,17 +49,21 @@ bool	ft_set_key_value(t_subcommand *subcommand, char ***envp, int i)
 	return (true);
 }
 
-int	ft_export(t_subcommand *subcommand, char ***envp)
+int	ft_export(t_subcommand *subcommand, char ***envp, t_token *token)
 {
 	int		i;
 	char	*key;
+	t_token	*head;
 
 	i = 1;
+	head = token;
 	if (!subcommand->args[1])
 		return (ft_env(envp, 1), 0);
 	while (subcommand->args[i])
 	{
-		if (ft_strchr(subcommand->args[i], '='))
+		if (!ft_check_is_valid_identifier(subcommand->args[i], head->type))
+			return (printf("not a valid identifier\n"), 1);
+		else if (ft_strchr(subcommand->args[i], '='))
 		{
 			if (!ft_set_key_value(subcommand, envp, i))
 				return (1);
@@ -72,6 +74,7 @@ int	ft_export(t_subcommand *subcommand, char ***envp)
 			*envp = ft_add_cpy_env_var(key, NULL, envp);
 		}
 		i++;
+		token = token->next;
 	}
 	return (0);
 }

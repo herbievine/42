@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/10 17:23:41 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/12 08:52:03 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token)
 
 	while (token)
 	{
+		path = ft_substr(token->value, 0, token->length);
+		if (path[0] == '.' && path[1] == '/')
+				subcommand->in_fd = open(path, O_RDONLY);
+		free(path);
 		if (token->type == TOKEN_LT)
 		{
 			if (!token->next)
