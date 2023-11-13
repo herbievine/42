@@ -18,7 +18,6 @@
 
 t_lexer				ft_lexer_new(const char *raw);
 t_token				ft_lexer_next(t_lexer *lexer);
-void				ft_mutate_lexer_state(t_lexer *lexer);
 t_bash_token_map	*ft_get_token_map(void);
 
 #endif /* LEXER_H */

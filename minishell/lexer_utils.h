@@ -15,7 +15,8 @@
 
 # include "structs.h"
 
-void				ft_mutate_lexer_state(t_lexer *lexer);
+void				ft_modify_state(t_quote_state *state, char c);
+void				ft_init_state(t_quote_state *state, char c);
 t_bash_token_map	*ft_get_token_map(void);
 bool				ft_is_valid_symbol(char c);
 

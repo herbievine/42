@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/10 10:00:19 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/13 11:00:18 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,16 @@ typedef enum e_token_types
 	TOKEN_GT_GT,
 	TOKEN_LT_LT,
 	TOKEN_PIPE,
-	TOKEN_SQ,
-	TOKEN_DQ,
-	TOKEN_IN_FILE,
-	TOKEN_OUT_FILE,
-	TOKEN_CMD,
+	TOKEN_SQ, // Deprecated
+	TOKEN_DQ, // Deprecated
 }	t_token_types;
 
-typedef enum e_lexer_states
+typedef enum e_quote_state
 {
-	LEXER_STATE_DEFAULT,
-	LEXER_STATE_IN_SQ,
-	LEXER_STATE_IN_DQ,
-}	t_lexer_states;
+	STATE_DEFAULT,
+	STATE_IN_SQ,
+	STATE_IN_DQ,
+}	t_quote_state;
 
 typedef struct s_token
 {
@@ -62,7 +59,6 @@ typedef struct s_bash_token_map
 typedef struct s_lexer
 {
 	const char		*raw;
-	t_lexer_states	state;
 	int				length;
 	int				cursor;
 }	t_lexer;

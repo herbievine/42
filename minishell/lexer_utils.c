@@ -15,33 +15,40 @@
 #include "char.h"
 #include <stdbool.h>
 
-void	ft_mutate_lexer_state(t_lexer *lexer)
+#define SQ '\''
+#define DQ '"'
+
+void	ft_modify_state(t_quote_state *state, char c)
 {
-	if (lexer->raw[lexer->cursor] == '\''
-		&& lexer->state == LEXER_STATE_DEFAULT)
-		lexer->state = LEXER_STATE_IN_SQ;
-	else if (lexer->raw[lexer->cursor] == '\''
-		&& lexer->state == LEXER_STATE_IN_SQ)
-		lexer->state = LEXER_STATE_DEFAULT;
-	else if (lexer->raw[lexer->cursor] == '"'
-		&& lexer->state == LEXER_STATE_DEFAULT)
-		lexer->state = LEXER_STATE_IN_DQ;
-	else if (lexer->raw[lexer->cursor] == '"'
-		&& lexer->state == LEXER_STATE_IN_DQ)
-		lexer->state = LEXER_STATE_DEFAULT;
+	if (c == SQ && *state == STATE_DEFAULT)
+		*state = STATE_IN_SQ;
+	else if (c == DQ && *state == STATE_DEFAULT)
+		*state = STATE_IN_DQ;
+	else if (c == SQ && *state == STATE_IN_SQ)
+		*state = STATE_DEFAULT;
+	else if (c == DQ && *state == STATE_IN_DQ)
+		*state = STATE_DEFAULT;
+}
+
+void	ft_init_state(t_quote_state *state, char c)
+{
+	if (c == SQ)
+		*state = STATE_IN_SQ;
+	else if (c == DQ)
+		*state = STATE_IN_DQ;
+	else
+		*state = STATE_DEFAULT;
 }
 
 t_bash_token_map	*ft_get_token_map(void)
 {
-	static t_bash_token_map	map[7];
+	static t_bash_token_map	map[5];
 
 	map[0] = (t_bash_token_map){.value = ">>", .type = TOKEN_GT_GT};
 	map[1] = (t_bash_token_map){.value = "<<", .type = TOKEN_LT_LT};
 	map[2] = (t_bash_token_map){.value = ">", .type = TOKEN_GT};
 	map[3] = (t_bash_token_map){.value = "<", .type = TOKEN_LT};
 	map[4] = (t_bash_token_map){.value = "|", .type = TOKEN_PIPE};
-	map[5] = (t_bash_token_map){.value = "'", .type = TOKEN_SQ};
-	map[6] = (t_bash_token_map){.value = "\"", .type = TOKEN_DQ};
 	return ((void *)map);
 }
 
@@ -49,7 +56,8 @@ bool	ft_is_valid_symbol(char c)
 {
 	if (ft_isalnum(c) || c == '-' || c == '$' || c == '='
 		|| c == '_' || c == '.' || c == '/' || c == '~'
-		|| c == '*' || c == '!' || c == '?' || c == '^' || c == '+')
+		|| c == '*' || c == '!' || c == '?' || c == '^'
+		|| c == '+' || c == '"' || c == '\'')
 		return (true);
 	return (false);
 }
