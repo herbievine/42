@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/10 16:57:51 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/11 09:16:09 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,11 @@ void	ft_change_exit_status(char ***envp)
 		if (ft_strncmp(head[i], "?=", 2) == 0)
 		{
 			free(head[i]);
-			printf("str = %s\n", str);
 			head[i] = ft_strjoin("?=", str);
 			return ;
 		}
 		i++;
 	}
-	printf("str = %s\n", str);
 	ft_create_cpy_var("?", str, envp, i);
 	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/10 17:17:30 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/11 19:43:05 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 	while (head != NULL && head->type != TOKEN_PIPE
 		&& head->type && !ft_is_io_symbol(head))
 	{
-		if (head->type == TOKEN_SQ || head->type == TOKEN_DQ)
-			head = head->next;
 		if (!head || head->type == TOKEN_PIPE)
 			break ;
 		args[i++] = ft_substr(head->value, 0, head->length);
@@ -99,8 +97,6 @@ static int	ft_arg_count(t_token *token, char *path)
 	{
 		if (ft_is_io_symbol(token))
 			i -= 2;
-		if (token->type == TOKEN_SQ || token->type == TOKEN_DQ)
-			i -= 1;
 		token = token->next;
 		i++;
 	}

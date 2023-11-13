@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 09:20:01 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/06 09:28:27 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/11 10:00:37 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	ft_type_token(t_token *token, int type)
 {
 	if (token->type == TOKEN_SQ && type != TOKEN_SQ)
-		type = TOKEN_SQ;
+		return (type = TOKEN_SQ);
 	else if (token->type == TOKEN_DQ && type != TOKEN_DQ)
-		type = TOKEN_DQ;
+		return (type = TOKEN_DQ);
 	else if (token->type == TOKEN_SQ && type == TOKEN_SQ)
-		type = 2;
+		return (type = 2);
 	else if (token->type == TOKEN_DQ && type == TOKEN_DQ)
-		type = 2; 
+		return (type = 2);
 	return (type);
 }
 

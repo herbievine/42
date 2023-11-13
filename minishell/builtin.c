@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/04 13:26:07 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/11 18:59:25 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	else if (ft_strschr(cmd, "pwd") == 0)
 		ft_pwd(subcommand);
 	else if (ft_strschr(cmd, "export") == 0)
-		g_signal = ft_export(subcommand, envp);
+		g_signal = ft_export(subcommand, envp, token->next);
 	else if (ft_strschr(cmd, "unset") == 0)
 		g_signal = ft_unset(subcommand, envp);
 	else if (ft_strschr(cmd, "env") == 0)
