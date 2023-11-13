@@ -109,20 +109,20 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (ft_create_subcommands(&command, envp, *cpy_envp))
-	{
-		ft_print_tokens(command.tokens);
-		ft_expand_token(command.subcommands, command.tokens);
-		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
-		{
-			// ft_print_subcommands(&command);
-			if (ft_check_subcommands(command.subcommands, command.tokens))
-				if (ft_execute(command.subcommands, &command.tokens) == 0)
-					g_signal = 0;
-		}
-	}
+	ft_print_tokens(command.tokens);
+	// if (ft_create_subcommands(&command, envp, *cpy_envp))
+	// {
+	// 	ft_expand_token(command.subcommands, command.tokens);
+	// 	if (ft_parse(command.tokens, command.subcommands, cpy_envp))
+	// 	{
+	// 		// ft_print_subcommands(&command);
+	// 		if (ft_check_subcommands(command.subcommands, command.tokens))
+	// 			if (ft_execute(command.subcommands, &command.tokens) == 0)
+	// 				g_signal = 0;
+	// 	}
+	// }
 	ft_change_exit_status(cpy_envp);
-	ft_free_subcommands(command.subcommands);
+	// ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
 }
 

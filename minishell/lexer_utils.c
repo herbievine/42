@@ -15,6 +15,31 @@
 #include "char.h"
 #include <stdbool.h>
 
+#define SQ '\''
+#define DQ '"'
+
+void	ft_modify_state(t_quote_state *state, char c)
+{
+	if (c == SQ && *state == STATE_DEFAULT)
+		*state = STATE_IN_SQ;
+	else if (c == DQ && *state == STATE_DEFAULT)
+		*state = STATE_IN_DQ;
+	else if (c == SQ && *state == STATE_IN_SQ)
+		*state = STATE_DEFAULT;
+	else if (c == DQ && *state == STATE_IN_DQ)
+		*state = STATE_DEFAULT;
+}
+
+void	ft_init_state(t_quote_state *state, char c)
+{
+	if (c == SQ)
+		*state = STATE_IN_SQ;
+	else if (c == DQ)
+		*state = STATE_IN_DQ;
+	else
+		*state = STATE_DEFAULT;
+}
+
 t_bash_token_map	*ft_get_token_map(void)
 {
 	static t_bash_token_map	map[5];

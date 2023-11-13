@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/13 14:49:38 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/13 16:38:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,6 @@
 #include "str.h"
 #include <stdbool.h>
 #include <stdio.h>
-
-static bool	ft_handle_symbol(t_lexer *lexer, t_token *token)
-{
-	if (ft_is_valid_symbol(lexer->raw[lexer->cursor]))
-	{
-		token->type = TOKEN_SYMBOL;
-		while (lexer->cursor < lexer->length
-			&& (ft_is_valid_symbol(lexer->raw[lexer->cursor])))
-		{
-			lexer->cursor++;
-			token->length++;
-		}
-		return (true);
-	}
-	return (false);
-}
 
 // Tokens are defined in `lexer_utils.c`
 // consisting of <<, >>, <, > or |
@@ -59,41 +43,30 @@ static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 	return (false);
 }
 
-#define SQ '\''
-#define DQ '"'
-
 static bool	ft_handle_quotes(t_lexer *lexer, t_token *token)
 {
-	char	state;
+	t_quote_state	state;
 
-	if (lexer->raw[lexer->cursor] == SQ)
-		state = SQ;
-	else if (lexer->raw[lexer->cursor] == DQ)
-		state = DQ;
-	else
+	if (!ft_is_valid_symbol(lexer->raw[lexer->cursor]))
 		return (false);
+	ft_init_state(&state, lexer->raw[lexer->cursor]);
 	token->type = TOKEN_SYMBOL;
 	while (lexer->cursor < lexer->length)
 	{
 		lexer->cursor++;
 		token->length++;
-		if (!lexer->raw[lexer->cursor + 1]
-			&& (state == SQ && lexer->raw[lexer->cursor] != SQ
-				|| state == DQ && lexer->raw[lexer->cursor] != DQ))
+		ft_modify_state(&state, lexer->raw[lexer->cursor]);
+		if (state != STATE_DEFAULT && !lexer->raw[lexer->cursor + 1])
 		{
 			token->type = TOKEN_INVALID;
 			token->value = lexer->raw + (lexer->cursor - token->length);
-			token->length = token->length + 1;
-			lexer->cursor++;
-			return (true);
+			return (token->length += 1, lexer->cursor += 1, true);
 		}
-		if ((state == SQ && lexer->raw[lexer->cursor] == SQ)
-			|| (state == DQ && lexer->raw[lexer->cursor] == DQ))
+		if (state == STATE_DEFAULT
+			&& !ft_is_valid_symbol(lexer->raw[lexer->cursor + 1]))
 		{
 			token->value = lexer->raw + (lexer->cursor - token->length);
-			token->length++;
-			lexer->cursor++;
-			break ;
+			return (token->length += 1, lexer->cursor += 1, true);
 		}
 	}
 	return (true);
@@ -127,8 +100,6 @@ t_token	ft_lexer_next(t_lexer *lexer)
 	if (ft_handle_quotes(lexer, &token))
 		return (token);
 	if (ft_handle_tokens(lexer, &token))
-		return (token);
-	if (ft_handle_symbol(lexer, &token))
 		return (token);
 	lexer->cursor++;
 	token.type = TOKEN_INVALID;

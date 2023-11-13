@@ -34,9 +34,9 @@ typedef enum e_token_types
 
 typedef enum e_quote_state
 {
-	LEXER_STATE_DEFAULT,
-	LEXER_STATE_IN_SQ,
-	LEXER_STATE_IN_DQ,
+	STATE_DEFAULT,
+	STATE_IN_SQ,
+	STATE_IN_DQ,
 }	t_quote_state;
 
 typedef struct s_token
