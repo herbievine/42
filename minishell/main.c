@@ -53,7 +53,7 @@ void	ft_print_tokens(t_token *tokens)
 	while (tmp)
 	{
 		str = ft_substr(tmp->value, 0, tmp->length);
-		printf("token: %s   |   type: %d   |   len:%d\n", str, tmp->type, tmp->length);
+		printf("token: %s\t| type: %d\t| len:%d\n", str, tmp->type, tmp->length);
 		free(str);
 		tmp = tmp->next;
 	}
@@ -96,6 +96,7 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 	token = ft_lexer_next(&lexer);
 	while (token.type != TOKEN_EOF)
 	{
+		// TODO move to parser
 		if (token.type == TOKEN_INVALID)
 		{
 			ft_invalid_token(lexer, token);
@@ -114,7 +115,7 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 		ft_expand_token(command.subcommands, command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
 		{
-			ft_print_subcommands(&command);
+			// ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
 				if (ft_execute(command.subcommands, &command.tokens) == 0)
 					g_signal = 0;

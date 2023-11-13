@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/12 09:15:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/13 14:49:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,36 +34,9 @@ static bool	ft_handle_symbol(t_lexer *lexer, t_token *token)
 	return (false);
 }
 
-static bool	ft_handle_quotes(t_lexer *lexer, t_token *token)
-{
-	if (lexer->state == LEXER_STATE_IN_SQ || lexer->state == LEXER_STATE_IN_DQ)
-	{
-		token->type = TOKEN_SYMBOL;
-		while (lexer->cursor < lexer->length)
-		{
-			if (lexer->state == LEXER_STATE_IN_SQ
-				&& lexer->raw[lexer->cursor] == '\'')
-				break ;
-			else if (lexer->state == LEXER_STATE_IN_DQ
-				&& lexer->raw[lexer->cursor] == '"')
-				break ;
-			if (!lexer->raw[lexer->cursor + 1])
-			{
-				token->type = TOKEN_INVALID;
-				token->value = lexer->raw + (lexer->cursor - token->length);
-				token->length = token->length + 1;
-				lexer->cursor++;
-				return (true);
-			}
-			lexer->cursor++;
-			token->length++;
-		}
-		return (true);
-	}
-	return (false);
-}
-
-#define TOKEN_COUNT 7
+// Tokens are defined in `lexer_utils.c`
+// consisting of <<, >>, <, > or |
+#define TOKEN_COUNT 5
 
 static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 {
@@ -72,17 +45,11 @@ static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 
 	i = -1;
 	token_map = ft_get_token_map();
-	if ((lexer->state == LEXER_STATE_IN_DQ
-			&& lexer->raw[lexer->cursor] == '\'')
-		|| (lexer->state == LEXER_STATE_IN_SQ
-			&& lexer->raw[lexer->cursor] == '"'))
-		return (false);
 	while (++i < TOKEN_COUNT)
 	{
 		if (ft_strncmp(&lexer->raw[lexer->cursor],
 				token_map[i].value, ft_strlen(token_map[i].value)) == 0)
 		{
-			ft_mutate_lexer_state(lexer);
 			lexer->cursor += ft_strlen(token_map[i].value);
 			token->type = token_map[i].type;
 			token->length = ft_strlen(token_map[i].value);
@@ -92,12 +59,51 @@ static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 	return (false);
 }
 
+#define SQ '\''
+#define DQ '"'
+
+static bool	ft_handle_quotes(t_lexer *lexer, t_token *token)
+{
+	char	state;
+
+	if (lexer->raw[lexer->cursor] == SQ)
+		state = SQ;
+	else if (lexer->raw[lexer->cursor] == DQ)
+		state = DQ;
+	else
+		return (false);
+	token->type = TOKEN_SYMBOL;
+	while (lexer->cursor < lexer->length)
+	{
+		lexer->cursor++;
+		token->length++;
+		if (!lexer->raw[lexer->cursor + 1]
+			&& (state == SQ && lexer->raw[lexer->cursor] != SQ
+				|| state == DQ && lexer->raw[lexer->cursor] != DQ))
+		{
+			token->type = TOKEN_INVALID;
+			token->value = lexer->raw + (lexer->cursor - token->length);
+			token->length = token->length + 1;
+			lexer->cursor++;
+			return (true);
+		}
+		if ((state == SQ && lexer->raw[lexer->cursor] == SQ)
+			|| (state == DQ && lexer->raw[lexer->cursor] == DQ))
+		{
+			token->value = lexer->raw + (lexer->cursor - token->length);
+			token->length++;
+			lexer->cursor++;
+			break ;
+		}
+	}
+	return (true);
+}
+
 t_lexer	ft_lexer_new(const char *raw)
 {
 	t_lexer	lexer;
 
 	lexer.raw = raw;
-	lexer.state = LEXER_STATE_DEFAULT;
 	lexer.length = ft_strlen(raw);
 	lexer.cursor = 0;
 	return (lexer);
@@ -118,9 +124,9 @@ t_token	ft_lexer_next(t_lexer *lexer)
 		token.type = TOKEN_EOF;
 		return (token);
 	}
-	if (ft_handle_tokens(lexer, &token))
-		return (token);
 	if (ft_handle_quotes(lexer, &token))
+		return (token);
+	if (ft_handle_tokens(lexer, &token))
 		return (token);
 	if (ft_handle_symbol(lexer, &token))
 		return (token);
