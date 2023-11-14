@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/12 08:44:30 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/13 13:39:57 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 {
 	pid_t	pid;
 	int		return_status;
+
+	char *args[] = {"cat", "Make\"file\"", NULL};
 
 	pid = fork();
 	return_status = 0;

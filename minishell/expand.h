@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:29 by codespace         #+#    #+#             */
-/*   Updated: 2023/10/26 11:25:23 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 15:27:36 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "structs.h"
 
-int		ft_expand_token(t_subcommand *subcommand, t_token *token);
+void	ft_expand_token(t_subcommand *subcommand, t_token *token);
 char	*ft_expand_dollar(t_subcommand *subcommand, char *str);
+char	ft_type_token(char c, char type);
 #endif

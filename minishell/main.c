@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/12 09:14:19 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/13 20:06:10 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #include "expand.h"
 #include "env.h"
 #include "builtin.h"
+#include "quotes.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -109,20 +110,22 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	ft_print_tokens(command.tokens);
-	// if (ft_create_subcommands(&command, envp, *cpy_envp))
-	// {
-	// 	ft_expand_token(command.subcommands, command.tokens);
-	// 	if (ft_parse(command.tokens, command.subcommands, cpy_envp))
-	// 	{
-	// 		// ft_print_subcommands(&command);
-	// 		if (ft_check_subcommands(command.subcommands, command.tokens))
-	// 			if (ft_execute(command.subcommands, &command.tokens) == 0)
-	// 				g_signal = 0;
-	// 	}
-	// }
+	if (ft_create_subcommands(&command, envp, *cpy_envp))
+	{
+		ft_expand_token(command.subcommands, command.tokens);
+		ft_suppress_quotes(command.subcommands, command.tokens);
+		// ft_print_tokens(command.tokens);
+		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
+		{
+			// ft_print_tokens(command.tokens);
+			// ft_print_subcommands(&command);
+			if (ft_check_subcommands(command.subcommands, command.tokens))
+				if (ft_execute(command.subcommands, &command.tokens) == 0)
+					g_signal = 0;
+		}
+	}
 	ft_change_exit_status(cpy_envp);
-	// ft_free_subcommands(command.subcommands);
+	ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
 }
 
