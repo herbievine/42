@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/14 13:18:38 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 13:52:57 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	ft_check_digit(char *str)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(str, 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			return (1);
+			return (255);
 		}
 		i++;
 	}
