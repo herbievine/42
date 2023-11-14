@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/14 13:52:57 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 17:17:54 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,18 @@ int	ft_exit(t_subcommand *subcommand, char ***envp, t_token *tokens)
 	int	exit_value;
 
 	i = -1;
-	exit_value = ft_check_digit(subcommand->args[1]);
-	if (subcommand->args[1] && subcommand->args[2] && !exit_value)
-		return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
-	if (!exit_value && subcommand->args[1])
-		exit_value = ft_atoi(subcommand->args[1]);
-	ft_clear_tokens(&tokens);
-	ft_free_array(*envp, -1);
-	ft_free_subcommands(subcommand);
-	ft_history_clear();
-	exit(exit_value % 256);
+	exit_value = 0;
+	if (subcommand->args[1])
+	{
+		exit_value = ft_check_digit(subcommand->args[1]);
+		if (subcommand->args[1] && subcommand->args[2] && !exit_value)
+			return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
+		if (!exit_value && subcommand->args[1])
+			exit_value = ft_atoi(subcommand->args[1]);
+	}
+		ft_clear_tokens(&tokens);
+		ft_free_array(*envp, -1);
+		ft_free_subcommands(subcommand);
+		ft_history_clear();
+		exit(exit_value % 256);
 }
