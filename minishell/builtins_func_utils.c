@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 08:32:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/12 08:56:20 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 13:19:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 bool	ft_check_is_valid_identifier(char *str, int type)
 {
 	int	i;
-	int have_alpha;
+	int	have_alpha;
 
 	i = 0;
 	if (type == TOKEN_DQ || type == TOKEN_SQ)
@@ -29,7 +29,8 @@ bool	ft_check_is_valid_identifier(char *str, int type)
 		if (str[i] == '=' && (str[i - 1] == '=' || !str[i - 1]
 				|| !ft_isalnum(str[i - 1])))
 			return (false);
-		else if (str[i] && str[i] != '=' && !ft_isalnum(str[i]) && str[i] != '_')
+		else if (str[i] && str[i] != '='
+			&& !ft_isalnum(str[i]) && str[i] != '_')
 			return (false);
 		i++;
 	}

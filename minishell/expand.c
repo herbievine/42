@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/11 14:17:12 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 13:20:53 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,57 +22,71 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 	char	*expanded;
 	char	*key;
 	int		length;
-	int 	i;
+	int		i;
 
-	length = 0;
+	length = 1;
 	i = 0;
 	while (str && str[i] != '$')
 		i++;
-	while (str[i + length] && ft_is_valid_symbol(str[length]))
+	while (str[i + length] && ft_is_valid_symbol(str[i + length])
+		&& str[i + length + 1] != '\'' && str[i + length + 1] != '"')
 		length++;
 	if (length == 1)
 		return (ft_strdup("$"));
 	if (str[i + 1] == '?')
 		length = 1;
-	key = ft_substr(str, i+1, length);
+	key = ft_substr(str, i + 1, length);
 	expanded = ft_get_cpy_env(subcommand, key);
 	free(key);
 	if (expanded)
 		return (expanded);
-	return (ft_strdup("")); // TODO: check if this is the right thing to do
+	return (ft_strdup(""));
 }
 
-int	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
+char	ft_type_token(char c, char type)
 {
+	if (c == '\'' && type != '\'')
+		return (type = '\'');
+	else if (c == '"' && type != '"')
+		return (type = '"');
+	else if (c == '\'' && type == '\'')
+		return (type = 2);
+	else if (c == '"' && type == '"')
+		return (type = 2);
+	return (type);
+}
+
+void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
+{
+	char	limiter;
+	char	*expanded;
 	char	*str;
 	int		i;
-	int 	j;
-	char	*expanded;
 
-	i = 0;
-	j = 0;
 	while (tokens)
 	{
-		if (tokens->type == TOKEN_SQ)
-			return (true);
+		i = 0;
+		limiter = 0;
 		str = ft_substr(tokens->value, 0, tokens->length);
-		while (str[i] && str[i] != '$')
-			i++;
-		while (str[i + j] && str[i + j] != ' ')
-			j++;
-		free(str);
-		str = ft_substr(tokens->value, i, j);
-		if (str && ft_strchr(str, '$') && ft_strlen(str) > 1)
+		while (str[i])
 		{
-			expanded = ft_strjoin(ft_substr(tokens->value, 0, i), ft_expand_dollar(subcommand, str));
-			free(str);
-			str = ft_strjoin(expanded, ft_substr(tokens->value, i + j, ft_strlen(tokens->value) - i - j));
-			tokens->length = ft_strlen(str);
-			// free(tokens->value);
-			tokens->value = ft_strdup(str);
+			limiter = ft_type_token(str[i], limiter);
+			if (str[i] == '$' && limiter != '\'')
+			{
+				expanded = ft_strjoin(ft_substr(str, 0, i),
+						ft_expand_dollar(subcommand, str));
+				while (str[i] && ft_is_valid_symbol(str[i])
+					&& str[i + 1] != '\'' && str[i + 1] != '"')
+					++i;
+				free(str);
+				str = ft_strjoin(expanded, ft_substr(tokens->value, i + 1,
+							ft_strlen(tokens->value) - i - 1));
+				tokens->length = ft_strlen(str);
+				tokens->value = ft_strdup(str);
+			}
+			i++;
 		}
 		tokens = tokens->next;
 		free(str);
 	}
-	return (true);
 }

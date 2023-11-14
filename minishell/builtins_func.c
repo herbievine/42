@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/12 09:04:49 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 13:18:38 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	ft_cd(t_subcommand *subcommand)
 	}
 	else if (subcommand->args[2])
 		return (0);
-	if (ft_strncmp(subcommand->args[1], "-", ft_strlen(subcommand->args[1])) == 0)
+	if (ft_strncmp(subcommand->args[1], "-",
+			ft_strlen(subcommand->args[1])) == 0)
 	{
 		path = ft_get_cpy_env(subcommand, "OLDPWD");
 		if (!path)
