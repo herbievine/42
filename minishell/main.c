@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/13 20:06:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/15 17:24:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
+	int 		return_value;
 
+	return_value = -1;
 	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
@@ -114,14 +116,12 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 	{
 		ft_expand_token(command.subcommands, command.tokens);
 		ft_suppress_quotes(command.subcommands, command.tokens);
-		// ft_print_tokens(command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
 		{
-			// ft_print_tokens(command.tokens);
-			// ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				if (ft_execute(command.subcommands, &command.tokens) == 0)
-					g_signal = 0;
+				return_value =  ft_execute(command.subcommands, &command.tokens);
+			if (return_value != -1)
+				g_signal = return_value;
 		}
 	}
 	ft_change_exit_status(cpy_envp);
