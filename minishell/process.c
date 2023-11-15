@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/15 15:36:28 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/15 17:25:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens)
 			exit(0);
 		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
 		return_status = ft_define_exit_status(strerror(errno),
-				subcommand->path);
+				subcommand->path, subcommand->args[0]);
 		ft_free_subcommands(subcommand);
 		ft_clear_tokens(tokens);
 		exit(return_status);
@@ -76,8 +76,7 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 		ft_redirect(subcommand);
 		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
 		return_status = ft_define_exit_status(strerror(errno),
-				subcommand->path);
-		dprintf(2, "minishell: %s: %s\n", subcommand->path, strerror(errno));
+				subcommand->path, subcommand->args[0]);
 		ft_free_subcommands(subcommand);
 		ft_clear_tokens(tokens);
 		exit(return_status);
