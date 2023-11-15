@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:57:47 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/11 20:07:17 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 16:07:35 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,23 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-bool	ft_set_key_value(t_subcommand *subcommand, char ***envp, int i)
+bool	ft_set_env_from_arg(char ***env, char *arg)
 {
 	char	*key;
 	char	*value;
+	char	*tmp;
 
-	if ((ft_position(subcommand->args[i], '='))
-		< ft_strlen(subcommand->args[i]))
-		key = ft_substr(subcommand->args[i],
-				(ft_position(subcommand->args[i], '=') + 1),
-				ft_strlen(subcommand->args[i]));
-	else
-		key = NULL;
-	value = ft_fmt_path("\"", key, "\"");
-	free(key);
-	key = ft_substr(subcommand->args[i], 0,
-			ft_position(subcommand->args[i], '=') + 1);
-	*envp = ft_add_cpy_env_var(key, value, envp);
-	free(key);
-	free(value);
-	return (true);
+	key = ft_substr(arg, 0, ft_position(arg, '='));
+	if (!key)
+		return (false);
+	value = ft_substr(arg, (ft_position(arg, '=') + 1), ft_strlen(arg));
+	if (!value)
+		return (free(key), false);
+	ft_env_set(env, key, value);
+	return (free(key), free(value), true);
 }
 
-int	ft_export(t_subcommand *subcommand, char ***envp, t_token *token)
+int	ft_export(t_subcommand *subcommand, char ***env, t_token *token)
 {
 	int		i;
 	char	*key;
@@ -58,33 +52,30 @@ int	ft_export(t_subcommand *subcommand, char ***envp, t_token *token)
 	i = 1;
 	head = token;
 	if (!subcommand->args[1])
-		return (ft_env(envp, 1), 0);
+		return (ft_env(*env, 1), 0);
 	while (subcommand->args[i])
 	{
 		if (!ft_check_is_valid_identifier(subcommand->args[i], head->type))
 			return (printf("not a valid identifier\n"), 1);
 		else if (ft_strchr(subcommand->args[i], '='))
 		{
-			if (!ft_set_key_value(subcommand, envp, i))
+			if (!ft_set_env_from_arg(env, subcommand->args[i]))
 				return (1);
 		}
 		else
-		{
-			key = ft_strjoin(subcommand->args[i], "=");
-			*envp = ft_add_cpy_env_var(key, NULL, envp);
-		}
+			ft_env_set(env, subcommand->args[i], NULL);
 		i++;
 		token = token->next;
 	}
 	return (0);
 }
 
-int	ft_unset(t_subcommand *subcommand, char ***envp)
+int	ft_unset(t_subcommand *subcommand, char ***env)
 {
 	char	**args;
 
 	args = subcommand->args;
 	while (*args)
-		*envp = ft_remove_cpy_env_var(*envp, *args++);
+		ft_env_remove(env, *args++);
 	return (0);
 }

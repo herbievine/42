@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-t_subcommand	*ft_subcommand_new(char **envp, char **cpy_envp)
+t_subcommand	*ft_subcommand_new(char **env)
 {
 	t_subcommand	*subcommand;
 
@@ -37,8 +37,8 @@ t_subcommand	*ft_subcommand_new(char **envp, char **cpy_envp)
 	subcommand->path = NULL;
 	subcommand->args = NULL;
 	subcommand->out_file_name = NULL;
-	subcommand->envp = envp;
-	subcommand->cpy_envp = cpy_envp;
+	// TODO Change field to `env`
+	subcommand->envp = env;
 	subcommand->mode = MODE_WRITE;
 	subcommand->is_executable = true;
 	subcommand->is_heredoc = false;
@@ -47,11 +47,11 @@ t_subcommand	*ft_subcommand_new(char **envp, char **cpy_envp)
 }
 
 t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length,
-	char **envp, char **cpy_envp)
+	char **env)
 {
 	t_subcommand	*subcommand;
 
-	subcommand = ft_subcommand_new(envp, cpy_envp);
+	subcommand = ft_subcommand_new(env);
 	if (!subcommand)
 		return (NULL);
 	if (!ft_set_here_doc(subcommand, token_start, token_length))
@@ -60,7 +60,7 @@ t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length,
 }
 
 t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index,
-	char **envp, char **cpy_envp)
+	char **env)
 {
 	int				i;
 	t_token			*token;
@@ -77,25 +77,24 @@ t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index,
 	{
 		*token_index = command->token_length;
 		return (ft_build_subcommand(token, command->token_length,
-				envp, cpy_envp));
+				env));
 	}
 	else if (*token_index == 0 || pipe_offset > 0)
 	{
 		*token_index += pipe_offset + 1;
-		return (ft_build_subcommand(token, pipe_offset, envp, cpy_envp));
+		return (ft_build_subcommand(token, pipe_offset, env));
 	}
 	return (NULL);
 }
 
-bool	ft_create_subcommands(t_command *command, char **envp,
-	char **cpy_envp)
+bool	ft_create_subcommands(t_command *command, char **env)
 {
 	int				token_index;
 	t_subcommand	*subcommand;
 	t_subcommand	*head;
 
 	token_index = 0;
-	subcommand = ft_find_next_subcommand(command, &token_index, envp, cpy_envp);
+	subcommand = ft_find_next_subcommand(command, &token_index, env);
 	while (subcommand)
 	{
 		if (!command->subcommands)
@@ -112,8 +111,7 @@ bool	ft_create_subcommands(t_command *command, char **envp,
 			command->subcommands = head;
 			command->subcommand_length++;
 		}
-		subcommand = ft_find_next_subcommand(command, &token_index,
-				envp, cpy_envp);
+		subcommand = ft_find_next_subcommand(command, &token_index, env);
 	}
 	return (true);
 }

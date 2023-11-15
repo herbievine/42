@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/13 20:06:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 13:58:13 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_print_subcommands(t_command *command)
 	}
 }
 
-void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
+void	ft_build_command(char *buffer, char **env)
 {
 	t_command	command;
 	t_lexer		lexer;
@@ -103,19 +103,19 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 			ft_invalid_token(lexer, token);
 			ft_clear_tokens(&command.tokens);
 			g_signal = 1;
-			ft_change_exit_status(cpy_envp);
+			ft_env_set(&env, "?", "1");
 			return ;
 		}
 		if (ft_append_token(&command.tokens, token))
 			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (ft_create_subcommands(&command, envp, *cpy_envp))
+	if (ft_create_subcommands(&command, env))
 	{
 		ft_expand_token(command.subcommands, command.tokens);
 		ft_suppress_quotes(command.subcommands, command.tokens);
 		// ft_print_tokens(command.tokens);
-		if (ft_parse(command.tokens, command.subcommands, cpy_envp))
+		if (ft_parse(command.tokens, command.subcommands, &env))
 		{
 			// ft_print_tokens(command.tokens);
 			// ft_print_subcommands(&command);
@@ -124,42 +124,45 @@ void	ft_build_command(char *buffer, char **envp, char ***cpy_envp)
 					g_signal = 0;
 		}
 	}
-	ft_change_exit_status(cpy_envp);
+	ft_env_set(&env, "?", ft_itoa(g_signal));
 	ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
 }
 
-void	ft_await_command_entry(char **envp)
+void	ft_await_command_entry(char **env)
 {
 	char	*buffer;
-	char	**cpy_envp;
 
-	cpy_envp = ft_cpy_env(envp);
 	while (true)
 	{
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
 			ft_handle_ctrl_d();
-			ft_free_array(cpy_envp, -1);
+			ft_free_array(env, -1);
 		}
 		if (ft_strlen(buffer) > 0)
 		{
 			ft_history_add(buffer);
-			ft_build_command(buffer, envp, &cpy_envp);
+			ft_build_command(buffer, env);
 		}
 		free(buffer);
 	}
-	ft_free_array(cpy_envp, -1);
+	ft_free_array(env, -1);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	char	**env;
+
 	(void)argc;
 	(void)argv;
 	g_signal = 0;
+	env = ft_env_init(envp);
+	if (!env)
+		return (1);
 	ft_history_new();
 	ft_signals_register();
-	ft_await_command_entry(envp);
+	ft_await_command_entry(env);
 	return (0);
 }

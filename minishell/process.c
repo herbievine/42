@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/13 13:39:57 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 15:54:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens,
 		close(fd[READ]);
 		if (!subcommand->is_executable || !subcommand->path)
 			exit(1);
-		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
+		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path);
 		dprintf(2, "minishell: %s: %s\n", subcommand->path, strerror(errno));
@@ -112,7 +112,7 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 			dup2(subcommand->in_fd, STDIN_FILENO);
 		if (subcommand->out_fd != -1)
 			dup2(subcommand->out_fd, STDOUT_FILENO);
-		execve(subcommand->path, subcommand->args, subcommand->cpy_envp);
+		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path);
 		dprintf(2, "minishell: %s: %s\n", subcommand->path, strerror(errno));

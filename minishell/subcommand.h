@@ -16,6 +16,6 @@
 # include "structs.h"
 # include <stdbool.h>
 
-bool	ft_create_subcommands(t_command *command, char **envp, char **cpy_envp);
+bool	ft_create_subcommands(t_command *command, char **env);
 
 #endif /* SUBCOMMAND_H */

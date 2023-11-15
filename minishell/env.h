@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:48 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/10 16:56:06 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 16:07:35 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 
 # include "structs.h"
 
-char	*ft_get_cpy_env(t_subcommand *subcommand, char *key);
-void	ft_set_cpy_env(t_subcommand *subcommand, char *key, char *value);
-char	**ft_get_paths(t_subcommand *subcommand);
-char	**ft_cpy_env(char **envp);
-char	**ft_remove_cpy_env_var(char **cpy_envp, char *key);
-char	**ft_add_cpy_env_var(char *key, char *value, char ***envp);
-void	ft_change_exit_status(char ***envp);
-char	**ft_create_cpy_var(char *key, char *value, char ***envp, int i);
+char	**ft_env_init(char **envp);
+char	*ft_env_get(char **env, char *key);
+char	**ft_env_get_paths(char **env);
+char	**ft_env_remove(char ***env, char *key);
+char	**ft_env_set(char ***env, char *key, char *value);
 
 #endif

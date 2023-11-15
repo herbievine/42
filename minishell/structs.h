@@ -76,8 +76,8 @@ typedef struct s_subcommand
 	int					builtin;
 	char				*path;
 	char				**args;
+	// TODO Change field to `env`
 	char				**envp;
-	char				**cpy_envp;
 	char				*out_file_name;
 	t_mode				mode;
 	bool				is_executable;
