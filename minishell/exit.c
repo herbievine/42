@@ -6,14 +6,14 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 09:32:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/10 17:24:00 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/15 15:16:45 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exit.h"
 #include "str.h"
 #include "error.h"
-
+//TODO: print error message
 int	ft_define_exit_status(char *str_status, char *path)
 {
 	if (ft_strncmp(str_status, EACCES, ft_strlen(str_status)) == 0)
