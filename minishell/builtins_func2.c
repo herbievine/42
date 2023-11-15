@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:57:47 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/14 16:07:35 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/15 18:01:54 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_export(t_subcommand *subcommand, char ***env, t_token *token)
 	while (subcommand->args[i])
 	{
 		if (!ft_check_is_valid_identifier(subcommand->args[i], head->type))
-			return (printf("not a valid identifier\n"), 1);
+			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
 		else if (ft_strchr(subcommand->args[i], '='))
 		{
 			if (!ft_set_env_from_arg(env, subcommand->args[i]))

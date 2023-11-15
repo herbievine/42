@@ -91,7 +91,9 @@ void	ft_build_command(char *buffer, char **env)
 	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
+	int 		return_value;
 
+	return_value = -1;
 	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
@@ -117,11 +119,10 @@ void	ft_build_command(char *buffer, char **env)
 		// ft_print_tokens(command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, &env))
 		{
-			// ft_print_tokens(command.tokens);
-			// ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				if (ft_execute(command.subcommands, &command.tokens) == 0)
-					g_signal = 0;
+				return_value =  ft_execute(command.subcommands, &command.tokens);
+			if (return_value != -1)
+				g_signal = return_value;
 		}
 	}
 	ft_env_set(&env, "?", ft_itoa(g_signal));
