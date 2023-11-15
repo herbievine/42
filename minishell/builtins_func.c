@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/14 17:17:54 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/15 18:07:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <errno.h>
 
 int	ft_cd(t_subcommand *subcommand)
 {
@@ -58,7 +59,18 @@ int	ft_cd(t_subcommand *subcommand)
 	else
 		path = subcommand->args[1];
 	if (chdir(path) == -1)
-		return (printf("cd: %s: "ENOENT"\n", path), 1);
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (1);
+	}
+	else
+	{
+		ft_add_cpy_env_var("OLDPWD",
+			ft_get_cpy_env(subcommand, "PWD"), &subcommand->envp);
+		ft_add_cpy_env_var("PWD", getcwd(NULL, 100), &subcommand->envp);
+	}
 	return (0);
 }
 
@@ -133,9 +145,9 @@ int	ft_exit(t_subcommand *subcommand, char ***envp, t_token *tokens)
 		if (!exit_value && subcommand->args[1])
 			exit_value = ft_atoi(subcommand->args[1]);
 	}
-		ft_clear_tokens(&tokens);
-		ft_free_array(*envp, -1);
-		ft_free_subcommands(subcommand);
-		ft_history_clear();
-		exit(exit_value % 256);
+	ft_clear_tokens(&tokens);
+	ft_free_array(*envp, -1);
+	ft_free_subcommands(subcommand);
+	ft_history_clear();
+	exit(exit_value % 256);
 }
