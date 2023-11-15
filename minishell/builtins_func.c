@@ -67,9 +67,9 @@ int	ft_cd(t_subcommand *subcommand)
 	}
 	else
 	{
-		ft_add_cpy_env_var("OLDPWD",
-			ft_get_cpy_env(subcommand, "PWD"), &subcommand->envp);
-		ft_add_cpy_env_var("PWD", getcwd(NULL, 100), &subcommand->envp);
+		ft_env_set(&subcommand->envp, "OLDPWD",
+			ft_env_get(subcommand->envp, "PWD"));
+		ft_env_set(&subcommand->envp, "PWD", getcwd(NULL, 100));
 	}
 	return (0);
 }
