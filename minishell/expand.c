@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/14 15:54:22 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/16 09:11:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 			{
 				expanded = ft_strjoin(ft_substr(str, 0, i),
 						ft_expand_dollar(subcommand, str));
-				while (str[i] && ft_is_valid_symbol(str[i])
+				while (str[i] && str[i] != '?' && ft_is_valid_symbol(str[i])
 					&& str[i + 1] != '\'' && str[i + 1] != '"')
 					++i;
 				free(str);
@@ -90,3 +90,4 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 		free(str);
 	}
 }
+c
