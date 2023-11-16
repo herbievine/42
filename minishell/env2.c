@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/15 21:43:56 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/16 12:19:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,16 @@ static char	**ft_env_set_at_index(char *key, char *value, char ***env, int i)
 	if (!new_env)
 		return (*env);
 	i = -1;
-	while ((env)[++i])
+	while ((*env)[++i])
 	{
-		new_env[i] = ft_strdup((const char *)(env)[i]);
+		new_env[i] = ft_strdup((*env)[i]);
 		if (!new_env[i])
 		{
 			ft_free_array(new_env, i);
 			return (*env);
 		}
 	}
-	if (value)
-		full_str = ft_strjoin(key, value);
-	else
-		full_str = ft_strjoin(key, "\"\"");
+	full_str = ft_env_format(key, value);
 	if (!full_str)
 		return (ft_free_array(new_env, i), *env);
 	new_env[i] = ft_strdup(full_str);

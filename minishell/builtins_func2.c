@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:57:47 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/15 18:01:54 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/16 12:17:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,13 @@ int	ft_export(t_subcommand *subcommand, char ***env, t_token *token)
 {
 	int		i;
 	char	*key;
-	t_token	*head;
 
 	i = 1;
-	head = token;
 	if (!subcommand->args[1])
 		return (ft_env(*env, 1), 0);
 	while (subcommand->args[i])
 	{
-		if (!ft_check_is_valid_identifier(subcommand->args[i], head->type))
+		if (!ft_check_is_valid_identifier(subcommand->args[i], token->type))
 			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
 		else if (ft_strchr(subcommand->args[i], '='))
 		{
