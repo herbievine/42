@@ -86,7 +86,7 @@ void	ft_print_subcommands(t_command *command)
 	}
 }
 
-void	ft_build_command(char *buffer, char **env)
+void	ft_build_command(char *buffer, char ***env)
 {
 	t_command	command;
 	t_lexer		lexer;
@@ -105,19 +105,19 @@ void	ft_build_command(char *buffer, char **env)
 			ft_invalid_token(lexer, token);
 			ft_clear_tokens(&command.tokens);
 			g_signal = 1;
-			ft_env_set(&env, "?", "1");
+			*env = ft_env_set(*env, "?", "1");
 			return ;
 		}
 		if (ft_append_token(&command.tokens, token))
 			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (ft_create_subcommands(&command, env))
+	if (ft_create_subcommands(&command, *env))
 	{
 		ft_expand_token(command.subcommands, command.tokens);
 		ft_suppress_quotes(command.subcommands, command.tokens);
 		// ft_print_tokens(command.tokens);
-		if (ft_parse(command.tokens, command.subcommands, &env))
+		if (ft_parse(command.tokens, command.subcommands, env))
 		{
 			if (ft_check_subcommands(command.subcommands, command.tokens))
 				return_value =  ft_execute(command.subcommands, &command.tokens);
@@ -125,12 +125,12 @@ void	ft_build_command(char *buffer, char **env)
 				g_signal = return_value;
 		}
 	}
-	ft_env_set(&env, "?", ft_itoa(g_signal));
+	*env = ft_env_set(*env, "?", ft_itoa(g_signal));
 	ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
 }
 
-void	ft_await_command_entry(char **env)
+void	ft_await_command_entry(char ***env)
 {
 	char	*buffer;
 
@@ -140,7 +140,7 @@ void	ft_await_command_entry(char **env)
 		if (!buffer)
 		{
 			ft_handle_ctrl_d();
-			ft_free_array(env, -1);
+			ft_free_array(*env, -1);
 		}
 		if (ft_strlen(buffer) > 0)
 		{
@@ -149,7 +149,7 @@ void	ft_await_command_entry(char **env)
 		}
 		free(buffer);
 	}
-	ft_free_array(env, -1);
+	ft_free_array(*env, -1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -162,8 +162,9 @@ int	main(int argc, char **argv, char **envp)
 	env = ft_env_init(envp);
 	if (!env)
 		return (1);
+	printf("env: %p\n", env);
 	ft_history_new();
 	ft_signals_register();
-	ft_await_command_entry(env);
+	ft_await_command_entry(&env);
 	return (0);
 }
