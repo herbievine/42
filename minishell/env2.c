@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/16 14:01:03 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/16 15:01:45 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**ft_env_set(char **env, char *key, char *value)
 	while (env[++i])
 	{
 		// TODO Make sure the token `+ 1` is a `=`
-		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0)
+		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0 )
 		{
 			if (value)
 			{
@@ -76,7 +76,6 @@ static char	**ft_env_set_at_index(char *key, char *value, char **env, int i)
 	char	*full_str;
 	char	**new_env;
 
-	printf("gere");
 	new_env = ft_calloc(i + 2, sizeof(char *));
 	if (!new_env)
 		return (env);

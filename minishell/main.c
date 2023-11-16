@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/14 13:58:13 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/16 15:02:17 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ int	main(int argc, char **argv, char **envp)
 	env = ft_env_init(envp);
 	if (!env)
 		return (1);
-	printf("env: %p\n", env);
 	ft_history_new();
 	ft_signals_register();
 	ft_await_command_entry(&env);
