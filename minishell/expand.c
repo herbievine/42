@@ -6,13 +6,14 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/16 09:16:03 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/16 17:45:52 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 #include "str.h"
 #include "env.h"
+#include "char.h"
 #include "lexer_utils.h"
 #include <stdio.h>
 #include <unistd.h>
@@ -29,13 +30,13 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 	while (str && str[i] != '$')
 		i++;
 	while (str[i + length] && ft_is_valid_symbol(str[i + length])
-		&& str[i + length + 1] != '\'' && str[i + length + 1] != '"')
+		&& str[i + length] != '\'' && str[i + length] != '"')
 		length++;
 	if (length == 1)
 		return (ft_strdup("$"));
 	if (str[i + 1] == '?')
-		length = 1;
-	key = ft_substr(str, i + 1, length);
+		length = 2;
+	key = ft_substr(str, i + 1, length - 1);
 	expanded = ft_env_get(subcommand->envp, key);
 	free(key);
 	if (expanded)
@@ -45,9 +46,9 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 
 char	ft_type_token(char c, char type)
 {
-	if (c == '\'' && type != '\'')
+	if (c == '\'' && type != '\'' && type != '"')
 		return (type = '\'');
-	else if (c == '"' && type != '"')
+	else if (c == '"' && type != '"' && type != '\'')
 		return (type = '"');
 	else if (c == '\'' && type == '\'')
 		return (type = 2);
@@ -76,7 +77,7 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 				expanded = ft_strjoin(ft_substr(str, 0, i),
 						ft_expand_dollar(subcommand, str));
 				while (str[i] && str[i] != '?' && ft_is_valid_symbol(str[i])
-					&& str[i + 1] != '\'' && str[i + 1] != '"')
+					&& str[i + 1] != '\'' && str[i + 1] != '"' && !ft_isspace(str[i+1]))
 					++i;
 				free(str);
 				str = ft_strjoin(expanded, ft_substr(tokens->value, i + 1,
