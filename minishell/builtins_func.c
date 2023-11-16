@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/15 18:07:30 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/16 15:00:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	ft_cd(t_subcommand *subcommand)
 	}
 	else
 	{
-		ft_env_set(&subcommand->envp, "OLDPWD",
+		subcommand->envp = ft_env_set(subcommand->envp, "OLDPWD",
 			ft_env_get(subcommand->envp, "PWD"));
-		ft_env_set(&subcommand->envp, "PWD", getcwd(NULL, 100));
+		subcommand->envp = ft_env_set(subcommand->envp, "PWD", getcwd(NULL, 100));
 	}
 	return (0);
 }
@@ -97,7 +97,6 @@ int	ft_env(char **env, int is_export)
 {
 	int	i;
 
-	printf("env\n");
 	i = 0;
 	while (env[i])
 	{
