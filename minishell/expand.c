@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/16 09:11:56 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/16 09:16:03 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 		free(str);
 	}
 }
-c
