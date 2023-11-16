@@ -54,7 +54,7 @@ bool	ft_if_builtin(char *cmd)
 }
 
 bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
-			char *cmd, char ***envp)
+			char *cmd, char ***env)
 {
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
@@ -65,13 +65,13 @@ bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	else if (ft_strschr(cmd, "pwd") == 0)
 		ft_pwd(subcommand);
 	else if (ft_strschr(cmd, "export") == 0)
-		g_signal = ft_export(subcommand, envp, token->next);
+		g_signal = ft_export(subcommand, env, token->next);
 	else if (ft_strschr(cmd, "unset") == 0)
-		g_signal = ft_unset(subcommand, envp);
+		g_signal = ft_unset(subcommand, env);
 	else if (ft_strschr(cmd, "env") == 0)
-		ft_env(envp, 0);
+		ft_env(*env, 0);
 	else if (ft_strschr(cmd, "exit") == 0)
-		g_signal = ft_exit(subcommand, envp, token);
+		g_signal = ft_exit(subcommand, env, token);
 	subcommand->out_fd = -1;
 	return (true);
 }

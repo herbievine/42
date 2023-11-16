@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/14 13:20:53 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 15:54:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 	if (str[i + 1] == '?')
 		length = 1;
 	key = ft_substr(str, i + 1, length);
-	expanded = ft_get_cpy_env(subcommand, key);
+	expanded = ft_env_get(subcommand->envp, key);
 	free(key);
 	if (expanded)
 		return (expanded);

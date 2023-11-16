@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/15 18:04:05 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/14 15:54:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char	*ft_find_path(t_subcommand *subcommand, char *cmd)
 
 	if (access(cmd, F_OK) == 0)
 		return (ft_substr(cmd, 0, ft_strlen(cmd)));
-	paths = ft_get_paths(subcommand);
+	paths = ft_env_get_paths(subcommand->envp);
 	if (!paths)
 		return (cmd);
 	i = -1;

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
 /*   Updated: 2023/11/15 18:07:30 by juliencros       ###   ########.fr       */
@@ -36,13 +36,13 @@ int	ft_cd(t_subcommand *subcommand)
 
 	if (!subcommand->args[1])
 	{
-		path = ft_get_cpy_env(subcommand, "HOME");
+		path = ft_env_get(subcommand->envp, "HOME");
 		if (!path)
 		{
-			path = ft_strjoin("/Users/", ft_get_cpy_env(subcommand, "USER"));
+			path = ft_strjoin("/Users/", ft_env_get(subcommand->envp, "USER"));
 			return (chdir(path), free(path), 0);
 		}
-		else 
+		else
 			return (chdir(path), 0);
 	}
 	else if (subcommand->args[2])
@@ -50,7 +50,7 @@ int	ft_cd(t_subcommand *subcommand)
 	if (ft_strncmp(subcommand->args[1], "-",
 			ft_strlen(subcommand->args[1])) == 0)
 	{
-		path = ft_get_cpy_env(subcommand, "OLDPWD");
+		path = ft_env_get(subcommand->envp, "OLDPWD");
 		if (!path)
 			return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
 	}
@@ -67,9 +67,9 @@ int	ft_cd(t_subcommand *subcommand)
 	}
 	else
 	{
-		ft_add_cpy_env_var("OLDPWD",
-			ft_get_cpy_env(subcommand, "PWD"), &subcommand->envp);
-		ft_add_cpy_env_var("PWD", getcwd(NULL, 100), &subcommand->envp);
+		ft_env_set(&subcommand->envp, "OLDPWD",
+			ft_env_get(subcommand->envp, "PWD"));
+		ft_env_set(&subcommand->envp, "PWD", getcwd(NULL, 100));
 	}
 	return (0);
 }
@@ -93,16 +93,17 @@ void	ft_pwd(t_subcommand *subcommand)
  * @param is_export 
  * @return int 
  */
-int	ft_env(char ***envp, int is_export)
+int	ft_env(char **env, int is_export)
 {
 	int	i;
 
+	printf("env\n");
 	i = 0;
-	while ((*envp)[i])
+	while (env[i])
 	{
 		if (is_export)
 			ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd((*envp)[i], 1);
+		ft_putstr_fd(env[i], 1);
 		ft_putstr_fd("\n", 1);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/15 17:58:31 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/15 21:43:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,82 +14,93 @@
 #include "str.h"
 #include "split.h"
 #include "free.h"
+#include "mem.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-char	**ft_add_cpy_env_var(char *key, char *value, char ***envp)
+static char	**ft_env_set_at_index(char *key, char *value, char ***env, int i);
+static char	*ft_env_format(char *key, char *value);
+
+char	**ft_env_set(char ***env, char *key, char *value)
 {
 	int		i;
-	char	**head;
-	char	*full_str;
+	char	*str_fmt;
 
 	i = -1;
-	head = *envp;
-	while (head[++i])
+	while ((*env)[++i])
 	{
-		if (ft_strncmp(head[i], key, ft_strlen(key)) == 0)
+		// TODO Make sure the token `+ 1` is a `=`
+		if (ft_strncmp((*env)[i], key, ft_strlen(key)) == 0)
 		{
 			if (value)
 			{
-				free(head[i]);
-				full_str = ft_strjoin(key, value);
-				head[i] = ft_strdup(full_str);
-				free(full_str);
+				str_fmt = ft_env_format(key, value);
+				if (!str_fmt)
+					return (*env);
+				free((*env)[i]);
+				(*env)[i] = ft_strdup(str_fmt);
+				free(str_fmt);
 			}
-			return (*envp);
+			return (*env);
 		}
 	}
-	return (ft_create_cpy_var(key, value, envp, i));
+	return (ft_env_set_at_index(key, value, env, i));
 }
 
-char	**ft_create_cpy_var(char *key, char *value, char ***envp, int i)
+static char	*ft_env_format(char *key, char *value)
+{
+	char	*tmp;
+	char	*str_fmt;
+
+	if (!value)
+	{
+		value = ft_calloc(3, sizeof(char));
+		if (!value)
+			return (NULL);
+		value[0] = '"';
+		value[1] = '"';
+		value[2] = '\0';
+	}
+	tmp = ft_strjoin(key, "=");
+	if (!tmp)
+		return (NULL);
+	str_fmt = ft_strjoin(tmp, value);
+	free(tmp);
+	if (!str_fmt)
+		return (NULL);
+	return (str_fmt);
+}
+
+static char	**ft_env_set_at_index(char *key, char *value, char ***env, int i)
 {
 	char	*full_str;
-	char	**head;
-	char	**new_cpy_envp;
+	char	**new_env;
 
-	head = *envp;
-	new_cpy_envp = malloc(sizeof(char *) * (i + 2));
-	if (!new_cpy_envp)
-		return (*envp);
+	new_env = ft_calloc(i + 2, sizeof(char *));
+	if (!new_env)
+		return (*env);
 	i = -1;
-	while (head[++i])
-		new_cpy_envp[i] = ft_strdup(head[i]);
-	if (value)
+	while ((env)[++i])
 	{
-		full_str = ft_strjoin(key, value);
-		new_cpy_envp[i++] = ft_strdup(full_str);
-	}
-	else
-	{
-		full_str = ft_strjoin(key, "\"\"");
-		new_cpy_envp[i++] = ft_strdup(full_str);
-	}
-	free(full_str);
-	new_cpy_envp[i] = NULL;
-	*envp = new_cpy_envp;
-	return (new_cpy_envp);
-}
-
-void	ft_change_exit_status(char ***envp)
-{
-	char	*str;
-	char	**head;
-	int		i;
-
-	i = 0;
-	str = ft_itoa(g_signal);
-	head = *envp;
-	while (head[i])
-	{
-		if (ft_strncmp(head[i], "?=", 2) == 0)
+		new_env[i] = ft_strdup((const char *)(env)[i]);
+		if (!new_env[i])
 		{
-			free(head[i]);
-			head[i] = ft_strjoin("?=", str);
-			return ;
+			ft_free_array(new_env, i);
+			return (*env);
 		}
-		i++;
 	}
-	ft_create_cpy_var("?", str, envp, i);
-	free(str);
+	if (value)
+		full_str = ft_strjoin(key, value);
+	else
+		full_str = ft_strjoin(key, "\"\"");
+	if (!full_str)
+		return (ft_free_array(new_env, i), *env);
+	new_env[i] = ft_strdup(full_str);
+	free(full_str);
+	if (!new_env[i])
+		return (ft_free_array(new_env, i - 1), *env);
+	new_env[i + 1] = NULL;
+	*env = new_env;
+	ft_free_array(*env, i);
+	return (new_env);
 }
