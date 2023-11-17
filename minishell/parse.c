@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/17 09:45:16 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/17 14:54:52 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <fcntl.h>
 
 static char	**ft_fill_args(t_token **token, t_subcommand *subcommand);
-static int	ft_arg_count(t_token *token, char *path);
+static int	ft_arg_count(t_token *token);
 
 bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 {
@@ -73,17 +73,19 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 	t_token	*head;
 
 	head = *token;
-	if (ft_arg_count(head, subcommand->path) < 1 || !head)
+	if (ft_arg_count(head) < 1 || !head)
 		return (NULL);
-	args = ft_calloc(ft_arg_count(head, subcommand->path) + 1, sizeof(char *));
+	args = ft_calloc(ft_arg_count(head) + 1, sizeof(char *));
 	if (!args)
 		return (NULL);
 	i = 0;
 	while (ft_is_io_symbol(head))
 		head = head->next->next;
 	while (head != NULL && head->type != TOKEN_PIPE
-		&& head->type && !ft_is_io_symbol(head))
+		&& head->type)
 	{
+		while (head &&  ft_is_io_symbol(head))
+			head = head->next->next;
 		if (!head || head->type == TOKEN_PIPE)
 			break ;
 		args[i++] = ft_substr(head->value, 0, head->length);
@@ -92,7 +94,7 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 	return (args[i] = NULL, args);
 }
 
-static int	ft_arg_count(t_token *token, char *path)
+static int	ft_arg_count(t_token *token)
 {
 	int	i;
 
