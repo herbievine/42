@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/14 12:57:43 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/17 09:56:20 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,25 @@ bool	ft_if_builtin(char *cmd)
 	return (false);
 }
 
-bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
+int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 			char *cmd, char ***env)
 {
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
 	if (ft_strschr(cmd, "echo") == 0)
-		g_signal = ft_echo(token->next, subcommand);
+		return (ft_echo(token->next, subcommand));
 	else if (ft_strschr(cmd, "cd") == 0)
-		g_signal = ft_cd(subcommand);
+		return (ft_cd(subcommand));
 	else if (ft_strschr(cmd, "pwd") == 0)
-		ft_pwd(subcommand);
+		return (ft_pwd(subcommand));
 	else if (ft_strschr(cmd, "export") == 0)
-		g_signal = ft_export(subcommand, env, token->next);
+		return (ft_export(subcommand, env, token->next));
 	else if (ft_strschr(cmd, "unset") == 0)
-		g_signal = ft_unset(subcommand, env);
+		return (ft_unset(subcommand, env));
 	else if (ft_strschr(cmd, "env") == 0)
-		ft_env(*env, 0);
+		return (ft_env(*env, 0));
 	else if (ft_strschr(cmd, "exit") == 0)
-		g_signal = ft_exit(subcommand, env, token);
+		return (ft_exit(subcommand, env, token));
 	subcommand->out_fd = -1;
 	return (true);
 }

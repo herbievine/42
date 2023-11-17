@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/16 15:02:17 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/17 09:46:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_build_command(char *buffer, char ***env)
 		if (ft_parse(command.tokens, command.subcommands, env))
 		{
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				return_value =  ft_execute(command.subcommands, &command.tokens);
+				return_value =  ft_execute(command.subcommands, &command.tokens, env);
 			if (return_value != -1)
 				g_signal = return_value;
 		}

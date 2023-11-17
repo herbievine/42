@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:57:39 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/16 15:00:28 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/17 09:57:09 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,14 @@ int	ft_cd(t_subcommand *subcommand)
 	else
 	{
 		subcommand->envp = ft_env_set(subcommand->envp, "OLDPWD",
-			ft_env_get(subcommand->envp, "PWD"));
-		subcommand->envp = ft_env_set(subcommand->envp, "PWD", getcwd(NULL, 100));
+				ft_env_get(subcommand->envp, "PWD"));
+		subcommand->envp = ft_env_set(subcommand->envp,
+				"PWD", getcwd(NULL, 100));
 	}
 	return (0);
 }
 
-void	ft_pwd(t_subcommand *subcommand)
+int	ft_pwd(t_subcommand *subcommand)
 {
 	char	*path;
 
@@ -82,7 +83,7 @@ void	ft_pwd(t_subcommand *subcommand)
 	ft_putstr_fd(path, subcommand->out_fd);
 	ft_putstr_fd("\n", subcommand->out_fd);
 	free(path);
-	return ;
+	return (0);
 }
 
 /**

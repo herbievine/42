@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/04 13:40:49 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/17 09:54:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_builtin
 
 bool	ft_builtin(t_subcommand *s_command, t_token *token, char ***envp);
 bool	ft_if_builtin(char *cmd);
-bool	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
+int		ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 			char *cmd, char ***envp);
 
 #endif
