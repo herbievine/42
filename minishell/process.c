@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/14 15:54:22 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/17 09:55:37 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "token.h"
 #include "error.h"
 #include "exit.h"
+#include "builtin.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <strings.h>
@@ -29,7 +30,7 @@
 #define READ 0
 #define WRITE 1
 
-int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens)
+int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp)
 {
 	pid_t	pid;
 	int		return_status;
@@ -41,6 +42,9 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens)
 	if (pid == PID_CHILD)
 	{
 		close(fd[READ]);
+		if (ft_if_builtin(subcommand->path))
+			return_status = ft_builtin_valid(*tokens, subcommand,
+					subcommand->path, envp);
 		if (!subcommand->is_executable || !subcommand->path)
 			exit(0);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
@@ -60,11 +64,14 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens)
 	return (return_status);
 }
 
-int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
+int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 {
 	pid_t	pid;
 	int		return_status;
 
+	if (ft_if_builtin(subcommand->path))
+		return (return_status = ft_builtin_valid(*tokens, subcommand,
+				subcommand->path, envp));
 	pid = fork();
 	return_status = 0;
 	if (pid == PID_ERROR)
@@ -88,7 +95,8 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 	return (return_status);
 }
 
-int	ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
+int	ft_multiple_commands(t_subcommand *subcommand,
+	t_token **tokens, char ***envp)
 {
 	int				i;
 	t_subcommand	*head;
@@ -99,7 +107,7 @@ int	ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
 	head = subcommand;
 	while (head != NULL)
 	{
-		return_status = ft_spawn_child(head, tokens);
+		return_status = ft_spawn_child(head, tokens, envp);
 		head = head->next;
 		i++;
 	}
@@ -109,9 +117,9 @@ int	ft_multiple_commands(t_subcommand *subcommand, t_token **tokens)
 	return (return_status);
 }
 
-int	ft_execute(t_subcommand *subcommand, t_token **tokens)
+int	ft_execute(t_subcommand *subcommand, t_token **tokens, char ***envp)
 {
 	if (!subcommand->next)
-		return (ft_single_command(subcommand, tokens));
-	return (ft_multiple_commands(subcommand, tokens));
+		return (ft_single_command(subcommand, tokens, envp));
+	return (ft_multiple_commands(subcommand, tokens, envp));
 }

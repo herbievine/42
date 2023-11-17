@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:57:47 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/16 15:01:37 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/17 09:13:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int ft_export(t_subcommand *subcommand, char ***env, t_token *token)
 	i = 1;
 	if (!subcommand->args[1])
 		return (ft_env(*env, 1), 0);
-	while (subcommand->args[i])
+	while (subcommand->args[i] && !subcommand->next)
 	{
 		if (!ft_check_is_valid_identifier(subcommand->args[i], token->type))
 			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
