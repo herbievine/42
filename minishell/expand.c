@@ -89,7 +89,6 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 		i = 0;
 		limiter = '\0';
 		str = ft_substr(token->value, 0, token->length);
-		// printf("str = %s\n", str);
 		while (str[i])
 		{
 			limiter = ft_type_token(str[i], limiter);
@@ -102,8 +101,6 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 				while (str[i] && str[i] != '?' && ft_is_valid_symbol(str[i])
 					&& str[i + 1] != '\'' && str[i + 1] != '"' && !ft_isspace(str[i + 1]))
 					++i;
-					printf("expanded = %s\n", expanded);
-					printf("i = %d\n", i);
 				if (!str[i])
 				{
 					token->length = ft_strlen(expanded);
@@ -115,7 +112,6 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 				free(str);
 				str = ft_strjoin(expanded, ft_substr(token->value, i + 1,
 							token->length - i - 1));
-				printf("str = %s\n", str);
 				token->length = ft_strlen(str);
 				token->value = ft_strdup(str);
 			}
