@@ -91,9 +91,9 @@ void	ft_build_command(char *buffer, char ***env)
 	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
-	int 		return_value;
+	int 		retval;
 
-	return_value = -1;
+	retval = -1;
 	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
@@ -116,13 +116,14 @@ void	ft_build_command(char *buffer, char ***env)
 	{
 		ft_expand_token(command.subcommands, command.tokens);
 		ft_suppress_quotes(command.subcommands, command.tokens);
+		ft_clean_tokens(&command.tokens);
 		// ft_print_tokens(command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, env))
 		{
 			if (ft_check_subcommands(command.subcommands, command.tokens))
-				return_value =  ft_execute(command.subcommands, &command.tokens, env);
-			if (return_value != -1)
-				g_signal = return_value;
+				retval = ft_execute(command.subcommands, &command.tokens, env);
+			if (retval != -1)
+				g_signal = retval;
 		}
 	}
 	ft_free_subcommands(command.subcommands);

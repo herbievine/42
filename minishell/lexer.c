@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/13 16:38:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/18 16:43:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,42 @@
 // Tokens are defined in `lexer_utils.c`
 // consisting of <<, >>, <, > or |
 #define TOKEN_COUNT 5
+
+/**
+ * @brief The ft_clean_tokens function is used after the expander to remove
+ * tokens which have a length of 0, as a result of the expander not being able
+ * to expand the token.
+ *
+ * @param token
+ */
+void	ft_clean_tokens(t_token **token)
+{
+	t_token	*head;
+	t_token	*prev;
+
+	head = *token;
+	prev = NULL;
+	while (head)
+	{
+		if (head->length == 0)
+		{
+			if (prev)
+				prev->next = head->next;
+			else
+				*token = head->next;
+			(free((void *)head->value), free(head));
+			if (prev)
+				head = prev->next;
+			else
+				head = *token;
+		}
+		else
+		{
+			prev = head;
+			head = head->next;
+		}
+	}
+}
 
 static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 {
