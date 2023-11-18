@@ -47,17 +47,17 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 char	ft_type_token(char c, char type)
 {
 	if (c == '\'' && type != '\'' && type != '"')
-		return (type = '\'');
+		return ('\'');
 	else if (c == '"' && type != '"' && type != '\'')
-		return (type = '"');
+		return ('"');
 	else if (c == '\'' && type == '\'')
-		return (type = 2);
+		return (2);
 	else if (c == '"' && type == '"')
-		return (type = 2);
+		return (2);
 	return (type);
 }
 
-void	ft_is_exit_status(t_subcommand *subcommand, t_token *tokens,  char *str, int i)
+void	ft_is_exit_status(t_subcommand *subcommand, t_token *token,  char *str, int i)
 {
 	char	*expanded;
 	char	*tmp;
@@ -72,44 +72,56 @@ void	ft_is_exit_status(t_subcommand *subcommand, t_token *tokens,  char *str, in
 	free(tmp2);
 	free(str);
 	str = ft_strdup(expanded);
-	tokens->length = ft_strlen(str);
-	tokens->value = ft_strdup(str);
+	token->length = ft_strlen(str);
+	token->value = ft_strdup(str);
 	free(expanded);
 }
 
-void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
+void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 {
 	char	limiter;
 	char	*expanded;
 	char	*str;
 	int		i;
 
-	while (tokens)
+	while (token)
 	{
 		i = 0;
-		limiter = 0;
-		str = ft_substr(tokens->value, 0, tokens->length);
+		limiter = '\0';
+		str = ft_substr(token->value, 0, token->length);
+		// printf("str = %s\n", str);
 		while (str[i])
 		{
 			limiter = ft_type_token(str[i], limiter);
 			if (str[i] == '$' && str[i + 1] == '?' && limiter != '\'')
-				ft_is_exit_status(subcommand, tokens,  str, i);
+				ft_is_exit_status(subcommand, token, str, i);
 			if (str[i] == '$' && limiter != '\'')
 			{
 				expanded = ft_strjoin(ft_substr(str, 0, i),
 						ft_expand_dollar(subcommand, str));
 				while (str[i] && str[i] != '?' && ft_is_valid_symbol(str[i])
-					&& str[i + 1] != '\'' && str[i + 1] != '"' && !ft_isspace(str[i+1]))
+					&& str[i + 1] != '\'' && str[i + 1] != '"' && !ft_isspace(str[i + 1]))
 					++i;
+					printf("expanded = %s\n", expanded);
+					printf("i = %d\n", i);
+				if (!str[i])
+				{
+					token->length = ft_strlen(expanded);
+					token->value = ft_strdup(expanded);
+					free(str);
+					str = ft_strdup(expanded);
+					break ;
+				}
 				free(str);
-				str = ft_strjoin(expanded, ft_substr(tokens->value, i + 1,
-							ft_strlen(tokens->value) - i - 1));
-				tokens->length = ft_strlen(str);
-				tokens->value = ft_strdup(str);
+				str = ft_strjoin(expanded, ft_substr(token->value, i + 1,
+							token->length - i - 1));
+				printf("str = %s\n", str);
+				token->length = ft_strlen(str);
+				token->value = ft_strdup(str);
 			}
 			i++;
 		}
-		tokens = tokens->next;
+		token = token->next;
 		free(str);
 	}
 }
