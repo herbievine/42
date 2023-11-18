@@ -25,5 +25,6 @@ int		ft_strschr(char *s1, char *s2);
 int		ft_atoi(const char *str);
 int		ft_position(char *str, char limitter);
 char	*ft_itoa(int n);
+char	*str_c(char **strs, char *sep);
 
 #endif /* STR_H */
