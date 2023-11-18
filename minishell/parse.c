@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/17 16:31:57 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/18 12:13:37 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 	{
 		subcommand->builtin = 1;
 		subcommand->path = ft_strdup(path);
-		subcommand->is_executable = false;
+		// subcommand->is_executable = false;
 	}
 	free(path);
 	if (!ft_set_in_fd(subcommand, tokens)

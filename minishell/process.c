@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/17 14:51:52 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/18 12:26:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp)
 	if (pid == PID_CHILD)
 	{
 		close(fd[READ]);
-		if (ft_if_builtin(subcommand->path))
+		if (ft_if_builtin(subcommand->path) && subcommand->is_executable)
 			return_status = ft_builtin_valid(*tokens, subcommand,
 					subcommand->path, envp);
-		if (!subcommand->is_executable || !subcommand->path)
+		if (!subcommand->is_executable || !subcommand->path || subcommand->builtin)
 			exit(0);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
@@ -69,7 +69,7 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 	pid_t	pid;
 	int		return_status;
 
-	if (ft_if_builtin(subcommand->path))
+	if (ft_if_builtin(subcommand->path) && subcommand->is_executable)
 		return (return_status = ft_builtin_valid(*tokens, subcommand,
 				subcommand->path, envp));
 	pid = fork();
@@ -78,7 +78,7 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 		return (false);
 	if (pid == PID_CHILD)
 	{
-		if (!subcommand->is_executable || !subcommand->path)
+		if (!subcommand->is_executable || !subcommand->path || subcommand->builtin)
 			exit(0);
 		ft_redirect(subcommand);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
