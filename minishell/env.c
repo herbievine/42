@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/14 14:01:44 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/18 11:49:43 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**ft_env_init(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	copy = ft_calloc(i + 2, sizeof(char *));
+	copy = ft_calloc(i + 1, sizeof(char *));
 	if (!copy)
 		return (NULL);
 	i = -1;
@@ -46,8 +46,7 @@ char	**ft_env_init(char **envp)
 			return (NULL);
 		}
 	}
-	copy[i] = ft_strdup("?=0");
-	copy[i + 1] = NULL;
+	copy[i] = NULL;
 	return (copy);
 }
 

@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/16 17:45:52 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/18 11:56:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,26 @@ char	ft_type_token(char c, char type)
 	return (type);
 }
 
+void	ft_is_exit_status(t_subcommand *subcommand, t_token *tokens,  char *str, int i)
+{
+	char	*expanded;
+	char	*tmp;
+	char	*tmp2;
+
+	expanded = ft_itoa(g_signal);
+	tmp = ft_substr(str, 0, i);
+	tmp2 = ft_strjoin(tmp, expanded);
+	free(tmp);
+	free(expanded);
+	expanded = ft_strjoin(tmp2, ft_substr(str, i + 2, ft_strlen(str) - i - 2));
+	free(tmp2);
+	free(str);
+	str = ft_strdup(expanded);
+	tokens->length = ft_strlen(str);
+	tokens->value = ft_strdup(str);
+	free(expanded);
+}
+
 void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 {
 	char	limiter;
@@ -72,6 +92,8 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *tokens)
 		while (str[i])
 		{
 			limiter = ft_type_token(str[i], limiter);
+			if (str[i] == '$' && str[i + 1] == '?' && limiter != '\'')
+				ft_is_exit_status(subcommand, tokens,  str, i);
 			if (str[i] == '$' && limiter != '\'')
 			{
 				expanded = ft_strjoin(ft_substr(str, 0, i),
