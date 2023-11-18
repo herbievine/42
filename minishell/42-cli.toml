@@ -2,8 +2,13 @@ name = "minishell"
 
 [scripts]
 run = [
-	{ cmd = "valgrind --leak-check=full --show-reachable=yes --error-limit=no --suppressions=./valgrind-readline.supp --gen-suppressions=all --log-file=minishell.log ./minishell" }
+	{ cmd = "valgrind --leak-check=full --show-reachable=yes --error-limit=no --suppressions=./valgrind-readline.supp --gen-suppressions=all --log-file=minishell.log ./minishell" },
+]
+test = [
+	{ cmd = "rm -rf tester" },
+	{ cmd = "git clone https://github.com/LucasKuhn/minishell_tester.git tester" },
+	{ cmd = "bash tester", dir = "tester" },
 ]
 build = { cmd = "make" }
-clean = { cmd = "make fclean" }
+clean = { cmd = "make fclean; rm -rf tester" }
 lint = { cmd = "norminette ." }
