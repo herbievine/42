@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/17 15:43:04 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/17 16:06:16 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void ft_print_error(char *error)
 	ft_putstr_fd(M, STDERR_FILENO);
 	ft_putstr_fd(error, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
+	g_signal = 1;
 }
 
 void	ft_close_in_files(t_subcommand *subcommand)
