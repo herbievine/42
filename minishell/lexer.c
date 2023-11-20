@@ -37,10 +37,7 @@ void	ft_clean_tokens(t_token **token)
 	head = *token;
 	prev = NULL;
 	if (!head->next && head->length == 0)
-	{
-		(free((void *)head->value), free(head));
-		return ;
-	}
+		return (free((void *)head->value), free(head));
 	while (head)
 	{
 		if (head->length == 0)
@@ -84,7 +81,7 @@ static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
 	return (false);
 }
 
-static bool	ft_handle_quotes(t_lexer *lexer, t_token *token)
+static bool	ft_handle_symbols(t_lexer *lexer, t_token *token)
 {
 	t_quote_state	state;
 
@@ -103,7 +100,7 @@ static bool	ft_handle_quotes(t_lexer *lexer, t_token *token)
 			token->value = lexer->raw + (lexer->cursor - token->length);
 			return (token->length += 1, lexer->cursor += 1, true);
 		}
-		if (state == STATE_DEFAULT
+		if (state == STATE_DEFAULT && lexer->raw[lexer->cursor] != '\0'
 			&& !ft_is_valid_symbol(lexer->raw[lexer->cursor + 1]))
 		{
 			token->value = lexer->raw + (lexer->cursor - token->length);
@@ -134,13 +131,10 @@ t_token	ft_lexer_next(t_lexer *lexer)
 	token.length = 0;
 	token.next = NULL;
 	if (lexer->cursor >= lexer->length)
-	{
-		token.type = TOKEN_EOF;
-		return (token);
-	}
-	if (ft_handle_quotes(lexer, &token))
-		return (token);
+		return (token.type = TOKEN_EOF, token);
 	if (ft_handle_tokens(lexer, &token))
+		return (token);
+	if (ft_handle_symbols(lexer, &token))
 		return (token);
 	lexer->cursor++;
 	token.type = TOKEN_INVALID;

@@ -41,10 +41,7 @@ char	**ft_env_init(char **envp)
 	{
 		copy[i] = ft_strdup(envp[i]);
 		if (!copy[i])
-		{
-			ft_free_array(copy, i);
-			return (NULL);
-		}
+			return (ft_free_array(copy, i), NULL);
 	}
 	copy[i] = NULL;
 	return (copy);
