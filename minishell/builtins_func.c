@@ -46,7 +46,7 @@ int	ft_cd(t_subcommand *subcommand)
 			return (chdir(path), 0);
 	}
 	else if (subcommand->args[2])
-		return (0);
+		return (ft_putstr_fd("cd: too many arguments\n", 2), 1);
 	if (ft_strncmp(subcommand->args[1], "-",
 			ft_strlen(subcommand->args[1])) == 0)
 	{
@@ -124,7 +124,9 @@ int	ft_check_digit(char *str)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(str, 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			return (255);
+			if (__MACH__)
+				return (255);
+			return (2);
 		}
 		i++;
 	}
