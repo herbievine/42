@@ -14,6 +14,7 @@
 #include "print.h"
 #include "str.h"
 #include "structs.h"
+#include "display.h"
 #include <unistd.h>
 #include <stdio.h>
 
@@ -28,9 +29,16 @@ void	old_ft_error(char *message)
 	ft_dprintf(STDERR_FILENO, "%s\n", message);
 }
 
-void	ft_error(char *message)
+void	ft_error(char *error)
 {
-	printf("minishell: %s\n", message);
+	ft_putstr_fd(M, STDERR_FILENO);
+	ft_putstr_fd(error, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+}
+
+void	ft_perror(char *message)
+{
+	perror(message);
 }
 
 void	ft_invalid_token(t_lexer lexer, t_token token)

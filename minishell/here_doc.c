@@ -44,7 +44,10 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 			path = (char *)token->next->value;
 			path[token->next->length] = '\0';
 			token->next->type = TOKEN_EOF;
-			ft_close_in_files(subcommand);
+			if (subcommand->in_fd > 0)
+				close(subcommand->in_fd);
+			if (subcommand->is_heredoc)
+				unlink(".here_doc_fd");
 			if (!ft_here_doc(subcommand, path))
 				return (false);
 		}

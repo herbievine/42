@@ -27,5 +27,7 @@
 // @deprecated
 void	old_ft_error(char *msg);
 void	ft_invalid_token(t_lexer lexer, t_token token);
+void	ft_error(char *error);
+void	ft_perror(char *message);
 
 #endif /* ERROR_H */
