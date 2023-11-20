@@ -40,10 +40,11 @@ int	g_signal;
 
 #define SUBCOMMAND_FMT \
 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
-	builtin=%d, mode=%d, is_heredoc=%d)\n"
+	builtin=%d, mode=%d, is_heredoc=%d, is_executable=%d)\n"
 #define SUBCOMMAND_ARG(subcommand)                      \
 	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
-			subcommand.builtin, subcommand.mode, subcommand.is_heredoc
+			subcommand.builtin, subcommand.mode, subcommand.is_heredoc, \
+			subcommand.is_executable
 
 void	ft_print_tokens(t_token *tokens)
 {
@@ -120,6 +121,7 @@ void	ft_build_command(char *buffer, char ***env)
 		// ft_print_tokens(command.tokens);
 		if (ft_parse(command.tokens, command.subcommands, env))
 		{
+			// ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
 				retval = ft_execute(command.subcommands, &command.tokens, env);
 			if (retval != -1)
