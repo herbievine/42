@@ -38,7 +38,6 @@ void	ft_print_error(char *status, char *path)
 
 int	ft_define_exit_status(char *str_status, char *path, char *args)
 {
-	dprintf(2, "str_status: %s\n", str_status);
 	if (ft_strncmp(str_status, EINVAL, ft_strlen(str_status)) == 0)
 		return (ft_print_error(str_status, path), 1);
 	else if (ft_strncmp(str_status, EISDIR, ft_strlen(str_status)) == 0)
