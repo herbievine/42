@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/20 11:04:39 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 11:15:17 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ bool	ft_set_out_fd(t_subcommand *subcommand,
 	char	*path;
 	int		fd;
 
-	while (token)
+	while (token && token->type != TOKEN_PIPE)
 	{
 		if (token->type == TOKEN_GT || token->type == TOKEN_GT_GT)
 		{

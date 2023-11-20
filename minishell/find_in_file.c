@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/18 14:42:08 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 11:19:10 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	ft_set_in_fd(t_subcommand *subcommand, t_token *token)
 	int		fd;
 	char	*path;
 
-	while (token)
+	while (token && token->type != TOKEN_PIPE)
 	{
 		if (token->type == TOKEN_LT)
 		{
