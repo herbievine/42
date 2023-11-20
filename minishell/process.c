@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/18 12:26:26 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 11:35:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ int	ft_multiple_commands(t_subcommand *subcommand,
 	}
 	while (i--)
 		waitpid(-1, &return_status, 0);
+	while (subcommand->next != NULL)
+		subcommand = subcommand->next;
+	if (!subcommand->is_executable)
+		return (-1);
 	return_status = WEXITSTATUS(return_status);
 	return (return_status);
 }
