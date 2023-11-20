@@ -20,12 +20,12 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// static void	ft_handle_ctrl_c(int signal);
+static void	ft_handle_ctrl_c(int signal);
 static void	ft_handle_ctrl_slash(int signal);
 
-// signal(SIGINT, &ft_handle_ctrl_c);
 void	ft_signals_register(void)
 {
+	signal(SIGINT, &ft_handle_ctrl_c);
 	signal(SIGQUIT, &ft_handle_ctrl_slash);
 }
 
