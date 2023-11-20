@@ -39,7 +39,7 @@ static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
 		close((*subcommand)->out_fd);
 	if ((*subcommand)->is_heredoc)
 		unlink(".here_doc_fd");
-	fd = open(path, O_RDONLY);
+	fd = open(path, O_RDONLY, 0644);
 	if (fd == -1)
 	{
 		ft_perror("minishell: ");

@@ -16,7 +16,11 @@
 # include <stdbool.h>
 # include <sys/types.h>
 
-extern int	g_signal;
+# ifndef __MACH__
+#  define __MACH__ 0
+# endif /* __MACH__ */
+
+int	g_signal;
 
 typedef enum e_token_types
 {
