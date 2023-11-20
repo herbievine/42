@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_c.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 17:05:39 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/18 17:05:39 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/20 16:22:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*str_c(char **strs, char *sep)
 		len += ft_strlen(strs[i]);
 	len += ft_strlen(sep) * (i - 1);
 	str = ft_calloc(len + 1, sizeof(char));
+	if (!str)
+		return (NULL);
 	len = 0;
 	i = -1;
 	while (strs[++i])
