@@ -16,8 +16,6 @@
 # include "structs.h"
 # include <stdbool.h>
 
-bool	ft_set_out_file(t_token *token, t_subcommand *subcommand);
-bool	ft_set_out_fd(t_subcommand *subcommand,
-			t_token	*token);
+bool	ft_find_outfile(t_subcommand *subcommand, t_token *token);
 
 #endif

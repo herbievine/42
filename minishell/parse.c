@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/18 12:13:37 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 14:49:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 	{
 		subcommand->builtin = 1;
 		subcommand->path = ft_strdup(path);
-		// subcommand->is_executable = false;
 	}
 	free(path);
-	if (!ft_set_in_fd(subcommand, tokens)
-		|| !ft_set_out_file(tokens, subcommand)
+	if (!ft_set_infile(subcommand, tokens)
+		|| !ft_find_outfile(subcommand, tokens)
 		|| !ft_set_path(subcommand, tokens))
 		subcommand->is_executable = false;
 	subcommand->args = ft_fill_args(&tokens, subcommand);

@@ -14,6 +14,7 @@
 #include "structs.h"
 #include "mem.h"
 #include "error.h"
+#include "free.h"
 #include "token.h"
 #include "here_doc.h"
 #include "find_out_file.h"

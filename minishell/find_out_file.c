@@ -18,30 +18,17 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-bool	ft_check_if_others_pipe(t_token *token);
-
-bool	ft_set_out_file(t_token *token, t_subcommand *subcommand)
-{
-	if (!token || token->type == TOKEN_PIPE
-		|| ft_check_if_others_pipe(token))
-		return (true);
-	return (ft_set_out_fd(subcommand, token));
-}
-
-bool	ft_check_if_others_pipe(t_token *token)
-{
-	while (token->next != NULL)
-	{
-		if (token->type == TOKEN_PIPE
-			|| token->type == TOKEN_GT
-			|| token->type == TOKEN_GT_GT)
-			return (false);
-		token = token->next;
-	}
-	return (true);
-}
-
-int	ft_handle_open(t_subcommand **subcommand, t_token *token)
+/**
+ * @brief The ft_handle_open function takes in a pointer to a subcommand and a
+ * pointer to a token. It opens the file specified by the token and throws the
+ * appropriate error message if the file is invalid. It returns the file
+ * descriptor of the file.
+ * 
+ * @param subcommand 
+ * @param token 
+ * @return int 
+ */
+static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
 {
 	char	*path;
 	int		fd;
@@ -65,10 +52,21 @@ int	ft_handle_open(t_subcommand **subcommand, t_token *token)
 	return (fd);
 }
 
-bool	ft_set_out_fd(t_subcommand *subcommand, t_token *token)
+/**
+ * @brief The ft_find_outfile function takes in a pointer to a subcommand and a
+ * pointer to a token. It iterates through the tokens until it reaches a pipe
+ * token. If it finds a redirection token, it calls the ft_handle_open
+ * function. If the file is invalid, it returns false. Otherwise, it sets the
+ * out_fd of the subcommand to the file descriptor of the file.
+ * 
+ * @param subcommand 
+ * @param token 
+ * @return true 
+ * @return false 
+ */
+bool	ft_find_outfile(t_subcommand *subcommand, t_token *token)
 {
-	char	*path;
-	int		fd;
+	int	fd;
 
 	while (token && token->type != TOKEN_PIPE)
 	{
