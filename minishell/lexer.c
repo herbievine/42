@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/18 16:43:57 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/20 14:40:33 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	ft_clean_tokens(t_token **token)
 
 	head = *token;
 	prev = NULL;
+	if (!head->next && head->length == 0)
+	{
+		(free((void *)head->value), free(head));
+		return ;
+	}
 	while (head)
 	{
 		if (head->length == 0)

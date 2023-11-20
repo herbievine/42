@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:56:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/04 13:46:33 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 14:33:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ft_free_tab(char **tab);
 
 void	ft_free_subcommands(t_subcommand *subcommand)
 {
+	if (!subcommand)
+		return ;
 	while (subcommand != NULL)
 	{
 		if (subcommand->is_heredoc && close(subcommand->in_fd))

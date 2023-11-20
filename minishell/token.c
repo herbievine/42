@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:00:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/06 09:18:51 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 14:36:47 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ bool	ft_clear_tokens(t_token **tokens)
 {
 	t_token	*next;
 
+	if (!tokens || !*tokens || (*tokens)->length == 0)
+		return (false);
 	while (*tokens)
 	{
 		next = (*tokens)->next;
