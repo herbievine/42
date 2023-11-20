@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/18 14:41:45 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 11:04:39 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ bool	ft_set_out_fd(t_subcommand *subcommand,
 	{
 		if (token->type == TOKEN_GT || token->type == TOKEN_GT_GT)
 		{
-			if (!token->next || token->next->type != TOKEN_SYMBOL)
+			if (!token->next || (token->next->type != TOKEN_SYMBOL
+			&& token->next->type != TOKEN_DQ && token->next->type != TOKEN_SQ))
 				return (ft_error_out_file(subcommand, token, ESYN), false);
 			path = ft_substr(token->next->value, 0, token->next->length);
 			if (subcommand->out_fd > 0)

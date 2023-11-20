@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:04:33 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/16 16:49:16 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 11:07:17 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,14 @@ void	ft_suppress_quotes(t_subcommand *subcommands, t_token *tokens)
 			if (str[i] == '"' || str[i] == '\'')
 			{
 				splited_str = ft_split(str, limitter);
-				if (splited_str[1] && splited_str[2])
-					tokens->value = ft_fmt_path(splited_str[0],
-										splited_str[1], splited_str[2]);
-				else if (splited_str[1])
-					tokens->value = ft_strjoin(splited_str[0], splited_str[1]);
-				else if (splited_str[0])
-					tokens->value = ft_strdup(splited_str[0]);
-				else
-					tokens->value = ft_strdup("");
+				free(str);
+				str = str_c(splited_str, "");
+				ft_free_array(splited_str, -1);
+				tokens->value = ft_strdup(str);
+				free(str);
 				tokens->length = ft_strlen(tokens->value);
 				ft_change_token_type(tokens, limitter);
-				ft_free_array(splited_str, -1);
+				break ;
 			}
 		}
 		tokens = tokens->next;
