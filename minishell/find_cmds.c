@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/20 21:38:08 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/21 09:25:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+
+static char	*ft_find_path(t_subcommand *subcommand, char *cmd);
 
 /**
  * @brief The ft_set_path function sets the path of the command.
@@ -65,7 +67,7 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
  * @param cmd
  * @return char*
  */
-char	*ft_find_path(t_subcommand *subcommand, char *cmd)
+static char	*ft_find_path(t_subcommand *subcommand, char *cmd)
 {
 	char	**paths;
 	char	*path;
