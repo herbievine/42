@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.h                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 14:49:02 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/21 14:49:02 by codespace        ###   ########.fr       */
+/*   Created: 2023/11/21 14:59:10 by codespace         #+#    #+#             */
+/*   Updated: 2023/11/21 14:59:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ECHO_H
-# define ECHO_H
+#include "builtins.h"
+#include "../display.h"
 
-# include "../structs.h"
+int	ft_env(char **env)
+{
+	int	i;
 
-int	ft_echo(t_subcommand *subcommand, t_token *token);
-
-#endif
+	i = 0;
+	while (env[i])
+	{
+		ft_putstr_fd(env[i], 1);
+		ft_putstr_fd("\n", 1);
+		i++;
+	}
+	return (0);
+}

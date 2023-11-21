@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cd.h"
+#include "builtins.h"
 #include "../structs.h"
 #include "../env.h"
 #include "../display.h"

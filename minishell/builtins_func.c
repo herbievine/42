@@ -40,27 +40,3 @@ int	ft_pwd(t_subcommand *subcommand)
 	free(path);
 	return (0);
 }
-
-/**
- * @brief The env utility shall obtain the current environment, 
- * the second argument is to write the normed export format or not
- * 
- * @param envp 
- * @param is_export 
- * @return int 
- */
-int	ft_env(char **env, int is_export)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		if (is_export)
-			ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(env[i], 1);
-		ft_putstr_fd("\n", 1);
-		i++;
-	}
-	return (0);
-}

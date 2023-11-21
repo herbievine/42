@@ -13,10 +13,7 @@
 #include "builtin.h"
 #include "str.h"
 #include "builtins_func.h"
-#include "builtins/cd.h"
-#include "builtins/exit.h"
-#include "builtins/export.h"
-#include "builtins/echo.h"
+#include "builtins/builtins.h"
 #include <stdio.h>
 
 bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
@@ -64,7 +61,7 @@ int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	else if (ft_strschr(cmd, "unset") == 0)
 		return (ft_unset(subcommand, env));
 	else if (ft_strschr(cmd, "env") == 0)
-		return (ft_env(*env, 0));
+		return (ft_env(*env));
 	else if (ft_strschr(cmd, "exit") == 0)
 		return (ft_exit(subcommand, token));
 	subcommand->out_fd = -1;

@@ -15,7 +15,6 @@
 
 # include "structs.h"
 
-int		ft_env(char **envp, int is_export);
 int		ft_unset(t_subcommand *subcommand, char ***envp);
 int		ft_pwd(t_subcommand *subcommand);
 
