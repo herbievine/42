@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/17 09:56:20 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/21 09:55:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,15 @@ bool	ft_if_builtin(char *cmd)
 {
 	if (cmd == NULL)
 		return (false);
-	if (ft_strncmp(cmd, "echo", 4) == 0 || ft_strncmp(cmd, "/bin/echo", 9) == 0
-		|| ft_strncmp(cmd, "/usr/bin/echo", 13) == 0
-		|| ft_strncmp(cmd, "cd", 2) == 0 || ft_strncmp(cmd, "/bin/cd", 7) == 0
-		|| ft_strncmp(cmd, "/usr/bin/cd", 10) == 0
-		|| ft_strncmp(cmd, "pwd", 3) == 0 || ft_strncmp(cmd, "/bin/pwd", 8) == 0
-		|| ft_strncmp(cmd, "/usr/bin/pwd", 12) == 0
-		|| ft_strncmp(cmd, "export", 6) == 0
-		|| ft_strncmp(cmd, "/bin/export", 11) == 0
-		|| ft_strncmp(cmd, "/usr/bin/export", 15) == 0
-		|| ft_strncmp(cmd, "unset", 5) == 0
-		|| ft_strncmp(cmd, "/bin/unset", 10) == 0
-		|| ft_strncmp(cmd, "/usr/bin/unset", 14) == 0
-		|| ft_strncmp(cmd, "env", 3) == 0 || ft_strncmp(cmd, "/bin/env", 8) == 0
-		|| ft_strncmp(cmd, "/usr/bin/env", 12) == 0
-		|| ft_strncmp(cmd, "exit", 4) == 0
-		|| ft_strncmp(cmd, "/bin/exit", 9) == 0
-		|| ft_strncmp(cmd, "/usr/bin/exit", 13) == 0)
+	if ((ft_strncmp(cmd, "echo", 4) == 0 && ft_strlen(cmd) == 4)
+		|| (ft_strncmp(cmd, "/bin/echo", 9) == 0 && ft_strlen(cmd) == 9)
+		|| (ft_strncmp(cmd, "/usr/bin/echo", 13) == 0 && ft_strlen(cmd) == 13)
+		|| (ft_strncmp(cmd, "cd", 2) == 0 && ft_strlen(cmd) == 2)
+		|| (ft_strncmp(cmd, "pwd", 3) == 0 && ft_strlen(cmd) == 3)
+		|| (ft_strncmp(cmd, "export", 6) == 0 && ft_strlen(cmd) == 6)
+		|| (ft_strncmp(cmd, "unset", 5) == 0 && ft_strlen(cmd) == 5)
+		|| (ft_strncmp(cmd, "env", 3) == 0 && ft_strlen(cmd) == 3)
+		|| (ft_strncmp(cmd, "exit", 4) == 0 && ft_strlen(cmd) == 4))
 		return (true);
 	return (false);
 }

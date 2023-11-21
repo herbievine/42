@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/20 11:35:23 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/20 21:39:29 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp)
 	if (pid == PID_CHILD)
 	{
 		close(fd[READ]);
-		if (ft_if_builtin(subcommand->path) && subcommand->is_executable)
+		if (subcommand->builtin && subcommand->is_executable)
 			return_status = ft_builtin_valid(*tokens, subcommand,
 					subcommand->path, envp);
 		if (!subcommand->is_executable || !subcommand->path || subcommand->builtin)
@@ -69,7 +69,7 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 	pid_t	pid;
 	int		return_status;
 
-	if (ft_if_builtin(subcommand->path) && subcommand->is_executable)
+	if (subcommand->builtin && subcommand->is_executable)
 		return (return_status = ft_builtin_valid(*tokens, subcommand,
 				subcommand->path, envp));
 	pid = fork();
