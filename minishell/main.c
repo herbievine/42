@@ -104,29 +104,30 @@ void	ft_build_command(char *buffer, char ***env)
 		if (token.type == TOKEN_INVALID)
 		{
 			ft_invalid_token(lexer, token);
-		ft_clear_tokens(&command.tokens);
-		g_signal = 1;
-		*env = ft_env_set(*env, "?", "1");
-		return ;
+			ft_clear_tokens(&command.tokens);
+			g_signal = 1;
+			*env = ft_env_set(*env, "?", "1");
+			return ;
 		}
 		if (ft_append_token(&command.tokens, token))
-		command.token_length++;
+			command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
 	if (ft_create_subcommands(&command, *env))
 	{
 		ft_expand_token(command.subcommands, command.tokens);
-	ft_suppress_quotes(command.subcommands, command.tokens);
-	ft_clean_tokens(&command.tokens);
-	// ft_print_tokens(command.tokens);
-	if (command.tokens->length > 0 && ft_parse(command.tokens, command.subcommands, env))
-	{
-			// ft_print_subcommands(&command);
-	if (ft_check_subcommands(command.subcommands, command.tokens))
-	retval = ft_execute(command.subcommands, &command.tokens, env);
-	if (retval != -1)
-	g_signal = retval;
-	}
+		ft_suppress_quotes(command.subcommands, command.tokens);
+		ft_clean_tokens(&command.tokens);
+		// ft_print_tokens(command.tokens);
+		if (command.tokens->length > 0
+			&& ft_parse(command.tokens, command.subcommands, env))
+		{
+				// ft_print_subcommands(&command);
+			if (ft_check_subcommands(command.subcommands, command.tokens))
+				retval = ft_execute(command.subcommands, &command.tokens, env);
+			if (retval != -1)
+				g_signal = retval;
+		}
 	}
 	ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
@@ -149,7 +150,7 @@ void	ft_await_command_entry(char ***env)
 			ft_history_add(buffer);
 			ft_build_command(buffer, env);
 		}
-				free(buffer);
+		free(buffer);
 	}
 }
 
