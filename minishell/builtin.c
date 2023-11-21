@@ -16,6 +16,7 @@
 #include "echo.h"
 #include "builtins/cd.h"
 #include "builtins/exit.h"
+#include "builtins/export.h"
 #include <stdio.h>
 
 bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
@@ -59,7 +60,7 @@ int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	else if (ft_strschr(cmd, "pwd") == 0)
 		return (ft_pwd(subcommand));
 	else if (ft_strschr(cmd, "export") == 0)
-		return (ft_export(subcommand, env, token->next));
+		return (ft_export(subcommand, token->next, env));
 	else if (ft_strschr(cmd, "unset") == 0)
 		return (ft_unset(subcommand, env));
 	else if (ft_strschr(cmd, "env") == 0)

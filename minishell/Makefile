@@ -60,7 +60,8 @@ SRCS = \
 	process_utils.c \
 	str_c.c \
 	builtins/cd.c \
-	builtins/exit.c 
+	builtins/exit.c \
+	builtins/export.c \
 
 OBJS = $(SRCS:.c=.o)
 

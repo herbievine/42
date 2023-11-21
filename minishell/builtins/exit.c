@@ -18,6 +18,7 @@
 #include "../history.h"
 #include "../char.h"
 #include "../str.h"
+#include <unistd.h>
 
 int	ft_parse_exit_code(char *str)
 {
@@ -30,9 +31,9 @@ int	ft_parse_exit_code(char *str)
 	{
 		if (!ft_isdigit(str[i]))
 		{
-			ft_putstr_fd("exit: ", 2);
-			ft_putstr_fd(str, 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
+			ft_putstr_fd("exit: ", STDERR_FILENO);
+			ft_putstr_fd(str, STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 			if (__MACH__)
 				return (255);
 			return (2);
@@ -51,7 +52,7 @@ int	ft_exit(t_subcommand *subcommand, t_token *token)
 	exit_value = 0;
 
 	if (subcommand->args[1] && subcommand->args[2])
-		return (ft_putstr_fd("exit: too many arguments\n", 2), 127);
+		return (ft_putstr_fd("exit: too many arguments\n", 2), EXIT_FAILURE);
 	if (subcommand->args[1])
 		exit_value = ft_parse_exit_code(subcommand->args[1]);
 	ft_clear_tokens(&token);

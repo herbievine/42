@@ -27,46 +27,46 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-bool ft_set_env_from_arg(char ***env, char *arg)
-{
-	char *key;
-	char *value;
-	char *tmp;
+// bool ft_set_env_from_arg(char ***env, char *arg)
+// {
+// 	char *key;
+// 	char *value;
+// 	char *tmp;
 
-	key = ft_substr(arg, 0, ft_position(arg, '='));
-	if (!key)
-		return (false);
-	value = ft_substr(arg, (ft_position(arg, '=') + 1), ft_strlen(arg));
-	if (!value)
-		return (free(key), false);
-	*env = ft_env_set(*env, key, value);
-	return (free(key), free(value), true);
-}
+// 	key = ft_substr(arg, 0, ft_position(arg, '='));
+// 	if (!key)
+// 		return (false);
+// 	value = ft_substr(arg, (ft_position(arg, '=') + 1), ft_strlen(arg));
+// 	if (!value)
+// 		return (free(key), false);
+// 	*env = ft_env_set(*env, key, value);
+// 	return (free(key), free(value), true);
+// }
 
-int ft_export(t_subcommand *subcommand, char ***env, t_token *token)
-{
-	int		i;
-	char	*key;
+// int ft_export(t_subcommand *subcommand, char ***env, t_token *token)
+// {
+// 	int		i;
+// 	char	*key;
 
-	i = 1;
-	if (!subcommand->args[1])
-		return (ft_env(*env, 1), 0);
-	while (subcommand->args[i] && !subcommand->next)
-	{
-		if (!ft_check_is_valid_identifier(subcommand->args[i], token->type))
-			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
-		else if (ft_strchr(subcommand->args[i], '='))
-		{
-			if (!ft_set_env_from_arg(env, subcommand->args[i]))
-				return (1);
-		}
-		else
-			*env = ft_env_set(*env, subcommand->args[i], NULL);
-		i++;
-		token = token->next;
-	}
-	return (0);
-}
+// 	i = 1;
+// 	if (!subcommand->args[1])
+// 		return (ft_env(*env, 1), 0);
+// 	while (subcommand->args[i] && !subcommand->next)
+// 	{
+// 		if (!ft_check_is_valid_identifier(subcommand->args[i], token->type))
+// 			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
+// 		else if (ft_strchr(subcommand->args[i], '='))
+// 		{
+// 			if (!ft_set_env_from_arg(env, subcommand->args[i]))
+// 				return (1);
+// 		}
+// 		else
+// 			*env = ft_env_set(*env, subcommand->args[i], NULL);
+// 		i++;
+// 		token = token->next;
+// 	}
+// 	return (0);
+// }
 
 int ft_unset(t_subcommand *subcommand, char ***env)
 {
