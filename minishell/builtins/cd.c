@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cd.h"
+#include "builtins.h"
 #include "../structs.h"
 #include "../env.h"
 #include "../display.h"
@@ -24,7 +24,7 @@ static bool	ft_verify_args(t_subcommand *subcommand)
 	if (subcommand->args[2])
 	{
 		if (!__MACH__)
-			ft_putstr_fd("cd: too many arguments\n", 2);
+			ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		return (false);
 	}
 	return (true);
@@ -41,10 +41,11 @@ static char	*ft_find_path(t_subcommand *subcommand)
 	{
 		path = ft_env_get(subcommand->envp, "OLDPWD");
 		if (!path)
-			ft_putstr_fd("cd: OLDPWD not set\n", 2);
+			ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
 	}
 	else
 		path = subcommand->args[1];
+	return (path);
 }
 
 int	ft_cd(t_subcommand *subcommand)
@@ -56,9 +57,9 @@ int	ft_cd(t_subcommand *subcommand)
 	path = ft_find_path(subcommand);
 	if (chdir(path) == -1)
 	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putstr_fd("cd: ", STDERR_FILENO);
+		ft_putstr_fd(path, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		return (1);
 	}
 	subcommand->envp = ft_env_set(subcommand->envp, "OLDPWD",

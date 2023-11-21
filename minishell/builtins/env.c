@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_func_utils.h                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 08:32:17 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/11 18:56:49 by juliencros       ###   ########.fr       */
+/*   Created: 2023/11/21 14:59:10 by codespace         #+#    #+#             */
+/*   Updated: 2023/11/21 14:59:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_FUNC_UTILS_H
-# define BUILTINS_FUNC_UTILS_H
+#include "builtins.h"
+#include "../display.h"
 
-# include "structs.h"
-# include <stdbool.h>
+int	ft_env(char **env)
+{
+	int	i;
 
-bool	ft_check_is_valid_identifier(char *str, int type);
-
-#endif
+	i = 0;
+	while (env[i])
+	{
+		ft_putstr_fd(env[i], 1);
+		ft_putstr_fd("\n", 1);
+		i++;
+	}
+	return (0);
+}

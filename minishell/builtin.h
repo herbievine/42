@@ -14,7 +14,6 @@
 # define BUILTIN_H
 
 # include "structs.h"
-# include "builtins_func.h"
 # include <stdbool.h>
 
 typedef struct s_builtin

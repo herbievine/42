@@ -12,9 +12,7 @@
 
 #include "builtin.h"
 #include "str.h"
-#include "builtins_func.h"
-#include "echo.h"
-#include "builtins/cd.h"
+#include "builtins/builtins.h"
 #include <stdio.h>
 
 bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
@@ -52,19 +50,19 @@ int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
 	if (ft_strschr(cmd, "echo") == 0)
-		return (ft_echo(token->next, subcommand));
+		return (ft_echo(subcommand, token->next));
 	else if (ft_strschr(cmd, "cd") == 0)
 		return (ft_cd(subcommand));
 	else if (ft_strschr(cmd, "pwd") == 0)
 		return (ft_pwd(subcommand));
 	else if (ft_strschr(cmd, "export") == 0)
-		return (ft_export(subcommand, env, token->next));
+		return (ft_export(subcommand, token->next, env));
 	else if (ft_strschr(cmd, "unset") == 0)
 		return (ft_unset(subcommand, env));
 	else if (ft_strschr(cmd, "env") == 0)
-		return (ft_env(*env, 0));
+		return (ft_env(*env));
 	else if (ft_strschr(cmd, "exit") == 0)
-		return (ft_exit(subcommand, env, token));
+		return (ft_exit(subcommand, token));
 	subcommand->out_fd = -1;
 	return (true);
 }
