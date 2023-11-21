@@ -92,7 +92,7 @@ void	ft_build_command(char *buffer, char ***env)
 	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
-	int 		retval;
+	int			retval;
 
 	retval = -1;
 	command = ft_command_new();
@@ -119,9 +119,10 @@ void	ft_build_command(char *buffer, char ***env)
 		ft_suppress_quotes(command.subcommands, command.tokens);
 		ft_clean_tokens(&command.tokens);
 		// ft_print_tokens(command.tokens);
-		if (command.tokens->length > 0 && ft_parse(command.tokens, command.subcommands, env))
+		if (command.tokens->length > 0
+			&& ft_parse(command.tokens, command.subcommands, env))
 		{
-			// ft_print_subcommands(&command);
+				// ft_print_subcommands(&command);
 			if (ft_check_subcommands(command.subcommands, command.tokens))
 				retval = ft_execute(command.subcommands, &command.tokens, env);
 			if (retval != -1)
@@ -141,8 +142,8 @@ void	ft_await_command_entry(char ***env)
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
-			ft_handle_ctrl_d();
 			ft_free_array(*env, -1);
+			ft_handle_ctrl_d();
 		}
 		if (ft_strlen(buffer) > 0)
 		{
@@ -151,7 +152,6 @@ void	ft_await_command_entry(char ***env)
 		}
 		free(buffer);
 	}
-	ft_free_array(*env, -1);
 }
 
 int	main(int argc, char **argv, char **envp)
