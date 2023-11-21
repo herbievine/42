@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 11:44:18 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/02 15:08:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/21 11:42:27 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "print.h"
 #include "history.h"
 #include "display.h"
+#include "structs.h"
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -40,6 +41,7 @@ static void	ft_handle_ctrl_c(int signal)
 {
 	(void)signal;
 	printf("\n");
+	g_signal = 1;
 	rl_on_new_line();
 	rl_redisplay();
 }
