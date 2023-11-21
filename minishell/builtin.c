@@ -13,10 +13,10 @@
 #include "builtin.h"
 #include "str.h"
 #include "builtins_func.h"
-#include "echo.h"
 #include "builtins/cd.h"
 #include "builtins/exit.h"
 #include "builtins/export.h"
+#include "builtins/echo.h"
 #include <stdio.h>
 
 bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
@@ -54,7 +54,7 @@ int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
 	if (ft_strschr(cmd, "echo") == 0)
-		return (ft_echo(token->next, subcommand));
+		return (ft_echo(subcommand, token->next));
 	else if (ft_strschr(cmd, "cd") == 0)
 		return (ft_cd(subcommand));
 	else if (ft_strschr(cmd, "pwd") == 0)

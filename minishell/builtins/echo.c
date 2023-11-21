@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 12:07:23 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/18 14:20:05 by juliencros       ###   ########.fr       */
+/*   Created: 2023/11/21 14:53:08 by codespace         #+#    #+#             */
+/*   Updated: 2023/11/21 14:53:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "echo.h"
-#include "str.h"
-#include "display.h"
-#include <stdio.h>
+#include "../structs.h"
+#include "../str.h"
+#include "../display.h"
 
-int	ft_echo(t_token *token, t_subcommand *subcommand)
+int	ft_echo(t_subcommand *subcommand, t_token *token)
 {
 	int	option;
 	int	i;
@@ -26,11 +26,11 @@ int	ft_echo(t_token *token, t_subcommand *subcommand)
 		&& ft_strncmp(subcommand->args[1], "-n", 2) == 0
 		&& ft_strlen(subcommand->args[1]) == 2)
 		option = 1;
-		while (subcommand->args[++i])
-		{
-			ft_putstr_fd(subcommand->args[i], subcommand->out_fd);
-			if (subcommand->args[i + 1])
-				ft_putchar_fd(' ', subcommand->out_fd);
+	while (subcommand->args[++i])
+	{
+		ft_putstr_fd(subcommand->args[i], subcommand->out_fd);
+		if (subcommand->args[i + 1])
+			ft_putchar_fd(' ', subcommand->out_fd);
 	}
 	if (!option)
 		ft_putchar_fd('\n', subcommand->out_fd);

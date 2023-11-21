@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   echo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 12:06:11 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/13 15:33:06 by juliencros       ###   ########.fr       */
+/*   Created: 2023/11/21 14:49:02 by codespace         #+#    #+#             */
+/*   Updated: 2023/11/21 14:49:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ECHO_H
 # define ECHO_H
 
-# include "structs.h"
+# include "../structs.h"
 
-int		ft_echo(t_token *token, t_subcommand *subcommand);
-bool	ft_is_antislash(char c, char type, int care_of_quote);
+int	ft_echo(t_subcommand *subcommand, t_token *token);
 
 #endif
