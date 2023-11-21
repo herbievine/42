@@ -15,6 +15,6 @@
 
 # include "../structs.h"
 
-int		ft_cd(t_subcommand *subcommand);
+int	ft_cd(t_subcommand *subcommand);
 
 #endif

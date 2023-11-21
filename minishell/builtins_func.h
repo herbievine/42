@@ -20,5 +20,5 @@ int		ft_export(t_subcommand *subcommand, char ***envp, t_token *token);
 int		ft_env(char **envp, int is_export);
 int		ft_unset(t_subcommand *subcommand, char ***envp);
 int		ft_pwd(t_subcommand *subcommand);
-int		ft_exit(t_subcommand *subcommand, char ***envp, t_token *token);
+
 #endif
