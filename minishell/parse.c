@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/21 14:12:33 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/21 14:44:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,11 @@
 
 static char	**ft_fill_args(t_token **token, t_subcommand *subcommand);
 static int	ft_arg_count(t_token *token);
-static bool	ft_check_tokens(t_token *tokens);
 
 bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 {
 	char	*path;
 
-	if (!ft_check_tokens(tokens))
-		return (false);
 	path = ft_substr(tokens->value, 0, tokens->length);
 	if (ft_if_builtin(path))
 	{
@@ -103,20 +100,4 @@ static int	ft_arg_count(t_token *token)
 		i++;
 	}
 	return (i);
-}
-
-static bool	ft_check_tokens(t_token *tokens)
-{
-	while (tokens)
-	{
-		if (token.type == TOKEN_INVALID)
-		{
-			ft_invalid_token(lexer, token);
-			ft_clear_tokens(&command.tokens);
-			g_signal = 1;
-			return (false);
-		}
-		tokens = tokens->next;
-	}
-	return (true);
 }
