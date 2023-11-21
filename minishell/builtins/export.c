@@ -75,7 +75,7 @@ static bool	ft_set_env_from_arg(char ***env, char *arg)
 	return (free(key), free(value), true);
 }
 
-int ft_export(t_subcommand *subcommand, t_token *token, char ***env)
+int	ft_export(t_subcommand *subcommand, t_token *token, char ***env)
 {
 	int		i;
 	char	*key;

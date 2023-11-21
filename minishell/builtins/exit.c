@@ -50,7 +50,6 @@ int	ft_exit(t_subcommand *subcommand, t_token *token)
 
 	i = -1;
 	exit_value = 0;
-
 	if (subcommand->args[1] && subcommand->args[2])
 		return (ft_putstr_fd("exit: too many arguments\n", 2), EXIT_FAILURE);
 	if (subcommand->args[1])
