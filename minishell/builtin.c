@@ -14,6 +14,7 @@
 #include "str.h"
 #include "builtins_func.h"
 #include "echo.h"
+#include "builtins/cd.h"
 #include <stdio.h>
 
 bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)

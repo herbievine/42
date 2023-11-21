@@ -30,51 +30,6 @@
 #include <sys/types.h>
 #include <errno.h>
 
-int	ft_cd(t_subcommand *subcommand)
-{
-	char	*path;
-
-	if (!subcommand->args[1])
-	{
-		path = ft_env_get(subcommand->envp, "HOME");
-		if (!path)
-		{
-			path = ft_strjoin("/Users/", ft_env_get(subcommand->envp, "USER"));
-			return (chdir(path), free(path), 0);
-		}
-		else
-			return (chdir(path), 0);
-	}
-	else if (subcommand->args[2])
-		return (ft_putstr_fd("cd: too many arguments\n", 2), 1);
-	if (ft_strncmp(subcommand->args[1], "-",
-			ft_strlen(subcommand->args[1])) == 0)
-	{
-		path = ft_env_get(subcommand->envp, "OLDPWD");
-		if (!path)
-			return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
-	}
-	if (subcommand->args[1][0] == '$')
-		path = ft_expand_dollar(subcommand, subcommand->args[1]);
-	else
-		path = subcommand->args[1];
-	if (chdir(path) == -1)
-	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (1);
-	}
-	else
-	{
-		subcommand->envp = ft_env_set(subcommand->envp, "OLDPWD",
-				ft_env_get(subcommand->envp, "PWD"));
-		subcommand->envp = ft_env_set(subcommand->envp,
-				"PWD", getcwd(NULL, 100));
-	}
-	return (0);
-}
-
 int	ft_pwd(t_subcommand *subcommand)
 {
 	char	*path;
