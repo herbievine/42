@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef builtins_H
-# define builtins_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
 # include "../structs.h"
 
@@ -21,5 +21,6 @@ int	ft_env(char **env);
 int	ft_exit(t_subcommand *subcommand, t_token *token);
 int	ft_export(t_subcommand *subcommand, t_token *token, char ***env);
 int	ft_pwd(t_subcommand *subcommand);
+int	ft_unset(t_subcommand *subcommand, char ***env);
 
 #endif

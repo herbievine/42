@@ -12,7 +12,6 @@
 
 #include "builtin.h"
 #include "str.h"
-#include "builtins_func.h"
 #include "builtins/builtins.h"
 #include <stdio.h>
 

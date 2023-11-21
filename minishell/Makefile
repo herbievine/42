@@ -49,9 +49,7 @@ SRCS = \
 	builtin.c \
 	env.c \
 	expand.c \
-	builtins_func_utils.c \
 	env2.c \
-	builtins_func2.c \
 	exit.c \
 	quotes.c \
 	process_utils.c \
@@ -62,6 +60,7 @@ SRCS = \
 	builtins/echo.c \
 	builtins/env.c \
 	builtins/pwd.c \
+	builtins/unset.c \
 
 OBJS = $(SRCS:.c=.o)
 
