@@ -18,6 +18,7 @@
 char	**ft_env_init(char **envp);
 char	*ft_env_get(char **env, char *key);
 char	**ft_env_get_paths(char **env);
+char	*ft_env_get_home(char **env);
 char	**ft_env_remove(char ***env, char *key);
 char	**ft_env_set(char **env, char *key, char *value);
 

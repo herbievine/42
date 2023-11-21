@@ -59,6 +59,7 @@ SRCS = \
 	quotes.c \
 	process_utils.c \
 	str_c.c \
+	builtins/cd.c 
 
 OBJS = $(SRCS:.c=.o)
 

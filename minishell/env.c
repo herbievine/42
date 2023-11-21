@@ -87,6 +87,26 @@ char	**ft_env_get_paths(char **env)
 }
 
 /**
+ * @brief TODO
+ * 
+ * @param env 
+ * @return char* 
+ */
+char	*ft_env_get_home(char **env)
+{
+	char	*path;
+
+	path = ft_env_get(env, "HOME");
+	if (!path && __MACH__)
+		path = ft_strjoin("/Users/", ft_env_get(env, "USER"));
+	else if (!path)
+		path = ft_strjoin("/home/", ft_env_get(env, "USER"));
+	if (!path)
+		return (NULL);
+	return (path);
+}
+
+/**
  * @brief The ft_env_remove function removes the environment variable
  * passed as a parameter from the environment variable passed as a parameter.
  * The new environment variable is returned.
