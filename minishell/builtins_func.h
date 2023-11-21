@@ -16,6 +16,5 @@
 # include "structs.h"
 
 int		ft_unset(t_subcommand *subcommand, char ***envp);
-int		ft_pwd(t_subcommand *subcommand);
 
 #endif

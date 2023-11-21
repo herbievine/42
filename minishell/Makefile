@@ -47,7 +47,6 @@ SRCS = \
 	check_subcommands.c \
 	process.c \
 	builtin.c \
-	builtins_func.c \
 	env.c \
 	expand.c \
 	builtins_func_utils.c \
@@ -62,6 +61,7 @@ SRCS = \
 	builtins/export.c \
 	builtins/echo.c \
 	builtins/env.c \
+	builtins/pwd.c \
 
 OBJS = $(SRCS:.c=.o)
 

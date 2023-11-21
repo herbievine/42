@@ -20,5 +20,6 @@ int	ft_echo(t_subcommand *subcommand, t_token *token);
 int	ft_env(char **env);
 int	ft_exit(t_subcommand *subcommand, t_token *token);
 int	ft_export(t_subcommand *subcommand, t_token *token, char ***env);
+int	ft_pwd(t_subcommand *subcommand);
 
 #endif
