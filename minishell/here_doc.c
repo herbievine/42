@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 10:46:42 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 11:00:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 	while (subcommand->in_fd > 0)
 	{
 		buffer = ft_calloc(10000, sizeof(char *));
-				if (!buffer)
-			return (false);
+		if (!buffer)
+			return (ft_putstr_fd("\n", 1), g_signal = 1, false);
 		if (ft_get_line(buffer, '\n', 1))
 		{
 			if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0
