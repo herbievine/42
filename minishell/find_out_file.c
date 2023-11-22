@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_out_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/20 14:19:21 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/22 18:05:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
 	int		fd;
 
 	path = ft_substr(token->next->value, 0, token->next->length);
+	if (!path)
+		return (g_signal = 1, -1);
 	if ((*subcommand)->out_fd > 0)
 		close((*subcommand)->out_fd);
 	if (token->type == TOKEN_GT)
