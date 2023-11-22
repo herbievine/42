@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 11:05:09 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 12:19:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 				return (ft_error(ESYN), g_signal = 1, false);
 			if (token->next->type != TOKEN_SYMBOL)
 				return (ft_error(ESYN), g_signal = 1, false);
-			path = (char *)token->next->value;
-			path[token->next->length] = '\0';
+			path = ft_substr(token->next->value, 0,
+					ft_strlen(token->next->value));
+			if (!path)
+				return (g_signal = 1, false);
 			token->next->type = TOKEN_EOF;
 			if (subcommand->in_fd > 0)
 				close(subcommand->in_fd);
