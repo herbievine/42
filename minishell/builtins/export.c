@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:04:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/21 12:04:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/22 12:24:44 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ int	ft_export(t_subcommand *subcommand, t_token *token, char ***env)
 		if (!ft_check_is_valid_identifier(subcommand->args[i], token->type))
 			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
 		else if (ft_strchr(subcommand->args[i], '='))
+		{
 			if (!ft_set_env_from_arg(env, subcommand->args[i]))
 				return (1);
+		}
 		else
 			*env = ft_env_set(*env, subcommand->args[i], NULL);
 		i++;
