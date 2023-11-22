@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 11:44:18 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/21 11:42:27 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/22 14:47:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ void	ft_handle_ctrl_d(void)
 	exit(EXIT_SUCCESS);
 }
 
+// TODO: check if replace is freeing the buffer
 static void	ft_handle_ctrl_c(int signal)
 {
 	(void)signal;
 	printf("\n");
 	g_signal = 1;
 	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
