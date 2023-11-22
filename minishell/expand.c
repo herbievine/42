@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/18 11:56:01 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 09:23:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,13 @@ void	ft_is_exit_status(t_subcommand *subcommand, t_token *token,  char *str, int
 	tmp2 = ft_strjoin(tmp, expanded);
 	free(tmp);
 	free(expanded);
+	if (!tmp2)
+		return ;
 	expanded = ft_strjoin(tmp2, ft_substr(str, i + 2, ft_strlen(str) - i - 2));
 	free(tmp2);
 	free(str);
+	if (!expanded)
+		return ;
 	str = ft_strdup(expanded);
 	token->length = ft_strlen(str);
 	token->value = ft_strdup(str);
@@ -98,6 +102,8 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 			{
 				expanded = ft_strjoin(ft_substr(str, 0, i),
 						ft_expand_dollar(subcommand, str));
+				if (!expanded)
+					return free(str), (void)0;
 				while (str[i] && str[i] != '?' && ft_is_valid_symbol(str[i])
 					&& str[i + 1] != '\'' && str[i + 1] != '"' && !ft_isspace(str[i + 1]))
 					++i;
@@ -112,6 +118,8 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 				free(str);
 				str = ft_strjoin(expanded, ft_substr(token->value, i + 1,
 							token->length - i - 1));
+				if (!expanded)
+					return free(expanded), (void)0;
 				token->length = ft_strlen(str);
 				token->value = ft_strdup(str);
 			}
