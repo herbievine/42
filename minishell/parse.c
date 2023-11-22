@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/22 13:16:27 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 14:56:42 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 		return (NULL);
 	args = ft_calloc(ft_arg_count(head) + 1, sizeof(char *));
 	if (!args)
-		return (NULL);
+		return (subcommand->is_executable = false, NULL);
 	i = 0;
 	while (ft_is_io_symbol(head))
 		head = head->next->next;
