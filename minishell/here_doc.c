@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/08 15:18:38 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 10:46:42 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static int	ft_init_here_doc(t_subcommand *subcommand);
 static void	ft_print_heredoc(t_subcommand *subcommand, char *line, int fd);
 bool		ft_here_doc(t_subcommand *subcommand,
 				char *limiter);
-
+//TODO: ft_print_error
 bool	ft_set_here_doc(t_subcommand *subcommand,
-	t_token *token, int token_length)
+	t_token *token)
 {
 	char	*path;
 
-	while (token && token_length > 0)
+	while (token && token->type != TOKEN_PIPE)
 	{
 		if (token->type == TOKEN_LT_LT)
 		{
@@ -52,7 +52,6 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 				return (false);
 		}
 		token = token->next;
-		token_length--;
 	}
 	return (true);
 }
@@ -66,7 +65,7 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 	while (subcommand->in_fd > 0)
 	{
 		buffer = ft_calloc(10000, sizeof(char *));
-		if (!buffer)
+				if (!buffer)
 			return (false);
 		if (ft_get_line(buffer, '\n', 1))
 		{

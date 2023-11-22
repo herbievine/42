@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/11 20:19:26 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 10:48:50 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length,
 	subcommand = ft_subcommand_new(env);
 	if (!subcommand)
 		return (NULL);
-	if (!ft_set_here_doc(subcommand, token_start, token_length))
-		return (free(subcommand), NULL);
 	return (subcommand);
 }
 
