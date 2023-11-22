@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 11:00:23 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 11:05:09 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_init_here_doc(t_subcommand *subcommand);
 static void	ft_print_heredoc(t_subcommand *subcommand, char *line, int fd);
 bool		ft_here_doc(t_subcommand *subcommand,
 				char *limiter);
-//TODO: ft_print_error
+
 bool	ft_set_here_doc(t_subcommand *subcommand,
 	t_token *token)
 {
@@ -38,9 +38,9 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 		if (token->type == TOKEN_LT_LT)
 		{
 			if (!token->next)
-				return (printf(M""ESYN" `newline'\n"), false);
+				return (ft_error(ESYN), g_signal = 1, false);
 			if (token->next->type != TOKEN_SYMBOL)
-				return (printf(M""ESYN" `%s'\n", token->next->value), false);
+				return (ft_error(ESYN), g_signal = 1, false);
 			path = (char *)token->next->value;
 			path[token->next->length] = '\0';
 			token->next->type = TOKEN_EOF;
@@ -49,7 +49,7 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 			if (subcommand->is_heredoc)
 				unlink(".here_doc_fd");
 			if (!ft_here_doc(subcommand, path))
-				return (false);
+				return (g_signal = 1, false);
 		}
 		token = token->next;
 	}
@@ -66,7 +66,7 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 	{
 		buffer = ft_calloc(10000, sizeof(char *));
 		if (!buffer)
-			return (ft_putstr_fd("\n", 1), g_signal = 1, false);
+			return (ft_putstr_fd("\n", 1), false);
 		if (ft_get_line(buffer, '\n', 1))
 		{
 			if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0
