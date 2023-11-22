@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/16 15:01:45 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 17:50:46 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ static char	*ft_env_format(char *key, char *value);
 
 char	**ft_env_set(char **env, char *key, char *value)
 {
-	int	i;
+	int		i;
 	char	*str_fmt;
 
 	i = -1;
 	while (env[++i])
 	{
 		// TODO Make sure the token `+ 1` is a `=`
-		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0 )
+		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0)
 		{
 			if (value)
 			{
 				str_fmt = ft_env_format(key, value);
 				if (!str_fmt)
-					return env;
+					return (env);
 				free(env[i]);
 				env[i] = ft_strdup(str_fmt);
 				free(str_fmt);
