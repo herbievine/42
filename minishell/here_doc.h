@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:36:03 by juliencros        #+#    #+#             */
-/*   Updated: 2023/08/17 19:09:24 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 10:43:34 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@
 # include <stdbool.h>
 
 bool	ft_set_here_doc(t_subcommand *subcommand,
-			t_token *token, int token_length);
+			t_token *token);
 
 #endif

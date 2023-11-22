@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/08 15:18:38 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 12:19:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,31 @@ bool		ft_here_doc(t_subcommand *subcommand,
 				char *limiter);
 
 bool	ft_set_here_doc(t_subcommand *subcommand,
-	t_token *token, int token_length)
+	t_token *token)
 {
 	char	*path;
 
-	while (token && token_length > 0)
+	while (token && token->type != TOKEN_PIPE)
 	{
 		if (token->type == TOKEN_LT_LT)
 		{
 			if (!token->next)
-				return (printf(M""ESYN" `newline'\n"), false);
+				return (ft_error(ESYN), g_signal = 1, false);
 			if (token->next->type != TOKEN_SYMBOL)
-				return (printf(M""ESYN" `%s'\n", token->next->value), false);
-			path = (char *)token->next->value;
-			path[token->next->length] = '\0';
+				return (ft_error(ESYN), g_signal = 1, false);
+			path = ft_substr(token->next->value, 0,
+					ft_strlen(token->next->value));
+			if (!path)
+				return (g_signal = 1, false);
 			token->next->type = TOKEN_EOF;
 			if (subcommand->in_fd > 0)
 				close(subcommand->in_fd);
 			if (subcommand->is_heredoc)
 				unlink(".here_doc_fd");
 			if (!ft_here_doc(subcommand, path))
-				return (false);
+				return (g_signal = 1, false);
 		}
 		token = token->next;
-		token_length--;
 	}
 	return (true);
 }
@@ -67,7 +68,7 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 	{
 		buffer = ft_calloc(10000, sizeof(char *));
 		if (!buffer)
-			return (false);
+			return (ft_putstr_fd("\n", 1), false);
 		if (ft_get_line(buffer, '\n', 1))
 		{
 			if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0
