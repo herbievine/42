@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 21:52:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/12 08:58:08 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 17:52:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include "char.h"
 #include <stdbool.h>
 
-#define SQ '\''
-#define DQ '"'
+#define SQ 39
+#define DQ 34
 
 void	ft_modify_state(t_quote_state *state, char c)
 {

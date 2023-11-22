@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/20 21:39:29 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 17:49:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp)
 		if (subcommand->builtin && subcommand->is_executable)
 			return_status = ft_builtin_valid(*tokens, subcommand,
 					subcommand->path, envp);
-		if (!subcommand->is_executable || !subcommand->path || subcommand->builtin)
+		if (!subcommand->is_executable 
+			|| !subcommand->path || subcommand->builtin)
 			exit(0);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
@@ -78,7 +79,8 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 		return (false);
 	if (pid == PID_CHILD)
 	{
-		if (!subcommand->is_executable || !subcommand->path || subcommand->builtin)
+		if (!subcommand->is_executable 
+			|| !subcommand->path || subcommand->builtin)
 			exit(0);
 		ft_redirect(subcommand);
 		execve(subcommand->path, subcommand->args, subcommand->envp);

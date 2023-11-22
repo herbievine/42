@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/13 11:00:18 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/22 17:53:36 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef enum e_token_types
 	TOKEN_GT_GT,
 	TOKEN_LT_LT,
 	TOKEN_PIPE,
-	TOKEN_SQ, // Deprecated
-	TOKEN_DQ, // Deprecated
+	TOKEN_SQ,
+	TOKEN_DQ,
 }	t_token_types;
 
 typedef enum e_quote_state
