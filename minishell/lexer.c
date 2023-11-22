@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/20 14:40:33 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 18:46:06 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	ft_clean_tokens(t_token **token)
 
 	head = *token;
 	prev = NULL;
-	if (!head->next && head->length == 0)
-		return (free((void *)head->value), free(head));
 	while (head)
 	{
 		if (head->length == 0)
@@ -49,7 +47,7 @@ void	ft_clean_tokens(t_token **token)
 			(free((void *)head->value), free(head));
 			if (prev)
 				head = prev->next;
-			else
+			else if (*token)
 				head = *token;
 		}
 		else
