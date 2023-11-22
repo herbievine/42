@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/22 17:31:05 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 17:45:50 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 		i = 0;
 		limiter = '\0';
 		str = ft_substr(token->value, 0, token->length);
+		if (!str)
+			return (subcommand->is_executable = false, g_signal = 1, (void)0);
 		while (str[i])
 		{
 			limiter = ft_type_token(str[i], limiter);
