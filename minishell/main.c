@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/22 09:56:19 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 18:05:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	ft_print_tokens(t_token *tokens)
 	while (tmp)
 	{
 		str = ft_substr(tmp->value, 0, tmp->length);
+		if (!str)
+			return ;
 		printf("token: %s\t| type: %d\t| len:%d\n", str, tmp->type, tmp->length);
 		free(str);
 		tmp = tmp->next;
