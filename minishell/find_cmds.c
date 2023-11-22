@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/21 09:25:46 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/22 13:21:37 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 	char	*path;
 	int		cmd_len;
 
-	while (ft_is_io_symbol(token))
+	while (token && ft_is_io_symbol(token))
 		token = token->next->next;
 	if (!token || token->type == TOKEN_PIPE
 		|| subcommand->builtin == 1 || subcommand->path != NULL)
