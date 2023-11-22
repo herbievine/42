@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/21 14:43:44 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 09:56:19 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	ft_build_command(char *buffer, char ***env)
 		}
 		if (ft_append_token(&command.tokens, token))
 			command.token_length++;
+		else
+			return (ft_clear_tokens(&command.tokens), g_signal = 1, (void)0);
 		token = ft_lexer_next(&lexer);
 	}
 	if (ft_create_subcommands(&command, *env))
