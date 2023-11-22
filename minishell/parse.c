@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/22 14:56:42 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/22 16:34:06 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "structs.h"
 #include "mem.h"
 #include "error.h"
+#include "free.h"
 #include "find_in_file.h"
 #include "find_cmds.h"
 #include "find_out_file.h"
@@ -60,22 +61,26 @@ bool	ft_is_io_symbol(t_token *token)
 		return (false);
 }
 
+bool	ft_init_args(t_token *token, t_subcommand *subcommand, char ***args)
+{
+	if (ft_arg_count(token) < 1 || !token)
+		return (false);
+	*args = ft_calloc(ft_arg_count(token) + 1, sizeof(char *));
+	if (!*args)
+		return (subcommand->is_executable = false, g_signal = 1, false);
+	return (true);
+}
+
 static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 {
 	int		i;
-	char	*path;
 	char	**args;
 	t_token	*head;
 
 	head = *token;
-	if (ft_arg_count(head) < 1 || !head)
+	if (!ft_init_args(head, subcommand, &args))
 		return (NULL);
-	args = ft_calloc(ft_arg_count(head) + 1, sizeof(char *));
-	if (!args)
-		return (subcommand->is_executable = false, NULL);
 	i = 0;
-	while (ft_is_io_symbol(head))
-		head = head->next->next;
 	while (head != NULL && head->type != TOKEN_PIPE
 		&& head->type)
 	{
@@ -84,6 +89,12 @@ static char	**ft_fill_args(t_token **token, t_subcommand *subcommand)
 		if (!head || head->type == TOKEN_PIPE)
 			break ;
 		args[i++] = ft_substr(head->value, 0, head->length);
+		if (!args[i - 1])
+		{
+			ft_free_array(args, i - 1);
+			return (subcommand->is_executable = false,
+				g_signal = 1, NULL);
+		}
 		head = head->next;
 	}
 	return (args[i] = NULL, args);
