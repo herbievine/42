@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:38:24 by herbie            #+#    #+#             */
-/*   Updated: 2023/07/15 16:02:11 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/23 11:02:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,14 @@ void	old_ft_error(char *message)
 	ft_dprintf(STDERR_FILENO, "%s\n", message);
 }
 
-void	ft_error(char *error)
+void	ft_error(char *error, char *path)
 {
 	ft_putstr_fd(M, STDERR_FILENO);
+	if (path)
+	{
+		ft_putstr_fd(path, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
 	ft_putstr_fd(error, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }

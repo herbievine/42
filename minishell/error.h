@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:38:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/09 11:01:52 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/23 11:01:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 // @deprecated
 void	old_ft_error(char *msg);
 void	ft_invalid_token(t_lexer lexer, t_token token);
-void	ft_error(char *error);
+void	ft_error(char *error, char *path);
 void	ft_perror(char *message);
 
 #endif /* ERROR_H */
