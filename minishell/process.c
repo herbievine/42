@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 17:49:22 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/23 11:49:24 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@
 #define READ 0
 #define WRITE 1
 
+int	parent_process(t_subcommand *subcommand, 
+	int fd[2], pid_t *pid, int return_status)
+{
+	close(fd[WRITE]);
+	if (subcommand->next && subcommand->next->in_fd == -1)
+		subcommand->next->in_fd = fd[READ];
+	else 
+		close(fd[READ]);
+	if (!subcommand->is_executable)
+		return (-1);
+	return (return_status);
+}
+
 int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp)
 {
 	pid_t	pid;
@@ -51,18 +64,10 @@ int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp)
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		ft_free_subcommands(subcommand);
-		ft_clear_tokens(tokens);
+		(ft_free_subcommands(subcommand), ft_clear_tokens(tokens));
 		exit(return_status);
 	}
-	close(fd[WRITE]);
-	if (subcommand->next && subcommand->next->in_fd == -1)
-		subcommand->next->in_fd = fd[READ];
-	else 
-		close(fd[READ]);
-	if (!subcommand->is_executable)
-		return (-1);
-	return (return_status);
+	return (parent_process(subcommand, fd, &pid, return_status));
 }
 
 int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
@@ -70,9 +75,6 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 	pid_t	pid;
 	int		return_status;
 
-	if (subcommand->builtin && subcommand->is_executable)
-		return (return_status = ft_builtin_valid(*tokens, subcommand,
-				subcommand->path, envp));
 	pid = fork();
 	return_status = 0;
 	if (pid == PID_ERROR)
@@ -86,8 +88,7 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		ft_free_subcommands(subcommand);
-		ft_clear_tokens(tokens);
+		(ft_free_subcommands(subcommand), ft_clear_tokens(tokens));
 		exit(return_status);
 	}
 	waitpid(pid, &return_status, 0);
@@ -126,6 +127,11 @@ int	ft_multiple_commands(t_subcommand *subcommand,
 int	ft_execute(t_subcommand *subcommand, t_token **tokens, char ***envp)
 {
 	if (!subcommand->next)
+	{
+		if (subcommand->builtin && subcommand->is_executable)
+			return (ft_builtin_valid(*tokens, subcommand,
+					subcommand->path, envp));
 		return (ft_single_command(subcommand, tokens, envp));
+	}
 	return (ft_multiple_commands(subcommand, tokens, envp));
 }
