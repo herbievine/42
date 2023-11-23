@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/22 17:45:50 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/23 10:51:47 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 	while (str && str[i] != '$')
 		i++;
 	while (str[i + length] && ft_is_valid_symbol(str[i + length])
-		&& str[i + length] != '\'' && str[i + length] != '"')
+		&& str[i + length] != '\'' && str[i + length] != '"'
+		&& str[i + length] != '$')
 		length++;
 	if (length == 1)
 		return (ft_strdup("$"));
@@ -59,7 +60,7 @@ char	ft_type_token(char c, char type)
 	return (type);
 }
 
-void	ft_is_exit_status(t_subcommand *subcommand
+char	*ft_is_exit_status(t_subcommand *subcommand
 	, t_token *token, char *str, int i)
 {
 	char	*expanded;
@@ -67,23 +68,23 @@ void	ft_is_exit_status(t_subcommand *subcommand
 	char	*tmp2;
 
 	expanded = ft_itoa(g_signal);
+	if (!expanded)
+		return (NULL);
 	tmp = ft_substr(str, 0, i);
 	if (!tmp)
-		return (subcommand->is_executable = false, g_signal = 1, (void)0);
+		return (free(expanded), NULL);
 	tmp2 = ft_strjoin(tmp, expanded);
-	free(tmp);
-	free(expanded);
+	(free(tmp), free(expanded));
 	if (!tmp2)
-		return (subcommand->is_executable = false, g_signal = 1, (void)0);
-	expanded = ft_strjoin(tmp2, ft_substr(str, i + 2, ft_strlen(str) - i - 2));
-	free(tmp2);
-	free(str);
+		return (NULL);
+	tmp = ft_substr(str, i + 2, token->length - i - 2);
+	if (!tmp)
+		return (NULL);
+	expanded = ft_strjoin(tmp2, tmp);
+	(free(tmp2), free(tmp));
 	if (!expanded)
-		return (subcommand->is_executable = false, g_signal = 1, (void)0);
-	str = ft_strdup(expanded);
-	token->length = ft_strlen(str);
-	token->value = ft_strdup(str);
-	free(expanded);
+		return (NULL);
+	return (expanded);
 }
 
 void	ft_expand_token(t_subcommand *subcommand, t_token *token)
@@ -104,8 +105,19 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 		{
 			limiter = ft_type_token(str[i], limiter);
 			if (str[i] == '$' && str[i + 1] == '?' && limiter != '\'')
-				ft_is_exit_status(subcommand, token, str, i);
-			if (str[i] == '$' && limiter != '\'')
+			{
+				str = ft_is_exit_status(subcommand, token, str, i);
+				if (!str)
+					return (subcommand->is_executable = false,
+						g_signal = 1, (void)0);
+				token->length = ft_strlen(str);
+				token->value = ft_strdup(str);
+				if (!token->value)
+					return (subcommand->is_executable = false,
+						g_signal = 1, (void)0);
+			}
+
+			if (str[i] == '$' && limiter != '\'' && str[i + 1] != '?')
 			{
 				expanded = ft_strjoin(ft_substr(str, 0, i),
 						ft_expand_dollar(subcommand, str));
@@ -113,7 +125,8 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 					return (free(str), (void)0);
 				while (str[i] && str[i] != '?' && ft_is_valid_symbol(str[i])
 					&& str[i + 1] != '\'' 
-					&& str[i + 1] != '"' && !ft_isspace(str[i + 1]))
+					&& str[i + 1] != '"' && !ft_isspace(str[i + 1])
+					&& str[i + 1] != '$')
 					++i;
 				if (!str[i])
 				{
@@ -132,7 +145,11 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 						g_signal = 1, (void)0);
 				token->length = ft_strlen(str);
 				token->value = ft_strdup(str);
+				if (!token->value)
+					return (subcommand->is_executable = 1,
+						g_signal = 1, (void)0);
 			}
+			// printf("token->value = %s\n", token->value);
 			i++;
 		}
 		token = token->next;
