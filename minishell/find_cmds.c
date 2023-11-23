@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 18:04:26 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/23 11:03:06 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 	if (ft_strncmp(path, cmd, ft_strlen(cmd)) == 0)
 	{
 		g_signal = 127;
-		return (printf(M"%s: "ECNF"\n", path), free(cmd), false);
+		return (ft_error(ECNF, path), free(cmd), false);
 	}
 	return (subcommand->path = path, true);
 }

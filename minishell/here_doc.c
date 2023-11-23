@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 13:12:51 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/23 11:02:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 			if (!token->next || (token->next->type != TOKEN_SYMBOL
 					&& token->next->type != TOKEN_SQ
 					&& token->next->type != TOKEN_DQ))
-				return (ft_error(ESYN), g_signal = 1, false);
+				return (ft_error(ESYN, NULL), g_signal = 1, false);
 			path = ft_substr(token->next->value, 0,
 					token->next->length);
 			if (!path)

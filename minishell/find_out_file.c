@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 18:05:18 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/23 11:02:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	ft_find_outfile(t_subcommand *subcommand, t_token *token)
 					&& token->next->type != TOKEN_DQ
 					&& token->next->type != TOKEN_SQ))
 			{
-				ft_error(ESYN);
+				ft_error(ESYN, NULL);
 				subcommand->is_executable = false;
 				return (g_signal = 1, false);
 			}
