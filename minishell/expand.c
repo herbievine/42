@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 19:11:46 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/24 22:20:16 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ char	*ft_iter_in_string(t_subcommand *subcommand, t_token *token, char *str)
 	while (str[i])
 	{
 		limiter = ft_type_token(str[i], limiter);
-		if (ft_check_validity(str, i, limiter))
+		if (str[i] && ft_check_validity(str, i, limiter))
 		{
-			i += ft_expand_string(subcommand, &str, i);
+			i = ft_expand_string(subcommand, &str, i);
 			if (i == -1)
 				return (NULL);
 		}
