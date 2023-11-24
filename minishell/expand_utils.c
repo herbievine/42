@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:03:09 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/24 19:05:44 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/24 19:11:57 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "char.h"
 #include "lexer_utils.h"
 #include <unistd.h>
-
 
 int	ft_is_exit_status(t_subcommand *subcommand,
 	t_token *token, char **str, int i)
