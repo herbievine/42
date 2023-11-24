@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:03:09 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/24 19:11:57 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/24 22:22:16 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "char.h"
 #include "lexer_utils.h"
 #include <unistd.h>
+#include <stdio.h>
 
 int	ft_is_exit_status(t_subcommand *subcommand,
 	t_token *token, char **str, int i)
@@ -23,6 +24,7 @@ int	ft_is_exit_status(t_subcommand *subcommand,
 	char	*expanded;
 	char	*tmp;
 	char	*tmp2;
+	int		len;
 
 	expanded = ft_itoa(g_signal);
 	if (!expanded)
@@ -34,15 +36,16 @@ int	ft_is_exit_status(t_subcommand *subcommand,
 	(free(tmp), free(expanded));
 	if (!tmp2)
 		return (-1);
+	len = ft_strlen(tmp2);
 	tmp = ft_substr((*str), i + 2, ft_strlen((*str)) - i - 2);
 	if (!tmp)
 		return (free(tmp2), -1);
 	free((*str));
 	(*str) = ft_strjoin(tmp2, tmp);
 	(free(tmp2), free(tmp));
-	if (!expanded)
+	if (!(*str))
 		return (-1);
-	return (1);
+	return (len);
 }
 
 char	*ft_fill_following_str(char *str, int i)
@@ -69,7 +72,6 @@ int	ft_expand_string(t_subcommand *subcommand, char **str, int i)
 	char	*expanded;
 	char	*tmp;
 	char	*tmp2;
-	int		length;
 
 	if ((*str)[i] == '$' && (*str)[i + 1] == '?')
 		return (ft_is_exit_status(subcommand, NULL, str, i));
@@ -77,20 +79,21 @@ int	ft_expand_string(t_subcommand *subcommand, char **str, int i)
 	if (!tmp)
 		return (-1);
 	expanded = ft_expand_dollar(subcommand, (*str) + i);
-	length = ft_strlen(expanded);
+	if (!expanded)
+		return (free(tmp), -1);
 	tmp2 = ft_strjoin(tmp, expanded);
 	free(tmp);
 	if (!tmp2)
 		return (-1);
 	tmp = ft_fill_following_str(*str, i + 1);
 	if (!tmp)
-		return (-1);
+		return (free(tmp2), -1);
 	free((*str));
 	(*str) = ft_strjoin(tmp2, tmp);
 	(free(tmp2), free(tmp));
 	if (!(*str))
 		return (-1);
-	return (length);
+	return (ft_strlen(expanded) + i);
 }
 
 bool	ft_check_validity(char *str, int i, char limiter)
