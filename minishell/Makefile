@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/11/21 11:36:32 by codespace        ###   ########.fr        #
+#    Updated: 2023/11/24 19:06:48 by juliencros       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS = \
 	builtin.c \
 	env.c \
 	expand.c \
+	expand_utils.c \
 	env2.c \
 	exit.c \
 	quotes.c \
@@ -61,7 +62,7 @@ SRCS = \
 	builtins/env.c \
 	builtins/pwd.c \
 	builtins/unset.c \
-
+	
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
