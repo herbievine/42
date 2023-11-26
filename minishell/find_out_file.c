@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_out_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/23 11:02:18 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/26 08:43:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
 		(*subcommand)->is_executable = false;
 		g_signal = 1;
 	}
-	else
-		(*subcommand)->out_file_name = ft_strdup(path);
 	free(path);
 	return (fd);
 }

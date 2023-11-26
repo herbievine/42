@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/24 22:20:16 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/26 09:12:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 		if (!str)
 			return (subcommand->is_executable = false, g_signal = 1, (void)0);
 		token->length = ft_strlen(str);
-		token->value = ft_strdup(str);
+		token->value = ft_strdup(str); // TODO: leaks the original token->value is not a malloced string
 		if (!token->value)
 			return (subcommand->is_executable = false,
 				g_signal = 1, (void)0);

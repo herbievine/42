@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subcommand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/22 10:48:50 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/26 08:42:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand->builtin = 0;
 	subcommand->path = NULL;
 	subcommand->args = NULL;
-	subcommand->out_file_name = NULL;
 	// TODO Change field to `env`
 	subcommand->envp = env;
 	subcommand->mode = MODE_WRITE;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:00:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/20 14:36:47 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/26 08:58:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool	ft_clear_tokens(t_token **tokens)
 	while (*tokens)
 	{
 		next = (*tokens)->next;
+		if ((*tokens)->value)
+			free((char *)(*tokens)->value);
 		free(*tokens);
 		*tokens = next;
 	}

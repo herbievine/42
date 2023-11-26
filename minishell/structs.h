@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/22 17:53:36 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/26 08:43:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_subcommand
 	char				**args;
 	// TODO Change field to `env`
 	char				**envp;
-	char				*out_file_name;
 	t_mode				mode;
 	bool				is_executable;
 	bool				is_heredoc;
