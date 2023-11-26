@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/26 11:00:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/26 12:07:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	parent_process(t_subcommand *subcommand,
 	return (return_status);
 }
 
-int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp, int fd[2])
+int	ft_spawn_child(t_subcommand *subcommand,
+	t_token **tokens, char ***envp, int fd[2])
 {
 	pid_t	pid;
 	int		return_status;

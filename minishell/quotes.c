@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:04:33 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/26 10:40:57 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/26 12:22:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,26 @@ void	ft_change_token_type(t_token *token, char limitter)
 		token->type = TOKEN_SQ;
 }
 
-char	*ft_clean_string(char *str, char limitter, t_subcommand *subcommand)
+bool	ft_clean_string(char *str, char limitter,
+	t_subcommand *subcommand, t_token *tokens)
 {
 	char	**splited_str;
 	char	*new_str;
 
+	free((char *)tokens->value);
 	splited_str = ft_split(str, limitter);
 	if (!splited_str)
-		return (subcommand->is_executable = false, g_signal = 1, ft_strdup(""));
+		return (tokens->value = ft_strdup(""),
+			subcommand->is_executable = false, false);
 	new_str = str_c(splited_str, "");
 	ft_free_array(splited_str, -1);
 	if (!new_str)
-		return (subcommand->is_executable = false, g_signal = 1, ft_strdup(""));
-	return (new_str);
+		return (tokens->value = ft_strdup(""),
+			subcommand->is_executable = false, false);
+	tokens->value = new_str;
+	tokens->length = ft_strlen(tokens->value);
+	ft_change_token_type(tokens, limitter);
+	return (true);
 }
 
 void	ft_suppress_quotes(t_subcommand *subcommands, t_token *tokens)
@@ -60,11 +67,8 @@ void	ft_suppress_quotes(t_subcommand *subcommands, t_token *tokens)
 			limitter = ft_type_token(str[i], limitter && limitter != 2);
 			if (str[i] == '"' || str[i] == '\'')
 			{
-				if (tokens->value)
-					free((char *)tokens->value);
-				tokens->value = ft_clean_string(str, str[i], subcommands);
-				tokens->length = ft_strlen(tokens->value);
-				(ft_change_token_type(tokens, limitter));
+				if (!ft_clean_string(str, str[i], subcommands, tokens))
+					return (free(str), g_signal = 1, (void)0);
 				break ;
 			}
 		}
