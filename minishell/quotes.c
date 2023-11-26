@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:04:33 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/26 08:59:58 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/26 10:40:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_suppress_quotes(t_subcommand *subcommands, t_token *tokens)
 					free((char *)tokens->value);
 				tokens->value = ft_clean_string(str, str[i], subcommands);
 				tokens->length = ft_strlen(tokens->value);
-				(free(str), ft_change_token_type(tokens, limitter));
+				(ft_change_token_type(tokens, limitter));
 				break ;
 			}
 		}
