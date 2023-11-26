@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:04:33 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 17:12:32 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/26 08:59:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ void	ft_suppress_quotes(t_subcommand *subcommands, t_token *tokens)
 			limitter = ft_type_token(str[i], limitter && limitter != 2);
 			if (str[i] == '"' || str[i] == '\'')
 			{
+				if (tokens->value)
+					free((char *)tokens->value);
 				tokens->value = ft_clean_string(str, str[i], subcommands);
 				tokens->length = ft_strlen(tokens->value);
 				(free(str), ft_change_token_type(tokens, limitter));
 				break ;
 			}
 		}
+		free(str);
 		tokens = tokens->next;
 	}
 }
