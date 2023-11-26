@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/23 11:49:24 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/26 11:00:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ int	parent_process(t_subcommand *subcommand,
 	return (return_status);
 }
 
-int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp)
+int	ft_spawn_child(t_subcommand *subcommand, t_token **tokens, char ***envp, int fd[2])
 {
 	pid_t	pid;
 	int		return_status;
-	int		fd[2];
 
 	return_status = 0;
 	if (!ft_fork_and_pipe(subcommand, fd, &pid))
@@ -104,13 +103,16 @@ int	ft_multiple_commands(t_subcommand *subcommand,
 	int				i;
 	t_subcommand	*head;
 	int				return_status;
+	int				fd[2];
 
 	i = 0;
+	fd[READ] = -1;
+	fd[WRITE] = -1;
 	return_status = 0;
 	head = subcommand;
 	while (head != NULL)
 	{
-		return_status = ft_spawn_child(head, tokens, envp);
+		return_status = ft_spawn_child(head, tokens, envp, fd);
 		head = head->next;
 		i++;
 	}
