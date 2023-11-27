@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/27 09:15:19 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/27 09:27:55 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static char	*ft_env_format(char *key, char *value)
 	char	*str_fmt;
 	char	*empty_value;
 
+	empty_value = NULL;
 	if (!value)
 	{
 		empty_value = ft_strdup("\"\"");
