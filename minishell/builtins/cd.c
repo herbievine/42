@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:09:48 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 08:59:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/27 10:02:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*ft_find_path(t_subcommand *subcommand)
 int	ft_cd(t_subcommand *subcommand)
 {
 	char	*path;
-	char 	*pwd;
+	char	*pwd;
 
 	if (!ft_verify_args(subcommand))
 		return (1);
