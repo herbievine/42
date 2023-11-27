@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:42:57 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 17:50:46 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/27 08:11:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,23 @@ static char	*ft_env_format(char *key, char *value)
 {
 	char	*tmp;
 	char	*str_fmt;
+	char	*empty_value;
 
 	if (!value)
 	{
-		value = ft_calloc(3, sizeof(char));
-		if (!value)
+		empty_value = ft_strdup("\"\"");
+		if (!empty_value)
 			return (NULL);
-		value[0] = '"';
-		value[1] = '"';
-		value[2] = '\0';
 	}
 	tmp = ft_strjoin(key, "=");
 	if (!tmp)
 		return (NULL);
-	str_fmt = ft_strjoin(tmp, value);
+	if(!value)
+		str_fmt = ft_strjoin(tmp, empty_value);
+	else
+		str_fmt = ft_strjoin(tmp, value);
+	if(empty_value)
+		free(empty_value);
 	free(tmp);
 	if (!str_fmt)
 		return (NULL);
