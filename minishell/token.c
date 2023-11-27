@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:00:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/26 08:58:26 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/27 10:27:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ bool	ft_clear_tokens(t_token **tokens)
 	while (*tokens)
 	{
 		next = (*tokens)->next;
-		if ((*tokens)->value)
+		if ((*tokens)->value && (*tokens)->is_malloced) 
 			free((char *)(*tokens)->value);
 		free(*tokens);
 		*tokens = next;

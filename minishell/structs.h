@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/26 08:43:12 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/27 10:21:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_token
 	t_token_types	type;
 	const char		*value;
 	int				length;
+	bool			is_malloced;
 	struct s_token	*next;
 }	t_token;
 
