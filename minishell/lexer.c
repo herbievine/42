@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/22 20:31:52 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/27 10:28:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ t_token	ft_lexer_next(t_lexer *lexer)
 	token.value = &lexer->raw[lexer->cursor];
 	token.length = 0;
 	token.next = NULL;
+	token.is_malloced = false;
 	if (lexer->cursor >= lexer->length)
 		return (token.type = TOKEN_EOF, token);
 	if (ft_handle_tokens(lexer, &token))
