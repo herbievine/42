@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:04:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 09:58:27 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/27 11:03:30 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	ft_check_is_valid_identifier(char *str, int type)
 		if (ft_isalpha(str[i]))
 			contains_alpha_char = true;
 		if (str[i] && str[i] == '=' && (i > 0 && str[i - 1] == '='
-			|| i > 0 && !ft_isalnum(str[i - 1])))
+				|| i > 0 && !ft_isalnum(str[i - 1])))
 			return (false);
 		else if (str[i] != '=' && !ft_isalnum(str[i]) && str[i] != '_')
 			return (false);
