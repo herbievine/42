@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:09:48 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/21 10:09:48 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/27 10:02:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 static bool	ft_verify_args(t_subcommand *subcommand)
 {
-	if (subcommand->args[2])
+	if (subcommand->args[1] && subcommand->args[2])
 	{
 		if (!__MACH__)
 			ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
@@ -51,6 +51,7 @@ static char	*ft_find_path(t_subcommand *subcommand)
 int	ft_cd(t_subcommand *subcommand)
 {
 	char	*path;
+	char	*pwd;
 
 	if (!ft_verify_args(subcommand))
 		return (1);
@@ -62,9 +63,13 @@ int	ft_cd(t_subcommand *subcommand)
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		return (1);
 	}
+	pwd = getcwd(NULL, 100);
+	if (!pwd)
+		return (1);
 	subcommand->envp = ft_env_set(subcommand->envp, "OLDPWD",
 			ft_env_get(subcommand->envp, "PWD"));
 	subcommand->envp = ft_env_set(subcommand->envp,
-			"PWD", getcwd(NULL, 100));
+			"PWD", pwd);
+	free(pwd);
 	return (0);
 }
