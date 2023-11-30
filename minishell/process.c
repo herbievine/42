@@ -31,7 +31,7 @@
 #define WRITE 1
 
 int	parent_process(t_subcommand *subcommand,
-	int fd[2], pid_t *pid, int return_status)
+	int fd[2], int return_status)
 {
 	close(fd[WRITE]);
 	if (subcommand->next && subcommand->next->in_fd == -1)
@@ -67,10 +67,10 @@ int	ft_spawn_child(t_subcommand *subcommand,
 		(ft_free_subcommands(subcommand), ft_clear_tokens(tokens));
 		exit(return_status);
 	}
-	return (parent_process(subcommand, fd, &pid, return_status));
+	return (parent_process(subcommand, fd, return_status));
 }
 
-int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
+int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 {
 	pid_t	pid;
 	int		return_status;
@@ -134,7 +134,7 @@ int	ft_execute(t_subcommand *subcommand, t_token **tokens, char ***envp)
 		if (subcommand->builtin && subcommand->is_executable)
 			return (ft_builtin_valid(*tokens, subcommand,
 					subcommand->path, envp));
-		return (ft_single_command(subcommand, tokens, envp));
+		return (ft_single_command(subcommand, tokens));
 	}
 	return (ft_multiple_commands(subcommand, tokens, envp));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/23 11:02:26 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/11/30 21:37:16 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,6 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 
 static int	ft_init_here_doc(t_subcommand *subcommand)
 {
-	int	i;
-
-	i = -1;
 	subcommand->in_fd = open(".here_doc_fd",
 			O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!subcommand->in_fd)

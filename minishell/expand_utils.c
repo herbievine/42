@@ -18,8 +18,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	ft_is_exit_status(t_subcommand *subcommand,
-	t_token *token, char **str, int i)
+int	ft_is_exit_status(char **str, int i)
 {
 	char	*expanded;
 	char	*tmp;
@@ -74,7 +73,7 @@ int	ft_expand_string(t_subcommand *subcommand, char **str, int i)
 	char	*tmp2;
 
 	if ((*str)[i] == '$' && (*str)[i + 1] == '?')
-		return (ft_is_exit_status(subcommand, NULL, str, i));
+		return (ft_is_exit_status(str, i));
 	tmp = ft_substr((*str), 0, i);
 	if (!tmp)
 		return (-1);

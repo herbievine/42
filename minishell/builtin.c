@@ -17,7 +17,6 @@
 
 bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
 {
-	t_builtin	*builtin;
 	char		*path;
 
 	path = (char *)token->value;
@@ -50,7 +49,7 @@ int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
 	if (ft_strschr(cmd, "echo") == 0)
-		return (ft_echo(subcommand, token->next));
+		return (ft_echo(subcommand));
 	else if (ft_strschr(cmd, "cd") == 0)
 		return (ft_cd(subcommand));
 	else if (ft_strschr(cmd, "pwd") == 0)

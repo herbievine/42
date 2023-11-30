@@ -16,7 +16,7 @@
 # include "../structs.h"
 
 int	ft_cd(t_subcommand *subcommand);
-int	ft_echo(t_subcommand *subcommand, t_token *token);
+int	ft_echo(t_subcommand *subcommand);
 int	ft_env(char **env);
 int	ft_exit(t_subcommand *subcommand, t_token *token);
 int	ft_export(t_subcommand *subcommand, t_token *token, char ***env);

@@ -51,7 +51,6 @@ bool	ft_clean_string(char *str, char limitter,
 void	ft_suppress_quotes(t_subcommand *subcommands, t_token *tokens)
 {
 	char	*str;
-	char	**splited_str;
 	char	limitter;
 	int		i;
 

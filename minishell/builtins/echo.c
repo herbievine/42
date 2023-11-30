@@ -15,7 +15,7 @@
 #include "../str.h"
 #include "../display.h"
 
-int	ft_echo(t_subcommand *subcommand, t_token *token)
+int	ft_echo(t_subcommand *subcommand)
 {
 	int	option;
 	int	i;

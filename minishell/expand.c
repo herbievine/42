@@ -60,7 +60,7 @@ char	ft_type_token(char c, char type)
 	return (type);
 }
 
-char	*ft_iter_in_string(t_subcommand *subcommand, t_token *token, char *str)
+char	*ft_iter_in_string(t_subcommand *subcommand, char *str)
 {
 	int		i;
 	char	limiter;
@@ -91,7 +91,7 @@ void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 		str = ft_substr(token->value, 0, token->length);
 		if (!str)
 			return (subcommand->is_executable = false, g_signal = 1, (void)0);
-		str = ft_iter_in_string(subcommand, token, str);
+		str = ft_iter_in_string(subcommand, str);
 		if (!str)
 			return (subcommand->is_executable = false, g_signal = 1, (void)0);
 		if (token->value && token->is_malloced)

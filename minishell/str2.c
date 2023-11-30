@@ -88,7 +88,7 @@ int	ft_strschr(char *s1, char *s2)
 				i++;
 				j++;
 			}
-			if (j == ft_strlen(s1))
+			if (j == (int)ft_strlen(s1))
 				return (i - j);
 		}
 		i++;

@@ -84,7 +84,7 @@ static void	ft_fill_split(char const *s, char **split, char c)
 
 static void	ft_free(char **split, size_t j)
 {
-	if (j != -1)
+	if (j != (size_t)(-1))
 	{
 		while (j)
 		{

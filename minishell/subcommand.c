@@ -45,8 +45,7 @@ t_subcommand	*ft_subcommand_new(char **env)
 	return (subcommand);
 }
 
-t_subcommand	*ft_build_subcommand(t_token *token_start, int token_length,
-	char **env)
+t_subcommand	*ft_build_subcommand(char **env)
 {
 	t_subcommand	*subcommand;
 
@@ -73,13 +72,12 @@ t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index,
 	if (pipe_offset == PIPE_NOT_FOUND)
 	{
 		*token_index = command->token_length;
-		return (ft_build_subcommand(token, command->token_length,
-				env));
+		return (ft_build_subcommand(env));
 	}
 	else if (*token_index == 0 || pipe_offset > 0)
 	{
 		*token_index += pipe_offset + 1;
-		return (ft_build_subcommand(token, pipe_offset, env));
+		return (ft_build_subcommand(env));
 	}
 	return (NULL);
 }

@@ -72,7 +72,7 @@ bool	ft_set_infile(t_subcommand *subcommand, t_token *token)
 	{
 		if (token->type == TOKEN_LT)
 		{
-			if (!token->next || ft_strlen(token->next->value) == 0
+			if ((!token->next || ft_strlen(token->next->value) == 0)
 				&& token->next->type != TOKEN_SYMBOL
 				&& token->next->type != TOKEN_SQ
 				&& token->next->type != TOKEN_DQ)

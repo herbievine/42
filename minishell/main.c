@@ -25,7 +25,6 @@
 #include "free.h"
 #include "mem.h"
 #include "process.h"
-#include "check_subcommands.h"
 #include "expand.h"
 #include "env.h"
 #include "builtin.h"
@@ -49,8 +48,7 @@ void	ft_fill_subcommand(t_command command, char ***env)
 	if (command.tokens
 		&& ft_parse(command.tokens, command.subcommands, env))
 	{
-		if (ft_check_subcommands(command.subcommands, command.tokens))
-			retval = ft_execute(command.subcommands, &command.tokens, env);
+		retval = ft_execute(command.subcommands, &command.tokens, env);
 		if (retval != -1)
 			g_signal = retval;
 	}
@@ -61,9 +59,7 @@ void	ft_build_command(char *buffer, char ***env)
 	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
-	int			retval;
 
-	retval = -1;
 	command = ft_command_new();
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);

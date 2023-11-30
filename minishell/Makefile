@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/11/24 19:06:48 by juliencros       ###   ########.fr        #
+#    Updated: 2023/11/30 21:31:57 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -g#-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -44,7 +44,6 @@ SRCS = \
 	free.c \
 	here_doc.c \
 	get_line.c \
-	check_subcommands.c \
 	process.c \
 	builtin.c \
 	env.c \

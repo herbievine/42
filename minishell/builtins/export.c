@@ -31,8 +31,8 @@ static bool	ft_check_is_valid_identifier(char *str, int type)
 	{
 		if (ft_isalpha(str[i]))
 			contains_alpha_char = true;
-		if (str[i] && str[i] == '=' && (i > 0 && str[i - 1] == '='
-				|| i > 0 && !ft_isalnum(str[i - 1])))
+		if (str[i] && str[i] == '=' && ((i > 0 && str[i - 1] == '=')
+				|| (i > 0 && !ft_isalnum(str[i - 1]))))
 			return (false);
 		else if (str[i] != '=' && !ft_isalnum(str[i]) && str[i] != '_')
 			return (false);
@@ -61,7 +61,6 @@ static bool	ft_set_env_from_arg(char ***env, char *arg)
 {
 	char	*key;
 	char	*value;
-	char	*tmp;
 	int		equal_pos;
 
 	equal_pos = 0;
@@ -80,7 +79,6 @@ static bool	ft_set_env_from_arg(char ***env, char *arg)
 int	ft_export(t_subcommand *subcommand, t_token *token, char ***env)
 {
 	int		i;
-	char	*key;
 
 	i = 1;
 	if (!subcommand->args[1])

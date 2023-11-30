@@ -38,7 +38,6 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 {
 	char	*cmd;
 	char	*path;
-	int		cmd_len;
 
 	while (token && ft_is_io_symbol(token))
 		token = token->next->next;

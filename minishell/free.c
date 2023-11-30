@@ -55,9 +55,10 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
+// TODO check if used. if so, use ft_free_array instead
 void	ft_free_cmds(char **split, size_t j)
 {
-	if (j != -1)
+	if (j != (size_t)(-1))
 	{
 		while (j)
 		{
