@@ -30,7 +30,7 @@ char	**ft_env_set(char **env, char *key, char *value)
 	while (env[++i])
 	{
 		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0
-			&& env[i][ft_strlen(i + 1)] == '=')
+			&& env[i][ft_strlen(key) + 1] == '=')
 		{
 			if (value)
 			{
