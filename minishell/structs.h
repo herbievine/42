@@ -20,7 +20,7 @@
 #  define __MACH__ 0
 # endif /* __MACH__ */
 
-int	g_signal;
+extern int	g_signal;
 
 typedef enum e_token_types
 {
@@ -52,9 +52,6 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-// # define TOKEN_FMT "Token(type=%d, value='%.*s')\n"
-// # define TOKEN_ARG(token) token.type, token.length, token.value
-
 typedef struct s_bash_token_map
 {
 	char			*value;
@@ -81,7 +78,6 @@ typedef struct s_subcommand
 	int					builtin;
 	char				*path;
 	char				**args;
-	// TODO Change field to `env`
 	char				**envp;
 	t_mode				mode;
 	bool				is_executable;
@@ -97,18 +93,10 @@ typedef struct s_command
 	int				subcommand_length;
 }	t_command;
 
-// # define SUBCOMMAND_FMT
-// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s',
-// 	mode=%d, is_heredoc=%d)\n"
-// # define SUBCOMMAND_ARG(subcommand)
-// 	subcommand.in_fd, subcommand.out_fd, subcommand.path,
-// 	subcommand.mode, subcommand.is_heredoc
 typedef struct s_shell
 {
 	char	**env;
 }	t_shell;
-
-// Constants
 
 # define PIPE_ERROR -1
 

@@ -29,8 +29,8 @@ char	**ft_env_set(char **env, char *key, char *value)
 	i = -1;
 	while (env[++i])
 	{
-		// TODO Make sure the token `+ 1` is a `=`
-		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0)
+		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0
+			&& env[i][ft_strlen(i + 1)] == '=')
 		{
 			if (value)
 			{

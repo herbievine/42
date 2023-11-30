@@ -63,7 +63,7 @@ bool	ft_clear_tokens(t_token **tokens)
 	while (*tokens)
 	{
 		next = (*tokens)->next;
-		if ((*tokens)->value && (*tokens)->is_malloced) 
+		if ((*tokens)->value && (*tokens)->is_malloced)
 			free((char *)(*tokens)->value);
 		free(*tokens);
 		*tokens = next;

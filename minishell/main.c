@@ -36,56 +36,7 @@
 #include <readline/readline.h>
 #include <signal.h>
 
-// #define SUBCOMMAND_FMT \
-// 	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
-// 	builtin=%d, mode=%d, is_heredoc=%d, is_executable=%d)\n"
-// #define SUBCOMMAND_ARG(subcommand)                      \
-// 	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
-// 			subcommand.builtin, subcommand.mode, subcommand.is_heredoc, \
-// 			subcommand.is_executable
-
-// void	ft_print_tokens(t_token *tokens)
-// {
-// 	t_token	*tmp;
-// 	char	*str;
-
-// 	tmp = tokens;
-// 	while (tmp)
-// 	{
-// 		str = ft_substr(tmp->value, 0, tmp->length);
-// 		if (!str)
-// 			return ;
-// 		printf("token: %s\t| type: %d\t| len:%d\n", str, tmp->type, tmp->length);
-// 		free(str);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-// void	ft_print_subcommands(t_command *command)
-// {
-// 	t_subcommand	*subcommand;
-// 	t_subcommand	tmp;
-// 	int				i;
-
-// 	subcommand = command->subcommands;
-// 	while (subcommand)
-// 	{
-// 		ft_memcpy(&tmp, subcommand, sizeof(t_subcommand));
-// 		printf(SUBCOMMAND_FMT, SUBCOMMAND_ARG(tmp));
-// 		if (subcommand->args)
-// 		{
-// 			i = 0;
-// 			while (subcommand->args[i])
-// 			{
-// 				printf("args[%d] = %s\n", i, subcommand->args[i]);
-// 				i++;
-// 			}
-// 		}
-// 		else
-// 			printf("args = NULL\n");
-// 		subcommand = subcommand->next;
-// 	}
-// }
+int	g_signal = 0;
 
 void	ft_fill_subcommand(t_command command, char ***env)
 {

@@ -37,7 +37,6 @@ void	ft_handle_ctrl_d(void)
 	exit(EXIT_SUCCESS);
 }
 
-// TODO: check if replace is freeing the buffer
 static void	ft_handle_ctrl_c(int signal)
 {
 	(void)signal;

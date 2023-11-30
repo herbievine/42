@@ -30,13 +30,13 @@
 #define READ 0
 #define WRITE 1
 
-int	parent_process(t_subcommand *subcommand, 
+int	parent_process(t_subcommand *subcommand,
 	int fd[2], pid_t *pid, int return_status)
 {
 	close(fd[WRITE]);
 	if (subcommand->next && subcommand->next->in_fd == -1)
 		subcommand->next->in_fd = fd[READ];
-	else 
+	else
 		close(fd[READ]);
 	if (!subcommand->is_executable)
 		return (-1);
@@ -58,7 +58,7 @@ int	ft_spawn_child(t_subcommand *subcommand,
 		if (subcommand->builtin && subcommand->is_executable)
 			return_status = ft_builtin_valid(*tokens, subcommand,
 					subcommand->path, envp);
-		if (!subcommand->is_executable 
+		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
 			exit(0);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
@@ -81,7 +81,7 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens, char ***envp)
 		return (false);
 	if (pid == PID_CHILD)
 	{
-		if (!subcommand->is_executable 
+		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
 			exit(0);
 		ft_redirect(subcommand);

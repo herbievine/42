@@ -37,7 +37,6 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand->builtin = 0;
 	subcommand->path = NULL;
 	subcommand->args = NULL;
-	// TODO Change field to `env`
 	subcommand->envp = env;
 	subcommand->mode = MODE_WRITE;
 	subcommand->is_executable = true;

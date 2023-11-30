@@ -54,7 +54,7 @@ char	*ft_fill_following_str(char *str, int i)
 	char	*tmp;
 
 	while (str[i] && str[i] != '$'
-		&& str[i] != '\'' && str[i] != '"' 
+		&& str[i] != '\'' && str[i] != '"'
 		&& !ft_isspace(str[i]))
 		i++;
 	tmp = ft_substr(str, i, ft_strlen(str) - i);
