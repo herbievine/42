@@ -7,8 +7,8 @@ run = [
 test = [
 	{ cmd = "git clone https://github.com/LucasKuhn/minishell_tester.git tester" },
 	{ cmd = "bash tester", dir = "tester" },
-	{ cmd = "rm -rf tester" }
+	{ cmd = "rm -rf tester" },
 ]
 build = { cmd = "make" }
-clean = { cmd = "make fclean; rm -rf tester" }
+clean = { cmd = "make fclean" }
 lint = { cmd = "norminette ." }
