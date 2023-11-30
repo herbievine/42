@@ -31,6 +31,8 @@ void	ft_init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 		philos[i].id = i + 1;
 		philos[i].eat_count = 0;
 		philos[i].data = data;
+		philos[i].last_meal_time = 0;
+		philos[i].start_time = 0;
 		philos[i].left_fork = &forks[i];
 		philos[i].right_fork = &forks[(i + 1) % data->philo_count];
 	}
@@ -50,6 +52,5 @@ void	ft_init_data(t_data *data)
 	data->time_sleep_in_ms = 0;
 	data->max_eat = -1;
 	data->start_time = 0;
-	data->is_ready = false;
 	data->is_game_over = false;
 }

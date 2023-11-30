@@ -16,6 +16,8 @@
 # define EARGS "error: invalid arguments"
 # define EUNKN "error: unknown error"
 # define ETHRD "error: thread error"
+# define EHELP "usage: ./philo <n_philos> <time_die>\
+ <time_eat> <time_sleep> [max_eat]"
 
 int		ft_err(char *err);
 

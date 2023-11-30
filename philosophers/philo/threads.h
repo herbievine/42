@@ -14,7 +14,8 @@
 # define THREADS_H
 
 # include "structs.h"
+# include <stdbool.h>
 
-t_bool	ft_spawn_threads(t_data *data, t_philo *philos);
+bool	ft_spawn_threads(t_data *data, t_philo *philos);
 
 #endif /* THREADS_H */

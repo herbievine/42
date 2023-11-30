@@ -19,10 +19,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
-static void		*ft_redirect_philo(void *arg);
-static t_bool	ft_init_mutexes(t_data *data, t_philo *philos);
-static void		ft_destroy_threads(t_data *data, t_philo *philos);
+static void	*ft_redirect_philo(void *arg);
+static bool	ft_init_mutexes(t_data *data, t_philo *philos);
+static void	ft_destroy_threads(t_data *data, t_philo *philos);
 
 /**
  * @brief The ft_spawn_threads function creates the threads and initializes
@@ -32,14 +33,17 @@ static void		ft_destroy_threads(t_data *data, t_philo *philos);
  * 
  * @param data 
  * @param philos 
- * @return t_bool 
+ * @return bool 
  */
-t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
+bool	ft_spawn_threads(t_data *data, t_philo *philos)
 {
 	int	i;
 
 	if (!ft_init_mutexes(data, philos))
 		return (false);
+	pthread_mutex_lock(&data->data_mutex);
+	data->start_time = ft_get_unix_time();
+	pthread_mutex_unlock(&data->data_mutex);
 	i = -1;
 	while (++i < data->philo_count)
 	{
@@ -47,13 +51,6 @@ t_bool	ft_spawn_threads(t_data *data, t_philo *philos)
 				&ft_redirect_philo, &philos[i]))
 			return (false);
 	}
-	pthread_mutex_lock(&data->data_mutex);
-	data->start_time = ft_get_time_in_ms();
-	i = -1;
-	while (++i < data->philo_count)
-		philos[i].last_meal_time = data->start_time;
-	data->is_ready = true;
-	pthread_mutex_unlock(&data->data_mutex);
 	ft_wait_for_exit(data, philos);
 	ft_destroy_threads(data, philos);
 	return (true);
@@ -72,6 +69,11 @@ static void	*ft_redirect_philo(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->data->max_eat == 0 || philo->data->time_die_in_ms == 0)
+		return (NULL);
+	pthread_mutex_lock(&philo->data->meal_mutex);
+	philo->last_meal_time = ft_get_unix_time();
+	pthread_mutex_unlock(&philo->data->meal_mutex);
 	if (philo->data->philo_count == 1)
 		ft_single_philo(philo);
 	else
@@ -86,9 +88,9 @@ static void	*ft_redirect_philo(void *arg)
  * 
  * @param data 
  * @param philos 
- * @return t_bool 
+ * @return bool 
  */
-static t_bool	ft_init_mutexes(t_data *data, t_philo *philos)
+static bool	ft_init_mutexes(t_data *data, t_philo *philos)
 {
 	int	i;
 

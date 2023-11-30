@@ -13,6 +13,9 @@
 #ifndef INT_H
 # define INT_H
 
-int	ft_atoi(char *str);
+# include <stdbool.h>
+
+int		ft_atoi(char *str);
+bool	ft_isdigit_str(char *str);
 
 #endif
