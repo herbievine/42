@@ -13,6 +13,8 @@
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
+# include <signal.h>
+
 void	ft_signals_register(void);
 void	ft_handle_ctrl_d(void);
 void	ft_handle_nothing(int signal);
