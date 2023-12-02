@@ -23,10 +23,10 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-static int	ft_init_here_doc(t_subcommand *subcommand);
+static int	ft_init_here_doc(t_subcommand *subcommand, t_token *token);
 static void	ft_print_heredoc(t_subcommand *subcommand, char *line, int fd);
 bool		ft_here_doc(t_subcommand *subcommand,
-				char *limiter);
+				char *limiter, t_token *token);
 
 bool	ft_set_here_doc(t_subcommand *subcommand,
 	t_token *token)
@@ -45,24 +45,25 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 					token->next->length);
 			if (!path)
 				return (g_signal = 1, false);
-			token->next->type = TOKEN_EOF;
 			if (subcommand->in_fd > 0)
 				close(subcommand->in_fd);
 			if (subcommand->is_heredoc)
 				unlink(".here_doc_fd");
-			if (!ft_here_doc(subcommand, path))
-				return (g_signal = 1, false);
+			if (!ft_here_doc(subcommand, path, token))
+				return (g_signal = 1, free(path), false);
+			free(path);
 		}
-		token = token->next;
+		token = token->next;	
 	}
 	return (true);
 }
 
-bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
+bool	ft_here_doc(t_subcommand *subcommand,
+		char *limiter, t_token *token)
 {
 	char	*buffer;
 
-	if (ft_init_here_doc(subcommand) != 0)
+	if (ft_init_here_doc(subcommand, token) != 0)
 		return (false);
 	while (subcommand->in_fd > 0)
 	{
@@ -87,8 +88,9 @@ bool	ft_here_doc(t_subcommand *subcommand, char *limiter)
 	return (true);
 }
 
-static int	ft_init_here_doc(t_subcommand *subcommand)
+static int	ft_init_here_doc(t_subcommand *subcommand, t_token *token)
 {
+	token->next->type = TOKEN_EOF;
 	subcommand->in_fd = open(".here_doc_fd",
 			O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!subcommand->in_fd)

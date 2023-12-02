@@ -30,7 +30,7 @@ char	**ft_env_set(char **env, char *key, char *value)
 	while (env[++i])
 	{
 		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0
-			&& env[i][ft_strlen(key) + 1] == '=')
+			&& env[i][ft_strlen(key)] == '=')
 		{
 			if (value)
 			{
@@ -45,6 +45,22 @@ char	**ft_env_set(char **env, char *key, char *value)
 		}
 	}
 	return (ft_env_set_at_index(key, value, env, i));
+}
+
+char	**ft_env_update_shlvl(char **env)
+{
+	char	*shlvl;
+	char	*tmp;
+
+	shlvl = ft_env_get(env, "SHLVL");
+	if (!shlvl)
+		return (env);
+	tmp = ft_itoa(ft_atoi(shlvl) + 1);
+	if (!tmp)
+		return (env);
+	env = ft_env_set(env, "SHLVL", tmp);
+	free(tmp);
+	return (env);
 }
 
 static char	*ft_env_format(char *key, char *value)
