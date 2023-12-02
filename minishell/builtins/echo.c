@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:53:08 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/21 14:53:08 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/02 21:24:55 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,42 @@
 #include "../structs.h"
 #include "../str.h"
 #include "../display.h"
+#include "../error.h"
+#include <stdio.h>
+
+static bool	is_newline_flag(char *arg);
 
 int	ft_echo(t_subcommand *subcommand)
 {
-	int	option;
-	int	i;
+	char	**args;
+	bool	print_newline;
+	int		i;
 
+	args = subcommand->args;
+	print_newline = true;
 	i = 0;
-	option = 0;
-	if (subcommand->args[0] && subcommand->args[1]
-		&& ft_strncmp(subcommand->args[1], "-n", 2) == 0
-		&& ft_strlen(subcommand->args[1]) == 2)
-		option = 1;
-	while (subcommand->args[++i])
+	while (args[++i] && is_newline_flag(args[i]))
+		print_newline = false;
+	while (args[i - 1] && args[i])
 	{
-		ft_putstr_fd(subcommand->args[i], subcommand->out_fd);
-		if (subcommand->args[i + 1])
+		ft_putstr_fd(args[i], subcommand->out_fd);
+		if (args[++i])
 			ft_putchar_fd(' ', subcommand->out_fd);
 	}
-	if (!option)
+	if (print_newline)
 		ft_putchar_fd('\n', subcommand->out_fd);
 	return (0);
+}
+
+static bool	is_newline_flag(char *arg)
+{
+	int	i;
+
+	if (arg[0] != '-')
+		return (false);
+	i = 0;
+	while (arg[++i])
+		if (arg[i] != 'n')
+			return (false);
+	return (true);
 }

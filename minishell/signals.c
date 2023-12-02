@@ -15,7 +15,6 @@
 #include "history.h"
 #include "display.h"
 #include "structs.h"
-#include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -33,21 +32,8 @@ void	ft_signals_register(void)
 void	ft_handle_nothing(int signal)
 {
 	(void)signal;
-	// printf("signal: %d\n", signal);
 	printf("\n");
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
 }
-
-// static void	ft_handle_newline(int signal)
-// {
-// 	(void)signal;
-// 	printf("\n");
-// 	// g_signal = 1;
-// 	// rl_on_new_line();
-// 	// rl_replace_line("", 0);
-// 	// rl_redisplay();
-// }
 
 void	ft_handle_ctrl_d(void)
 {
