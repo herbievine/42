@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 11:44:18 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/22 14:47:30 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/02 15:29:49 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,25 @@ void	ft_signals_register(void)
 	signal(SIGINT, &ft_handle_ctrl_c);
 	signal(SIGQUIT, &ft_handle_ctrl_slash);
 }
+
+void	ft_handle_nothing(int signal)
+{
+	(void)signal;
+	// printf("signal: %d\n", signal);
+	printf("\n");
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+}
+
+// static void	ft_handle_newline(int signal)
+// {
+// 	(void)signal;
+// 	printf("\n");
+// 	// g_signal = 1;
+// 	// rl_on_new_line();
+// 	// rl_replace_line("", 0);
+// 	// rl_redisplay();
+// }
 
 void	ft_handle_ctrl_d(void)
 {

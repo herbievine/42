@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/30 21:37:16 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/02 15:29:00 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "error.h"
 #include "display.h"
 #include "expand.h"
+#include "signals.h"
 #include "lexer_utils.h"
 #include "find_in_file.h"
 #include <unistd.h>
@@ -90,6 +91,8 @@ bool	ft_here_doc(t_subcommand *subcommand,
 
 static int	ft_init_here_doc(t_subcommand *subcommand, t_token *token)
 {
+	signal(SIGINT, &ft_handle_nothing);
+	signal(SIGQUIT, &ft_handle_nothing);
 	token->next->type = TOKEN_EOF;
 	subcommand->in_fd = open(".here_doc_fd",
 			O_RDWR | O_CREAT | O_TRUNC, 0644);

@@ -6,12 +6,11 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/23 12:23:57 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/02 15:03:03 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "str.h"
-#include "io.h"
 #include "parse.h"
 #include "structs.h"
 #include "print.h"
@@ -85,6 +84,7 @@ void	ft_await_command_entry(char ***env)
 
 	while (true)
 	{
+		ft_signals_register();
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
@@ -111,7 +111,6 @@ int	main(int argc, char **argv, char **envp)
 	if (!env)
 		return (1);
 	ft_history_new();
-	ft_signals_register();
 	ft_await_command_entry(&env);
 	return (0);
 }
