@@ -11,11 +11,20 @@
 /* ************************************************************************** */
 
 #include "free.h"
+#include "str.h"
+#include "token.h"
 #include <unistd.h>
 #include <stdio.h>
-#include "str.h"
+#include <stdbool.h>
 
-void	ft_free_tab(char **tab);
+void	ft_free_all(t_subcommand *subcommand, t_token **token,
+		bool do_you_want_to_free_the_env)
+{
+	if (do_you_want_to_free_the_env)
+		ft_free_array(subcommand->envp, -1);
+	ft_free_subcommands(subcommand);
+	ft_clear_tokens(token);
+}
 
 void	ft_free_subcommands(t_subcommand *subcommand)
 {
@@ -34,25 +43,12 @@ void	ft_free_subcommands(t_subcommand *subcommand)
 		if (subcommand->path != NULL)
 			free(subcommand->path);
 		if (subcommand->args != NULL)
-			ft_free_tab(subcommand->args);
+			ft_free_array(subcommand->args, -1);
 		tmp = subcommand->next;
 		free(subcommand);
 		subcommand = tmp;
 	}
 	return ;
-}
-
-void	ft_free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }
 
 // TODO check if used. if so, use ft_free_array instead

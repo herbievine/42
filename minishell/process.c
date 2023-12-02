@@ -60,11 +60,11 @@ int	ft_spawn_child(t_subcommand *subcommand,
 					subcommand->path, envp);
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			exit(0);
+			(ft_free_all(subcommand, tokens, true), exit(0));
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		(ft_free_subcommands(subcommand), ft_clear_tokens(tokens));
+		ft_free_all(subcommand, tokens, false);
 		exit(return_status);
 	}
 	return (parent_process(subcommand, fd, return_status));
@@ -83,12 +83,12 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 	{
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			exit(0);
+			(ft_free_all(subcommand, tokens, true), exit(0));
 		ft_redirect(subcommand);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		(ft_free_subcommands(subcommand), ft_clear_tokens(tokens));
+		ft_free_all(subcommand, tokens, false);
 		exit(return_status);
 	}
 	waitpid(pid, &return_status, 0);

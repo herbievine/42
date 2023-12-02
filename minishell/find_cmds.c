@@ -47,9 +47,8 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 	cmd = ft_substr(token->value, 0, token->length);
 	if (!cmd)
 		return (g_signal = 1, false);
-	if (ft_strncmp(cmd, "/bin/", 5) == 0)
-		if (access(cmd, F_OK) == 0)
-			return (subcommand->path = cmd, true);
+	if (ft_strncmp(cmd, "/bin/", 5) == 0 && access(cmd, F_OK) == 0)
+		return (subcommand->path = ft_strdup(cmd), free(cmd), true);
 	path = ft_find_path(subcommand, cmd);
 	if (!path)
 		return (g_signal = 1, free(cmd), false);

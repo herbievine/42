@@ -44,8 +44,7 @@ char	**ft_env_init(char **envp)
 			return (ft_free_array(copy, i), NULL);
 	}
 	copy[i] = NULL;
-	char **cpy_env = ft_env_update_shlvl(copy);
-	return(cpy_env);
+	return (ft_env_update_shlvl(copy));
 }
 
 /**

@@ -53,7 +53,7 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 				return (g_signal = 1, free(path), false);
 			free(path);
 		}
-		token = token->next;	
+		token = token->next;
 	}
 	return (true);
 }
