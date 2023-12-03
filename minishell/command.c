@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-t_command	ft_command_new(void)
+t_command	ft_command_new(char ***env)
 {
 	t_command	command;
 
@@ -25,5 +25,6 @@ t_command	ft_command_new(void)
 	command.token_length = 0;
 	command.subcommands = NULL;
 	command.subcommand_length = 0;
+	command.env = env;
 	return (command);
 }

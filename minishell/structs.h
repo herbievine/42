@@ -91,6 +91,7 @@ typedef struct s_command
 	int				token_length;
 	t_subcommand	*subcommands;
 	int				subcommand_length;
+	char			***env;
 }	t_command;
 
 typedef struct s_shell

@@ -19,7 +19,7 @@
 #include <stdio.h>
 
 // Tokens are defined in `lexer_utils.c`
-// consisting of <<, >>, <, > or |
+// They consist of <<, >>, <, > or |
 #define TOKEN_COUNT 5
 
 /**
@@ -29,33 +29,28 @@
  *
  * @param token
  */
-void	ft_clean_tokens(t_token **token)
+bool	ft_clean_tokens(t_token **token)
 {
-	t_token	*head;
-	t_token	*prev;
+	t_token	*tmp;
 
-	head = *token;
-	prev = NULL;
-	while (head)
+	if (*token && (*token)->length == 0 && !(*token)->next)
 	{
-		if (head->length == 0)
+		(free((void *)(*token)->value), free(*token));
+		*token = NULL;
+		return (false);
+	}
+	while (*token != NULL)
+	{
+		if ((*token)->length == 0)
 		{
-			if (prev)
-				prev->next = head->next;
-			else
-				*token = head->next;
-			(free((void *)head->value), free(head));
-			if (prev)
-				head = prev->next;
-			else
-				head = *token;
+			tmp = *token;
+			*token = (*token)->next;
+			(free((void *)tmp->value), free(tmp));
 		}
 		else
-		{
-			prev = head;
-			head = head->next;
-		}
+			token = &(*token)->next;
 	}
+	return (true);
 }
 
 static bool	ft_handle_tokens(t_lexer *lexer, t_token *token)
