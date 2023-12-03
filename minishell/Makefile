@@ -41,6 +41,7 @@ SRCS = \
 	find_in_file.c \
 	find_out_file.c \
 	free.c \
+	lists.c \
 	here_doc.c \
 	get_line.c \
 	process.c \
