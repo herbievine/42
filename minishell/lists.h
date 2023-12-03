@@ -14,9 +14,9 @@
 # define LISTS_H
 
 void	ft_dcll_append(t_double_circular_ll **start,
-	t_double_circular_ll *new_node);
+			t_double_circular_ll *new_node);
 void	ft_dcll_prepend(t_double_circular_ll **start,
-	t_double_circular_ll *new_node);
+			t_double_circular_ll *new_node);
 void	ft_dcll_display(t_double_circular_ll *start);
 
 #endif /* LISTS_H */
