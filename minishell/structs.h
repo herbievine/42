@@ -71,6 +71,12 @@ typedef enum e_mode
 	MODE_APPEND
 }	t_mode;
 
+typedef struct s_double_circular_ll
+{
+	struct s_double_circular_ll	*next;
+	struct s_double_circular_ll	*prev;
+}	t_double_circular_ll;
+
 typedef struct s_subcommand
 {
 	int					in_fd;

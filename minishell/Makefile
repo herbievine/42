@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/12/02 15:03:06 by juliencros       ###   ########.fr        #
+#    Updated: 2023/12/03 11:22:43 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS = \
 	find_in_file.c \
 	find_out_file.c \
 	free.c \
+	lists.c \
 	here_doc.c \
 	get_line.c \
 	process.c \
