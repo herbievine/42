@@ -49,7 +49,7 @@ static void	ft_execution_wrapper(t_command *command)
 static bool	ft_parse_wrapper(t_command *command)
 {
 	if (command->token_length == 0 || !command->tokens)
-		return ;
+		return (false);
 	ft_expand_token(command->subcommands, command->tokens);
 	ft_suppress_quotes(command->subcommands, command->tokens);
 	if (!ft_clean_tokens(&command->tokens))
