@@ -126,7 +126,8 @@ char	**ft_env_remove(char ***env, char *key)
 		j = 0;
 		while ((*env)[i][j] && (*env)[i][j] != '=')
 			j++;
-		if (ft_strncmp((*env)[i], key, j) == 0)
+		if (ft_strncmp((*env)[i], key, j) == 0
+			&& (*env)[i][ft_strlen(key)] == '=')
 		{
 			free((*env)[i]);
 			while ((*env)[i])
