@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:56:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/26 08:43:40 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/03 08:01:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_free_all(t_subcommand *subcommand, t_token **token,
 	if (do_you_want_to_free_the_env)
 		ft_free_array(subcommand->envp, -1);
 	ft_free_subcommands(subcommand);
-	ft_clear_tokens(token);
+	ft_free_tokens(token);
 }
 
 void	ft_free_subcommands(t_subcommand *subcommand)

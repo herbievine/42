@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 11:05:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/21 11:05:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/03 08:01:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_exit(t_subcommand *subcommand, t_token *token)
 		return (ft_putstr_fd("exit: too many arguments\n", 2), EXIT_FAILURE);
 	if (subcommand->args[1])
 		exit_value = ft_parse_exit_code(subcommand->args[1]);
-	ft_clear_tokens(&token);
+	ft_free_tokens(&token);
 	ft_free_array(subcommand->envp, -1);
 	ft_free_subcommands(subcommand);
 	ft_history_clear();

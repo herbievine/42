@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/02 15:03:03 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/03 08:01:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,46 +36,55 @@
 
 int	g_signal = 0;
 
-void	ft_fill_subcommand(t_command command, char ***env)
+static void	ft_execution_wrapper(t_command *command)
 {
 	int	retval;
 
 	retval = -1;
-	ft_expand_token(command.subcommands, command.tokens);
-	ft_suppress_quotes(command.subcommands, command.tokens);
-	ft_clean_tokens(&command.tokens);
-	if (command.tokens
-		&& ft_parse(command.tokens, command.subcommands, env))
-	{
-		retval = ft_execute(command.subcommands, &command.tokens, env);
-		if (retval != -1)
-			g_signal = retval;
-	}
+	retval = ft_execute(command->subcommands, &command->tokens, command->env);
+	if (retval != -1)
+		g_signal = retval;
 }
 
-void	ft_build_command(char *buffer, char ***env)
+static bool	ft_parse_wrapper(t_command *command)
+{
+	if (command->token_length == 0 || !command->tokens)
+		return (false);
+	ft_expand_token(command->subcommands, command->tokens);
+	ft_suppress_quotes(command->subcommands, command->tokens);
+	if (!ft_clean_tokens(&command->tokens))
+		return (false);
+	if (!ft_parse(command->tokens, command->subcommands, command->env))
+		return (false);
+	return (true);
+}
+
+static void	ft_build_command(char *buffer, char ***env)
 {
 	t_command	command;
 	t_lexer		lexer;
 	t_token		token;
 
-	command = ft_command_new();
+	command = ft_command_new(env);
 	lexer = ft_lexer_new(buffer);
 	token = ft_lexer_next(&lexer);
 	while (token.type != TOKEN_EOF)
 	{
-		if (token.type == TOKEN_INVALID && ft_clear_tokens(&command.tokens))
-			return (ft_invalid_token(lexer, token), g_signal = 1, (void)0);
-		if (ft_append_token(&command.tokens, token))
-			command.token_length++;
-		else
-			return (ft_clear_tokens(&command.tokens), g_signal = 1, (void)0);
+		if (token.type == TOKEN_INVALID)
+			return (ft_free_tokens(&command.tokens),
+				ft_invalid_token(lexer, token), g_signal = 1, (void)0);
+		if (!ft_append_token(&command.tokens, token))
+			return (ft_free_tokens(&command.tokens), g_signal = 1, (void)0);
+		command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (ft_create_subcommands(&command, *env))
-		ft_fill_subcommand(command, env);
+	if (!ft_create_subcommands(&command, *env))
+		return (ft_free_all(command.subcommands, &command.tokens, false));
+	if (!ft_parse_wrapper(&command))
+		return (ft_free_all(command.subcommands, &command.tokens, false));
+	ft_execution_wrapper(&command);
 	ft_free_subcommands(command.subcommands);
-	ft_clear_tokens(&command.tokens);
+	ft_free_tokens(&command.tokens);
 }
 
 void	ft_await_command_entry(char ***env)
