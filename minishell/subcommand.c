@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 18:50:36 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:33:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand->is_executable = true;
 	subcommand->is_heredoc = false;
 	subcommand->next = NULL;
-	subcommand->prev = NULL;
 	return (subcommand);
 }
 
@@ -106,7 +105,6 @@ bool	ft_create_subcommands(t_command *command, char **env)
 			head = command->subcommands;
 			while (command->subcommands->next)
 				command->subcommands = command->subcommands->next;
-			subcommand->prev = command->subcommands;
 			command->subcommands->next = subcommand;
 			command->subcommands = head;
 			command->subcommand_length++;

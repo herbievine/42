@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 17:18:55 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:33:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_subcommand
 	bool				is_executable;
 	bool				is_heredoc;
 	struct s_subcommand	*next;
-	struct s_subcommand	*prev;
 }	t_subcommand;
 
 typedef struct s_command
@@ -91,8 +90,8 @@ typedef struct s_command
 	t_token			*tokens;
 	int				token_length;
 	t_subcommand	*subcommands;
-	int 			subcommand_nb;
-	int 			*pid;
+	int				subcommand_nb;
+	int				*pid;
 	int				pipe_fd[2];
 	int				prev_pipe_fd;
 	int				subcommand_length;

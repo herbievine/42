@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 18:50:08 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:31:38 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 #define READ 0
 #define WRITE 1
 
-int	parent_process(t_command *command, t_subcommand *subcommand, int return_status)
+int	parent_process(t_command *command,
+	t_subcommand *subcommand, int return_status)
 {
 	close(command->pipe_fd[WRITE]);
 	if (command->prev_pipe_fd != -1)
@@ -48,7 +49,8 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 	int		return_status;
 
 	return_status = 0;
-	if (!ft_fork_and_pipe(command, subcommand, &command->pid[subcommand_nb], subcommand_nb))
+	if (!ft_fork_and_pipe(command, subcommand,
+			&command->pid[subcommand_nb], subcommand_nb))
 		return (false);
 	if (command->pid[subcommand_nb] == PID_CHILD)
 	{
@@ -126,22 +128,10 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 
 int	ft_execute(t_command *command, char ***envp)
 {
-	t_subcommand	*head;
-	int i = 0;
-
-	head = command->subcommands;
-	while (head != NULL)
-	{
-		head = head->next;
-		i++;
-	}
-	command->subcommand_length = i;
-	command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
-	if (!command->pid)
-		return (false);
 	if (!command->subcommands->next)
 	{
-		if (command->subcommands->builtin && command->subcommands->is_executable)
+		if (command->subcommands->builtin
+			&& command->subcommands->is_executable)
 			return (ft_builtin_valid(command->tokens, command->subcommands,
 					command->subcommands->path, envp));
 		return (ft_single_command(command->subcommands, &command->tokens));

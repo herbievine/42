@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 18:46:08 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:29:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 			dup2(command->pipe_fd[WRITE], STDOUT_FILENO);
 		else if (subcommand->out_fd != -1)
 			dup2(subcommand->out_fd, STDOUT_FILENO);
-		close(command->pipe_fd[READ]);
-		close(command->pipe_fd[WRITE]);
+		(close(command->pipe_fd[READ]), close(command->pipe_fd[WRITE]));
 	}
 	return (true);
 }
@@ -54,5 +53,3 @@ void	ft_redirect(t_subcommand *subcommand)
 	if (subcommand->out_fd != -1)
 		dup2(subcommand->out_fd, STDOUT_FILENO);
 }
-
-// fcntl(3, F_GETFD) == -1 ? dprintf(2, " %s: error\n", subcommand->path): dprintf(2, "%s:no error\n", subcommand->path);
