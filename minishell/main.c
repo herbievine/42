@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 19:34:42 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:48:06 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ void	ft_init_pid(t_command *command)
 		i++;
 	}
 	command->subcommand_nb = i;
-	command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
-	if (!command->pid)
+	if (i > 0)
 	{
-		g_signal = 1;
+		command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
+		if (!command->pid)
+			g_signal = 1;
 	}
 }
 
@@ -72,6 +73,8 @@ void	ft_fill_subcommand(t_command command, char ***env)
 		if (retval != -1)
 			g_signal = retval;
 	}
+	else
+		command.subcommands = NULL;
 }
 
 void	ft_build_command(char *buffer, char ***env)
@@ -97,6 +100,8 @@ void	ft_build_command(char *buffer, char ***env)
 		ft_fill_subcommand(command, env);
 	ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
+	if (command.pid)
+		free(command.pid);
 }
 
 void	ft_await_command_entry(char ***env)

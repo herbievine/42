@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:56:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 18:47:55 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:50:25 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void	ft_free_all(t_subcommand *subcommand, t_token **token,
+void	ft_free_all(t_command *command,
+		t_subcommand *subcommand, t_token **token,
 		bool do_you_want_to_free_the_env)
 {
 	if (do_you_want_to_free_the_env)
 		ft_free_array(subcommand->envp, -1);
 	ft_free_subcommands(subcommand);
 	ft_clear_tokens(token);
+	free(command->pid);
 }
 
 void	ft_free_subcommands(t_subcommand *subcommand)

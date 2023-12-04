@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:14:02 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 10:54:48 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:47:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_command	ft_command_new(void)
 	command.tokens = NULL;
 	command.token_length = 0;
 	command.subcommands = NULL;
+	command.pid = NULL;
 	command.prev_pipe_fd = -1;
 	command.pipe_fd[READ] = -1;
 	command.pipe_fd[WRITE] = -1;
