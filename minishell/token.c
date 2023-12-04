@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:00:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/27 10:27:08 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/03 08:01:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,42 @@ bool	ft_append_token(t_token **tokens, t_token token)
 	return (true);
 }
 
-bool	ft_clear_tokens(t_token **tokens)
+/**
+ * @brief The ft_clean_tokens function is used after the expander to remove
+ * tokens which have a length of 0, as a result of the expander not being able
+ * to expand the token.
+ *
+ * @param token
+ */
+bool	ft_clean_tokens(t_token **token)
+{
+	t_token	*tmp;
+
+	if (*token && (*token)->length == 0 && !(*token)->next)
+	{
+		(free((void *)(*token)->value), free(*token));
+		*token = NULL;
+		return (false);
+	}
+	while (*token != NULL)
+	{
+		if ((*token)->length == 0)
+		{
+			tmp = *token;
+			*token = (*token)->next;
+			(free((void *)tmp->value), free(tmp));
+		}
+		else
+			token = &(*token)->next;
+	}
+	return (true);
+}
+
+bool	ft_free_tokens(t_token **tokens)
 {
 	t_token	*next;
 
-	if (!tokens || !*tokens || (*tokens)->length == 0)
+	if (!tokens || !*tokens)
 		return (false);
 	while (*tokens)
 	{

@@ -16,6 +16,6 @@
 # include "structs.h"
 # include <stdbool.h>
 
-t_command	ft_command_new(void);
+t_command	ft_command_new(char ***env);
 
 #endif /* COMMAND_H */

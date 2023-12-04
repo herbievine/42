@@ -18,13 +18,12 @@
 #include <stdbool.h>
 
 void	ft_free_all(t_command *command,
-		t_subcommand *subcommand, t_token **token,
 		bool do_you_want_to_free_the_env)
 {
 	if (do_you_want_to_free_the_env)
-		ft_free_array(subcommand->envp, -1);
-	ft_free_subcommands(subcommand);
-	ft_clear_tokens(token);
+		ft_free_array(command->env, -1);
+	ft_free_subcommands(command->subcommands);
+	ft_clear_tokens(command->tokens);
 	free(command->pid);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 19:29:01 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 21:27:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <errno.h>
 
 bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
-		pid_t *pid, int subcommand_nb)
+		pid_t *pid, int subcommand_length)
 {
 	if (pipe(command->pipe_fd) == PIPE_ERROR)
 		return (false);
@@ -30,7 +30,7 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 	}
 	if (*pid == PID_CHILD)
 	{
-		if (subcommand_nb != 0 && subcommand->in_fd == -1)
+		if (subcommand_length != 0 && subcommand->in_fd == -1)
 		{
 			dup2(command->prev_pipe_fd, STDIN_FILENO);
 			close(command->prev_pipe_fd);

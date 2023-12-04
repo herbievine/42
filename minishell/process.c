@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 19:52:07 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 21:27:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ int	parent_process(t_command *command,
 }
 
 int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
-	char ***envp, int subcommand_nb)
+	char ***envp, int subcommand_length)
 {
 	int		return_status;
 
 	return_status = 0;
 	if (!ft_fork_and_pipe(command, subcommand,
-			&command->pid[subcommand_nb], subcommand_nb))
+			&command->pid[subcommand_length], subcommand_length))
 		return (false);
-	if (command->pid[subcommand_nb] == PID_CHILD)
+	if (command->pid[subcommand_length] == PID_CHILD)
 	{
 		if (subcommand->builtin && subcommand->is_executable)
 			return_status = ft_builtin_valid(command->tokens, subcommand,

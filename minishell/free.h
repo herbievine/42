@@ -16,8 +16,8 @@
 # include "structs.h"
 # include <stdlib.h>
 
-void	ft_free_all(t_command *command, t_subcommand *subcommand,
-			t_token **token, bool do_you_want_to_free_the_env);
+void	ft_free_all(t_command *command,
+			bool do_you_want_to_free_the_env);
 void	ft_free_subcommands(t_subcommand *subcommand);
 void	ft_free_cmds(char **split, size_t j);
 void	ft_free_array(char **array, int n);

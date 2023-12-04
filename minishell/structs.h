@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 19:33:18 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 21:27:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ typedef enum e_mode
 	MODE_APPEND
 }	t_mode;
 
+typedef struct s_double_circular_ll
+{
+	struct s_double_circular_ll	*next;
+	struct s_double_circular_ll	*prev;
+}	t_double_circular_ll;
+
 typedef struct s_subcommand
 {
 	int					in_fd;
@@ -90,11 +96,12 @@ typedef struct s_command
 	t_token			*tokens;
 	int				token_length;
 	t_subcommand	*subcommands;
-	int				subcommand_nb;
+	int				subcommand_length;
 	int				*pid;
 	int				pipe_fd[2];
 	int				prev_pipe_fd;
 	int				subcommand_length;
+	char			***env;
 }	t_command;
 
 typedef struct s_shell

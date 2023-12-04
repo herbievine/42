@@ -94,15 +94,22 @@ char	**ft_env_get_paths(char **env)
  */
 char	*ft_env_get_home(char **env)
 {
+	char	*home;
+	char	*user;
 	char	*path;
 
-	path = ft_env_get(env, "HOME");
-	if (!path && __MACH__)
-		path = ft_strjoin("/Users/", ft_env_get(env, "USER"));
-	else if (!path)
-		path = ft_strjoin("/home/", ft_env_get(env, "USER"));
-	if (!path)
+	home = ft_env_get(env, "HOME");
+	if (!home)
 		return (NULL);
+	user = ft_env_get(env, "USER");
+	if (!user)
+		return (free(home), NULL);
+	if (__MACH__)
+		path = ft_strjoin("/Users/", ft_env_get(env, "USER"));
+	else
+		path = ft_strjoin("/home/", ft_env_get(env, "USER"));
+	free(home);
+	free(user);
 	return (path);
 }
 
@@ -126,7 +133,8 @@ char	**ft_env_remove(char ***env, char *key)
 		j = 0;
 		while ((*env)[i][j] && (*env)[i][j] != '=')
 			j++;
-		if (ft_strncmp((*env)[i], key, j) == 0)
+		if (ft_strncmp((*env)[i], key, j) == 0
+			&& (*env)[i][ft_strlen(key)] == '=')
 		{
 			free((*env)[i]);
 			while ((*env)[i])
