@@ -54,6 +54,37 @@ bool	ft_append_token(t_token **tokens, t_token token)
 	return (true);
 }
 
+/**
+ * @brief The ft_clean_tokens function is used after the expander to remove
+ * tokens which have a length of 0, as a result of the expander not being able
+ * to expand the token.
+ *
+ * @param token
+ */
+bool	ft_clean_tokens(t_token **token)
+{
+	t_token	*tmp;
+
+	if (*token && (*token)->length == 0 && !(*token)->next)
+	{
+		(free((void *)(*token)->value), free(*token));
+		*token = NULL;
+		return (false);
+	}
+	while (*token != NULL)
+	{
+		if ((*token)->length == 0)
+		{
+			tmp = *token;
+			*token = (*token)->next;
+			(free((void *)tmp->value), free(tmp));
+		}
+		else
+			token = &(*token)->next;
+	}
+	return (true);
+}
+
 bool	ft_free_tokens(t_token **tokens)
 {
 	t_token	*next;
