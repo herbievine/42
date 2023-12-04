@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:56:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/03 08:01:30 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/04 19:50:25 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void	ft_free_all(t_subcommand *subcommand, t_token **token,
+void	ft_free_all(t_command *command,
 		bool do_you_want_to_free_the_env)
 {
 	if (do_you_want_to_free_the_env)
-		ft_free_array(subcommand->envp, -1);
-	ft_free_subcommands(subcommand);
-	ft_free_tokens(token);
+		ft_free_array(*(command->env), -1);
+	ft_free_subcommands(command->subcommands);
+	ft_free_tokens(&(command->tokens));
+	free(command->pid);
 }
 
 void	ft_free_subcommands(t_subcommand *subcommand)

@@ -3,39 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/15 15:39:23 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 21:27:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 #include <unistd.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <errno.h>
 
-bool	ft_fork_and_pipe(t_subcommand *subcommand,
-	int fd[2], pid_t *pid)
+bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
+		pid_t *pid, int subcommand_length)
 {
-	if (subcommand->next && pipe(fd) == PIPE_ERROR)
+	if (pipe(command->pipe_fd) == PIPE_ERROR)
 		return (false);
 	*pid = fork();
 	if (*pid == PID_ERROR)
 	{
 		if (subcommand->next)
-			return (close(fd[READ]), close(fd[WRITE]), false);
+			return (close(command->pipe_fd[READ]),
+				close(command->pipe_fd[WRITE]), false);
 	}
 	if (*pid == PID_CHILD)
 	{
-		if (subcommand->in_fd != -1)
+		if (subcommand_length != 0 && subcommand->in_fd == -1)
+		{
+			dup2(command->prev_pipe_fd, STDIN_FILENO);
+			close(command->prev_pipe_fd);
+		}
+		else if (subcommand->in_fd != -1)
 			dup2(subcommand->in_fd, STDIN_FILENO);
-		else
-			dup2(fd[READ], STDIN_FILENO);
-		close(fd[READ]);
-		if (subcommand->out_fd != -1)
+		if (subcommand->next && subcommand->out_fd == -1)
+			dup2(command->pipe_fd[WRITE], STDOUT_FILENO);
+		else if (subcommand->out_fd != -1)
 			dup2(subcommand->out_fd, STDOUT_FILENO);
-		else
-			dup2(fd[WRITE], STDOUT_FILENO);
-		close(fd[WRITE]);
+		(close(command->pipe_fd[READ]), close(command->pipe_fd[WRITE]));
 	}
 	return (true);
 }
