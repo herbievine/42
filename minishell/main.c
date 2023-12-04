@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/02 15:03:03 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/03 16:46:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,55 @@
 
 int	g_signal = 0;
 
+#define SUBCOMMAND_FMT \
+	"Subcommand(in_fd=%d, out_fd=%d, path='%s', \
+	builtin=%d, mode=%d, is_heredoc=%d, is_executable=%d) and prev = '%s'\n"
+#define SUBCOMMAND_ARG(subcommand)                      \
+	subcommand.in_fd, subcommand.out_fd, subcommand.path, \
+			subcommand.builtin, subcommand.mode, subcommand.is_heredoc, \
+			subcommand.is_executable, subcommand.prev ? subcommand.prev->path : "NULL"
+
+void	ft_print_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+	char	*str;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		str = ft_substr(tmp->value, 0, tmp->length);
+		printf("token: %s\t| type: %d\t| len:%d\n", str, tmp->type, tmp->length);
+		free(str);
+		tmp = tmp->next;
+	}
+}
+
+void	ft_print_subcommands(t_command *command)
+{
+	t_subcommand	*subcommand;
+	t_subcommand	tmp;
+	int				i;
+
+	subcommand = command->subcommands;
+	while (subcommand)
+	{
+		ft_memcpy(&tmp, subcommand, sizeof(t_subcommand));
+		printf(SUBCOMMAND_FMT, SUBCOMMAND_ARG(tmp));
+		if (subcommand->args)
+		{
+			i = 0;
+			while (subcommand->args[i])
+			{
+				printf("args[%d] = %s\n", i, subcommand->args[i]);
+				i++;
+			}
+		}
+		else
+			printf("args = NULL\n");
+		subcommand = subcommand->next;
+	}
+}
+
 void	ft_fill_subcommand(t_command command, char ***env)
 {
 	int	retval;
@@ -47,7 +96,8 @@ void	ft_fill_subcommand(t_command command, char ***env)
 	if (command.tokens
 		&& ft_parse(command.tokens, command.subcommands, env))
 	{
-		retval = ft_execute(command.subcommands, &command.tokens, env);
+		// ft_print_subcommands(&command);
+		retval = ft_execute(&command, env);
 		if (retval != -1)
 			g_signal = retval;
 	}

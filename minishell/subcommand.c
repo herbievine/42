@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subcommand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/26 08:42:54 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/03 16:32:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+#define READ 0
+#define WRITE 1
+
 t_subcommand	*ft_subcommand_new(char **env)
 {
 	t_subcommand	*subcommand;
@@ -35,6 +38,10 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand->in_fd = -1;
 	subcommand->out_fd = -1;
 	subcommand->builtin = 0;
+	// subcommand->subcommand_nb = 0;
+	// subcommand->pipe_fd[READ] = -1;
+	// subcommand->pipe_fd[WRITE] = -1;
+	// subcommand->prev_pipe_fd = -1;
 	subcommand->path = NULL;
 	subcommand->args = NULL;
 	subcommand->envp = env;
@@ -42,6 +49,7 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand->is_executable = true;
 	subcommand->is_heredoc = false;
 	subcommand->next = NULL;
+	subcommand->prev = NULL;
 	return (subcommand);
 }
 
@@ -102,6 +110,7 @@ bool	ft_create_subcommands(t_command *command, char **env)
 			head = command->subcommands;
 			while (command->subcommands->next)
 				command->subcommands = command->subcommands->next;
+			subcommand->prev = command->subcommands;
 			command->subcommands->next = subcommand;
 			command->subcommands = head;
 			command->subcommand_length++;
