@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 11:03:12 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 17:18:55 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ typedef struct s_subcommand
 	int					in_fd;
 	int					out_fd;
 	int					builtin;
-	// int 				pipe_fd[2];
-	// int 				prev_pipe_fd;
-	// int 				subcommand_nb;
 	char				*path;
 	char				**args;
 	char				**envp;
@@ -95,6 +92,7 @@ typedef struct s_command
 	int				token_length;
 	t_subcommand	*subcommands;
 	int 			subcommand_nb;
+	int 			*pid;
 	int				pipe_fd[2];
 	int				prev_pipe_fd;
 	int				subcommand_length;

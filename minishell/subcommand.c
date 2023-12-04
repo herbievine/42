@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/03 16:32:18 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 18:50:36 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand->in_fd = -1;
 	subcommand->out_fd = -1;
 	subcommand->builtin = 0;
-	// subcommand->subcommand_nb = 0;
-	// subcommand->pipe_fd[READ] = -1;
-	// subcommand->pipe_fd[WRITE] = -1;
-	// subcommand->prev_pipe_fd = -1;
 	subcommand->path = NULL;
 	subcommand->args = NULL;
 	subcommand->envp = env;

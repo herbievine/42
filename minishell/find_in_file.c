@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 16:22:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 18:47:15 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
 	if (!path)
 		return (g_signal = 1, -1);
 	if ((*subcommand)->out_fd > 0)
-	{
-		fprintf(stderr, "==%i== close %d\n", getpid(), (*subcommand)->out_fd);
 		close((*subcommand)->out_fd);
-	}
 	if ((*subcommand)->is_heredoc)
 		unlink(".here_doc_fd");
 	fd = open(path, O_RDONLY, 0644);

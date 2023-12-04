@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 17:12:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 18:50:08 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,10 @@
 
 int	parent_process(t_command *command, t_subcommand *subcommand, int return_status)
 {
-	dprintf(2, "previous pipe_fd: %d	pipe_read: %d	pipe_write: %dx\n", command->prev_pipe_fd, command->pipe_fd[READ],  command->pipe_fd[WRITE]);
-	fprintf(stderr, "==%i== close %d\n", getpid(), command->pipe_fd[WRITE]);
 	close(command->pipe_fd[WRITE]);
 	if (command->prev_pipe_fd != -1)
-	{
-		fprintf(stderr, "==%i== close %d\n", getpid(), command->prev_pipe_fd);
 		close(command->prev_pipe_fd);
-	}
-	fprintf(stderr, "==%i== dup %d\n", getpid(), command->pipe_fd[READ]);
 	command->prev_pipe_fd = dup(command->pipe_fd[READ]);
-	fprintf(stderr, "==%i== close %d\n", getpid(), command->pipe_fd[READ]);
 	close(command->pipe_fd[READ]);
 	if (!subcommand->is_executable)
 		return (-1);
@@ -55,11 +48,11 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 	int		return_status;
 
 	return_status = 0;
-	// dprintf(2, "bfr fork subcommand: %s\n", subcommand->path);
 	if (!ft_fork_and_pipe(command, subcommand, &command->pid[subcommand_nb], subcommand_nb))
 		return (false);
 	if (command->pid[subcommand_nb] == PID_CHILD)
 	{
+		free(command->pid);
 		if (subcommand->builtin && subcommand->is_executable)
 			return_status = ft_builtin_valid(command->tokens, subcommand,
 					subcommand->path, envp);
@@ -86,25 +79,20 @@ int	ft_multiple_commands(t_command *command, char ***envp)
 	head = command->subcommands;
 	while (head != NULL)
 	{
-		return_status = ft_spawn_child(command, head, envp, i);
+		return_status = ft_spawn_child(command, head, envp, i++);
 		head = head->next;
-		i++;
 	}
-	i = 0;
-	while (i < command->subcommand_length)
-	{
-		fprintf(stderr, "==%i== WAIT %i\n", getpid(), i);	
+	i = -1;
+	while (++i < command->subcommand_length)
 		waitpid(command->pid[i], &return_status, 0);
-		i++;
-	}
 	head = command->subcommands;
 	while (head->next != NULL)
 		head = head->next;
-	fprintf(stderr, "==%i== close %d\n", getpid(), command->pipe_fd[READ]);	
 	close(command->pipe_fd[READ]);
 	if (!head->is_executable)
 		return (-1);
-	return_status = WEXITSTATUS(return_status);
+	if (WIFEXITED(return_status))
+		return_status = WEXITSTATUS(return_status);
 	return (return_status);
 }
 
@@ -129,7 +117,6 @@ int	ft_single_command(t_subcommand *subcommand, t_token **tokens)
 		ft_free_all(subcommand, tokens, false);
 		exit(return_status);
 	}
-	fprintf(stderr, "==%i== WAIT %i\n", getpid(), pid);
 	waitpid(pid, &return_status, 0);
 	return_status = WEXITSTATUS(return_status);
 	if (!subcommand->is_executable)

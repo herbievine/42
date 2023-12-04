@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/03 16:46:58 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 19:24:15 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,26 @@ void	ft_print_tokens(t_token *tokens)
 	}
 }
 
+void ft_init_pid(t_command *command)
+{
+	t_subcommand	*subcommand;
+	int				i;
+
+	subcommand = command->subcommands;
+	i = 0;
+	while (subcommand)
+	{
+		subcommand = subcommand->next;
+		i++;
+	}
+	command->subcommand_nb = i;
+	command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
+	if (!command->pid)
+	{
+		g_signal = 1;
+	}
+}
+		
 void	ft_print_subcommands(t_command *command)
 {
 	t_subcommand	*subcommand;
@@ -90,13 +110,14 @@ void	ft_fill_subcommand(t_command command, char ***env)
 	int	retval;
 
 	retval = -1;
+
 	ft_expand_token(command.subcommands, command.tokens);
 	ft_suppress_quotes(command.subcommands, command.tokens);
 	ft_clean_tokens(&command.tokens);
+	ft_init_pid(&command);
 	if (command.tokens
 		&& ft_parse(command.tokens, command.subcommands, env))
 	{
-		// ft_print_subcommands(&command);
 		retval = ft_execute(&command, env);
 		if (retval != -1)
 			g_signal = retval;
