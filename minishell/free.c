@@ -21,9 +21,9 @@ void	ft_free_all(t_command *command,
 		bool do_you_want_to_free_the_env)
 {
 	if (do_you_want_to_free_the_env)
-		ft_free_array(command->env, -1);
+		ft_free_array(*(command->env), -1);
 	ft_free_subcommands(command->subcommands);
-	ft_clear_tokens(command->tokens);
+	ft_free_tokens(&(command->tokens));
 	free(command->pid);
 }
 

@@ -59,11 +59,11 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 					subcommand->path, envp);
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			(ft_free_all(command, subcommand, &command->tokens, true), exit(0));
+			(ft_free_all(command, true), exit(0));
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		ft_free_all(command, subcommand, &command->tokens, false);
+		ft_free_all(command, false);
 		exit(return_status);
 	}
 	return (parent_process(command, subcommand, return_status));
@@ -97,8 +97,7 @@ int	ft_multiple_commands(t_command *command, char ***envp)
 	return (return_status);
 }
 
-int	ft_single_command(t_command *command,
-	t_subcommand *subcommand, t_token **tokens)
+int	ft_single_command(t_command *command, t_subcommand *subcommand)
 {
 	pid_t	pid;
 	int		return_status;
@@ -111,12 +110,12 @@ int	ft_single_command(t_command *command,
 	{
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			(ft_free_all(command, subcommand, tokens, true), exit(0));
+			(ft_free_all(command, true), exit(0));
 		ft_redirect(subcommand);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		ft_free_all(command, subcommand, tokens, false);
+		ft_free_all(command, false);
 		exit(return_status);
 	}
 	waitpid(pid, &return_status, 0);
@@ -134,8 +133,7 @@ int	ft_execute(t_command *command, char ***envp)
 			&& command->subcommands->is_executable)
 			return (ft_builtin_valid(command->tokens, command->subcommands,
 					command->subcommands->path, envp));
-		return (ft_single_command(command,
-				command->subcommands, &command->tokens));
+		return (ft_single_command(command, command->subcommands));
 	}
 	return (ft_multiple_commands(command, envp));
 }

@@ -100,7 +100,6 @@ typedef struct s_command
 	int				*pid;
 	int				pipe_fd[2];
 	int				prev_pipe_fd;
-	int				subcommand_length;
 	char			***env;
 }	t_command;
 
