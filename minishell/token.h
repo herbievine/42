@@ -19,6 +19,7 @@
 
 int		ft_find_next_pipe(t_token *token);
 bool	ft_append_token(t_token **tokens, t_token token);
+bool	ft_clean_tokens(t_token **token);
 bool	ft_free_tokens(t_token **tokens);
 
 #endif /* TOKEN_H */
