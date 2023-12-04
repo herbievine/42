@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/02 15:29:00 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/04 16:23:14 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 			if (!path)
 				return (g_signal = 1, false);
 			if (subcommand->in_fd > 0)
+			{
+				fprintf(stderr, "==%i== close %d\n", getpid(), subcommand->in_fd);
 				close(subcommand->in_fd);
+			}
 			if (subcommand->is_heredoc)
 				unlink(".here_doc_fd");
 			if (!ft_here_doc(subcommand, path, token))
@@ -84,6 +87,7 @@ bool	ft_here_doc(t_subcommand *subcommand,
 			free(buffer);
 		}
 	}
+	fprintf(stderr, "==%i== close %d\n", getpid(), subcommand->in_fd);
 	close(subcommand->in_fd);
 	subcommand->in_fd = open(".here_doc_fd", O_RDONLY);
 	return (true);
