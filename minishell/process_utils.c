@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 12:38:15 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 14:54:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,19 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand)
 	if (token->type == TOKEN_LT)
 		fd = open(str, O_RDONLY);
 	if (token->type == TOKEN_LT_LT)
-		fd = subcommand->in_fd;
+		fd = open(".here_doc_fd", O_RDONLY);
+	if ((fd == -1 || fd > 0) && subcommand->in_fd >= 0)
+		close(subcommand->in_fd);
 	if (fd > 0)
 	{
-		dup2(fd, STDIN_FILENO);
-		close(fd);
+		subcommand->in_fd = fd;
+		(dup2(fd, STDIN_FILENO) , close(fd));
 	}
 	free(str);
 	return (fd);
 }
 
-int	ft_handle_out(t_token *token)
+int	ft_handle_out(t_token *token, t_subcommand *subcommand)
 {
 	char	*str;
 	int		fd;
@@ -65,10 +67,12 @@ int	ft_handle_out(t_token *token)
 		fd = open(str, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (token->type == TOKEN_GT_GT)
 		fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0666);
+	if ((fd == -1 || fd > 0) && subcommand->out_fd >= 0)
+		close(subcommand->out_fd);
 	if (fd > 0)
 	{
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
+		subcommand->out_fd = fd;
+		(dup2(fd, STDOUT_FILENO), close(fd));
 	}
 	free(str);
 	return (fd);
@@ -92,11 +96,11 @@ void	ft_open_files(t_command *command,
 	{
 		fd = ft_handle_in(command->tokens, subcommand);
 		if (fd != -1)
-			fd = ft_handle_out(command->tokens);
+			fd = ft_handle_out(command->tokens, subcommand);
 		if (fd == -1)
 		{
 			ft_error(strerror(errno), (char *)command->tokens->next->value);
-			if (command->prev_pipe_fd)
+			if (command->prev_pipe_fd > 0)
 				close(command->prev_pipe_fd);
 			return (subcommand->is_executable = false, g_signal = 1, (void)0);
 		}
@@ -125,8 +129,8 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 		}
 		if (subcommand->next)
 			dup2(command->pipe_fd[WRITE], STDOUT_FILENO);
-		(close(command->pipe_fd[READ]), close(command->pipe_fd[WRITE]));
 		ft_open_files(command, subcommand, subcommand_length);
+		(close(command->pipe_fd[READ]), close(command->pipe_fd[WRITE]));
 	}
 	return (true);
 }

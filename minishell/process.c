@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 12:39:23 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 14:48:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	parent_process(t_command *command,
 	close(command->pipe_fd[WRITE]);
 	if (command->prev_pipe_fd != -1)
 		close(command->prev_pipe_fd);
-	command->prev_pipe_fd = dup(command->pipe_fd[READ]);
-	close(command->pipe_fd[READ]);
+	command->prev_pipe_fd = command->pipe_fd[READ];
 	if (!subcommand->is_executable)
 		return (-1);
 	return (return_status);
