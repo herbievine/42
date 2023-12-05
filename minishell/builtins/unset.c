@@ -14,12 +14,12 @@
 #include "../structs.h"
 #include "../env.h"
 
-int	ft_unset(t_subcommand *subcommand, char ***env)
+int	ft_unset(t_command *command, t_subcommand *subcommand)
 {
 	char	**args;
 
 	args = subcommand->args;
 	while (*args)
-		ft_env_remove(env, *args++);
+		ft_env_remove(command->env, *args++);
 	return (0);
 }

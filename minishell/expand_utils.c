@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:03:09 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/24 22:22:16 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 21:53:51 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ char	*ft_fill_following_str(char *str, int i)
 	char	*full_string;
 	char	*tmp;
 
-	while (str[i] && str[i] != '$'
-		&& str[i] != '\'' && str[i] != '"'
-		&& !ft_isspace(str[i]))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'))
 		i++;
 	tmp = ft_substr(str, i, ft_strlen(str) - i);
 	if (!tmp)

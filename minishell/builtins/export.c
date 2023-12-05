@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:04:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 11:03:30 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 21:10:59 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,22 @@
 #include "../env.h"
 #include <stdlib.h>
 
-static bool	ft_check_is_valid_identifier(char *str, int type)
+static bool	ft_parse_export(char *str)
 {
-	int		i;
-	bool	contains_alpha_char;
+	int	i;
 
 	i = 0;
-	contains_alpha_char = false;
-	if (type == TOKEN_DQ || type == TOKEN_SQ)
-		return (true);
-	while (str[i])
+	if (ft_isdigit(str[0]))
+		return (false);
+	while (str[i] && str[i] != '=')
 	{
-		if (ft_isalpha(str[i]))
-			contains_alpha_char = true;
-		if (str[i] && str[i] == '=' && ((i > 0 && str[i - 1] == '=')
-				|| (i > 0 && !ft_isalnum(str[i - 1]))))
+		if (str[i] == '$')
 			return (false);
-		else if (str[i] != '=' && !ft_isalnum(str[i]) && str[i] != '_')
+		if (str[i] && str[i] == '=' && ((i > 0 && !ft_isalnum(str[i - 1]))))
 			return (false);
 		i++;
 	}
-	if (!contains_alpha_char || i == 0 || str[i - 1] == '=')
+	if (!i)
 		return (false);
 	return (true);
 }
@@ -76,26 +71,29 @@ static bool	ft_set_env_from_arg(char ***env, char *arg)
 	return (free(key), free(value), true);
 }
 
-int	ft_export(t_subcommand *subcommand, t_token *token, char ***env)
+int	ft_export(t_command *cmd, t_subcommand *subcommand, t_token *token)
 {
-	int		i;
+	int	i;
 
 	i = 1;
 	if (!subcommand->args[1])
-		return (ft_print_exported_variables(*env), 0);
+		return (ft_print_exported_variables(*(cmd->env)), 0);
 	if (subcommand->next)
 		return (0);
 	while (subcommand->args[i])
 	{
-		if (!ft_check_is_valid_identifier(subcommand->args[i], token->type))
-			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
+		if (!ft_parse_export(subcommand->args[i]))
+		{
+			(ft_putstr_fd(" not a valid identifier\n", 2), i++);
+			continue ;
+		}
 		else if (ft_strchr(subcommand->args[i], '='))
 		{
-			if (!ft_set_env_from_arg(env, subcommand->args[i]))
+			if (!ft_set_env_from_arg(cmd->env, subcommand->args[i]))
 				return (1);
 		}
 		else
-			*env = ft_env_set(*env, subcommand->args[i], NULL);
+			*(cmd->env) = ft_env_set(*(cmd->env), subcommand->args[i], NULL);
 		i++;
 		token = token->next;
 	}

@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 15:45:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 22:27:48 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 #include "free.h"
 #include "str.h"
+#include "display.h"
 #include "mem.h"
 #include "token.h"
 #include "error.h"
+#include "signals.h"
 #include "exit.h"
 #include "builtin.h"
 #include <stdlib.h>
@@ -30,20 +32,8 @@
 #define READ 0
 #define WRITE 1
 
-int	parent_process(t_command *command,
-	t_subcommand *subcommand, int return_status)
-{
-	close(command->pipe_fd[WRITE]);
-	if (command->prev_pipe_fd != -1)
-		close(command->prev_pipe_fd);
-	command->prev_pipe_fd = command->pipe_fd[READ];
-	if (!subcommand->is_executable)
-		return (-1);
-	return (return_status);
-}
-
 int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
-	char ***envp, int subcommand_length)
+		int subcommand_length)
 {
 	int		return_status;
 
@@ -54,8 +44,8 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 	if (command->pid[subcommand_length] == PID_CHILD)
 	{
 		if (subcommand->builtin && subcommand->is_executable)
-			return_status = ft_builtin_valid(command->tokens, subcommand,
-					subcommand->path, envp);
+			return_status = ft_builtin_valid(command, subcommand,
+					command->tokens, subcommand->path);
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
 			(ft_free_all(command, true), exit(0));
@@ -68,7 +58,25 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 	return (parent_process(command, subcommand, return_status));
 }
 
-int	ft_multiple_commands(t_command *command, char ***envp)
+int	exec_waitpid(t_command *command)
+{
+	static int	var;
+	int			i;
+	int			ret;
+
+	i = -1;
+	while (++i < command->subcommand_length)
+	{
+		waitpid(command->pid[i], &ret, 0);
+		if (WIFEXITED(ret))
+			ret = WEXITSTATUS(ret);
+		if (ret == 131 && !var++)
+			ft_putstr_fd("Quit (core dumped)\n", 2);
+	}
+	return (ret);
+}
+
+int	ft_multiple_commands(t_command *command)
 {
 	int				i;
 	t_subcommand	*head;
@@ -79,12 +87,10 @@ int	ft_multiple_commands(t_command *command, char ***envp)
 	head = command->subcommands;
 	while (head != NULL)
 	{
-		return_status = ft_spawn_child(command, head, envp, i++);
+		return_status = ft_spawn_child(command, head, i++);
 		head = head->next;
 	}
-	i = -1;
-	while (++i < command->subcommand_length)
-		waitpid(command->pid[i], &return_status, 0);
+	return_status = exec_waitpid(command);
 	head = command->subcommands;
 	while (head->next != NULL)
 		head = head->next;
@@ -93,6 +99,7 @@ int	ft_multiple_commands(t_command *command, char ***envp)
 		return (-1);
 	if (WIFEXITED(return_status))
 		return_status = WEXITSTATUS(return_status);
+	signal(SIGINT, &ctrlc);
 	return (return_status);
 }
 
@@ -124,15 +131,14 @@ int	ft_single_command(t_command *command, t_subcommand *subcommand)
 	return (return_status);
 }
 
-int	ft_execute(t_command *command, char ***envp)
+int	ft_execute(t_command *command)
 {
 	if (!command->subcommands->next)
 	{
 		if (command->subcommands->builtin
 			&& command->subcommands->is_executable)
-			return (ft_builtin_valid(command->tokens, command->subcommands,
-					command->subcommands->path, envp));
-		return (ft_single_command(command, command->subcommands));
+			return (ft_builtin_valid(command, command->subcommands,
+					command->tokens, command->subcommands->path));
 	}
-	return (ft_multiple_commands(command, envp));
+	return (ft_multiple_commands(command));
 }
