@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 14:54:59 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 14:57:36 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand)
 	if (fd > 0)
 	{
 		subcommand->in_fd = fd;
-		(dup2(fd, STDIN_FILENO) , close(fd));
+		(dup2(fd, STDIN_FILENO), close(fd));
 	}
 	free(str);
 	return (fd);
@@ -134,4 +134,3 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 	}
 	return (true);
 }
-

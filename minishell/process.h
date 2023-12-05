@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:34 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 12:39:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 14:57:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int		ft_execute(t_command *command, char ***envp);
 bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 			pid_t *pid, int subcommand_nb);
 void	ft_open_files(t_command *command,
-		t_subcommand *subcommand, int subcommand_nb);
+			t_subcommand *subcommand, int subcommand_nb);
 
 #endif
