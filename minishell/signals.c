@@ -46,7 +46,7 @@ static void	ft_handle_ctrl_c(int signal)
 {
 	(void)signal;
 	printf("\n");
-	g_signal = 1;
+	g_signal = 130;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
