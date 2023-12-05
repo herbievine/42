@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:04:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 11:03:30 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 21:10:59 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,34 @@
 #include "../env.h"
 #include <stdlib.h>
 
-static bool	ft_check_is_valid_identifier(char *str, int type)
+static int ft_check_is_valid_identifier(char *str, int type)
 {
-	int		i;
-	bool	contains_alpha_char;
+	int i;
 
 	i = 0;
-	contains_alpha_char = false;
-	if (type == TOKEN_DQ || type == TOKEN_SQ)
-		return (true);
-	while (str[i])
+	(void)type;
+	// if (type == TOKEN_DQ || type == TOKEN_SQ)
+	// return (false);
+	if (ft_isdigit(str[0]))
+		return (123);
+	while (str[i] && str[i] != '=')
 	{
-		if (ft_isalpha(str[i]))
-			contains_alpha_char = true;
-		if (str[i] && str[i] == '=' && ((i > 0 && str[i - 1] == '=')
-				|| (i > 0 && !ft_isalnum(str[i - 1]))))
-			return (false);
-		else if (str[i] != '=' && !ft_isalnum(str[i]) && str[i] != '_')
-			return (false);
+		if (str[i] == '$')
+			return (56);
+		if (str[i] && str[i] == '=' && ((i > 0 && !ft_isalnum(str[i - 1]))))
+			return (42);
 		i++;
 	}
-	if (!contains_alpha_char || i == 0 || str[i - 1] == '=')
-		return (false);
-	return (true);
+	if (!i)
+		return (4645);
+	// if (contains_alpha_char || i == 0 || str[i - 1] == '=')
+	// return (56);
+	return (0);
 }
 
-static void	ft_print_exported_variables(char **env)
+static void ft_print_exported_variables(char **env)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (env[i])
@@ -57,11 +57,11 @@ static void	ft_print_exported_variables(char **env)
 	}
 }
 
-static bool	ft_set_env_from_arg(char ***env, char *arg)
+static bool ft_set_env_from_arg(char ***env, char *arg)
 {
-	char	*key;
-	char	*value;
-	int		equal_pos;
+	char *key;
+	char *value;
+	int equal_pos;
 
 	equal_pos = 0;
 	while (arg[equal_pos] && arg[equal_pos] != '=')
@@ -76,9 +76,11 @@ static bool	ft_set_env_from_arg(char ***env, char *arg)
 	return (free(key), free(value), true);
 }
 
-int	ft_export(t_subcommand *subcommand, t_token *token, char ***env)
+#include <stdio.h>
+
+int ft_export(t_subcommand *subcommand, t_token *token, char ***env)
 {
-	int		i;
+	int i;
 
 	i = 1;
 	if (!subcommand->args[1])
@@ -87,8 +89,15 @@ int	ft_export(t_subcommand *subcommand, t_token *token, char ***env)
 		return (0);
 	while (subcommand->args[i])
 	{
-		if (!ft_check_is_valid_identifier(subcommand->args[i], token->type))
-			return (ft_putstr_fd(" not a valid identifier\n", 2), 1);
+		fprintf(stderr, ">>> {{%s}}\n", subcommand->args[i]);
+		int tmp = ft_check_is_valid_identifier(subcommand->args[i], token->type);
+		if (tmp)
+		{
+			fprintf(stderr, "tmp >>%i\n", tmp);
+			ft_putstr_fd(" not a valid identifier\n", 2);
+			i++;
+			continue ;
+		}
 		else if (ft_strchr(subcommand->args[i], '='))
 		{
 			if (!ft_set_env_from_arg(env, subcommand->args[i]))

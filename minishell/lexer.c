@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:27:13 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/27 10:28:15 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 20:52:35 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static bool	ft_check_exit_condition_symbols(t_lexer *l,
 		t->value = l->raw + (l->cursor - t->length);
 		return (true);
 	}
+	if (state != STATE_DEFAULT && !l->raw[l->cursor])
+		return (t->type = TOKEN_INVALID, false);
 	if (state != STATE_DEFAULT && !l->raw[l->cursor + 1])
 	{
 		t->type = TOKEN_INVALID;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 17:18:31 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 20:23:12 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 {
 	if (pipe(command->pipe_fd) == PIPE_ERROR)
 		return (false);
+	signal(SIGINT, SIG_IGN);
 	*pid = fork();
 	if (*pid == PID_ERROR)
 	{
@@ -131,6 +132,8 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 	}
 	if (*pid == PID_CHILD)
 	{
+		signal(SIGINT, &ctrlc);
+		signal(SIGQUIT, &antislash);
 		if (subcommand_length != 0)
 		{
 			dup2(command->prev_pipe_fd, STDIN_FILENO);

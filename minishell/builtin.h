@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/17 10:38:37 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 20:11:48 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ typedef struct s_builtin
 bool	ft_builtin(t_subcommand *s_command, t_token *token, char ***envp);
 bool	ft_if_builtin(char *cmd);
 int		ft_builtin_valid(t_token *token, t_subcommand *subcommand,
-			char *cmd, char ***envp);
+			char *cmd, char ***envp, t_command *command);
 
 #endif

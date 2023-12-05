@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/21 09:55:58 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 20:13:25 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
 	path = (char *)token->value;
 	path[token->length] = '\0';
 	if (ft_if_builtin(path))
-		return (ft_builtin_valid(token, subcommand, path, envp), true);
+		return (ft_builtin_valid(token, subcommand, path, envp, NULL), true);
 	return (false);
 }
 
@@ -44,7 +44,7 @@ bool	ft_if_builtin(char *cmd)
 }
 
 int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
-			char *cmd, char ***env)
+			char *cmd, char ***env, t_command *command)
 {
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
@@ -61,7 +61,7 @@ int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	else if (ft_strschr(cmd, "env") == 0)
 		return (ft_env(*env));
 	else if (ft_strschr(cmd, "exit") == 0)
-		return (ft_exit(subcommand, token));
+		return (ft_exit(subcommand, command));
 	subcommand->out_fd = -1;
 	return (true);
 }

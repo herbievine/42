@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:37:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/27 10:25:50 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 21:55:24 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str)
 	i = 0;
 	while (str && str[i] != '$')
 		i++;
-	while (str[i + length] && ft_is_valid_symbol(str[i + length])
-		&& str[i + length] != '\'' && str[i + length] != '"'
-		&& str[i + length] != '$')
+	while (str[i + length] && (ft_isalnum(str[i + length])  || str[i + length] == '_' || str[i + length] == '?'))
 		length++;
 	if (length == 1)
 		return (ft_strdup("$"));
@@ -88,6 +86,7 @@ char	*ft_iter_in_string(t_subcommand *subcommand, char *str)
 	}
 	return (str);
 }
+
 
 void	ft_expand_token(t_subcommand *subcommand, t_token *token)
 {
