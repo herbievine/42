@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 12:52:23 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 13:02:06 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ft_open_files(t_command *command,
 			fd = ft_handle_out(command->tokens);
 		if (fd == -1)
 		{
-			ft_error(strerror(errno), (char *)command->tokens->value);
+			ft_error(strerror(errno), (char *)command->tokens->next->value);
 			if (command->prev_pipe_fd)
 				close(command->prev_pipe_fd);
 			return (subcommand->is_executable = false, g_signal = 1, (void)0);
