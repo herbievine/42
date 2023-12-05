@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 21:27:00 by herbie           ###   ########.fr       */
+/*   Updated: 2023/11/27 10:21:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,6 @@ typedef struct s_command
 	int				token_length;
 	t_subcommand	*subcommands;
 	int				subcommand_length;
-	int				*pid;
-	int				pipe_fd[2];
-	int				prev_pipe_fd;
 	char			***env;
 }	t_command;
 

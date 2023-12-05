@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 19:48:06 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/03 08:01:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	ft_execution_wrapper(t_command *command)
 	int	retval;
 
 	retval = -1;
-	retval = ft_execute(command, command->env);
+	retval = ft_execute(command->subcommands, &command->tokens, command->env);
 	if (retval != -1)
 		g_signal = retval;
 }
@@ -54,9 +54,6 @@ static bool	ft_parse_wrapper(t_command *command)
 	ft_suppress_quotes(command->subcommands, command->tokens);
 	if (!ft_clean_tokens(&command->tokens))
 		return (false);
-	command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
-	if (!command->pid)
-		g_signal = 1;
 	if (!ft_parse(command->tokens, command->subcommands, command->env))
 		return (false);
 	return (true);
@@ -82,11 +79,12 @@ static void	ft_build_command(char *buffer, char ***env)
 		token = ft_lexer_next(&lexer);
 	}
 	if (!ft_create_subcommands(&command, *env))
-		return (ft_free_all(&command, false));
+		return (ft_free_all(command.subcommands, &command.tokens, false));
 	if (!ft_parse_wrapper(&command))
-		return (ft_free_all(&command, false));
+		return (ft_free_all(command.subcommands, &command.tokens, false));
 	ft_execution_wrapper(&command);
-	ft_free_all(&command, false);
+	ft_free_subcommands(command.subcommands);
+	ft_free_tokens(&command.tokens);
 }
 
 void	ft_await_command_entry(char ***env)
