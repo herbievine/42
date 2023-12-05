@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 13:02:54 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 12:33:06 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,13 @@ int	ft_multiple_commands(t_command *command, char ***envp)
 int	ft_single_command(t_command *command,
 	t_subcommand *subcommand, t_token **tokens)
 {
-	pid_t	pid;
 	int		return_status;
 
-	pid = fork();
+	command->pid[0] = fork();
 	return_status = 0;
-	if (pid == PID_ERROR)
+	if (command->pid[0] == PID_ERROR)
 		return (false);
-	if (pid == PID_CHILD)
+	if (command->pid[0] == PID_CHILD)
 	{
 		ft_open_files(command, subcommand, 0);
 		if (!subcommand->is_executable
@@ -119,7 +118,7 @@ int	ft_single_command(t_command *command,
 		ft_free_all(command, subcommand, tokens, false);
 		exit(return_status);
 	}
-	waitpid(pid, &return_status, 0);
+	waitpid(command->pid[0], &return_status, 0);
 	return_status = WEXITSTATUS(return_status);
 	if (!subcommand->is_executable)
 		return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/04 19:48:06 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 12:28:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_init_pid(t_command *command)
 		i++;
 	}
 	command->subcommand_nb = i;
-	if (i > 0)
+	if (i >= 0)
 	{
 		command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
 		if (!command->pid)
@@ -100,8 +100,7 @@ void	ft_build_command(char *buffer, char ***env)
 		ft_fill_subcommand(command, env);
 	ft_free_subcommands(command.subcommands);
 	ft_clear_tokens(&command.tokens);
-	if (command.pid)
-		free(command.pid);
+	free(command.pid);
 }
 
 void	ft_await_command_entry(char ***env)
