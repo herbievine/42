@@ -78,33 +78,42 @@ int	ft_handle_out(t_token *token, t_subcommand *subcommand)
 	return (fd);
 }
 
+static int	ft_handle_io(t_command *cmd, t_token *curr, t_subcommand *sub)
+{
+	int	fd;
+
+	fd = ft_handle_in(curr, sub);
+	if (fd != -1)
+		fd = ft_handle_out(curr, sub);
+	if (fd == -1)
+	{
+		ft_error(strerror(errno), (char *)curr->next->value);
+		if (cmd->prev_pipe_fd > 0)
+			close(cmd->prev_pipe_fd);
+		sub->is_executable = false;
+		g_signal = 1;
+	}
+	return (fd);
+}
+
 void	ft_open_files(t_command *command,
 		t_subcommand *subcommand, int subcommand_nb)
 {
-	int	fd;
-	int	indx;
+	int			i;
+	t_token		*token_head;
 
-	fd = 0;
-	indx = -1;
-	while (++indx < subcommand_nb && command->tokens)
+	i = -1;
+	token_head = command->tokens;
+	while (++i < subcommand_nb && token_head)
 	{
-		while (command->tokens && command->tokens->type != TOKEN_PIPE)
-			command->tokens = command->tokens->next;
-		command->tokens = command->tokens->next;
+		while (token_head && token_head->type != TOKEN_PIPE)
+			token_head = token_head->next;
+		token_head = token_head->next;
 	}
-	while (command->tokens != NULL && command->tokens->type != TOKEN_PIPE)
+	while (token_head != NULL && token_head->type != TOKEN_PIPE)
 	{
-		fd = ft_handle_in(command->tokens, subcommand);
-		if (fd != -1)
-			fd = ft_handle_out(command->tokens, subcommand);
-		if (fd == -1)
-		{
-			ft_error(strerror(errno), (char *)command->tokens->next->value);
-			if (command->prev_pipe_fd > 0)
-				close(command->prev_pipe_fd);
-			return (subcommand->is_executable = false, g_signal = 1, (void)0);
-		}
-		command->tokens = command->tokens->next;
+		ft_handle_io(command, token_head, subcommand);
+		token_head = token_head->next;
 	}
 }
 
