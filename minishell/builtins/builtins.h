@@ -19,8 +19,8 @@ int	ft_cd(t_subcommand *subcommand);
 int	ft_echo(t_subcommand *subcommand);
 int	ft_env(char **env);
 int	ft_exit(t_subcommand *subcommand, t_command *command);
-int	ft_export(t_subcommand *subcommand, t_token *token, char ***env);
+int	ft_export(t_command *command, t_subcommand *subcommand, t_token *token);
 int	ft_pwd(t_subcommand *subcommand);
-int	ft_unset(t_subcommand *subcommand, char ***env);
+int	ft_unset(t_command *command, t_subcommand *subcommand);
 
 #endif

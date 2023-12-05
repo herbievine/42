@@ -44,7 +44,7 @@ static void	ft_execution_wrapper(t_command *command)
 	command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
 	if (!command->pid)
 		g_signal = 1;
-	retval = ft_execute(command, command->env);
+	retval = ft_execute(command);
 	if (retval != -1)
 		g_signal = retval;
 }

@@ -18,7 +18,7 @@
 # define READ 0
 # define WRITE 1
 
-int		ft_execute(t_command *command, char ***envp);
+int		ft_execute(t_command *command);
 bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 			pid_t *pid, int subcommand_nb);
 void	ft_open_files(t_command *command,
