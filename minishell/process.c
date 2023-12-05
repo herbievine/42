@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 12:37:45 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 12:52:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	ft_single_command(t_command *command,
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
 			(ft_free_all(command, subcommand, tokens, true), exit(0));
-		ft_redirect(subcommand);
+		ft_open_files(command, subcommand, 0);
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);

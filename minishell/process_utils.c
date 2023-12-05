@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 12:30:40 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 12:52:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_handle_out(t_token *token)
 	return (fd);
 }
 
-void	openfiles(t_command *command,
+void	ft_open_files(t_command *command,
 		t_subcommand *subcommand, int subcommand_nb)
 {
 	int	fd;
@@ -126,15 +126,8 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 		if (subcommand->next)
 			dup2(command->pipe_fd[WRITE], STDOUT_FILENO);
 		(close(command->pipe_fd[READ]), close(command->pipe_fd[WRITE]));
-		openfiles(command, subcommand, subcommand_nb);
+		ft_open_files(command, subcommand, subcommand_nb);
 	}
 	return (true);
 }
 
-void	ft_redirect(t_subcommand *subcommand)
-{
-	if (subcommand->in_fd != -1)
-		dup2(subcommand->in_fd, STDIN_FILENO);
-	if (subcommand->out_fd != -1)
-		dup2(subcommand->out_fd, STDOUT_FILENO);
-}
