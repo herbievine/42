@@ -18,34 +18,29 @@
 #include "../env.h"
 #include <stdlib.h>
 
-static int ft_check_is_valid_identifier(char *str, int type)
+static bool	ft_parse_export(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	(void)type;
-	// if (type == TOKEN_DQ || type == TOKEN_SQ)
-	// return (false);
 	if (ft_isdigit(str[0]))
-		return (123);
+		return (false);
 	while (str[i] && str[i] != '=')
 	{
 		if (str[i] == '$')
-			return (56);
+			return (false);
 		if (str[i] && str[i] == '=' && ((i > 0 && !ft_isalnum(str[i - 1]))))
-			return (42);
+			return (false);
 		i++;
 	}
 	if (!i)
-		return (4645);
-	// if (contains_alpha_char || i == 0 || str[i - 1] == '=')
-	// return (56);
-	return (0);
+		return (false);
+	return (true);
 }
 
-static void ft_print_exported_variables(char **env)
+static void	ft_print_exported_variables(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env[i])
@@ -57,11 +52,11 @@ static void ft_print_exported_variables(char **env)
 	}
 }
 
-static bool ft_set_env_from_arg(char ***env, char *arg)
+static bool	ft_set_env_from_arg(char ***env, char *arg)
 {
-	char *key;
-	char *value;
-	int equal_pos;
+	char	*key;
+	char	*value;
+	int		equal_pos;
 
 	equal_pos = 0;
 	while (arg[equal_pos] && arg[equal_pos] != '=')
@@ -76,35 +71,29 @@ static bool ft_set_env_from_arg(char ***env, char *arg)
 	return (free(key), free(value), true);
 }
 
-#include <stdio.h>
-
-int ft_export(t_subcommand *subcommand, t_token *token, char ***env)
+int	ft_export(t_command *cmd, t_subcommand *subcommand, t_token *token)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!subcommand->args[1])
-		return (ft_print_exported_variables(*env), 0);
+		return (ft_print_exported_variables(*(cmd->env)), 0);
 	if (subcommand->next)
 		return (0);
 	while (subcommand->args[i])
 	{
-		fprintf(stderr, ">>> {{%s}}\n", subcommand->args[i]);
-		int tmp = ft_check_is_valid_identifier(subcommand->args[i], token->type);
-		if (tmp)
+		if (!ft_parse_export(subcommand->args[i]))
 		{
-			fprintf(stderr, "tmp >>%i\n", tmp);
-			ft_putstr_fd(" not a valid identifier\n", 2);
-			i++;
+			(ft_putstr_fd(" not a valid identifier\n", 2), i++);
 			continue ;
 		}
 		else if (ft_strchr(subcommand->args[i], '='))
 		{
-			if (!ft_set_env_from_arg(env, subcommand->args[i]))
+			if (!ft_set_env_from_arg(cmd->env, subcommand->args[i]))
 				return (1);
 		}
 		else
-			*env = ft_env_set(*env, subcommand->args[i], NULL);
+			*(cmd->env) = ft_env_set(*(cmd->env), subcommand->args[i], NULL);
 		i++;
 		token = token->next;
 	}

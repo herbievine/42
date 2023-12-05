@@ -15,14 +15,15 @@
 #include "builtins/builtins.h"
 #include <stdio.h>
 
-bool	ft_builtin(t_subcommand *subcommand, t_token *token, char ***envp)
+bool	ft_builtin(t_command *command, t_subcommand *subcommand,
+			t_token *token)
 {
 	char		*path;
 
 	path = (char *)token->value;
 	path[token->length] = '\0';
 	if (ft_if_builtin(path))
-		return (ft_builtin_valid(token, subcommand, path, envp, NULL), true);
+		return (ft_builtin_valid(command, subcommand, token, path), true);
 	return (false);
 }
 
@@ -43,8 +44,8 @@ bool	ft_if_builtin(char *cmd)
 	return (false);
 }
 
-int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
-			char *cmd, char ***env, t_command *command)
+int	ft_builtin_valid(t_command *command, t_subcommand *subcommand,
+			t_token *token, char *cmd)
 {
 	if (subcommand->out_fd == -1)
 		subcommand->out_fd = 1;
@@ -55,13 +56,13 @@ int	ft_builtin_valid(t_token *token, t_subcommand *subcommand,
 	else if (ft_strschr(cmd, "pwd") == 0)
 		return (ft_pwd(subcommand));
 	else if (ft_strschr(cmd, "export") == 0)
-		return (ft_export(subcommand, token->next, env));
+		return (ft_export(command, subcommand, token->next));
 	else if (ft_strschr(cmd, "unset") == 0)
-		return (ft_unset(subcommand, env));
+		return (ft_unset(command, subcommand));
 	else if (ft_strschr(cmd, "env") == 0)
-		return (ft_env(*env));
+		return (ft_env(*(command->env)));
 	else if (ft_strschr(cmd, "exit") == 0)
 		return (ft_exit(subcommand, command));
 	subcommand->out_fd = -1;
-	return (true);
+	return (1);
 }
