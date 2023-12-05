@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/05 12:37:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 15:50:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ static void	ft_execution_wrapper(t_command *command)
 	int	retval;
 
 	retval = -1;
-	retval = ft_execute(command->subcommands, &command->tokens, command->env);
+	command->pid = ft_calloc(sizeof(pid_t), command->subcommand_length);
+	if (!command->pid)
+		g_signal = 1;
+	retval = ft_execute(command, command->env);
 	if (retval != -1)
 		g_signal = retval;
 }
