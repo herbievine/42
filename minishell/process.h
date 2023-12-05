@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:34 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/22 17:51:02 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 14:57:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 # define READ 0
 # define WRITE 1
 
-int		ft_execute(t_subcommand *subcommand, t_token **tokens, char ***envp);
-bool	ft_fork_and_pipe(t_subcommand *subcommand,
-			int fd[2], pid_t *pid);
-void	ft_redirect(t_subcommand *subcommand);
+int		ft_execute(t_command *command, char ***envp);
+bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
+			pid_t *pid, int subcommand_nb);
+void	ft_open_files(t_command *command,
+			t_subcommand *subcommand, int subcommand_nb);
 
 #endif
