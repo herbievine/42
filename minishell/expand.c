@@ -74,7 +74,9 @@ char	*ft_iter_in_string(t_subcommand *subcommand, char *str)
 		{
 			if (str[i] == '$' && str[i + 1] == '?')
 			{
-				i += ft_handle_exit_status(&str, i);
+				i = ft_handle_exit_status(&str, i);
+				if (i == -1)
+					return (NULL);
 				continue ;
 			}
 			i = ft_expand_string(subcommand, &str, i);
