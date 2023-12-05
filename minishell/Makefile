@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
 #    Updated: 2023/12/04 17:16:16 by juliencros       ###   ########.fr        #
@@ -13,7 +13,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 RM = rm
 RMFLAG = -f
@@ -41,6 +41,7 @@ SRCS = \
 	find_in_file.c \
 	find_out_file.c \
 	free.c \
+	lists.c \
 	here_doc.c \
 	get_line.c \
 	process.c \

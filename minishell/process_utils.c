@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 13:02:06 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 12:38:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	ft_open_files(t_command *command,
 }
 
 bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
-		pid_t *pid, int subcommand_nb)
+		pid_t *pid, int subcommand_length)
 {
 	if (pipe(command->pipe_fd) == PIPE_ERROR)
 		return (false);
@@ -118,7 +118,7 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 	}
 	if (*pid == PID_CHILD)
 	{
-		if (subcommand_nb != 0)
+		if (subcommand_length != 0)
 		{
 			dup2(command->prev_pipe_fd, STDIN_FILENO);
 			close(command->prev_pipe_fd);
@@ -126,7 +126,7 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 		if (subcommand->next)
 			dup2(command->pipe_fd[WRITE], STDOUT_FILENO);
 		(close(command->pipe_fd[READ]), close(command->pipe_fd[WRITE]));
-		ft_open_files(command, subcommand, subcommand_nb);
+		ft_open_files(command, subcommand, subcommand_length);
 	}
 	return (true);
 }

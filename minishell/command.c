@@ -20,7 +20,7 @@
 #define READ 0
 #define WRITE 1
 
-t_command	ft_command_new(void)
+t_command	ft_command_new(char ***env)
 {
 	t_command	command;
 
@@ -32,5 +32,6 @@ t_command	ft_command_new(void)
 	command.pipe_fd[READ] = -1;
 	command.pipe_fd[WRITE] = -1;
 	command.subcommand_length = 0;
+	command.env = env;
 	return (command);
 }

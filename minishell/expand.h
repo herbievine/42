@@ -20,4 +20,5 @@ char	*ft_expand_dollar(t_subcommand *subcommand, char *str);
 char	ft_type_token(char c, char type);
 bool	ft_check_validity(char *str, int i, char limiter);
 int		ft_expand_string(t_subcommand *subcommand, char **str, int i);
+int		ft_handle_exit_status(char **str, int i);
 #endif

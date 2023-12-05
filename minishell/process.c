@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 12:33:06 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 12:39:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,26 @@ int	parent_process(t_command *command,
 }
 
 int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
-	char ***envp, int subcommand_nb)
+	char ***envp, int subcommand_length)
 {
 	int		return_status;
 
 	return_status = 0;
 	if (!ft_fork_and_pipe(command, subcommand,
-			&command->pid[subcommand_nb], subcommand_nb))
+			&command->pid[subcommand_length], subcommand_length))
 		return (false);
-	if (command->pid[subcommand_nb] == PID_CHILD)
+	if (command->pid[subcommand_length] == PID_CHILD)
 	{
 		if (subcommand->builtin && subcommand->is_executable)
 			return_status = ft_builtin_valid(command->tokens, subcommand,
 					subcommand->path, envp);
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			(ft_free_all(command, subcommand, &command->tokens, true), exit(0));
+			(ft_free_all(command, true), exit(0));
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		ft_free_all(command, subcommand, &command->tokens, false);
+		ft_free_all(command, false);
 		exit(return_status);
 	}
 	return (parent_process(command, subcommand, return_status));
@@ -97,8 +97,7 @@ int	ft_multiple_commands(t_command *command, char ***envp)
 	return (return_status);
 }
 
-int	ft_single_command(t_command *command,
-	t_subcommand *subcommand, t_token **tokens)
+int	ft_single_command(t_command *command, t_subcommand *subcommand)
 {
 	int		return_status;
 
@@ -111,11 +110,11 @@ int	ft_single_command(t_command *command,
 		ft_open_files(command, subcommand, 0);
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			(ft_free_all(command, subcommand, tokens, true), exit(0));
+			(ft_free_all(command, true), exit(0));
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
-		ft_free_all(command, subcommand, tokens, false);
+		ft_free_all(command, false);
 		exit(return_status);
 	}
 	waitpid(command->pid[0], &return_status, 0);
@@ -133,8 +132,7 @@ int	ft_execute(t_command *command, char ***envp)
 			&& command->subcommands->is_executable)
 			return (ft_builtin_valid(command->tokens, command->subcommands,
 					command->subcommands->path, envp));
-		return (ft_single_command(command,
-				command->subcommands, &command->tokens));
+		return (ft_single_command(command, command->subcommands));
 	}
 	return (ft_multiple_commands(command, envp));
 }

@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	ft_is_exit_status(char **str, int i)
+int	ft_handle_exit_status(char **str, int i)
 {
 	char	*expanded;
 	char	*tmp;
@@ -61,8 +61,6 @@ char	*ft_fill_following_str(char *str, int i)
 		return (NULL);
 	full_string = ft_strjoin(tmp, "");
 	free(tmp);
-	if (!full_string)
-		return (NULL);
 	return (full_string);
 }
 
@@ -71,17 +69,17 @@ int	ft_expand_string(t_subcommand *subcommand, char **str, int i)
 	char	*expanded;
 	char	*tmp;
 	char	*tmp2;
+	size_t	len;
 
-	if ((*str)[i] == '$' && (*str)[i + 1] == '?')
-		return (ft_is_exit_status(str, i));
 	tmp = ft_substr((*str), 0, i);
 	if (!tmp)
 		return (-1);
 	expanded = ft_expand_dollar(subcommand, (*str) + i);
 	if (!expanded)
 		return (free(tmp), -1);
+	len = ft_strlen(expanded);
 	tmp2 = ft_strjoin(tmp, expanded);
-	free(tmp);
+	(free(tmp), free(expanded));
 	if (!tmp2)
 		return (-1);
 	tmp = ft_fill_following_str(*str, i + 1);
@@ -92,7 +90,7 @@ int	ft_expand_string(t_subcommand *subcommand, char **str, int i)
 	(free(tmp2), free(tmp));
 	if (!(*str))
 		return (-1);
-	return (ft_strlen(expanded) + i);
+	return (len + i);
 }
 
 bool	ft_check_validity(char *str, int i, char limiter)
