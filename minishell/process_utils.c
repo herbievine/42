@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 14:57:36 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/05 16:29:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 #include <stdbool.h>
 #include <string.h>
 
-int	ft_handle_in(t_token *token, t_subcommand *subcommand)
+int ft_handle_in(t_token *token, t_subcommand *subcommand)
 {
-	int		fd;
-	char	*str;
+	int fd;
+	char *str;
 
 	fd = 0;
 	str = NULL;
@@ -49,10 +49,10 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand)
 	return (fd);
 }
 
-int	ft_handle_out(t_token *token, t_subcommand *subcommand)
+int ft_handle_out(t_token *token, t_subcommand *subcommand)
 {
-	char	*str;
-	int		fd;
+	char *str;
+	int fd;
 
 	fd = 0;
 	str = NULL;
@@ -78,11 +78,11 @@ int	ft_handle_out(t_token *token, t_subcommand *subcommand)
 	return (fd);
 }
 
-void	ft_open_files(t_command *command,
-		t_subcommand *subcommand, int subcommand_nb)
+void ft_open_files(t_command *command,
+									 t_subcommand *subcommand, int subcommand_nb)
 {
-	int	fd;
-	int	indx;
+	int fd;
+	int indx;
 
 	fd = 0;
 	indx = -1;
@@ -108,8 +108,8 @@ void	ft_open_files(t_command *command,
 	}
 }
 
-bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
-		pid_t *pid, int subcommand_length)
+bool ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
+											pid_t *pid, int subcommand_length)
 {
 	if (pipe(command->pipe_fd) == PIPE_ERROR)
 		return (false);
@@ -118,7 +118,7 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 	{
 		if (subcommand->next)
 			return (close(command->pipe_fd[READ]),
-				close(command->pipe_fd[WRITE]), false);
+							close(command->pipe_fd[WRITE]), false);
 	}
 	if (*pid == PID_CHILD)
 	{

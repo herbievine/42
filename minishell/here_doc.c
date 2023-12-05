@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 18:48:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/02 15:29:00 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <readline/readline.h>
 
-static int	ft_init_here_doc(t_subcommand *subcommand, t_token *token);
-static void	ft_print_heredoc(t_subcommand *subcommand, char *line, int fd);
-bool		ft_here_doc(t_subcommand *subcommand,
+static char	*ft_init_heredoc(t_subcommand *subcommand, t_token *token);
+static bool	ft_exit_heredoc(t_subcommand *subcommand, char *buffer);
+static bool	ft_heredoc(t_subcommand *subcommand,
 				char *limiter, t_token *token);
 
 bool	ft_set_here_doc(t_subcommand *subcommand,
 	t_token *token)
 {
-	char	*path;
+	char	*limiter;
 
 	while (token && token->type != TOKEN_PIPE)
 	{
@@ -42,54 +43,58 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 					&& token->next->type != TOKEN_SQ
 					&& token->next->type != TOKEN_DQ))
 				return (ft_error(ESYN, NULL), g_signal = 1, false);
-			path = ft_substr(token->next->value, 0,
+			limiter = ft_substr(token->next->value, 0,
 					token->next->length);
-			if (!path)
+			if (!limiter)
 				return (g_signal = 1, false);
 			if (subcommand->in_fd > 0)
 				close(subcommand->in_fd);
 			if (subcommand->is_heredoc)
 				unlink(".here_doc_fd");
-			if (!ft_here_doc(subcommand, path, token))
-				return (g_signal = 1, free(path), false);
-			free(path);
+			if (!ft_heredoc(subcommand, limiter, token))
+				return (g_signal = 1, free(limiter), false);
+			free(limiter);
 		}
 		token = token->next;
 	}
 	return (true);
 }
 
-bool	ft_here_doc(t_subcommand *subcommand,
-		char *limiter, t_token *token)
+static bool	ft_heredoc_exit_cond(char *line, char *limiter)
 {
-	char	*buffer;
-
-	if (ft_init_here_doc(subcommand, token) != 0)
-		return (false);
-	while (subcommand->in_fd > 0)
-	{
-		buffer = ft_calloc(10000, sizeof(char *));
-		if (!buffer)
-			return (ft_putstr_fd("\n", 1), false);
-		if (ft_get_line(buffer, '\n', 1))
-		{
-			if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0
-				&& ft_strlen(buffer) == ft_strlen(limiter) + 1)
-			{
-				free(buffer);
-				break ;
-			}
-			else
-				ft_print_heredoc(subcommand, buffer, subcommand->in_fd);
-			free(buffer);
-		}
-	}
-	close(subcommand->in_fd);
-	subcommand->in_fd = open(".here_doc_fd", O_RDONLY);
-	return (true);
+	if (!line)
+		return (ft_putstr_fd("\n", 1), true);
+	else if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0
+		&& ft_strlen(line) == ft_strlen(limiter))
+		return (free(line), true);
+	return (false);
 }
 
-static int	ft_init_here_doc(t_subcommand *subcommand, t_token *token)
+static bool	ft_heredoc(t_subcommand *subcommand,
+	char *limiter, t_token *token)
+{
+	char	*line;
+	char	*buffer;
+	char	*tmp;
+
+	buffer = ft_init_heredoc(subcommand, token);
+	if (!buffer)
+		return (false);
+	while (buffer)
+	{
+		tmp = readline("here> ");
+		if (ft_heredoc_exit_cond(tmp, limiter))
+			break ;
+		line = ft_strjoin(tmp, "\n");
+		free(tmp);
+		tmp = buffer;
+		buffer = ft_strjoin(tmp, line);
+		(free(tmp), free(line));
+	}
+	return (ft_exit_heredoc(subcommand, buffer));
+}
+
+static char	*ft_init_heredoc(t_subcommand *subcommand, t_token *token)
 {
 	signal(SIGINT, &ft_handle_nothing);
 	signal(SIGQUIT, &ft_handle_nothing);
@@ -97,34 +102,34 @@ static int	ft_init_here_doc(t_subcommand *subcommand, t_token *token)
 	subcommand->in_fd = open(".here_doc_fd",
 			O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!subcommand->in_fd)
-		return (-1);
+		return (NULL);
 	subcommand->is_heredoc = true;
-	write(1, "heredoc>", 9);
-	return (0);
+	return (ft_strdup(""));
 }
 
-static	void	ft_print_heredoc(t_subcommand *subcommand, char *line, int fd)
+static bool	ft_exit_heredoc(t_subcommand *subcommand, char *buffer)
 {
 	int		i;
 	char	*tmp;
 
 	i = -1;
-	if (line)
+	while (buffer[++i])
 	{
-		while (line[++i])
+		if (buffer[i] == '$')
 		{
-			if (line[i] == '$')
-			{
-				tmp = ft_expand_dollar(subcommand, line);
-				if (tmp)
-					ft_putstr_fd(tmp, fd);
-				while (line[i] && (ft_is_valid_symbol(line[i])))
-					i++;
-				i--;
-			}
-			else
-				ft_putchar_fd(line[i], fd);
+			tmp = ft_expand_dollar(subcommand, buffer);
+			if (tmp)
+				ft_putstr_fd(tmp, subcommand->in_fd);
+			free(tmp);
+			while (buffer[i] && (ft_is_valid_symbol(buffer[i])))
+				i++;
+			i--;
 		}
+		else
+			ft_putchar_fd(buffer[i], subcommand->in_fd);
 	}
-	write(1, "heredoc>", 9);
+	free(buffer);
+	close(subcommand->in_fd);
+	subcommand->in_fd = open(".here_doc_fd", O_RDONLY);
+	return (true);
 }
