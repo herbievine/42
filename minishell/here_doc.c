@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/02 15:29:00 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 22:25:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ static bool	ft_heredoc(t_subcommand *subcommand,
 
 static char	*ft_init_heredoc(t_subcommand *subcommand, t_token *token)
 {
-	signal(SIGINT, &ft_handle_nothing);
-	signal(SIGQUIT, &ft_handle_nothing);
 	token->next->type = TOKEN_EOF;
 	subcommand->in_fd = open(".here_doc_fd",
 			O_RDWR | O_CREAT | O_TRUNC, 0644);

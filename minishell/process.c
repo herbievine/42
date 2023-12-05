@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 20:30:35 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/05 22:22:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,6 @@
 
 #define READ 0
 #define WRITE 1
-
-int	parent_process(t_command *command,
-	t_subcommand *subcommand, int return_status)
-{
-	close(command->pipe_fd[WRITE]);
-	if (command->prev_pipe_fd != -1)
-		close(command->prev_pipe_fd);
-	command->prev_pipe_fd = command->pipe_fd[READ];
-	signal(SIGQUIT, SIG_IGN);
-	if (!subcommand->is_executable)
-		return (-1);
-	return (return_status);
-}
 
 int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 	char ***envp, int subcommand_length)
@@ -71,11 +58,11 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 	return (parent_process(command, subcommand, return_status));
 }
 
-int exec_waitpid(t_command *command)
+int	exec_waitpid(t_command *command)
 {
-	static int var;
-	int i;
-	int ret;
+	static int	var;
+	int			i;
+	int			ret;
 
 	i = -1;
 	while (++i < command->subcommand_length)

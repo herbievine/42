@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/05 20:32:24 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/05 22:17:50 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,11 @@ void	ft_await_command_entry(char ***env)
 
 	while (true)
 	{
-		// ft_signals_register();
 		buffer = readline("minishell> ");
 		if (!buffer)
 		{
 			ft_free_array(*env, -1);
 			break ;
-			// ft_handle_ctrl_d();
 		}
 		if (ft_strlen(buffer) > 0)
 		{
@@ -124,8 +122,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &ctrlc);
-	// ft_history_new();
 	ft_await_command_entry(&env);
-
 	return (0);
 }

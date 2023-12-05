@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 11:44:20 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/05 20:23:48 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/05 22:26:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 # include <signal.h>
 
-void	ft_signals_register(void);
-void	ft_handle_ctrl_d(void);
-void	ft_handle_nothing(int signal);
 void	antislash(int sig);
 void	ctrlc(int sig);
 
