@@ -56,6 +56,7 @@ char	**ft_env_update_shlvl(char **env)
 	if (!shlvl)
 		return (env);
 	tmp = ft_itoa(ft_atoi(shlvl) + 1);
+	free(shlvl);
 	if (!tmp)
 		return (env);
 	env = ft_env_set(env, "SHLVL", tmp);
