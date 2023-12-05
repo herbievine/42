@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_in_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:02:31 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/23 11:02:12 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 22:51:18 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,28 @@
  * @param token 
  * @return int 
  */
-static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
-{
-	char	*path;
-	int		fd;
+// static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
+// {
+// 	char	*path;
+// 	int		fd;
 
-	path = ft_substr(token->next->value, 0, token->next->length);
-	if (!path)
-		return (g_signal = 1, -1);
-	if ((*subcommand)->out_fd > 0)
-		close((*subcommand)->out_fd);
-	if ((*subcommand)->is_heredoc)
-		unlink(".here_doc_fd");
-	fd = open(path, O_RDONLY, 0644);
-	if (fd == -1)
-	{
-		ft_perror("minishell: ");
-		(*subcommand)->is_executable = false;
-		g_signal = 1;
-	}
-	free(path);
-	return (fd);
-}
+// 	path = ft_substr(token->next->value, 0, token->next->length);
+// 	if (!path)
+// 		return (g_signal = 1, -1);
+// 	if ((*subcommand)->out_fd > 0)
+// 		close((*subcommand)->out_fd);
+// 	if ((*subcommand)->is_heredoc)
+// 		unlink(".here_doc_fd");
+// 	fd = open(path, O_RDONLY, 0644);
+// 	if (fd == -1)
+// 	{
+// 		ft_perror("minishell: ");
+// 		(*subcommand)->is_executable = false;
+// 		g_signal = 1;
+// 	}
+// 	free(path);
+// 	return (fd);
+// }
 
 /**
  * @brief The ft_find_infile function takes in a pointer to a subcommand and a
@@ -64,29 +64,29 @@ static int	ft_handle_open(t_subcommand **subcommand, t_token *token)
  * @return true 
  * @return false 
  */
-bool	ft_set_infile(t_subcommand *subcommand, t_token *token)
-{
-	int	fd;
+	// bool	ft_set_infile(t_subcommand *subcommand, t_token *token)
+	// {
+	// 	int	fd;
 
-	while (token && token->type != TOKEN_PIPE)
-	{
-		if (token->type == TOKEN_LT)
-		{
-			if ((!token->next || ft_strlen(token->next->value) == 0)
-				&& token->next->type != TOKEN_SYMBOL
-				&& token->next->type != TOKEN_SQ
-				&& token->next->type != TOKEN_DQ)
-			{
-				ft_error(ESYN, NULL);
-				subcommand->is_executable = false;
-				return (g_signal = 1, false);
-			}
-			fd = ft_handle_open(&subcommand, token);
-			if (fd == -1)
-				return (false);
-			subcommand->in_fd = fd;
-		}
-		token = token->next;
-	}
-	return (true);
-}
+	// 	while (token && token->type != TOKEN_PIPE)
+	// 	{
+	// 		if (token->type == TOKEN_LT)
+	// 		{
+	// 			if ((!token->next || ft_strlen(token->next->value) == 0)
+	// 				&& token->next->type != TOKEN_SYMBOL
+	// 				&& token->next->type != TOKEN_SQ
+	// 				&& token->next->type != TOKEN_DQ)
+	// 			{
+	// 				ft_error(ESYN, NULL);
+	// 				subcommand->is_executable = false;
+	// 				return (g_signal = 1, false);
+	// 			}
+	// 			fd = ft_handle_open(&subcommand, token);
+	// 			if (fd == -1)
+	// 				return (false);
+	// 			subcommand->in_fd = fd;
+	// 		}
+	// 		token = token->next;
+	// 	}
+	// 	return (true);
+	// }
