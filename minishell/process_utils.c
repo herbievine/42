@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 11:33:01 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 11:36:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand)
 
 	fd = 0;
 	str = NULL;
-	if (!token->next && (token->type == TOKEN_LT || token->type == TOKEN_LT_LT))
-		return (-1);
-	else if (!token->next)
+	if (!token->next)
 		return (0);
 	str = ft_substr(token->next->value, 0, ft_strlen(token->next->value));
 	if (!str)
@@ -58,9 +56,7 @@ int	ft_handle_out(t_token *token, t_subcommand *subcommand)
 
 	fd = 0;
 	str = NULL;
-	if (!token->next && (token->type == TOKEN_GT || token->type == TOKEN_GT_GT))
-		return (-1);
-	else if (!token->next)
+	if (!token->next)
 		return (0);
 	str = ft_substr(token->next->value, 0, ft_strlen(token->next->value));
 	if (!str)

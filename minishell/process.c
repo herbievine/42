@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 11:33:09 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 11:34:25 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 #define READ 0
 #define WRITE 1
-#define ERROE_IS_EXEC = 120
+#define ERROE_IS_EXEC 120
 
 int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 		int subcommand_length)
