@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 22:27:41 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/05 22:46:01 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static int	ft_handle_io(t_command *cmd, t_token *curr, t_subcommand *sub)
 		fd = ft_handle_out(curr, sub);
 	if (fd == -1)
 	{
-		ft_error(strerror(errno), (char *)curr->next->value);
+		if (curr->next)
+			ft_error(strerror(errno), (char *)curr->next->value);
 		if (cmd->prev_pipe_fd > 0)
 			close(cmd->prev_pipe_fd);
 		sub->is_executable = false;
