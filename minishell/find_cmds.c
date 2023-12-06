@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 10:09:09 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 13:11:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdbool.h>
+#include <string.h>
+#include <errno.h>
 
 static char	*ft_find_path(t_subcommand *subcommand, char *cmd);
 

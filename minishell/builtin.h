@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 22:30:58 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/06 14:19:19 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ bool	ft_builtin(t_command *command, t_subcommand *subcommand,
 bool	ft_if_builtin(char *cmd);
 int		ft_builtin_valid(t_command *command, t_subcommand *subcommand,
 			t_token *token, char *cmd);
+void	ft_print(char *str, int in_fd, int pipe_fd);
 
 #endif

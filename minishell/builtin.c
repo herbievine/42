@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 20:13:25 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 14:25:55 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "str.h"
 #include "builtins/builtins.h"
+#include "display.h"
 #include <stdio.h>
 
 bool	ft_builtin(t_command *command, t_subcommand *subcommand,
@@ -25,6 +26,14 @@ bool	ft_builtin(t_command *command, t_subcommand *subcommand,
 	if (ft_if_builtin(path))
 		return (ft_builtin_valid(command, subcommand, token, path), true);
 	return (false);
+}
+
+void	ft_print(char *str, int in_fd, int pipe_fd)
+{
+	if (in_fd != 1 && pipe_fd == -1)
+		ft_putstr_fd(str, in_fd);
+	else
+		printf("%s", str);
 }
 
 bool	ft_if_builtin(char *cmd)
@@ -47,22 +56,19 @@ bool	ft_if_builtin(char *cmd)
 int	ft_builtin_valid(t_command *command, t_subcommand *subcommand,
 			t_token *token, char *cmd)
 {
-	if (subcommand->out_fd == -1)
-		subcommand->out_fd = 1;
 	if (ft_strschr(cmd, "echo") == 0)
-		return (ft_echo(subcommand));
+		return (ft_echo(command, subcommand));
 	else if (ft_strschr(cmd, "cd") == 0)
 		return (ft_cd(subcommand));
 	else if (ft_strschr(cmd, "pwd") == 0)
-		return (ft_pwd(subcommand));
+		return (ft_pwd(command, subcommand));
 	else if (ft_strschr(cmd, "export") == 0)
 		return (ft_export(command, subcommand, token->next));
 	else if (ft_strschr(cmd, "unset") == 0)
 		return (ft_unset(command, subcommand));
 	else if (ft_strschr(cmd, "env") == 0)
-		return (ft_env(*(command->env)));
+		return (ft_env(command, subcommand, *(command->env)));
 	else if (ft_strschr(cmd, "exit") == 0)
 		return (ft_exit(subcommand, command));
-	subcommand->out_fd = -1;
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:53:08 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/02 21:24:55 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/06 14:18:41 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 static bool	is_newline_flag(char *arg);
 
-int	ft_echo(t_subcommand *subcommand)
+int	ft_echo(t_command *command, t_subcommand *subcommand)
 {
 	char	**args;
 	bool	print_newline;
@@ -32,12 +32,12 @@ int	ft_echo(t_subcommand *subcommand)
 		print_newline = false;
 	while (args[i - 1] && args[i])
 	{
-		ft_putstr_fd(args[i], subcommand->out_fd);
+		ft_print(args[i], subcommand->out_fd, command->pipe_fd[1]);
 		if (args[++i])
-			ft_putchar_fd(' ', subcommand->out_fd);
+			ft_print(" ", subcommand->out_fd, command->pipe_fd[1]);
 	}
 	if (print_newline)
-		ft_putchar_fd('\n', subcommand->out_fd);
+		ft_print("\n", subcommand->out_fd, command->pipe_fd[1]);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subcommand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/11/26 08:42:54 by codespace        ###   ########.fr       */
+/*   Updated: 2023/12/06 11:55:15 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand = ft_calloc(sizeof(t_subcommand), 1);
 	if (!subcommand)
 		return (NULL);
-	subcommand->in_fd = -1;
-	subcommand->out_fd = -1;
+	subcommand->in_fd = 0;
+	subcommand->out_fd = 1;
 	subcommand->builtin = 0;
 	subcommand->path = NULL;
 	subcommand->args = NULL;
