@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 10:52:21 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 11:33:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand)
 		fd = open(str, O_RDONLY);
 	if (token->type == TOKEN_LT_LT)
 		fd = open(".here_doc_fd", O_RDONLY);
+	if (fd == -1)
+		ft_error(strerror(errno), str);
 	if ((fd == -1 || fd > 0) && subcommand->in_fd >= 0)
 		close(subcommand->in_fd);
 	if (fd > 0)
@@ -67,6 +69,8 @@ int	ft_handle_out(t_token *token, t_subcommand *subcommand)
 		fd = open(str, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (token->type == TOKEN_GT_GT)
 		fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0666);
+	if (fd == -1)
+		ft_error(strerror(errno), str);
 	if ((fd == -1 || fd > 0) && subcommand->out_fd >= 0)
 		close(subcommand->out_fd);
 	if (fd > 0)
@@ -87,8 +91,6 @@ static int	ft_handle_io(t_command *cmd, t_token *curr, t_subcommand *sub)
 		fd = ft_handle_out(curr, sub);
 	if (fd == -1)
 	{
-		if (curr->next)
-			ft_error(strerror(errno), (char *)curr->next->value);
 		if (cmd->prev_pipe_fd > 0)
 			close(cmd->prev_pipe_fd);
 		sub->is_executable = false;

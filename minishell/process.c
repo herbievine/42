@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 22:27:48 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/06 11:33:09 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 #define READ 0
 #define WRITE 1
+#define ERROE_IS_EXEC = 120
 
 int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 		int subcommand_length)
@@ -48,7 +49,7 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 					command->tokens, subcommand->path);
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			(ft_free_all(command, true), exit(0));
+			(ft_free_all(command, true), exit(120));
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
@@ -95,7 +96,9 @@ int	ft_multiple_commands(t_command *command)
 	while (head->next != NULL)
 		head = head->next;
 	close(command->pipe_fd[READ]);
-	if (!head->is_executable)
+	if (head->is_executable == true && return_status == 120)
+		g_signal = 1;
+	if (head->is_executable == false || return_status == 120)
 		return (-1);
 	if (WIFEXITED(return_status))
 		return_status = WEXITSTATUS(return_status);
