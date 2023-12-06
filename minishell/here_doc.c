@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 18:13:03 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 18:55:23 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	ft_set_here_doc(t_subcommand *subcommand,
 			(free(limiter), here_doc_indx++);
 		}
 		token = token->next;
-		if (token && token->type == TOKEN_PIPE)
+		if (token && token->type == TOKEN_PIPE && subcommand)
 			subcommand = subcommand->next;
 	}
 	return (true);

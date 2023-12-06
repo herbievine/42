@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:03:09 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 21:53:51 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 18:36:16 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ bool	ft_check_validity(char *str, int i, char limiter)
 	if (str[i]
 		&& ft_is_valid_symbol(str[i + 1])
 		&& !ft_isspace(str[i + 1])
-		&& str[i] == '$' && limiter != '\'' )
+		&& str[i] == '$' && limiter != '\'')
 		return (true);
 	return (false);
 }

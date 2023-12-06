@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 11:05:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/05 20:10:30 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 19:02:46 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ int	ft_exit(t_subcommand *subcommand, t_command *command)
 		return (ft_putstr_fd("exit: too many arguments\n", 2), EXIT_FAILURE);
 	if (subcommand->args[1])
 		exit_value = ft_parse_exit_code(subcommand->args[1]);
-	ft_free_tokens(&command->tokens);
-	ft_free_array(subcommand->envp, -1);
-	ft_free_subcommands(subcommand);
+	ft_free_all(command, true);
 	ft_history_clear();
 	exit(exit_value % 256);
 }
