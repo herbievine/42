@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 11:34:25 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 12:02:42 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 	if (command->pid[subcommand_length] == PID_CHILD)
 	{
 		if (subcommand->builtin && subcommand->is_executable)
-			return_status = ft_builtin_valid(command, subcommand,
+		{
+			g_signal = ft_builtin_valid(command, subcommand,
 					command->tokens, subcommand->path);
-		if (!subcommand->is_executable
-			|| !subcommand->path || subcommand->builtin)
+			exit(g_signal);
+		}
+		if (!subcommand->is_executable || !subcommand->path)
 			(ft_free_all(command, true), exit(120));
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
@@ -98,7 +100,7 @@ int	ft_multiple_commands(t_command *command)
 	close(command->pipe_fd[READ]);
 	if (head->is_executable == true && return_status == 120)
 		g_signal = 1;
-	if (head->is_executable == false || return_status == 120)
+	if ((head->is_executable == false || return_status == 120))
 		return (-1);
 	if (WIFEXITED(return_status))
 		return_status = WEXITSTATUS(return_status);
@@ -120,7 +122,7 @@ int	ft_single_command(t_command *command, t_subcommand *subcommand)
 		ft_open_files(command, subcommand, 0);
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
-			(ft_free_all(command, true), exit(0));
+			(ft_free_all(command, true), exit(120));
 		execve(subcommand->path, subcommand->args, subcommand->envp);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
@@ -128,8 +130,9 @@ int	ft_single_command(t_command *command, t_subcommand *subcommand)
 		exit(return_status);
 	}
 	waitpid(pid, &return_status, 0);
-	return_status = WEXITSTATUS(return_status);
-	if (!subcommand->is_executable)
+	if (WIFEXITED(return_status))
+		return_status = WEXITSTATUS(return_status);
+	if (!subcommand->is_executable || return_status == 120)
 		return (-1);
 	return (return_status);
 }

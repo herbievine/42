@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 20:13:25 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 11:57:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ bool	ft_if_builtin(char *cmd)
 int	ft_builtin_valid(t_command *command, t_subcommand *subcommand,
 			t_token *token, char *cmd)
 {
-	if (subcommand->out_fd == -1)
-		subcommand->out_fd = 1;
 	if (ft_strschr(cmd, "echo") == 0)
 		return (ft_echo(subcommand));
 	else if (ft_strschr(cmd, "cd") == 0)
@@ -63,6 +61,5 @@ int	ft_builtin_valid(t_command *command, t_subcommand *subcommand,
 		return (ft_env(*(command->env)));
 	else if (ft_strschr(cmd, "exit") == 0)
 		return (ft_exit(subcommand, command));
-	subcommand->out_fd = -1;
 	return (1);
 }
