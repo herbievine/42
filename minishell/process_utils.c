@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 11:37:33 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 13:08:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-int	ft_handle_in(t_token *token, t_subcommand *subcommand)
+int	ft_handle_in(t_token *token, t_subcommand *subcommand, bool dup)
 {
 	int		fd;
 	char	*str;
@@ -38,18 +38,18 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand)
 		fd = open(".here_doc_fd", O_RDONLY);
 	if (fd == -1)
 		ft_error(strerror(errno), str);
-	if ((fd == -1 || fd > 0) && subcommand->in_fd >= 0)
+	if ((fd == -1 || fd > 0) && subcommand->in_fd > 0)
 		close(subcommand->in_fd);
 	if (fd > 0)
 	{
 		subcommand->in_fd = fd;
-		(dup2(fd, STDIN_FILENO), close(fd));
+		if (dup)
+			(dup2(fd, STDIN_FILENO), close(fd));
 	}
-	free(str);
-	return (fd);
+	return (free(str), fd);
 }
 
-int	ft_handle_out(t_token *token, t_subcommand *subcommand)
+int	ft_handle_out(t_token *token, t_subcommand *subcommand, bool dup)
 {
 	char	*str;
 	int		fd;
@@ -67,24 +67,25 @@ int	ft_handle_out(t_token *token, t_subcommand *subcommand)
 		fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0666);
 	if (fd == -1)
 		ft_error(strerror(errno), str);
-	if ((fd == -1 || fd > 0) && subcommand->out_fd >= 0)
+	if ((fd == -1 || fd > 0) && subcommand->out_fd > 1)
 		close(subcommand->out_fd);
 	if (fd > 0)
 	{
 		subcommand->out_fd = fd;
-		(dup2(fd, STDOUT_FILENO), close(fd));
+		if (dup)
+			(dup2(fd, STDOUT_FILENO), close(fd));
 	}
-	free(str);
-	return (fd);
+	return (free(str), fd);
 }
 
-static int	ft_handle_io(t_command *cmd, t_token *curr, t_subcommand *sub)
+static int	ft_handle_io(t_command *cmd,
+			t_token *curr, t_subcommand *sub, bool dup)
 {
 	int	fd;
 
-	fd = ft_handle_in(curr, sub);
+	fd = ft_handle_in(curr, sub, dup);
 	if (fd != -1)
-		fd = ft_handle_out(curr, sub);
+		fd = ft_handle_out(curr, sub, dup);
 	if (fd == -1)
 	{
 		if (cmd->prev_pipe_fd > 0)
@@ -96,7 +97,7 @@ static int	ft_handle_io(t_command *cmd, t_token *curr, t_subcommand *sub)
 }
 
 void	ft_open_files(t_command *command,
-		t_subcommand *subcommand, int subcommand_nb)
+		t_subcommand *subcommand, int subcommand_nb, bool dup)
 {
 	int			i;
 	int			status;
@@ -113,7 +114,7 @@ void	ft_open_files(t_command *command,
 	}
 	while (token_head != NULL && token_head->type != TOKEN_PIPE)
 	{
-		status = ft_handle_io(command, token_head, subcommand);
+		status = ft_handle_io(command, token_head, subcommand, dup);
 		if (status == -1)
 			return ;
 		token_head = token_head->next;
@@ -145,7 +146,7 @@ bool	ft_fork_and_pipe(t_command *command, t_subcommand *subcommand,
 		if (subcommand->next)
 			dup2(command->pipe_fd[WRITE], STDOUT_FILENO);
 		(close(command->pipe_fd[READ]), close(command->pipe_fd[WRITE]));
-		ft_open_files(command, subcommand, subcommand_length);
+		ft_open_files(command, subcommand, subcommand_length, true);
 	}
 	return (true);
 }
