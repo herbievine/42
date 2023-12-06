@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 18:05:49 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 18:13:03 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ static bool	ft_exit_heredoc(t_subcommand *subcommand, char *buffer)
 	if (!tmp)
 		return (false);
 	ft_putstr_fd(tmp, subcommand->in_fd);
+	free(tmp);
 	close(subcommand->in_fd);
 	return (true);
 }
