@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 13:11:06 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 15:15:11 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 		{
 			g_signal = ft_builtin_valid(command, subcommand,
 					command->tokens, subcommand->path);
-			exit(g_signal);
+			(ft_free_all(command, true), exit(g_signal));
 		}
 		if (!subcommand->is_executable || !subcommand->path)
 			(ft_free_all(command, true), exit(120));
