@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:04:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/06 14:45:15 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 14:59:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_export(t_command *cmd, t_subcommand *subcommand, t_token *token)
 	{
 		if (!ft_parse_export(subcommand->args[i]))
 		{
-			(ft_putstr_fd(" not a valid identifier\n", 2), i++);
+			ft_putstr_fd(" not a valid identifier\n", 2);
 			g_signal = 1;
 			continue ;
 		}
