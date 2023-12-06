@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 22:46:01 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 10:52:21 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,11 @@ void	ft_open_files(t_command *command,
 		t_subcommand *subcommand, int subcommand_nb)
 {
 	int			i;
+	int			status;
 	t_token		*token_head;
 
 	i = -1;
+	status = 0;
 	token_head = command->tokens;
 	while (++i < subcommand_nb && token_head)
 	{
@@ -113,7 +115,9 @@ void	ft_open_files(t_command *command,
 	}
 	while (token_head != NULL && token_head->type != TOKEN_PIPE)
 	{
-		ft_handle_io(command, token_head, subcommand);
+		status = ft_handle_io(command, token_head, subcommand);
+		if (status == -1)
+			return ;
 		token_head = token_head->next;
 	}
 }
