@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 22:25:51 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 16:35:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,38 @@
 #include <stdio.h>
 #include <readline/readline.h>
 
-static char	*ft_init_heredoc(t_subcommand *subcommand, t_token *token);
+static char	*ft_init_heredoc(t_subcommand *subcommand,
+				t_token *token, int here_doc_indx);
 static bool	ft_exit_heredoc(t_subcommand *subcommand, char *buffer);
-static bool	ft_heredoc(t_subcommand *subcommand,
-				char *limiter, t_token *token);
+static bool	ft_heredoc(t_subcommand *subcommand, char *limiter,
+				t_token *token, int here_doc_indx);
 
 bool	ft_set_here_doc(t_subcommand *subcommand,
 	t_token *token)
 {
 	char	*limiter;
+	int		here_doc_indx;
 
-	while (token && token->type != TOKEN_PIPE)
+	here_doc_indx = 0;
+	while (token)
 	{
-		if (token->type == TOKEN_LT_LT)
+		if (token && token->type == TOKEN_LT_LT)
 		{
 			if (!token->next || (token->next->type != TOKEN_SYMBOL
 					&& token->next->type != TOKEN_SQ
-					&& token->next->type != TOKEN_DQ))
+					&& token->next->type != TOKEN_DQ
+					&& token->next->type != TOKEN_EOF))
 				return (ft_error(ESYN, NULL), g_signal = 1, false);
-			limiter = ft_substr(token->next->value, 0,
-					token->next->length);
+			limiter = ft_substr(token->next->value, 0, token->next->length);
 			if (!limiter)
 				return (g_signal = 1, false);
-			if (subcommand->in_fd > 0)
-				close(subcommand->in_fd);
-			if (subcommand->is_heredoc)
-				unlink(".here_doc_fd");
-			if (!ft_heredoc(subcommand, limiter, token))
+			if (!ft_heredoc(subcommand, limiter, token, here_doc_indx))
 				return (g_signal = 1, free(limiter), false);
-			free(limiter);
+			(free(limiter), here_doc_indx++);
 		}
 		token = token->next;
+		if (token && token->type == TOKEN_PIPE)
+			subcommand = subcommand->next;
 	}
 	return (true);
 }
@@ -71,13 +72,18 @@ static bool	ft_heredoc_exit_cond(char *line, char *limiter)
 }
 
 static bool	ft_heredoc(t_subcommand *subcommand,
-	char *limiter, t_token *token)
+	char *limiter, t_token *token, int here_doc_indx)
 {
 	char	*line;
 	char	*buffer;
 	char	*tmp;
 
-	buffer = ft_init_heredoc(subcommand, token);
+	if (subcommand->in_fd > 0)
+		close(subcommand->in_fd);
+	if (subcommand->is_heredoc)
+		unlink(subcommand->heredoc_name);
+	free(subcommand->heredoc_name);
+	buffer = ft_init_heredoc(subcommand, token, here_doc_indx);
 	if (!buffer)
 		return (false);
 	while (buffer)
@@ -94,10 +100,20 @@ static bool	ft_heredoc(t_subcommand *subcommand,
 	return (ft_exit_heredoc(subcommand, buffer));
 }
 
-static char	*ft_init_heredoc(t_subcommand *subcommand, t_token *token)
+static char	*ft_init_heredoc(t_subcommand *subcommand,
+			t_token *token, int here_doc_indx)
 {
+	char	*tmp;
+
 	token->next->type = TOKEN_EOF;
-	subcommand->in_fd = open(".here_doc_fd",
+	tmp = ft_itoa(here_doc_indx);
+	if (!tmp)
+		return (NULL);
+	subcommand->heredoc_name = ft_strjoin(".here_doc", tmp);
+	free(tmp);
+	if (!subcommand->heredoc_name)
+		return (NULL);
+	subcommand->in_fd = open(subcommand->heredoc_name,
 			O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (!subcommand->in_fd)
 		return (NULL);
@@ -108,26 +124,11 @@ static char	*ft_init_heredoc(t_subcommand *subcommand, t_token *token)
 static bool	ft_exit_heredoc(t_subcommand *subcommand, char *buffer)
 {
 	int		i;
-	char	*tmp;
 
 	i = -1;
 	while (buffer[++i])
-	{
-		if (buffer[i] == '$')
-		{
-			tmp = ft_expand_dollar(subcommand, buffer);
-			if (tmp)
-				ft_putstr_fd(tmp, subcommand->in_fd);
-			free(tmp);
-			while (buffer[i] && (ft_is_valid_symbol(buffer[i])))
-				i++;
-			i--;
-		}
-		else
-			ft_putchar_fd(buffer[i], subcommand->in_fd);
-	}
+		ft_putchar_fd(buffer[i], subcommand->in_fd);
 	free(buffer);
 	close(subcommand->in_fd);
-	subcommand->in_fd = open(".here_doc_fd", O_RDONLY);
 	return (true);
 }

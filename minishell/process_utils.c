@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 13:34:48 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 15:37:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand, bool dup)
 	if (token->type == TOKEN_LT)
 		fd = open(str, O_RDONLY);
 	if (token->type == TOKEN_LT_LT)
-		fd = open(".here_doc_fd", O_RDONLY);
+		fd = open(subcommand->heredoc_name, O_RDONLY);
 	if (fd == -1)
 		ft_error(strerror(errno), str);
 	if (fd > 0)

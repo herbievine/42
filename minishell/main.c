@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/05 22:17:50 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 16:33:46 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include "env.h"
 #include "builtin.h"
 #include "quotes.h"
+#include "here_doc.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -56,6 +57,8 @@ static bool	ft_parse_wrapper(t_command *command)
 	ft_expand_token(command->subcommands, command->tokens);
 	ft_suppress_quotes(command->subcommands, command->tokens);
 	if (!ft_clean_tokens(&command->tokens))
+		return (false);
+	if (!ft_set_here_doc(command->subcommands, command->tokens))
 		return (false);
 	if (!ft_parse(command->tokens, command->subcommands, command->env))
 		return (false);

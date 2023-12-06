@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:56:36 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/04 19:50:25 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 15:22:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	ft_free_subcommands(t_subcommand *subcommand)
 	while (subcommand != NULL)
 	{
 		if (subcommand->is_heredoc)
-			unlink(".here_doc_fd");
+			unlink(subcommand->heredoc_name);
+		if (subcommand->heredoc_name != NULL)
+			free(subcommand->heredoc_name);
 		if ((subcommand->in_fd > 1) && (subcommand->in_fd != -1))
 			close(subcommand->in_fd);
 		if (subcommand->out_fd > 1)

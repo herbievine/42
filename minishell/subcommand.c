@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/06 11:55:15 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 15:21:29 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_subcommand	*ft_subcommand_new(char **env)
 	subcommand->path = NULL;
 	subcommand->args = NULL;
 	subcommand->envp = env;
+	subcommand->heredoc_name = NULL;
 	subcommand->mode = MODE_WRITE;
 	subcommand->is_executable = true;
 	subcommand->is_heredoc = false;
