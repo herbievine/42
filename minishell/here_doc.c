@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 16:35:56 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 18:05:49 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "signals.h"
 #include "lexer_utils.h"
 #include "find_in_file.h"
+#include "expand.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -123,12 +124,12 @@ static char	*ft_init_heredoc(t_subcommand *subcommand,
 
 static bool	ft_exit_heredoc(t_subcommand *subcommand, char *buffer)
 {
-	int		i;
+	char	*tmp;
 
-	i = -1;
-	while (buffer[++i])
-		ft_putchar_fd(buffer[i], subcommand->in_fd);
-	free(buffer);
+	tmp = ft_iter_in_string(subcommand, buffer);
+	if (!tmp)
+		return (false);
+	ft_putstr_fd(tmp, subcommand->in_fd);
 	close(subcommand->in_fd);
 	return (true);
 }
