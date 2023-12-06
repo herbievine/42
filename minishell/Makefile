@@ -6,14 +6,15 @@
 #    By: jcros <jcros@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2023/12/06 19:47:38 by jcros            ###   ########.fr        #
+#    Updated: 2023/12/06 20:37:22 by jcros            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -g3 -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
+
 
 RM = rm
 RMFLAG = -f

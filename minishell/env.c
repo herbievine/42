@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:11:40 by juliencros        #+#    #+#             */
-/*   Updated: 2023/11/18 11:49:43 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 21:00:30 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*ft_env_get_home(char **env)
 	if (__MACH__)
 		path = ft_strjoin("/Users/", user);
 	else
-		path = ft_strjoin("/home/", user);
+		path = ft_strjoin("/mnt/nfs/homes/", user);
 	free(user);
 	return (path);
 }
