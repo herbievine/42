@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/05 23:02:09 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 10:21:29 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,6 @@
 static char	**ft_fill_args(t_token **token, t_subcommand *subcommand);
 static int	ft_arg_count(t_token *token);
 
-int checkdoublepipe(t_token *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->type == TOKEN_PIPE && !tokens->next)
-			return (1);
-		if (tokens->type == TOKEN_PIPE && tokens->next && tokens->next->type == TOKEN_PIPE)
-			return (1);
-		tokens = tokens->next;
-	}
-	return (0);
-}
-
 bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 {
 	char	*path;
@@ -56,7 +43,7 @@ bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 			return (g_signal = 1, false);
 	}
 	free(path);
-	if (checkdoublepipe(tokens))
+	if (ft_check_pipe_valid(tokens) || ft_check_io_valid(tokens))
 		return (ft_error(ESYN, NULL), false);
 	if (!ft_set_here_doc(subcommand, tokens)
 		|| !ft_set_path(subcommand, tokens))

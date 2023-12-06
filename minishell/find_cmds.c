@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 23:04:47 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 10:09:09 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,8 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 	char	*cmd;
 	char	*path;
 
-	t_token *tmp = token;
-	while (token)
-	{
-		if (ft_is_io_symbol(token) && !token->next)
-			return (ft_error(ESYN, "asdas"), false);
-		if (ft_is_io_symbol(token) && token->next && token->next->type != TOKEN_SYMBOL)
-			return (ft_error(ESYN, "asdas"), false);
-		token = token->next;
-	}
-	token = tmp;
 	while (token && ft_is_io_symbol(token))
-	{
-		if (!token->next)
-			return (ft_error(ESYN, "sdasd"), false);
 		token = token->next->next;
-	}
-	token = tmp;
 	if (!token || token->type == TOKEN_PIPE
 		|| subcommand->builtin == 1 || subcommand->path != NULL)
 		return (true);
