@@ -3,6 +3,7 @@ push_swap/push_swap
 pipex/pipex
 so_long/so_long
 philosophers/philo/philo
+minishell/minishell
 
 # 42 Misc
 out
@@ -12,6 +13,7 @@ mlx
 # Ignore code testers
 **/tester
 **/checker
+**/*test*
 
 # MacOS
 .DS_Store
@@ -20,7 +22,7 @@ mlx
 .vscode
 
 # Log files
-*.log
+*.log*
 *.logs
 
 # Prerequisites
