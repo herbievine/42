@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:30:04 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 13:08:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 13:34:48 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	ft_handle_in(t_token *token, t_subcommand *subcommand, bool dup)
 		fd = open(".here_doc_fd", O_RDONLY);
 	if (fd == -1)
 		ft_error(strerror(errno), str);
-	if ((fd == -1 || fd > 0) && subcommand->in_fd > 0)
-		close(subcommand->in_fd);
 	if (fd > 0)
 	{
 		subcommand->in_fd = fd;
@@ -67,8 +65,6 @@ int	ft_handle_out(t_token *token, t_subcommand *subcommand, bool dup)
 		fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0666);
 	if (fd == -1)
 		ft_error(strerror(errno), str);
-	if ((fd == -1 || fd > 0) && subcommand->out_fd > 1)
-		close(subcommand->out_fd);
 	if (fd > 0)
 	{
 		subcommand->out_fd = fd;
