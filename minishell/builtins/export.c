@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:04:11 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/05 21:10:59 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 14:45:15 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static bool	ft_parse_export(char *str)
 		return (false);
 	while (str[i] && str[i] != '=')
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' || str[i] == '-')
 			return (false);
 		if (str[i] && str[i] == '=' && ((i > 0 && !ft_isalnum(str[i - 1]))))
 			return (false);
@@ -75,16 +75,15 @@ int	ft_export(t_command *cmd, t_subcommand *subcommand, t_token *token)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (!subcommand->args[1])
 		return (ft_print_exported_variables(*(cmd->env)), 0);
-	if (subcommand->next)
-		return (0);
-	while (subcommand->args[i])
+	while (subcommand->args[++i])
 	{
 		if (!ft_parse_export(subcommand->args[i]))
 		{
 			(ft_putstr_fd(" not a valid identifier\n", 2), i++);
+			g_signal = 1;
 			continue ;
 		}
 		else if (ft_strchr(subcommand->args[i], '='))
@@ -94,8 +93,9 @@ int	ft_export(t_command *cmd, t_subcommand *subcommand, t_token *token)
 		}
 		else
 			*(cmd->env) = ft_env_set(*(cmd->env), subcommand->args[i], NULL);
-		i++;
 		token = token->next;
 	}
+	if (g_signal == 1)
+		return (1);
 	return (0);
 }
