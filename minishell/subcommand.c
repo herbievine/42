@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subcommand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:44:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/06 15:21:29 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 20:05:26 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "free.h"
 #include "token.h"
 #include "here_doc.h"
-#include "find_out_file.h"
-#include "find_in_file.h"
 #include "builtin.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -56,8 +54,7 @@ t_subcommand	*ft_build_subcommand(char **env)
 	return (subcommand);
 }
 
-t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index,
-	char **env)
+t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index)
 {
 	int				i;
 	t_token			*token;
@@ -73,24 +70,24 @@ t_subcommand	*ft_find_next_subcommand(t_command *command, int *token_index,
 	if (pipe_offset == PIPE_NOT_FOUND)
 	{
 		*token_index = command->token_length;
-		return (ft_build_subcommand(env));
+		return (ft_build_subcommand(*command->env));
 	}
 	else if (*token_index == 0 || pipe_offset > 0)
 	{
 		*token_index += pipe_offset + 1;
-		return (ft_build_subcommand(env));
+		return (ft_build_subcommand(*command->env));
 	}
 	return (NULL);
 }
 
-bool	ft_create_subcommands(t_command *command, char **env)
+bool	ft_create_subcommands(t_command *command)
 {
 	int				token_index;
 	t_subcommand	*subcommand;
 	t_subcommand	*head;
 
 	token_index = 0;
-	subcommand = ft_find_next_subcommand(command, &token_index, env);
+	subcommand = ft_find_next_subcommand(command, &token_index);
 	while (subcommand)
 	{
 		if (!command->subcommands)
@@ -107,7 +104,7 @@ bool	ft_create_subcommands(t_command *command, char **env)
 			command->subcommands = head;
 			command->subcommand_length++;
 		}
-		subcommand = ft_find_next_subcommand(command, &token_index, env);
+		subcommand = ft_find_next_subcommand(command, &token_index);
 	}
 	return (true);
 }

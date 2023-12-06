@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/06 16:33:42 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 19:58:01 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 #include "mem.h"
 #include "error.h"
 #include "free.h"
-#include "find_in_file.h"
 #include "find_cmds.h"
-#include "find_out_file.h"
 #include "str.h"
 #include "builtin.h"
 #include <stdio.h>
@@ -27,7 +25,7 @@
 static char	**ft_fill_args(t_token **token, t_subcommand *subcommand);
 static int	ft_arg_count(t_token *token);
 
-bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
+bool	ft_parse(t_command *cmd, t_token *tokens, t_subcommand *subcommand)
 {
 	char	*path;
 
@@ -50,7 +48,7 @@ bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 	while (tokens->next != NULL && tokens->type != TOKEN_PIPE)
 		tokens = tokens->next;
 	if (tokens->next && tokens->type == TOKEN_PIPE && subcommand->next)
-		return (ft_parse(tokens->next, subcommand->next, envp), true);
+		return (ft_parse(cmd, tokens->next, subcommand->next), true);
 	return (true);
 }
 

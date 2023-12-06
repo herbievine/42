@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:12:12 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 13:11:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 19:59:20 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #include <string.h>
 #include <errno.h>
 
-static char	*ft_find_path(t_subcommand *subcommand, char *cmd);
+static char	*ft_find_path(char **env, char *cmd);
 
 /**
  * @brief The ft_set_path function sets the path of the command.
@@ -52,7 +52,7 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
 		return (g_signal = 1, false);
 	if (ft_strncmp(cmd, "/bin/", 5) == 0 && access(cmd, F_OK) == 0)
 		return (subcommand->path = ft_strdup(cmd), free(cmd), true);
-	path = ft_find_path(subcommand, cmd);
+	path = ft_find_path(subcommand->envp, cmd);
 	if (!path)
 		return (g_signal = 1, free(cmd), false);
 	if (ft_strncmp(path, cmd, ft_strlen(cmd)) == 0)
@@ -71,7 +71,7 @@ bool	ft_set_path(t_subcommand *subcommand, t_token *token)
  * @param cmd
  * @return char*
  */
-static char	*ft_find_path(t_subcommand *subcommand, char *cmd)
+static char	*ft_find_path(char **env, char *cmd)
 {
 	char	**paths;
 	char	*path;
@@ -79,7 +79,7 @@ static char	*ft_find_path(t_subcommand *subcommand, char *cmd)
 
 	if (access(cmd, F_OK) == 0)
 		return (ft_substr(cmd, 0, ft_strlen(cmd)));
-	paths = ft_env_get_paths(subcommand->envp);
+	paths = ft_env_get_paths(env);
 	if (!paths)
 		return (ft_strdup(cmd));
 	i = -1;

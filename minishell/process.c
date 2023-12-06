@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 18:04:18 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 15:15:11 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 20:04:36 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_spawn_child(t_command *command, t_subcommand *subcommand,
 		}
 		if (!subcommand->is_executable || !subcommand->path)
 			(ft_free_all(command, true), exit(120));
-		execve(subcommand->path, subcommand->args, subcommand->envp);
+		execve(subcommand->path, subcommand->args, *command->env);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
 		ft_free_all(command, false);
@@ -123,7 +123,7 @@ int	ft_single_command(t_command *command, t_subcommand *subcommand)
 		if (!subcommand->is_executable
 			|| !subcommand->path || subcommand->builtin)
 			(ft_free_all(command, true), exit(120));
-		execve(subcommand->path, subcommand->args, subcommand->envp);
+		execve(subcommand->path, subcommand->args, *command->env);
 		return_status = ft_define_exit_status(strerror(errno),
 				subcommand->path, subcommand->args[0]);
 		ft_free_all(command, false);

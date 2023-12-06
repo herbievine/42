@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:08:55 by codespace         #+#    #+#             */
-/*   Updated: 2023/12/06 14:25:23 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 19:35:30 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../structs.h"
 # include "../builtin.h"
 
-int	ft_cd(t_subcommand *subcommand);
+int	ft_cd(t_command *cmd, t_subcommand *subcommand);
 int	ft_echo(t_command *command, t_subcommand *subcommand);
 int	ft_env(t_command *command, t_subcommand *subcommand, char **env);
 int	ft_exit(t_subcommand *subcommand, t_command *command);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:37:02 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 14:25:55 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 19:36:04 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_builtin_valid(t_command *command, t_subcommand *subcommand,
 	if (ft_strschr(cmd, "echo") == 0)
 		return (ft_echo(command, subcommand));
 	else if (ft_strschr(cmd, "cd") == 0)
-		return (ft_cd(subcommand));
+		return (ft_cd(command, subcommand));
 	else if (ft_strschr(cmd, "pwd") == 0)
 		return (ft_pwd(command, subcommand));
 	else if (ft_strschr(cmd, "export") == 0)

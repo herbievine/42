@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/06 16:33:46 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 20:06:00 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static bool	ft_parse_wrapper(t_command *command)
 		return (false);
 	if (!ft_set_here_doc(command->subcommands, command->tokens))
 		return (false);
-	if (!ft_parse(command->tokens, command->subcommands, command->env))
+	if (!ft_parse(command, command->tokens, command->subcommands))
 		return (false);
 	return (true);
 }
@@ -84,7 +84,7 @@ static void	ft_build_command(char *buffer, char ***env)
 		command.token_length++;
 		token = ft_lexer_next(&lexer);
 	}
-	if (!ft_create_subcommands(&command, *env))
+	if (!ft_create_subcommands(&command))
 		return (ft_free_all(&command, false));
 	if (!ft_parse_wrapper(&command))
 		return (ft_free_all(&command, false));

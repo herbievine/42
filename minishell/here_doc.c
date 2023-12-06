@@ -6,20 +6,18 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:37:08 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/06 18:55:23 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 20:19:23 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "here_doc.h"
 #include "mem.h"
-#include "get_line.h"
 #include "str.h"
 #include "error.h"
 #include "display.h"
 #include "expand.h"
 #include "signals.h"
 #include "lexer_utils.h"
-#include "find_in_file.h"
 #include "expand.h"
 #include <unistd.h>
 #include <fcntl.h>
@@ -116,7 +114,7 @@ static char	*ft_init_heredoc(t_subcommand *subcommand,
 		return (NULL);
 	subcommand->in_fd = open(subcommand->heredoc_name,
 			O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (!subcommand->in_fd)
+	if (subcommand->in_fd == -1)
 		return (NULL);
 	subcommand->is_heredoc = true;
 	return (ft_strdup(""));
