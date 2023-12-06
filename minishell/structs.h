@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/05 22:27:08 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 15:20:52 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_subcommand
 	char				*path;
 	char				**args;
 	char				**envp;
+	char				*heredoc_name;
 	t_mode				mode;
 	bool				is_executable;
 	bool				is_heredoc;

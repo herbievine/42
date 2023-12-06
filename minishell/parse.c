@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/06 10:21:29 by juliencros       ###   ########.fr       */
+/*   Updated: 2023/12/06 16:33:42 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include "find_out_file.h"
 #include "str.h"
 #include "builtin.h"
-#include "here_doc.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -45,8 +44,7 @@ bool	ft_parse(t_token *tokens, t_subcommand *subcommand, char ***envp)
 	free(path);
 	if (ft_check_pipe_valid(tokens) || ft_check_io_valid(tokens))
 		return (ft_error(ESYN, NULL), false);
-	if (!ft_set_here_doc(subcommand, tokens)
-		|| !ft_set_path(subcommand, tokens))
+	if (!ft_set_path(subcommand, tokens))
 		subcommand->is_executable = false;
 	subcommand->args = ft_fill_args(&tokens, subcommand);
 	while (tokens->next != NULL && tokens->type != TOKEN_PIPE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_out_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:18:30 by juliencros        #+#    #+#             */
-/*   Updated: 2023/12/05 22:50:31 by jcros            ###   ########.fr       */
+/*   Updated: 2023/12/06 15:55:08 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ bool	ft_find_outfile(t_subcommand *subcommand, t_token *token)
 		{
 			if (!token->next || (token->next->type != TOKEN_SYMBOL
 					&& token->next->type != TOKEN_DQ
-					&& token->next->type != TOKEN_SQ))
+					&& token->next->type != TOKEN_SQ
+					&& token->next->type != TOKEN_EOF))
 			{
 				ft_error(ESYN, NULL);
 				subcommand->is_executable = false;
