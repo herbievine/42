@@ -7,7 +7,13 @@ projects = [
 	"push_swap",
 	"so_long",
 	"philosophers/philo",
-	"minishell"
+	"minishell",
+	"cpp01/ex00",
+	"cpp01/ex01",
+	"cpp01/ex02",
+	"cpp01/ex03",
+	"cpp01/ex04",
+	"cpp01/ex05",
 ]
 
 [scripts]
