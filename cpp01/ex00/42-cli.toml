@@ -1,0 +1,5 @@
+name = "cpp01/ex00"
+
+[scripts]
+build = { cmd = "make" }
+clean = { cmd = "make fclean" }

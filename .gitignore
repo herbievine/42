@@ -6,6 +6,12 @@ philosophers/philo/philo
 minishell/minishell
 cpp00/ex00/megaphone
 cpp00/ex00/phonebook
+cpp01/ex00/zombie
+cpp01/ex01/horde
+cpp01/ex02/brain
+cpp01/ex03/attack
+cpp01/ex04/sed2
+cpp01/ex05/harl
 
 # 42 Misc
 out
