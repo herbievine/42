@@ -18,6 +18,7 @@ int main()
 	std::string command;
 	PhoneBook phoneBook;
 	phoneBook.count = 0;
+	phoneBook.length = 0;
 
 	while (true)
 	{

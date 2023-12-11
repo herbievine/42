@@ -60,6 +60,7 @@ void PhoneBook::add()
 																			fields[3].value,
 																			fields[4].value);
 	this->count++;
+	this->length++;
 }
 
 void PhoneBook::search()
@@ -74,16 +75,14 @@ void PhoneBook::search()
 	std::cout << "|" << std::left << std::setw(10) << "Nickname";
 	std::cout << "|" << std::endl;
 	std::cout << "+==========+==========+==========+==========+" << std::endl;
-	for (i = 0; i < MAX_CONTACTS; i++)
+	for (i = 0; i < std::min(MAX_CONTACTS, this->length); i++)
 	{
-		if (!this->contacts[i])
-			break;
 		std::cout << "|" << std::left << std::setw(10) << i;
 		std::cout << "|" << std::left << std::setw(10) << this->getTruncated(this->contacts[i]->getFirstName());
 		std::cout << "|" << std::left << std::setw(10) << this->getTruncated(this->contacts[i]->getLastName());
 		std::cout << "|" << std::left << std::setw(10) << this->getTruncated(this->contacts[i]->getNickname());
 		std::cout << "|" << std::endl;
-		if (this->contacts[i + 1] && i < MAX_CONTACTS - 1)
+		if (i < std::min(MAX_CONTACTS, this->length) - 1)
 			std::cout << "+----------+----------+----------+----------+" << std::endl;
 	}
 	std::cout << "+==========+==========+==========+==========+" << std::endl;
@@ -99,7 +98,7 @@ void PhoneBook::search()
 		return;
 	else if (index[0] < '0' || index[0] > '7')
 		return;
-	else if (!this->contacts[index[0] - '0'])
+	else if (index[0] - '0' >= std::min(MAX_CONTACTS, this->length))
 		return;
 	else
 		this->contacts[index[0] - '0']->print();

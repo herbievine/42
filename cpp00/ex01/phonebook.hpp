@@ -15,7 +15,7 @@
 #ifndef PHONEBOOK_HPP
 #define PHONEBOOK_HPP
 
-#define MAX_CONTACTS 3
+#define MAX_CONTACTS 8
 
 struct ContactField
 {
@@ -32,6 +32,7 @@ public:
 	Contact *contacts[8];
 
 	int count;
+	int length;
 
 	void add();
 	void search();

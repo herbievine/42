@@ -40,13 +40,6 @@ void Contact::print() const
 	std::cout << "Darkest Secret: " << this->darkestSecret << std::endl;
 }
 
-bool Contact::isEmpty() const
-{
-	if (this->firstName.empty())
-		return true;
-	return false;
-}
-
 std::string Contact::getFirstName() const
 {
 	return this->firstName;

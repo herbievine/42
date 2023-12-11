@@ -25,7 +25,6 @@ public:
 					std::string darkestSecret);
 	~Contact();
 	void print() const;
-	bool isEmpty() const;
 	std::string getFirstName() const;
 	std::string getLastName() const;
 	std::string getNickname() const;

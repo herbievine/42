@@ -13,7 +13,7 @@
 NAME = phonebook
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 RM = rm
 RMFLAG = -f
@@ -30,7 +30,7 @@ bonus: all
 	$(CC) $(CFLAGS) -c $< -o $(<:.cpp=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -std=c++98 -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	$(RM) $(RMFLAG) $(OBJS)
