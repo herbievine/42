@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:24:46 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 16:40:54 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:11:39 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Harl::~Harl()
 {
 }
 
+// cppcheck-suppress passedByValue
 void Harl::complain(std::string level)
 {
 	int i;
@@ -29,7 +30,7 @@ void Harl::complain(std::string level)
 			&Harl::info,
 			&Harl::warning,
 			&Harl::error};
-	std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+	std::string const levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
 	for (i = 0; i < 4; i++)
 	{

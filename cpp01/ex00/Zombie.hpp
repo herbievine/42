@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:54:08 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 15:25:54 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:02:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class Zombie
 {
 public:
-	Zombie(std::string name);
+	explicit Zombie(std::string name);
 	~Zombie(void);
 	void announce(void);
 

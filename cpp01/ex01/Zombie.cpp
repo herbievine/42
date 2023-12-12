@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:57:19 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 15:18:04 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:03:44 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ Zombie::Zombie()
 {
 }
 
+// cppcheck-suppress passedByValue
 Zombie::Zombie(std::string name)
 {
 	this->name = name;
@@ -27,6 +28,7 @@ Zombie::~Zombie(void)
 	std::cout << this->name << " is dead" << std::endl;
 }
 
+// cppcheck-suppress passedByValue
 void Zombie::setName(std::string name)
 {
 	this->name = name;

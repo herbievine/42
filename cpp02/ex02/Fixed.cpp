@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:44:54 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/12 13:05:50 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:20:21 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ Fixed Fixed::operator--(int)
 	return tmp;
 }
 
+// cppcheck-suppress unusedFunction
 Fixed &Fixed::min(Fixed &a, Fixed &b)
 {
 	if (a.getRawBits() < b.getRawBits())
@@ -163,6 +164,7 @@ float Fixed::toFloat(void) const
 	return static_cast<float>(this->getRawBits()) / (1 << this->fractionalBits);
 }
 
+// cppcheck-suppress unusedFunction
 int Fixed::toInt(void) const
 {
 	return this->getRawBits() >> this->fractionalBits;

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:44:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 13:13:18 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 13:42:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <cstring>
 #include <iomanip>
 
-PhoneBook::PhoneBook()
+PhoneBook::PhoneBook() : contacts(), count(0), length(0)
 {
 }
 
@@ -26,7 +26,6 @@ PhoneBook::~PhoneBook()
 
 void PhoneBook::add()
 {
-	int i;
 	ContactField fields[5] = {
 			{.name = "First name",
 			 .value = ""},

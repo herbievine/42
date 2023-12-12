@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:58:34 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/12 10:23:34 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:08:44 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 class Sed
 {
 public:
-	Sed(std::string infile);
+	explicit Sed(std::string const &infile);
 	~Sed();
-	void replace(std::string pattern, std::string replace);
+	void replace(std::string const &pattern, std::string const &replace);
 
 private:
 	std::string infile;

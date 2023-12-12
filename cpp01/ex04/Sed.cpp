@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sed.cpp                                            :+:      :+:    :+:   */
+/*   Sed.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:00:34 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 17:24:59 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:10:09 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Sed.hpp"
 #include <fstream>
 
-Sed::Sed(std::string infile) : infile(infile), outfile(infile + ".replace")
+Sed::Sed(std::string const &infile) : infile(infile), outfile(infile + ".replace")
 {
 }
 
@@ -21,7 +21,7 @@ Sed::~Sed()
 {
 }
 
-void Sed::replace(std::string pattern, std::string replace)
+void Sed::replace(std::string const &pattern, std::string const &replace)
 {
 	std::ifstream ifs(this->infile);
 	std::ofstream ofs(this->outfile);

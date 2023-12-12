@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:39:00 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 15:44:50 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:06:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 class HumanB
 {
 public:
-	HumanB(std::string name);
+	explicit HumanB(std::string const &name);
 	~HumanB();
 	void attack();
 	void setWeapon(Weapon &weapon);

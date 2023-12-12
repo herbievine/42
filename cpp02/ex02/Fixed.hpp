@@ -8,8 +8,8 @@ class Fixed
 {
 public:
 	Fixed();
-	Fixed(int const value);
-	Fixed(float const value);
+	explicit Fixed(int const value);
+	explicit Fixed(float const value);
 	Fixed(const Fixed &rhs);
 	Fixed &operator=(const Fixed &rhs);
 	~Fixed();

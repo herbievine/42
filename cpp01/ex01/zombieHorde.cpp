@@ -6,12 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:14:34 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 15:21:02 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:03:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
+// cppcheck-suppress passedByValue
 Zombie *zombieHorde(int N, std::string name)
 {
 	int i;

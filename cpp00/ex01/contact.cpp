@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:33:59 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 11:29:56 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 13:42:17 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <iostream>
 #include <cstring>
 
-Contact::Contact(std::string firstName,
-								 std::string lastName,
-								 std::string nickname,
-								 std::string phone,
-								 std::string darkestSecret)
+Contact::Contact(std::string const &firstName,
+								 std::string const &lastName,
+								 std::string const &nickname,
+								 std::string const &phone,
+								 std::string const &darkestSecret)
 {
 	this->firstName = firstName;
 	this->lastName = lastName;

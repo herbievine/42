@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:38:56 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 15:47:47 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:04:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 class HumanA
 {
 public:
-	HumanA(std::string name, Weapon &weapon);
+	HumanA(std::string const &name, Weapon &weapon);
 	~HumanA();
 	void attack();
 

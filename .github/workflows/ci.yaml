@@ -43,6 +43,8 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip setuptools
           pip install norminette
+      - name: Install cppcheck
+        run: sudo apt-get install -y -qq cppcheck
       - name: Build
         run: ftcli build
       - name: Clean

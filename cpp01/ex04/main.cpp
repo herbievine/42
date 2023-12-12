@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:06:33 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/12 10:24:12 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 14:10:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 {
 	if (argc != 4)
 	{
-		std::cerr << "usage: ./sed <filename> <pattern> <replace>." << std::endl;
+		std::cerr << "usage: ./sed2 <filename> <pattern> <replace>." << std::endl;
 		return 1;
 	}
 
