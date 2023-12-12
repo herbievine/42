@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:00:34 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 16:46:35 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/11 17:24:59 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void Sed::replace(std::string pattern, std::string replace)
 	if (!ifs.is_open())
 	{
 		std::cerr << "error: " << this->infile << " could not be opened." << std::endl;
+		ofs.close();
 		return;
 	}
 	if (!ofs.is_open())

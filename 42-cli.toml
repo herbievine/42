@@ -8,6 +8,8 @@ projects = [
 	"so_long",
 	"philosophers/philo",
 	"minishell",
+	"cpp00/ex00",
+	"cpp00/ex01",
 	"cpp01/ex00",
 	"cpp01/ex01",
 	"cpp01/ex02",
