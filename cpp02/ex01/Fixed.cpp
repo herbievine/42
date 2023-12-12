@@ -6,12 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 10:44:54 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/12 11:19:50 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/12 15:02:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 #include <iostream>
+#include <cmath>
 
 Fixed::Fixed() : fixedPointValue(0)
 {
