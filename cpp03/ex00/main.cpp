@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 09:58:21 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/24 15:59:50 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/26 13:17:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 int main(void)
 {
-	ClapTrap clapTrap("ClapTrap");
+	ClapTrap clap("Rook");
+
+	clap.attack("42 staff");
+	clap.takeDamage(2);
+	clap.beRepaired(1);
 
 	return 0;
 }

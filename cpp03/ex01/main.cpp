@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/26 13:19:54 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/26 13:41:07 by herbie           ###   ########.fr       */
+/*   Created: 2023/12/11 09:58:21 by herbie            #+#    #+#             */
+/*   Updated: 2023/12/26 13:27:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLAPTRAP_HPP
-#define CLAPTRAP_HPP
-
+#include "ScavTrap.hpp"
 #include <iostream>
 
-class ClapTrap
+int main(void)
 {
-public:
-	explicit ClapTrap(const std::string &name);
-	~ClapTrap();
+	ScavTrap scav("Sponge Bob");
 
-	void attack(const std::string &target);
-	void takeDamage(unsigned int amount);
-	void beRepaired(unsigned int amount);
+	scav.attack("42 staff");
+	scav.takeDamage(2);
+	scav.beRepaired(1);
+	scav.attack("more 42 staff");
+	scav.guardGate();
 
-private:
-	std::string name;
-	int hitPoints;
-	int energyPoints;
-	int attackDamage;
-};
-
-#endif /* CLAPTRAP_HPP */
+	return 0;
+}

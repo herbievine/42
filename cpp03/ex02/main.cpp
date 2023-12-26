@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/26 13:19:54 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/26 13:41:07 by herbie           ###   ########.fr       */
+/*   Created: 2023/12/11 09:58:21 by herbie            #+#    #+#             */
+/*   Updated: 2023/12/26 13:34:58 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLAPTRAP_HPP
-#define CLAPTRAP_HPP
-
+#include "FragTrap.hpp"
 #include <iostream>
 
-class ClapTrap
+int main(void)
 {
-public:
-	explicit ClapTrap(const std::string &name);
-	~ClapTrap();
+	FragTrap frag("James Bond");
 
-	void attack(const std::string &target);
-	void takeDamage(unsigned int amount);
-	void beRepaired(unsigned int amount);
+	frag.attack("Jennifer Aniston");
+	frag.takeDamage(76);
+	frag.beRepaired(34);
+	frag.attack("Jennifer Aniston");
+	frag.highFivesGuys();
 
-private:
-	std::string name;
-	int hitPoints;
-	int energyPoints;
-	int attackDamage;
-};
-
-#endif /* CLAPTRAP_HPP */
+	return 0;
+}
