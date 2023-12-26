@@ -24,21 +24,24 @@ Sed::~Sed()
 void Sed::replace(std::string const &pattern, std::string const &replace)
 {
 	std::ifstream ifs(this->infile);
-	std::ofstream ofs(this->outfile);
-	std::string line;
-
+	
 	if (!ifs.is_open())
 	{
 		std::cerr << "error: " << this->infile << " could not be opened." << std::endl;
-		ofs.close();
 		return;
 	}
+
+	std::ofstream ofs(this->outfile);
+	
 	if (!ofs.is_open())
 	{
 		std::cerr << "error: " << this->outfile << " could not be opened." << std::endl;
 		ifs.close();
 		return;
 	}
+	
+	std::string line;
+	
 	while (std::getline(ifs, line))
 	{
 		size_t pos = line.find(pattern);
@@ -50,6 +53,7 @@ void Sed::replace(std::string const &pattern, std::string const &replace)
 		}
 		ofs << line << std::endl;
 	}
+	
 	ifs.close();
 	ofs.close();
 }

@@ -21,6 +21,7 @@ class HumanB
 public:
 	explicit HumanB(std::string const &name);
 	~HumanB();
+	
 	void attack();
 	void setWeapon(Weapon &weapon);
 

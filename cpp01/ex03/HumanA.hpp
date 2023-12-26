@@ -21,6 +21,7 @@ class HumanA
 public:
 	HumanA(std::string const &name, Weapon &weapon);
 	~HumanA();
+	
 	void attack();
 
 private:
