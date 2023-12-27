@@ -21,7 +21,6 @@
 int main(void)
 {
 	IMateriaSource *src = new MateriaSource();
-	AMateria *tmp;
 
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
@@ -30,6 +29,7 @@ int main(void)
 
 	ICharacter *me = new Character("me");
 
+	AMateria *tmp, *cure;
 	tmp = src->createMateria("ice");
 	me->equip(tmp);
 
@@ -39,8 +39,8 @@ int main(void)
 	tmp = src->createMateria("ice");
 	me->equip(tmp);
 
-	tmp = src->createMateria("cure");
-	me->equip(tmp);
+	cure = src->createMateria("cure");
+	me->equip(cure);
 
 	tmp = src->createMateria("unknown");
 	me->equip(tmp);
@@ -52,8 +52,12 @@ int main(void)
 	me->use(2, *bob);
 	me->use(3, *bob);
 
-	me->unequip(1);
-	me->use(1, *bob);
+	me->unequip(3);
+	me->use(3, *bob);
+
+	// We need to delete the 3rd item as the
+	// unequip function doesn't do it for us
+	delete cure;
 
 	delete bob;
 	delete me;
