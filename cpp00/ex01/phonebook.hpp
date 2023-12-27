@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 10:18:07 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/11 13:05:39 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/27 14:33:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
 	PhoneBook();
 	~PhoneBook();
 
-	Contact *contacts[8];
+	Contact *contacts[MAX_CONTACTS];
 
 	int count;
 	int length;
