@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 14:54:08 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/12 14:03:10 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/27 14:33:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ public:
 	Zombie(void);
 	explicit Zombie(std::string name);
 	~Zombie(void);
-	
+
 	void setName(std::string name);
 	void announce(void);
 
