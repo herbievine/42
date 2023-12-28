@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 13:19:36 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/26 17:49:50 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 16:21:15 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@
 class ScavTrap : public ClapTrap
 {
 public:
+	ScavTrap();
 	explicit ScavTrap(const std::string &name);
+	ScavTrap(const ScavTrap &scavTrap);
 	~ScavTrap();
+
+	ScavTrap &operator=(const ScavTrap &scavTrap);
 
 	// cppcheck-suppress missingOverride
 	void attack(const std::string &target);
