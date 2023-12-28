@@ -29,6 +29,8 @@ WrongCat::~WrongCat()
 
 WrongCat &WrongCat::operator=(const WrongCat &rhs)
 {
+	std::cout << "[WrongCat] Assignation operator called" << std::endl;
+
 	this->type = rhs.type;
 
 	return (*this);

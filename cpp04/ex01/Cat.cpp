@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:53:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/28 17:45:42 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 18:16:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ Cat::Cat(const Cat &cat) : Animal(cat), brain(new Brain(*cat.brain))
 
 Cat &Cat::operator=(const Cat &rhs)
 {
+	std::cout << "[Cat] Assignation operator called" << std::endl;
+
 	this->type = rhs.type;
 	*brain = *rhs.brain;
 

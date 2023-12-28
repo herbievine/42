@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:48:23 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/27 11:11:51 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 18:25:34 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "WrongCat.hpp"
 #include <iostream>
 
-#define MAX_ANIMALS 2
+#define MAX_ANIMALS 100
 
 int main(void)
 {

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:53:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/28 17:48:02 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 18:13:53 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ Dog::Dog(const Dog &dog) : Animal(dog)
 
 Dog &Dog::operator=(const Dog &rhs)
 {
+	std::cout << "[Dog] Assignation operator called" << std::endl;
+
 	this->type = rhs.type;
 
 	return (*this);
