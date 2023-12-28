@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:49:17 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/27 15:21:44 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 17:58:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@
 class Character : public ICharacter
 {
 public:
+	Character();
 	explicit Character(std::string const &name);
+	Character(const Character &character);
 	virtual ~Character();
+
+	Character &operator=(const Character &rhs);
 
 	// cppcheck-suppress missingOverride
 	std::string const &getName() const;

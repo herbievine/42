@@ -19,8 +19,11 @@
 class WrongCat : public WrongAnimal
 {
 public:
-	WrongCat(void);
+	WrongCat();
+	WrongCat(const WrongCat &wrongCat);
 	~WrongCat();
+
+	WrongCat &operator=(const WrongCat &rhs);
 
 	// cppcheck-suppress missingOverride
 	void makeSound(void) const;

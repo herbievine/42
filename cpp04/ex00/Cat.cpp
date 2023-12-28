@@ -6,15 +6,27 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:53:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/26 17:57:06 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 17:45:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 
-Cat::Cat(void) : Animal("Cat")
+Cat::Cat() : Animal("Cat")
 {
 	std::cout << "[Cat] Constructor called" << std::endl;
+}
+
+Cat::Cat(const Cat &cat) : Animal(cat)
+{
+	std::cout << "[Cat] Copy constructor called" << std::endl;
+}
+
+Cat &Cat::operator=(const Cat &rhs)
+{
+	this->type = rhs.type;
+
+	return (*this);
 }
 
 Cat::~Cat()
