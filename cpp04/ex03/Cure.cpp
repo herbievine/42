@@ -17,9 +17,23 @@ Cure::Cure() : AMateria("cure")
 	std::cout << "[Cure] Constructor called" << std::endl;
 }
 
+Cure::Cure(const Cure &cure) : AMateria(cure)
+{
+	std::cout << "[Cure] Copy constructor called" << std::endl;
+}
+
 Cure::~Cure()
 {
 	std::cout << "[Cure] Destructor called" << std::endl;
+}
+
+Cure &Cure::operator=(const Cure &rhs)
+{
+	std::cout << "[Cure] Assignation operator called" << std::endl;
+
+	this->type = rhs.type;
+
+	return *this;
 }
 
 AMateria *Cure::clone() const

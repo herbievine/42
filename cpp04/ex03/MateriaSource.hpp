@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 12:33:28 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/27 15:23:25 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 18:02:44 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ class MateriaSource : public IMateriaSource
 {
 public:
 	MateriaSource();
+	MateriaSource(const MateriaSource &materiaSource);
 	~MateriaSource();
+
+	MateriaSource &operator=(const MateriaSource &rhs);
 
 	// cppcheck-suppress missingOverride
 	void learnMateria(AMateria *);

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:49:17 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/27 15:09:40 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 17:30:20 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ class Animal
 public:
 	Animal();
 	explicit Animal(std::string const &type);
+	Animal(const Animal &animal);
 	virtual ~Animal();
+
+	Animal &operator=(const Animal &rhs);
 
 	std::string getType() const;
 	virtual void makeSound() const;

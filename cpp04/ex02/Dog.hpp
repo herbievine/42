@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:49:17 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/27 15:19:27 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 17:46:16 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 class Dog : public AAnimal
 {
 public:
-	Dog(void);
-	Dog(const Dog &rhs);
-	Dog &operator=(const Dog &rhs);
+	Dog();
+	Dog(const Dog &dog);
 	~Dog();
+
+	Dog &operator=(const Dog &rhs);
 
 	// cppcheck-suppress missingOverride
 	void makeSound(void) const;

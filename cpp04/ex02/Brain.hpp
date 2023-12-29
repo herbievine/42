@@ -20,8 +20,11 @@
 class Brain
 {
 public:
-	Brain(void);
+	Brain();
+	Brain(const Brain &brain);
 	~Brain();
+
+	Brain &operator=(const Brain &rhs);
 
 private:
 	std::string *ideas[BRAIN_IDEAS];

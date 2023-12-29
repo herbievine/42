@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:49:17 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/27 15:16:59 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 17:55:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@
 class WrongCat : public WrongAnimal
 {
 public:
-	WrongCat(void);
+	WrongCat();
+	WrongCat(const WrongCat &wrongCat);
 	~WrongCat();
+
+	WrongCat &operator=(const WrongCat &rhs);
 
 	// cppcheck-suppress missingOverride
 	void makeSound(void) const;

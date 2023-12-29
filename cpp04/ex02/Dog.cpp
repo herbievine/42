@@ -6,29 +6,29 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:53:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/27 15:19:19 by herbie           ###   ########.fr       */
+/*   Updated: 2023/12/28 18:17:14 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Dog.hpp"
 
-Dog::Dog(void) : AAnimal("Dog"), brain(new Brain())
+Dog::Dog() : AAnimal("Dog"), brain(new Brain())
 {
 	std::cout << "[Dog] Constructor called" << std::endl;
 }
 
-Dog::Dog(const Dog &rhs) : AAnimal(rhs), brain(new Brain(*rhs.brain))
+Dog::Dog(const Dog &dog) : AAnimal(dog), brain(new Brain(*dog.brain))
 {
 	std::cout << "[Dog] Copy constructor called" << std::endl;
 }
 
 Dog &Dog::operator=(const Dog &rhs)
 {
-	if (this != &rhs)
-	{
-		this->type = rhs.type;
-		*brain = *rhs.brain;
-	}
+	std::cout << "[Dog] Assignation operator called" << std::endl;
+
+	this->type = rhs.type;
+	*brain = *rhs.brain;
+
 	return (*this);
 }
 
