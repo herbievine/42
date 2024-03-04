@@ -1,0 +1,7 @@
+name = "cub3d"
+
+[scripts]
+build = { cmd = "make", mlx = true }
+run = [{ cmd = "./cub3d maps/default.cub" }]
+clean = { cmd = "make fclean", mlx = true }
+lint = { cmd = "norminette ." }
