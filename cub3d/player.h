@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str.h                                              :+:      :+:    :+:   */
+/*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 16:13:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/29 12:14:43 by herbie           ###   ########.fr       */
+/*   Created: 2024/03/04 13:38:05 by herbie            #+#    #+#             */
+/*   Updated: 2024/03/04 13:38:05 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STR_H
-# define STR_H
+#ifndef PLAYER_H
+# define PLAYER_H
 
-# include <stdlib.h>
+# include "structs.h"
 
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
 
-#endif /* STR_H */
+void	ft_render_player(t_data *data);
+void	ft_move_player(t_data *data, int key);
+
+#endif

@@ -13,6 +13,8 @@
 #include "structs.h"
 #include "error.h"
 #include "window.h"
+#include "minimap.h"
+#include "player.h"
 // #include "hooks.h"
 // #include "ints.h"
 // #include "free.h"
@@ -114,23 +116,37 @@
 // 	free(tmp);
 // }
 
-// /**
-//  * @brief The ft_on_render function is the main loop of the game. It gets
-//  * called every time the window needs to be refreshed. It renders the
-//  * background and the assets of the game.
-//  * 
-//  * @param data 
-//  * @return int 
-//  */
-// int	ft_on_render(t_data *data)
-// {
-// 	if (data->win_ptr == NULL)
-// 		return (0);
-// 	ft_display_score(data);
-// 	ft_render_bg(data);
-// 	ft_render_assets(data);
-// 	return (0);
-// }
+/**
+ * @brief The ft_on_render function is the main loop of the game. It gets
+ * called every time the window needs to be refreshed. It renders the
+ * background and the assets of the game.
+ * 
+ * @param data 
+ * @return int 
+ */
+int	ft_on_render(t_data *data)
+{
+	if (data->win_ptr == NULL)
+		return (0);
+	ft_render_minimap(data);
+	ft_render_player(data);
+	return (0);
+}
+
+/**
+ * @brief The ft_on_key function is the hook for the key events. It handles the
+ * key events and updates the game state accordingly.
+ * 
+ * @param keycode 
+ * @param data 
+ * @return int 
+ */
+int	ft_on_key(int keycode, t_data *data)
+{
+	ft_move_player(data, keycode);
+	ft_on_render(data);
+	return (0);
+}
 
 /**
  * @brief The ft_init_window function initializes the window of the game. It
@@ -143,17 +159,12 @@ void	ft_init_window(t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (ft_err(EX11));
-	printf("MLX DONE BABY");
 	data->win_ptr = mlx_new_window(
 			data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "franprix");
 	if (!data->win_ptr)
 		return (ft_err(EX11));
-	// if (!ft_load_textures(data))
-	// 	return (ft_free_mlx(data), ft_free_data(data), ft_err(ETXTUR));
-	// mlx_loop_hook(data->mlx_ptr, &ft_on_render, data);
-	// mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &ft_on_keypress, data);
-	// mlx_hook(
-	// 	data->win_ptr, DestroyNotify, StructureNotifyMask, &ft_on_close, data);
-	// mlx_loop(data->mlx_ptr);
-	// return (ft_free_textures(data), ft_free_mlx(data), ft_free_data(data));
+	// ft_on_render(data);
+	// mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
+	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &ft_on_key, data);
+	mlx_loop(data->mlx_ptr);
 }

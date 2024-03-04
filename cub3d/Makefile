@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/03/04 09:01:04 by herbie           ###   ########.fr        #
+#    Updated: 2024/03/04 13:38:57 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRCS = \
 	str.c \
 	math2.c \
 	window.c \
+	minimap.c \
+	player.c \
 	parse.c \
 	error.c \
 	# ints.c \

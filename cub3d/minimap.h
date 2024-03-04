@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str.h                                              :+:      :+:    :+:   */
+/*   minimap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 16:13:30 by herbie            #+#    #+#             */
-/*   Updated: 2023/03/29 12:14:43 by herbie           ###   ########.fr       */
+/*   Created: 2024/03/04 09:30:33 by herbie            #+#    #+#             */
+/*   Updated: 2024/03/04 09:30:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STR_H
-# define STR_H
+#ifndef MINIMAP_H
+# define MINIMAP_H
 
-# include <stdlib.h>
+# include "structs.h"
 
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	ft_render_minimap(t_data *data);
 
-#endif /* STR_H */
+#endif
