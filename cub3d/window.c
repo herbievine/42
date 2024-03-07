@@ -15,6 +15,8 @@
 #include "window.h"
 #include "minimap.h"
 #include "player.h"
+#include "hooks.h"
+#include "render.h"
 // #include "hooks.h"
 // #include "ints.h"
 // #include "free.h"
@@ -116,6 +118,24 @@
 // 	free(tmp);
 // }
 
+void	ft_render_bg(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < WIN_WIDTH)
+	{
+		y = 0;
+		while (y < WIN_HEIGHT)
+		{
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x00000000);
+			y++;
+		}
+		x++;
+	}
+}
+
 /**
  * @brief The ft_on_render function is the main loop of the game. It gets
  * called every time the window needs to be refreshed. It renders the
@@ -126,25 +146,13 @@
  */
 int	ft_on_render(t_data *data)
 {
+	// printf("re-rendering...\n");
 	if (data->win_ptr == NULL)
 		return (0);
-	ft_render_minimap(data);
-	ft_render_player(data);
-	return (0);
-}
-
-/**
- * @brief The ft_on_key function is the hook for the key events. It handles the
- * key events and updates the game state accordingly.
- * 
- * @param keycode 
- * @param data 
- * @return int 
- */
-int	ft_on_key(int keycode, t_data *data)
-{
-	ft_move_player(data, keycode);
-	ft_on_render(data);
+	ft_render(data);
+	// ft_render_bg(data);
+	// ft_render_minimap(data);
+	// ft_render_player(data);
 	return (0);
 }
 
@@ -163,8 +171,11 @@ void	ft_init_window(t_data *data)
 			data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "franprix");
 	if (!data->win_ptr)
 		return (ft_err(EX11));
-	// ft_on_render(data);
-	// mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
-	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, &ft_on_key, data);
+	// ft_render(data);
+	mlx_hook(
+		data->win_ptr, DestroyNotify, StructureNotifyMask, ft_on_close, data);
+	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keypress, data);
+	// mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keyrelease, data);
+	mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
 	mlx_loop(data->mlx_ptr);
 }

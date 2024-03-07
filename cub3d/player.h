@@ -20,6 +20,7 @@
 # define KEY_S 115
 # define KEY_D 100
 
+void	ft_init_player(t_player *player);
 void	ft_render_player(t_data *data);
 void	ft_move_player(t_data *data, int key);
 

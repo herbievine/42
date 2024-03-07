@@ -15,6 +15,8 @@
 
 # include "structs.h"
 
-void	ft_parse_map_or_throw(t_map *map, char *map_path);
+void	ft_init_map(t_data *data);
+void	ft_print_map(t_data data);
+// void	ft_parse_map_or_throw(int **map, char *map_path);
 
 #endif /* PARSE_H */

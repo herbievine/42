@@ -12,7 +12,9 @@
 
 #include "hooks.h"
 #include "structs.h"
+#include "window.h"
 #include "free.h"
+#include "move.h"
 #include "mlx/mlx.h"
 #include "print.h"
 #include <stdlib.h>
@@ -29,26 +31,14 @@
  */
 void	ft_handle_move(int keysym, t_data *data)
 {
-	if (keysym == XK_Up
-		&& data->map->map[data->map->start.y - 1][data->map->start.x] != WALL
-		&& ++data->map->moves
-		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-		--data->map->start.y;
-	else if (keysym == XK_Down
-		&& data->map->map[data->map->start.y + 1][data->map->start.x] != WALL
-		&& ++data->map->moves
-		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-		++data->map->start.y;
-	else if (keysym == XK_Left
-		&& data->map->map[data->map->start.y][data->map->start.x - 1] != WALL
-		&& ++data->map->moves
-		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-		--data->map->start.x;
-	else if (keysym == XK_Right
-		&& data->map->map[data->map->start.y][data->map->start.x + 1] != WALL
-		&& ++data->map->moves
-		&& ft_dprintf(1, "You have moved %d time(s).\n", data->map->moves))
-		++data->map->start.x;
+	if (keysym == XK_w)
+		ft_move_player_forward(data);
+	else if (keysym == XK_s)
+		ft_move_player_backward(data);
+	else if (keysym == XK_a)
+		ft_move_player_left(data);
+	else if (keysym == XK_d)
+		ft_move_player_right(data);
 }
 
 /**
@@ -67,18 +57,14 @@ int	ft_on_keypress(int keysym, t_data *data)
 		ft_on_close(data);
 	else
 		ft_handle_move(keysym, data);
-	if (data->map->map[data->map->start.y][data->map->start.x] == EXIT
-		&& data->map->collectibles == 0)
-	{
-		ft_dprintf(1, "You win!\n");
-		ft_dprintf(1, "Total moves: %d\n", data->map->moves);
-		ft_on_close(data);
-	}
-	else if (data->map->map[data->map->start.y][data->map->start.x] == COLL)
-	{
-		--data->map->collectibles;
-		data->map->map[data->map->start.y][data->map->start.x] = EMPT;
-	}
+	ft_render_bg(data);
+	return (0);
+}
+
+int	ft_on_keyrelease(int keysym, t_data *data)
+{
+	(void)keysym;
+	(void)data;
 	return (0);
 }
 
@@ -91,9 +77,10 @@ int	ft_on_keypress(int keysym, t_data *data)
  */
 int	ft_on_close(t_data *data)
 {
-	ft_free_textures(data);
-	ft_free_mlx(data);
-	ft_free_data(data);
+	(void)data;
+	// ft_free_textures(data);
+	// ft_free_mlx(data);
+	// ft_free_data(data);
 	exit(0);
 	return (0);
 }

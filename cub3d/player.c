@@ -6,12 +6,22 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:38:21 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/04 13:38:21 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/07 13:37:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player.h"
 #include "mlx/mlx.h"
+
+void	ft_init_player(t_player *player)
+{
+	player->x = 22;
+	player->y = 12;
+	player->dx = -1;
+	player->dy = 0;
+	player->px = 0;
+	player->py = 0.66;
+}
 
 void	ft_render_player(t_data *data)
 {

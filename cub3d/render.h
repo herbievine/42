@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.h                                           :+:      :+:    :+:   */
+/*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 13:36:08 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 14:42:04 by herbie           ###   ########.fr       */
+/*   Created: 2024/03/07 10:54:08 by herbie            #+#    #+#             */
+/*   Updated: 2024/03/07 10:54:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_H
-# define WINDOW_H
+#ifndef RENDER_H
+# define RENDER_H
 
 # include "structs.h"
 
-# define WIN_WIDTH 960
-# define WIN_HEIGHT 540
+void	ft_render(t_data *data);
 
-void	ft_init_window(t_data *data);
-void	ft_render_bg(t_data *data);
-
-#endif /* WINDOW_H */
+#endif /* RENDER_H */

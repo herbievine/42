@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.h                                           :+:      :+:    :+:   */
+/*   move.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 13:36:08 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 14:42:04 by herbie           ###   ########.fr       */
+/*   Created: 2024/03/07 11:13:57 by herbie            #+#    #+#             */
+/*   Updated: 2024/03/07 11:13:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_H
-# define WINDOW_H
+#ifndef MOVE_H
+# define MOVE_H
 
 # include "structs.h"
 
-# define WIN_WIDTH 960
-# define WIN_HEIGHT 540
+void	ft_move_player_forward(t_data *data);
+void	ft_move_player_backward(t_data *data);
+void	ft_move_player_left(t_data *data);
+void	ft_move_player_right(t_data *data);
 
-void	ft_init_window(t_data *data);
-void	ft_render_bg(t_data *data);
-
-#endif /* WINDOW_H */
+#endif /* MOVE_H */

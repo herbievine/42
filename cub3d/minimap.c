@@ -18,37 +18,38 @@
 #define OFFSET 10
 #define SIZE 80
 
-void	ft_draw_line(t_data *data, int x1, int y1, int x2, int y2)
-{
-	double deltaX = x2 - x1;
-	double deltaY = y2 - y1;
+// void	ft_draw_line(t_data *data, int x1, int y1, int x2, int y2)
+// {
+// 	double deltaX = x2 - x1;
+// 	double deltaY = y2 - y1;
 
-	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+// 	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 
-	deltaX /= pixels;
-	deltaY /= pixels;
+// 	deltaX /= pixels;
+// 	deltaY /= pixels;
 
-	double pixelX = x1;
-	double pixelY = y1;
-	while (pixels)
-	{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pixelX, pixelY, 0xFFFFFF);
-			pixelX += deltaX;
-			pixelY += deltaY;
-			--pixels;
-	}
-}
+// 	double pixelX = x1;
+// 	double pixelY = y1;
+// 	while (pixels)
+// 	{
+// 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pixelX, pixelY, 0xFFFFFF);
+// 			pixelX += deltaX;
+// 			pixelY += deltaY;
+// 			--pixels;
+// 	}
+// }
 
 void	ft_draw_outline(t_data *data)
 {
+	(void)data;
 	// draw top line
-	ft_draw_line(data, OFFSET, OFFSET, OFFSET + SIZE, OFFSET);
-	// draw bottom line
-	ft_draw_line(data, OFFSET, OFFSET + SIZE, OFFSET + SIZE, OFFSET + SIZE);
-	// draw left line
-	ft_draw_line(data, OFFSET, OFFSET, OFFSET, OFFSET + SIZE);
-	// draw right line
-	ft_draw_line(data, OFFSET + SIZE, OFFSET, OFFSET + SIZE, OFFSET + SIZE);
+	// ft_draw_line(data, OFFSET, OFFSET, OFFSET + SIZE, OFFSET);
+	// // draw bottom line
+	// ft_draw_line(data, OFFSET, OFFSET + SIZE, OFFSET + SIZE, OFFSET + SIZE);
+	// // draw left line
+	// ft_draw_line(data, OFFSET, OFFSET, OFFSET, OFFSET + SIZE);
+	// // draw right line
+	// ft_draw_line(data, OFFSET + SIZE, OFFSET, OFFSET + SIZE, OFFSET + SIZE);
 }
 
 void	ft_render_minimap(t_data *data)

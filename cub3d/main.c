@@ -15,6 +15,7 @@
 #include "parse.h"
 #include "error.h"
 #include "window.h"
+#include "player.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -27,12 +28,14 @@
 
 int	main(int argc, char *argv[])
 {
+	(void)argv;
 	t_data	data;
 
 	if (argc != 2)
 		ft_err(EIO);
-	// data = ft_init();
-	ft_parse_map_or_throw(&data.map, argv[1]);
+	ft_init_player(&data.player);
+	ft_init_map(&data);
+	ft_print_map(data);
 	ft_init_window(&data);
 	return (0);
 }
