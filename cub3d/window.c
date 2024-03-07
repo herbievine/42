@@ -176,6 +176,6 @@ void	ft_init_window(t_data *data)
 		data->win_ptr, DestroyNotify, StructureNotifyMask, ft_on_close, data);
 	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keypress, data);
 	// mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keyrelease, data);
-	mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
+	// mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
 	mlx_loop(data->mlx_ptr);
 }

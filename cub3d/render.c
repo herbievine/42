@@ -18,24 +18,33 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color)
+// void ft_draw_line(t_data *data, int x1, int y1, int x2, int y2, int color)
+// {
+// 	double deltaX = x2 - x1;
+// 	double deltaY = y2 - y1;
+
+// 	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+
+// 	deltaX /= pixels;
+// 	deltaY /= pixels;
+
+// 	double pixelX = x1;
+// 	double pixelY = y1;
+// 	while (pixels)
+// 	{
+// 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pixelX, pixelY, color);
+// 		pixelX += deltaX;
+// 		pixelY += deltaY;
+// 		--pixels;
+// 	}
+// }
+
+void	ft_draw_vertical_line(t_data *data, int x, int y1, int y2, int color)
 {
-	double deltaX = x2 - x1;
-	double deltaY = y2 - y1;
-
-	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
-
-	deltaX /= pixels;
-	deltaY /= pixels;
-
-	double pixelX = x1;
-	double pixelY = y1;
-	while (pixels)
+	while (y1 < y2)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pixelX, pixelY, color);
-		pixelX += deltaX;
-		pixelY += deltaY;
-		--pixels;
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y1, color);
+		y1++;
 	}
 }
 
@@ -157,23 +166,24 @@ void ft_render(t_data *data)
 				color = 0xFFFFFF;
 				break; // white
 			default:
-				color = 0xFFFF00;
+				color = 0;
 				break; // yellow
 			}
 		}
 
 		// give x and y sides different brightness
-		if (side == 1)
-		{
-			color = color / 2;
-		}
+		// if (side == 1)
+		// {
+		// 	color = color / 2;
+		// }
 
 		// draw the pixels of the stripe as a vertical line
 
 
 		// verLine(x, drawStart, drawEnd, color);
 		// printf("drawStart: %d, drawEnd: %d\n", drawStart, drawEnd);
-		ft_draw_line(data, x, drawStart, x, drawEnd, color);
+		// ft_draw_line(data, x, drawStart, x, drawEnd, color);
+		ft_draw_vertical_line(data, x, drawStart, drawEnd, color);
 	}
 
 
@@ -183,6 +193,6 @@ void ft_render(t_data *data)
 	// printf("FPS: %f\n", 1.0 / frameTime);					// FPS counter
 
 	// speed modifiers
-	data->player.movespeed = frameTime * 5.0; // the constant value is in squares/second
-	data->player.rotspeed = frameTime * 3.0;	 // the constant value is in radians/second
+	data->player.movespeed = frameTime * .2; // the constant value is in squares/second
+	data->player.rotspeed = frameTime * .2;	 // the constant value is in radians/second
 }

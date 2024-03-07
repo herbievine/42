@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:59:56 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/07 13:38:06 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/07 14:42:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void ft_move_player_left(t_data *data)
 
 	p = &data->player;
 
-	double oldDX = p->dx;
-	p->dx = p->dx * cos(-p->rotspeed) - p->dy * sin(-p->rotspeed);
-	p->dy = oldDX * sin(-p->rotspeed) + p->dy * cos(-p->rotspeed);
+	double oldDirX = p->dx;
+	p->dx = p->dx * cos(p->rotspeed) - p->dy * sin(p->rotspeed);
+	p->dy = oldDirX * sin(p->rotspeed) + p->dy * cos(p->rotspeed);
 	double oldPlaneX = p->px;
-	p->px = p->px * cos(-p->rotspeed) - p->py * sin(-p->rotspeed);
-	p->py = oldPlaneX * sin(-p->rotspeed) + p->py * cos(-p->rotspeed);
+	p->px = p->px * cos(p->rotspeed) - p->py * sin(p->rotspeed);
+	p->py = oldPlaneX * sin(p->rotspeed) + p->py * cos(p->rotspeed);
 }
 
 void ft_move_player_right(t_data *data)

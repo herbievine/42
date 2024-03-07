@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 14:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/08 13:21:47 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/07 14:09:20 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "window.h"
 #include "free.h"
 #include "move.h"
+#include "render.h"
 #include "mlx/mlx.h"
 #include "print.h"
 #include <stdlib.h>
@@ -53,11 +54,13 @@ void	ft_handle_move(int keysym, t_data *data)
  */
 int	ft_on_keypress(int keysym, t_data *data)
 {
+	printf("Player data: x: %f, y: %f, dx: %f, dy: %f, px: %f, py: %f\n", data->player.x, data->player.y, data->player.dx, data->player.dy, data->player.px, data->player.py);
 	if (keysym == XK_Escape)
 		ft_on_close(data);
 	else
 		ft_handle_move(keysym, data);
 	ft_render_bg(data);
+	ft_render(data);
 	return (0);
 }
 
