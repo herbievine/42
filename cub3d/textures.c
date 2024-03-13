@@ -15,6 +15,7 @@
 #include "mlx/mlx.h"
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 /**
  * @brief The ft_load_texture function loads the texture into the data struct.
@@ -34,4 +35,18 @@ bool	ft_load_texture(t_data *data, t_cardinal_direction dir, char *path)
 	if (!data->textures[dir].img)
 		return (false);
 	return (true);
+}
+
+void	ft_apply_texture(t_data *data, int x)
+{
+	t_ray	ray;
+
+	printf("ft_apply_texturefrom %d@ de %d\n", ray.ds, ray.de);
+
+	ray = data->ray;
+	while (ray.ds < ray.de)
+	{
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, ray.ds, 0xFF0000);
+		ray.ds++;
+	}
 }

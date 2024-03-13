@@ -38,14 +38,14 @@ typedef struct s_texture
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
-	float	dx;
-	float	dy;
-	float	px;
-	float	py;
-	float movespeed;
-	float rotspeed;
+	double	x;
+	double	y;
+	double	dx;
+	double	dy;
+	double	px;
+	double	py;
+	double	movespeed;
+	double	rotspeed;
 }	t_player;
 
 typedef struct s_map
@@ -55,16 +55,57 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
+/**
+ * @brief All the raycasting data
+ * 
+ * @param cx The camera plane
+ * @param dx The direction x
+ * @param dy The direction y
+ * @param mx The map x
+ * @param my The map y
+ * @param sx The step x
+ * @param sy The step y
+ * @param sdx The side distance x
+ * @param sdy The side distance y
+ * @param ddx The delta distance x
+ * @param ddy The delta distance y
+ * @param wd The wall distance
+ * @param side The side of the wall hit
+ * @param h The height of the wall
+ * @param ds The draw start
+ * @param de The draw end
+ */
+typedef struct s_ray
+{
+	double	cx;
+	double	dx;
+	double	dy;
+	int		mx;
+	int		my;
+	int		sx;
+	int		sy;
+	double	sdx;
+	double	sdy;
+	double	ddx;
+	double	ddy;
+	double	wd;
+	int		side;
+	int		h;
+	int		ds;
+	int		de;
+}	t_ray;
+
 typedef struct s_data
 {
 	void				*mlx_ptr;
 	void				*win_ptr;
 	t_texture			textures[4];
-	t_map				map;
+	// t_map				map;
 	int					**map2;
+	t_ray				ray;
 	t_player		player;
-	unsigned long long		previous_frame_time;
-	unsigned long long		current_frame_time;
+	double			previous_frame_time;
+	double			current_frame_time;
 }	t_data;
 
 #endif /* STRUCTS_H */

@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures.h                                         :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 09:56:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/08 09:56:16 by herbie           ###   ########.fr       */
+/*   Created: 2024/03/13 14:51:57 by herbie            #+#    #+#             */
+/*   Updated: 2024/03/13 14:51:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEXTURES_H
-# define TEXTURES_H
+#ifndef RAY_H
+# define RAY_H
 
 # include "structs.h"
-# include <stdbool.h>
 
-# define TILE_SIZE 48
+void	ft_cast_ray(t_data *data);
 
-# define FLOOR_PATH "./assets/floor.xpm"
-# define WALL_PATH "./assets/wall.xpm"
-# define PLAYER_PATH "./assets/cat.xpm"
-# define COLLECTIBLE_PATH "./assets/fish.xpm"
-# define EXIT_PATH "./assets/end.xpm"
-
-bool	ft_load_texture(t_data *data, t_cardinal_direction dir, char *path);
-void	ft_apply_texture(t_data *data, int x);
-
-#endif /* TEXTURES_H */
+#endif /* RAY_H */

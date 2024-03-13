@@ -171,7 +171,7 @@ void	ft_init_window(t_data *data)
 			data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "franprix");
 	if (!data->win_ptr)
 		return (ft_err(EX11));
-	// ft_render(data);
+	ft_render(data);
 	mlx_hook(
 		data->win_ptr, DestroyNotify, StructureNotifyMask, ft_on_close, data);
 	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keypress, data);
