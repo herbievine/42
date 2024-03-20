@@ -6,12 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 12:18:42 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/20 16:49:32 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+# include <stdbool.h>
 
 # define WALL '1'
 # define EMPT '0'
@@ -46,6 +48,7 @@ typedef struct s_player
 	double	py;
 	double	movespeed;
 	double	rotspeed;
+	bool	is_moving;
 }	t_player;
 
 typedef struct s_map

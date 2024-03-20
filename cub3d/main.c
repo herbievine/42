@@ -28,9 +28,9 @@
 
 int	main(int argc, char *argv[])
 {
-	(void)argv;
 	t_data	data;
 
+	(void)argv;
 	if (argc != 2)
 		ft_err(EIO);
 	ft_init_player(&data.player);

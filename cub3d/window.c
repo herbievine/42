@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:36:01 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/08 13:21:47 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/20 16:46:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "player.h"
 #include "hooks.h"
 #include "render.h"
+#include "ints.h"
 // #include "hooks.h"
 // #include "ints.h"
 // #include "free.h"
@@ -27,6 +28,7 @@
 #include <stdio.h>
 #include <X11/X.h>
 #include <X11/keysym.h>
+#include <time.h>
 
 /**
  * @brief The ft_render_assets function renders the assets of the game. It
@@ -60,6 +62,42 @@
 // 		}
 // 	}
 // }
+
+double	ft_calculate_fps(t_data *data)
+{
+	double	frame_time;
+
+	data->previous_frame_time = data->current_frame_time;
+	data->current_frame_time = clock();
+	frame_time = (data->current_frame_time - data->previous_frame_time)
+		/ (double)1000;
+	data->player.movespeed = frame_time * 5;
+	data->player.rotspeed = frame_time * 3;
+	return (1.0 / frame_time);
+}
+
+void	ft_render_fps(t_data *data, double fps)
+{
+	char	*fps_str;
+	int		i;
+	int		j;
+
+	fps_str = ft_itoa(fps);
+	if (!fps_str)
+		return ;
+	i = 5;
+	while (++i < 50)
+	{
+		j = -1;
+		while (++j < 16)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, 0x0000FF00);
+	}
+	mlx_string_put(
+		data->mlx_ptr, data->win_ptr, 10, 12, 0x00FF0000, "FPS: ");
+	mlx_string_put(
+		data->mlx_ptr, data->win_ptr, 35, 12, 0x00FF0000, fps_str);
+	free(fps_str);
+}
 
 // /**
 //  * @brief The ft_render_bg function renders the background of the game. It
@@ -146,9 +184,16 @@ void	ft_render_bg(t_data *data)
  */
 int	ft_on_render(t_data *data)
 {
-	// printf("re-rendering...\n");
+	double	fps;
 	if (data->win_ptr == NULL)
 		return (0);
+	fps = ft_calculate_fps(data);
+	printf("fps: %f\n", fps);
+	ft_render_fps(data, fps);
+	if (!data->player.is_moving)
+		return (0);
+	printf("re-rendering...\n");
+	ft_render_bg(data);
 	ft_render(data);
 	// ft_render_bg(data);
 	// ft_render_minimap(data);
@@ -171,11 +216,10 @@ void	ft_init_window(t_data *data)
 			data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "franprix");
 	if (!data->win_ptr)
 		return (ft_err(EX11));
-	ft_render(data);
 	mlx_hook(
 		data->win_ptr, DestroyNotify, StructureNotifyMask, ft_on_close, data);
-	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keypress, data);
-	// mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keyrelease, data);
-	// mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
+	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, ft_on_keypress, data);
+	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keyrelease, data);
+	mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
 	mlx_loop(data->mlx_ptr);
 }

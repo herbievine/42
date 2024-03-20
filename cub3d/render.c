@@ -15,7 +15,6 @@
 #include "ray.h"
 #include "mlx/mlx.h"
 #include <math.h>
-#include <time.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -52,9 +51,6 @@ void ft_draw_vertical_line(t_data *data, int x, int y1, int y2, int color)
 void ft_render(t_data *data)
 {
 	t_player *player = &data->player;
-
-	printf("Player data: x: %f, y: %f, dx: %f, dy: %f, px: %f, py: %f\n", player->x, player->y, player->dx, player->dy, player->px, player->py);
-	printf("move speed: %f, rot speed: %f\n", data->player.movespeed, data->player.rotspeed);
 
 	for (int x = 0; x < WIN_WIDTH; x++)
 	{
@@ -182,12 +178,5 @@ void ft_render(t_data *data)
 	}
 	// ft_cast_ray(data);
 
-	data->previous_frame_time = data->current_frame_time;
-	data->current_frame_time = clock();
-	double frameTime = (data->current_frame_time - data->previous_frame_time) / (double)1000; // the time in seconds it took to render the frame
-	// printf("FPS: %f\n", 1.0 / frameTime);					// FPS counter
-
-	// speed modifiers
-	data->player.movespeed = frameTime * .2; // the constant value is in squares/second
-	data->player.rotspeed = frameTime * .2;	 // the constant value is in radians/second
+	
 }

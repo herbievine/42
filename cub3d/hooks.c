@@ -32,6 +32,8 @@
  */
 void	ft_handle_move(int keysym, t_data *data)
 {
+	data->player.is_moving = true;
+	printf("key: %d\n", keysym);
 	if (keysym == XK_w)
 		ft_move_player_forward(data);
 	else if (keysym == XK_s)
@@ -54,18 +56,16 @@ void	ft_handle_move(int keysym, t_data *data)
  */
 int	ft_on_keypress(int keysym, t_data *data)
 {
-	printf("Player data: x: %f, y: %f, dx: %f, dy: %f, px: %f, py: %f\n", data->player.x, data->player.y, data->player.dx, data->player.dy, data->player.px, data->player.py);
 	if (keysym == XK_Escape)
 		ft_on_close(data);
 	else
 		ft_handle_move(keysym, data);
-	ft_render_bg(data);
-	ft_render(data);
 	return (0);
 }
 
 int	ft_on_keyrelease(int keysym, t_data *data)
 {
+	data->player.is_moving = false;
 	(void)keysym;
 	(void)data;
 	return (0);

@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/03/13 14:54:03 by herbie           ###   ########.fr        #
+#    Updated: 2024/03/20 18:03:46 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ SRCS = \
 	parse.c \
 	error.c \
 	textures.c \
-	# ints.c \
+	ints.c \
 	# split.c \
 	# free.c \
 	# display.c \
