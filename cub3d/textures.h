@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:16 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 17:34:43 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/21 17:47:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define COLLECTIBLE_PATH "./assets/fish.xpm"
 # define EXIT_PATH "./assets/end.xpm"
 
-bool	ft_load_texture(t_data *data, t_cardinal_direction dir, char *path);
 void	ft_apply_texture(t_data *data, int x);
 bool	ft_fill_texture(t_data *data, t_map *map);
 

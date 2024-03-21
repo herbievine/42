@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 17:34:32 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/21 18:02:50 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 static long ft_char_to_hex(char *str);
 static void	ft_fill(char *line, t_data *data, t_map *map);
+static bool	ft_load_texture(t_data *data, t_cardinal_direction dir, char *path);
 
 bool	ft_fill_texture(t_data *data, t_map *map)
 {
@@ -52,7 +53,7 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 			map->str_index++;
 	}
 	(ft_free_array(types, -1), ft_free_array(buffer_map, -1));
-	if (params != 6)
+		if (params != 6)
 		return (false);
 	return (true);
 }
@@ -101,7 +102,6 @@ static long ft_char_to_hex(char *str)
 static void	ft_fill(char *line, t_data *data, t_map *map)
 {
 	char	*parssed_line;
-	int		size;
 
 	if (line == NULL)
 		return ;
@@ -109,20 +109,28 @@ static void	ft_fill(char *line, t_data *data, t_map *map)
 	if (parssed_line == NULL)
 		return ;
 	if (ft_strncmp(line, "NO", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->no_img = mlx_xpm_file_to_image(data->mlx_ptr, ft_strchr(
-					parssed_line, '.'), &size, &size);
+		ft_load_texture(data, NORTH, ft_strchr(parssed_line, '.'));
 	else if (ft_strncmp(line, "SO", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->so_img = mlx_xpm_file_to_image(data->mlx_ptr, ft_strchr(
-					parssed_line, '.'), &size, &size);
+		ft_load_texture(data, SOUTH, ft_strchr(parssed_line, '.'));
 	else if (ft_strncmp(line, "WE", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->we_img = mlx_xpm_file_to_image(data->mlx_ptr, ft_strchr(
-					parssed_line, '.'), &size, &size);
+		ft_load_texture(data, WEST, ft_strchr(parssed_line, '.'));
 	else if (ft_strncmp(line, "EA", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->ea_img = mlx_xpm_file_to_image(data->mlx_ptr, ft_strchr(
-					parssed_line, '.'), &size, &size);
+		ft_load_texture(data, EAST, ft_strchr(parssed_line, '.'));
 	else if (ft_strncmp(parssed_line, "F", 1) == 0)
 		map->floor_hex = ft_char_to_hex(parssed_line);
 	else if (ft_strncmp(parssed_line, "C", 1) == 0)
 		map->ceiling_hex = ft_char_to_hex(parssed_line);
 	free(parssed_line);
+}
+
+static bool	ft_load_texture(t_data *data, t_cardinal_direction dir, char *path)
+{
+	data->textures[dir].img = mlx_xpm_file_to_image(
+			data->mlx_ptr,
+			path,
+			&data->textures[dir].width,
+			&data->textures[dir].height);
+	if (!data->textures[dir].img)
+		return (false);
+	return (true);
 }

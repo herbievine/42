@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 17:33:01 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/21 18:01:21 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #define mapWidth 24
 #define mapHeight 24
 
-static bool	ft_parse_args(t_map *map);
+static bool	ft_parse_args(t_data *data);
 static bool ft_parse_map(t_data *data, t_map *map);
 
 int worldMap[mapWidth][mapHeight]=
@@ -140,10 +140,10 @@ int	ft_print_data(t_data *data)
 
 	i = 0;
 	printf(" ------ print data ------ \n");
-	printf("NO = %p\n", data->map.no_img);
-	printf("SO = %p\n", data->map.so_img);
-	printf("WE = %p\n", data->map.we_img);
-	printf("EA = %p\n", data->map.ea_img);
+	printf("NO = %p\n", data->textures[0].img);
+	printf("SO = %p\n", data->textures[1].img);
+	printf("WE = %p\n", data->textures[2].img);
+	printf("EA = %p\n", data->textures[3].img);
 	printf("F = %ld\n", data->map.floor_hex);
 	printf("C = %ld\n", data->map.ceiling_hex);
 	printf("width = %d\n", data->map.width);
@@ -172,24 +172,21 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 	ft_read(&data->map.map_in_string, data->fd);
 	if (data->map.map_in_string == NULL)
 		return (ft_err("EMAP"), false);
-	if (!ft_fill_texture(data, &data->map) || !ft_parse_args(&data->map))
+	if (!ft_fill_texture(data, &data->map) || !ft_parse_args(data))
 		return (ft_err("ETXTUR"), false);
 	if (!ft_init_map(&data->map) )
 		return (ft_err("EMAP"), false);
 	if (!ft_parse_map(data, &data->map))
 		return (ft_err("EMAP2"), false);
 	ft_print_data(data);
-	close(data->fd); // TODO: check if ft_free or keep it here
 	return (true);
 }
 
-static bool	ft_parse_args(t_map *map)
+static bool	ft_parse_args(t_data *data)
 {
-	// TODO: check if f and c exist and check if valid color
-	// TODO: mlx take r, g, b, not one string.
-	if (map->no_img == NULL || map->so_img == NULL
-			|| map->we_img == NULL || map->ea_img == NULL
-			|| map->floor_hex == -1 || map->ceiling_hex == -1)
+	if (data->textures[0].img == NULL || data->textures[1].img == NULL 
+		|| data->textures[2].img == NULL || data->textures[3].img == NULL 
+		|| data->map.floor_hex == -1 || data->map.ceiling_hex == -1)
 			return (false);
 	return (true);
 }
