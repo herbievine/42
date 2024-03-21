@@ -6,45 +6,55 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:59:56 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/20 17:04:43 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/21 14:53:53 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "move.h"
-#include <math.h>
+#include "math2.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <math.h>
 
 void	ft_move_player_forward(t_data *data)
 {
 	int			**map;
 	t_player	*p;
+	double		x;
+	double		y;
+	double		move_speed;
 
 	map = data->map2;
 	p = &data->player;
+	move_speed = ft_min(p->movespeed, 1.0);
+	x = p->x + p->dx * move_speed;
+	y = p->y + p->dy * move_speed;
 
-	printf("CURRENTLY AT:\nmap[%f][%f] = %d\n", p->x, p->y, map[(int)p->x][(int)p->y]);
-	printf("MOVING TO:\nmap[%d][%d] = \n", (int)(p->x + p->dx * p->movespeed), (int)(p->y));
-
-	if (map[(int)(p->x + p->dx * p->movespeed)][(int)(p->y)] == 0)
-		p->x += p->dx * p->movespeed;
-	if (map[(int)(p->x)][(int)(p->y + p->dy * p->movespeed)] == 0)
-		p->y += p->dy * p->movespeed;
+	if (x > 0.25 && map[(int)(x)][(int)(p->y)] == 0)
+		p->x += p->dx * move_speed;
+	if (y > 0.25 && map[(int)(p->x)][(int)(y)] == 0)
+		p->y += p->dy * move_speed;
 }
 
 void	ft_move_player_backward(t_data *data)
 {
 	int			**map;
 	t_player	*p;
+	double		x;
+	double		y;
+	double		move_speed;
 
 	map = data->map2;
 	p = &data->player;
+	move_speed = ft_min(p->movespeed, 1.0);
+	x = p->x - p->dx * move_speed;
+	y = p->y - p->dy * move_speed;
 
-	if (map[(int)(p->x - p->dx * p->movespeed)][(int)(p->y)] == 0)
-		p->x -= p->dx * p->movespeed;
-	if (map[(int)(p->x)][(int)(p->y - p->dy * p->movespeed)] == 0)
-		p->y -= p->dy * p->movespeed;
+	if (x > 0.25 && map[(int)(x)][(int)(p->y)] == 0)
+		p->x -= p->dx * move_speed;
+	if (y > 0.25 && map[(int)(p->x)][(int)(y)] == 0)
+		p->y -= p->dy * move_speed;
 }
 
 void	ft_move_player_left(t_data *data)
@@ -52,15 +62,17 @@ void	ft_move_player_left(t_data *data)
 	t_player	*p;
 	double		prev_dx;
 	double		prev_px;
+	double		rot_speed;
 
 	p = &data->player;
 	prev_dx = p->dx;
 	prev_px = p->px;
+	rot_speed = ft_min(p->rotspeed, 0.6);
 
-	p->dx = p->dx * cos(p->rotspeed) - p->dy * sin(p->rotspeed);
-	p->dy = prev_dx * sin(p->rotspeed) + p->dy * cos(p->rotspeed);
-	p->px = p->px * cos(p->rotspeed) - p->py * sin(p->rotspeed);
-	p->py = prev_px * sin(p->rotspeed) + p->py * cos(p->rotspeed);
+	p->dx = p->dx * cos(rot_speed) - p->dy * sin(rot_speed);
+	p->dy = prev_dx * sin(rot_speed) + p->dy * cos(rot_speed);
+	p->px = p->px * cos(rot_speed) - p->py * sin(rot_speed);
+	p->py = prev_px * sin(rot_speed) + p->py * cos(rot_speed);
 }
 
 void	ft_move_player_right(t_data *data)
@@ -68,13 +80,15 @@ void	ft_move_player_right(t_data *data)
 	t_player	*p;
 	double		prev_dx;
 	double		prev_px;
+	double		rot_speed;
 
 	p = &data->player;
 	prev_dx = p->dx;
 	prev_px = p->px;
+	rot_speed = ft_min(p->rotspeed, 0.6);
 
-	p->dx = p->dx * cos(-p->rotspeed) - p->dy * sin(-p->rotspeed);
-	p->dy = prev_dx * sin(-p->rotspeed) + p->dy * cos(-p->rotspeed);
-	p->px = p->px * cos(-p->rotspeed) - p->py * sin(-p->rotspeed);
-	p->py = prev_px * sin(-p->rotspeed) + p->py * cos(-p->rotspeed);
+	p->dx = p->dx * cos(-rot_speed) - p->dy * sin(-rot_speed);
+	p->dy = prev_dx * sin(-rot_speed) + p->dy * cos(-rot_speed);
+	p->px = p->px * cos(-rot_speed) - p->py * sin(-rot_speed);
+	p->py = prev_px * sin(-rot_speed) + p->py * cos(-rot_speed);
 }

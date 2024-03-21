@@ -13,7 +13,9 @@
 #include "math2.h"
 #include <math.h>
 
-float deg_to_rad(float deg)
+double	ft_min(double a, double b)
 {
-	return (deg * PI / 180.0);
+	if (a < b)
+		return (a);
+	return (b);
 }

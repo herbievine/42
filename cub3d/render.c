@@ -118,10 +118,7 @@ void ft_render(t_data *data)
 
 			// Check if ray has hit a wall
 			if (data->map2[mapX][mapY] > 0)
-			{
 				hit = 1;
-				printf("Hit a wall at x: %d, y: %d\n", mapX, mapY);
-			}
 		}
 
 		if (side == 0)
@@ -131,8 +128,6 @@ void ft_render(t_data *data)
 
 		// Calculate height of line to draw on screen
 		int lineHeight = (int)(WIN_HEIGHT / perpWallDist);
-
-		printf("lineHeight: %d\n", lineHeight);
 
 		// calculate lowest and highest pixel to fill in current stripe
 		int drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
@@ -159,7 +154,7 @@ void ft_render(t_data *data)
 			color = 0xFFFFFF;
 			break; // white
 		default:
-			color = 0;
+			color = 0xFFFFFF;
 			break; // yellow
 		}
 

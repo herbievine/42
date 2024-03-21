@@ -20,10 +20,10 @@
 
 typedef enum e_cardinal_direction
 {
-	NORTH = 1,
-	SOUTH = 2,
-	WEST = 3,
-	EAST = 4
+	NORTH = 0,
+	SOUTH = 1,
+	WEST = 2,
+	EAST = 3
 }	t_cardinal_direction;
 
 typedef struct s_texture

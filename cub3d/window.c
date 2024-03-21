@@ -188,7 +188,6 @@ int	ft_on_render(t_data *data)
 	if (data->win_ptr == NULL)
 		return (0);
 	fps = ft_calculate_fps(data);
-	printf("fps: %f\n", fps);
 	ft_render_fps(data, fps);
 	if (!data->player.is_moving)
 		return (0);
