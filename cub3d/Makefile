@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/03/21 14:51:11 by herbie           ###   ########.fr        #
+#    Updated: 2024/03/21 17:26:31 by juliencros       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS = \
 	main.c \
 	mem.c \
 	str.c \
+	str2.c \
 	math2.c \
 	window.c \
 	minimap.c \
@@ -46,13 +47,17 @@ SRCS = \
 	render.c \
 	parse.c \
 	error.c \
-	textures.c \
+	free.c \
+	init.c \
+	get_line.c \
+	io.c \
+	split.c \
 	ints.c \
-	# free.c \
+	resolve_map.c \
+	textures.c \
 	# display.c \
 	# print.c \
 	# hooks.c \
-	# io.c \
 
 OBJS = $(SRCS:.c=.o)
 

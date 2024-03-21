@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:40:41 by herbie            #+#    #+#             */
-/*   Updated: 2023/04/20 15:06:25 by codespace        ###   ########.fr       */
+/*   Updated: 2024/03/06 11:47:49 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	ft_free_array(char **array, int n);
 void	ft_free_2d_array(char ***array, int n);
-void	ft_free_textures(t_data *data);
+// void	ft_free_textures(t_data *data);
 void	ft_free_mlx(t_data *data);
 void	ft_free_data(t_data *data);
 

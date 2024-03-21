@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/08 09:56:16 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:29:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 
 bool	ft_load_texture(t_data *data, t_cardinal_direction dir, char *path);
 void	ft_apply_texture(t_data *data, int x);
+bool	ft_fill_texture(t_data *data, t_map *map);
 
 #endif /* TEXTURES_H */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:15:16 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:52:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
  * @param s
  * @param n
  */
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n, int c)
 {
-	ft_memset(s, 0, n);
+	ft_memset(s, c, n);
 }
 
 /**
@@ -44,7 +44,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	space = malloc(nmemb * size);
 	if (!space)
 		return (0);
-	ft_bzero(space, nmemb * size);
+	ft_bzero(space, nmemb * size, 0);
 	return (space);
 }
 
@@ -62,4 +62,39 @@ void	*ft_memset(void *s, int c, size_t n)
 	while (n-- > 0)
 		((char *)s)[n] = (unsigned char)c;
 	return (s);
+}
+
+/**
+ * @brief The ft_memcpy function copies n bytes from memory area src to memory
+ * area dest. The memory areas must not overlap.
+ *
+ * @param dest
+ * @param src
+ * @param n
+ * @return void*
+ */
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char	*ptr_dest;
+	unsigned char	*ptr_src;
+
+	ptr_dest = (unsigned char *)dest;
+	ptr_src = (unsigned char *)src;
+	if (dest == src)
+		return (dest);
+	while (n-- > 0)
+		*ptr_dest++ = *ptr_src++;
+	return (dest);
+}
+
+char	*ft_realloc(char *ptr, size_t size)
+{
+	char	*new_ptr;
+
+	new_ptr = malloc(size);
+	if (!new_ptr)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, size);
+	free(ptr);
+	return (new_ptr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ints.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 17:31:42 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/15 17:02:51 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,36 @@ char	*ft_itoa(int n)
 		n /= 10;
 	}
 	return (str);
+}
+
+/**
+ * @brief The ft_atoi function converts the initial portion of the string
+ * pointed to by str to int representation.
+ * 
+ * @param str 
+ * @return int 
+ */
+int	ft_atoi(const char *str)
+{
+	int		i;
+	int		sign;
+	long	n;
+
+	i = 0;
+	sign = 1;
+	n = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		if (str[i++] == '-')
+			sign = -1;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		n = n * 10 + (str[i++] - '0');
+		if (n < 0 && sign == 1)
+			return (-1);
+		if (n < 0 && sign == -1)
+			return (0);
+	}
+	return (n * sign);
 }

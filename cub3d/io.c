@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   io.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:28:45 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/05 12:25:00 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/16 15:14:41 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "io.h"
 #include "mem.h"
 #include <unistd.h>
+#include <stdio.h>
 
 /**
  * @brief The ft_read function takes in a pointer to a string. It reads from

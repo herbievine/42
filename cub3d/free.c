@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/07 17:44:03 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/18 18:32:25 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ void	ft_free_2d_array(char ***array, int n)
  * 
  * @param data 
  */
-void	ft_free_textures(t_data *data)
-{
-	int	i;
+// void	ft_free_textures(t_data *data)
+// {
+// 	int	i;
 
-	i = -1;
-	while (++i < 5)
-		if (data->textures[i])
-			mlx_destroy_image(data->mlx_ptr, data->textures[i]);
-}
+// 	i = -1;
+// 	while (++i < 5)
+// 		if (data->textures[i])
+// 			mlx_destroy_image(data->mlx_ptr, data->textures[i]);
+// }
 
 /**
  * @brief The ft_free_mlx function takes in a data struct and frees all mlx
@@ -102,8 +102,18 @@ void	ft_free_mlx(t_data *data)
  */
 void	ft_free_data(t_data *data)
 {
-	if (data->map->map)
-		ft_free_array(data->map->map, -1);
-	free(data->map);
-	free(data);
+	if (data->fd > 0)
+		close(data->fd);
+	if (data->map.no_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->map.no_img);
+	if (data->map.so_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->map.so_img);
+	if (data->map.we_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->map.we_img);
+	if (data->map.ea_img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->map.ea_img);
+	ft_free_mlx(data);
+	if (data->map.map)
+		ft_free_array(data->map.map, -1);
+	free(data->map.map_in_string);
 }

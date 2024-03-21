@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 10:21:02 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/05 13:43:01 by juliencros       ###   ########.fr       */
+/*   Created: 2024/03/04 14:23:09 by juliencros        #+#    #+#             */
+/*   Updated: 2024/03/11 10:19:14 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef GET_LINE_H
+# define GET_LINE_H
 
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdbool.h>
 
-# define EMAP "Invalid map"
-# define EARG "Invalid arguments"
-# define EIO "I/O error"
-# define EUNKN "Unknown error"
-# define ENOENT "No such file or directory"
-# define EX11 "X11 error"
-# define ETXTUR "Texture error"
+# define BUFFER_SIZE 100000
 
-void	ft_err(char *msg);
+bool	ft_get_line(int fd, char **line);
 
-#endif /* ERROR_H */
+#endif

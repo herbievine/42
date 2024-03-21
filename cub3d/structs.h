@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/20 16:49:32 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:28:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define WALL '1'
 # define EMPT '0'
+# define OUT NULL
 
 typedef enum e_cardinal_direction
 {
@@ -54,8 +55,23 @@ typedef struct s_player
 typedef struct s_map
 {
 	char	**map;
+	char 	*map_in_string;
+	int 	str_index;
 	int		width;
 	int		height;
+	void	*no_img;
+	void	*so_img;
+	void	*we_img;
+	void	*ea_img;
+	long floor_hex;
+	long ceiling_hex;
+	int		col;
+	int		row;
+	char	index;
+	int		start_row;
+	int		start_col;
+	int 	start_map;
+	int		offset;
 }	t_map;
 
 /**
@@ -103,12 +119,13 @@ typedef struct s_data
 	void				*mlx_ptr;
 	void				*win_ptr;
 	t_texture			textures[4];
-	// t_map				map;
 	int					**map2;
 	t_ray				ray;
 	t_player		player;
 	double			previous_frame_time;
 	double			current_frame_time;
+	t_map				map;
+	int					fd;
 }	t_data;
 
 #endif /* STRUCTS_H */

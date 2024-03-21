@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:14:22 by herbie            #+#    #+#             */
-/*   Updated: 2023/05/21 11:53:40 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/16 15:07:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "str.h"
-#include "mem.h"
-#include <stdlib.h>
 
 /**
  * @brief The ft_strlen funtion computes the length of the string s.
@@ -117,7 +115,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*str;
 
 	if (!s)
-		return (0);
+		return (NULL);
 	if (ft_strlen(s) < start)
 		return (ft_calloc(1, sizeof(char)));
 	if (ft_strlen(s) < len + start)
@@ -125,7 +123,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	else
 		str = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!str)
-		return (0);
+		return (NULL);
 	i = -1;
 	while (s[start + ++i] && i < len)
 		str[i] = s[start + i];
