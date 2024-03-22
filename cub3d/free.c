@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/18 18:32:25 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/22 08:50:00 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@
  * @param n
  */
 void	ft_free_array(char **array, int n)
+{
+	int	i;
+
+	i = -1;
+	if (n == -1)
+		while (array[++i])
+			free(array[i]);
+	else
+		while (++i < n)
+			if (array[i])
+				free(array[i]);
+	free(array);
+}
+
+void ft_free_array_int(int **array, int n)
 {
 	int	i;
 
@@ -113,7 +128,10 @@ void	ft_free_data(t_data *data)
 	if (data->map.ea_img != NULL)
 		mlx_destroy_image(data->mlx_ptr, data->map.ea_img);
 	ft_free_mlx(data);
+	if (data->map.char_map)
+		ft_free_array(data->map.char_map, -1);
 	if (data->map.map)
-		ft_free_array(data->map.map, -1);
-	free(data->map.map_in_string);
+		ft_free_array_int(data->map.map, -1);
+	if (data->map.map_in_string)
+		free(data->map.map_in_string);
 }

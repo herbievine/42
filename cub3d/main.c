@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 18:07:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/22 09:45:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	main(int argc, char *argv[])
 	ft_init(&data);
 	if (!ft_fill_and_parse_data(argv, &data))
 		return (ft_free_data(&data), 1);
-	// ft_init_player(&data.player);
+	ft_init_player(&data.player, &data);
 	// ft_print_data(&data);
-	// ft_init_window(&data);
+	ft_init_window(&data);
 	ft_free_data(&data);
 	return (0);
 }

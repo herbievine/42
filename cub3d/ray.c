@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:12:20 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/13 14:12:20 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/22 09:47:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_cast_ray(t_data *data)
 	{
 		ft_init_ray(&ray, x, &data->player);
 		ft_calculate_step(&ray, &data->player);
-		ft_calculate_wall_distance(&ray, data->map2);
+		ft_calculate_wall_distance(&ray, data->map.map);
 		ft_calculate_wall_height(&ray);
 		ft_apply_texture(data, x);
 		x++;

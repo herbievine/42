@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:38:21 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/07 13:37:56 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/22 09:44:39 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player.h"
 #include "mlx/mlx.h"
 
-void	ft_init_player(t_player *player)
+void	ft_init_player(t_player *player, t_data *data)
 {
-	player->x = 22;
-	player->y = 12;
+	player->x = data->map.start_row;
+	player->y = data->map.start_col;
 	player->dx = -1;
 	player->dy = 0;
 	player->px = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:52:56 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/13 13:55:40 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/22 09:48:23 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void ft_render(t_data *data)
 			}
 
 			// Check if ray has hit a wall
-			if (data->map2[mapX][mapY] > 0)
+			if (data->map.map[mapX][mapY] > 0)
 				hit = 1;
 		}
 
@@ -139,7 +139,7 @@ void ft_render(t_data *data)
 
 		int color;
 
-		switch (data->map2[mapX][mapY])
+		switch (data->map.map[mapX][mapY])
 		{
 		case 1:
 			color = 0xFF0000;

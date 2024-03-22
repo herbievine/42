@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 17:34:00 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/22 08:40:25 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	char	**map;
+	char	**char_map;
+	int 	**map;
 	char 	*map_in_string;
 	int 	str_index;
 	int		width;

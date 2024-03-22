@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:59:56 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 14:53:53 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/22 09:47:47 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_move_player_forward(t_data *data)
 	double		y;
 	double		move_speed;
 
-	map = data->map2;
+	map = data->map.map;
 	p = &data->player;
 	move_speed = ft_min(p->movespeed, 1.0);
 	x = p->x + p->dx * move_speed;
@@ -45,7 +45,7 @@ void	ft_move_player_backward(t_data *data)
 	double		y;
 	double		move_speed;
 
-	map = data->map2;
+	map = data->map.map;
 	p = &data->player;
 	move_speed = ft_min(p->movespeed, 1.0);
 	x = p->x - p->dx * move_speed;

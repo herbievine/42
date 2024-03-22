@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 18:01:21 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/22 09:43:13 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "textures.h"
 #include "resolve_map.h"
 #include "init.h"
+#include "ints.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -136,9 +137,6 @@ int worldMap[mapWidth][mapHeight]=
 
 int	ft_print_data(t_data *data)
 {
-	int	i;
-
-	i = 0;
 	printf(" ------ print data ------ \n");
 	printf("NO = %p\n", data->textures[0].img);
 	printf("SO = %p\n", data->textures[1].img);
@@ -149,13 +147,48 @@ int	ft_print_data(t_data *data)
 	printf("width = %d\n", data->map.width);
 	printf("height = %d\n", data->map.height);
 	printf("map: \n");
+	int i = 0;
+	int j = 0;
 	while (i < data->map.height)
 	{
-		printf("%s", data->map.map[i]);
+		j = 0;
+		while (j < data->map.width + data->map.offset)
+		{
+			printf("%d", data->map.map[i][j]);
+			j++;
+		}
+		printf("\n");
 		i++;
-	}
+	}	
 	printf(" ------------ \n");
 	return (0);
+}
+
+static bool ft_to_int_map(t_map *map)
+{
+	int i;
+	int j;
+
+	i = -1;
+	map->map = malloc(map->height * sizeof(int*));
+	if (map->map == NULL)
+		return (false);
+	i = -1;
+	while (++i < map->height)
+	{
+		map->map[i] = malloc((map->width + map->offset) * sizeof(int));
+		if (map->map[i] == NULL)
+			return (ft_free_array_int(map->map, i - 1), false);
+		j = -1;
+		while (map->char_map[i][++j])
+		{
+			if (ft_strchr("01", map->char_map[i][j]))
+				map->map[i][j] = map->char_map[i][j] - '0';
+			else 
+				map->map[i][j] = 0;
+		}
+	}
+	return (true);
 }
 
 bool	ft_fill_and_parse_data(char *argv[], t_data *data)
@@ -178,6 +211,8 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		return (ft_err("EMAP"), false);
 	if (!ft_parse_map(data, &data->map))
 		return (ft_err("EMAP2"), false);
+	if (!ft_to_int_map(&data->map))
+		return (ft_err("EMAP3"), false);
 	ft_print_data(data);
 	return (true);
 }
@@ -208,7 +243,7 @@ static bool ft_parse_map(t_data *data, t_map *map)
 		if (ft_strchr_array(start, copy_map[i]) != -1)
 		{
 			map->start_row = i;
-			map->start_col = ft_strchr_array(start, map->map[i]);
+			map->start_col = ft_strchr_array(start, map->char_map[i]);
 			map->row = i;
 			map->col = map->start_col;
 		}
