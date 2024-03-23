@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 08:40:25 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/23 15:20:54 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_player
 	double	dy;
 	double	px;
 	double	py;
+	
 	double	movespeed;
 	double	rotspeed;
 	bool	is_moving;
@@ -72,6 +73,7 @@ typedef struct s_map
 	int		start_row;
 	int		start_col;
 	int 	start_map;
+	t_cardinal_direction	start_dir;
 	int		offset;
 }	t_map;
 

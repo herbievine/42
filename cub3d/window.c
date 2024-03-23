@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:36:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/20 16:46:07 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/23 17:02:04 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
 #include <time.h>
+
+int ft_on_render(t_data *data);
 
 /**
  * @brief The ft_render_assets function renders the assets of the game. It
@@ -182,23 +184,23 @@ void	ft_render_bg(t_data *data)
  * @param data 
  * @return int 
  */
-int	ft_on_render(t_data *data)
-{
-	double	fps;
-	if (data->win_ptr == NULL)
-		return (0);
-	fps = ft_calculate_fps(data);
-	ft_render_fps(data, fps);
-	if (!data->player.is_moving)
-		return (0);
-	printf("re-rendering...\n");
-	ft_render_bg(data);
-	ft_render(data);
-	// ft_render_bg(data);
-	// ft_render_minimap(data);
-	// ft_render_player(data);
-	return (0);
-}
+// int	ft_on_render(t_data *data)
+// {
+// 	double	fps;
+// 	if (data->win_ptr == NULL)
+// 		return (0);
+// 	fps = ft_calculate_fps(data);
+// 	ft_render_fps(data, fps);
+// 	if (!data->player.is_moving)
+// 		return (0);
+// 	printf("re-rendering...\n");
+// 	ft_render_bg(data);
+// 	ft_render(data);
+// 	// ft_render_bg(data);
+// 	// ft_render_minimap(data);
+// 	// ft_render_player(data);
+// 	return (0);
+// }
 
 /**
  * @brief The ft_init_window function initializes the window of the game. It
@@ -221,4 +223,30 @@ void	ft_init_window(t_data *data)
 	mlx_hook(data->win_ptr, KeyRelease, KeyReleaseMask, ft_on_keyrelease, data);
 	mlx_loop_hook(data->mlx_ptr, ft_on_render, data);
 	mlx_loop(data->mlx_ptr);
+}
+
+int ft_on_render(t_data *data)
+{
+	double	fps;
+
+	if (data->win_ptr == NULL)
+		return (0);
+	fps = ft_calculate_fps(data);
+	ft_render_fps(data, fps);
+	if (!data->player.is_moving)
+		return (0);
+	// ft_create_pixel_map(data);
+	ft_render_bg(data);
+	ft_render(data);
+	printf("new player x: %f\n", data->player.x);
+	printf("new player y: %f\n", data->player.y);
+	printf("new player dx: %f\n", data->player.dx);
+	printf("new player dy: %f\n", data->player.dy);
+	printf("new player px: %f\n", data->player.px);
+	printf("new player py: %f\n", data->player.py);
+	// ft_cast_ray(data);
+	// ft_render_bg(data);
+	// ft_render_minimap(data);
+	// ft_render_player(data);
+	return (0);
 }

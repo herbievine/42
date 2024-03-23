@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:59:56 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 09:47:47 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/23 17:25:12 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_move_player_backward(t_data *data)
 		p->y -= p->dy * move_speed;
 }
 
-void	ft_move_player_left(t_data *data)
+void	ft_move_player_right(t_data *data)
 {
 	t_player	*p;
 	double		prev_dx;
@@ -75,7 +75,7 @@ void	ft_move_player_left(t_data *data)
 	p->py = prev_px * sin(rot_speed) + p->py * cos(rot_speed);
 }
 
-void	ft_move_player_right(t_data *data)
+void	ft_move_player_left(t_data *data)
 {
 	t_player	*p;
 	double		prev_dx;

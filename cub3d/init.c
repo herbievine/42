@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/22 09:33:31 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/23 15:26:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include "textures.h"
 #include <stdbool.h>
 
-static bool	ft_check_map(char **map);
+static bool	ft_check_map(t_map *map, char **parsed_line);
 
 void	ft_init(t_data *data)
 {
@@ -86,26 +86,6 @@ int	ft_count_nl(t_map *map)
 // 	}
 // 	return (true);
 // }
-int ft_find_start_map(t_map *map)
-{
-	int i;
-	int j;
-	char *buffer;
-
-	i = 0;
-	while (map->char_map[i])
-	{
-		buffer = ft_strtrim(map->char_map[i], " \t\n");
-		if (ft_strlen(buffer) == (size_t)map->width)
-		{
-			j = 0;
-			while (!ft_strchr("10NOWSE", buffer[j]))
-				j++;
-			return (j);
-		}
-	}
-	return (-1);
-}
 
 bool ft_resize_map(t_map *map)
 {
@@ -168,13 +148,13 @@ bool	ft_init_map(t_map *map)
 		}
 	}
 	parsed_line[i] = NULL;
-	if (!ft_check_map(parsed_line) || !ft_resize_map(map))
+	if (!ft_check_map(map, parsed_line) || !ft_resize_map(map))
 		return (ft_free_array(parsed_line, i),  false);
 	return (ft_free_array(parsed_line, i), true);
 }
 
 
-static bool	ft_check_map(char **map)
+static bool	ft_check_map(t_map *map, char **parsed_line)
 {
 	int		i;
 	int		j;
@@ -184,15 +164,19 @@ static bool	ft_check_map(char **map)
 	i = 0;
 	num_of_start = 0;
 	valid_char = "10NOWSE ";
-	while (map && map[i])
+	while (parsed_line && parsed_line[i])
 	{
 		j = 0;
-		while (map[i]&& map[i][j])
+		while (parsed_line[i]&& parsed_line[i][j])
 		{
-			if (!ft_strchr(valid_char, map[i][j]))
-				return (printf("map[%d][%d] = %c\n", i, j, map[i][j]),false);
-			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W' || map[i][j] == 'E')
+			if (!ft_strchr(valid_char, parsed_line[i][j]))
+				return (printf("parsed_line[%d][%d] = %c\n", i, j, parsed_line[i][j]),false);
+			if (parsed_line[i][j] == 'N' || parsed_line[i][j] == 'S' || parsed_line[i][j] == 'W' || parsed_line[i][j] == 'E')
+			{
+				map->start_dir = parsed_line[i][j] == 'N' ? NORTH : parsed_line[i][j] == 'S'
+					? SOUTH : parsed_line[i][j] == 'W' ? WEST : EAST;
 				num_of_start++;
+			}
 			j++;
 		}
 		i++;
