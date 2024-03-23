@@ -40,14 +40,14 @@
 // 	}
 // }
 
-void ft_draw_vertical_line(t_data *data, int x, int y1, int y2, int color)
-{
-	while (y1 < y2)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y1, color);
-		y1++;
-	}
-}
+// void ft_draw_vertical_line(t_data *data, int x, int y1, int y2, int color)
+// {
+// 	while (y1 < y2)
+// 	{
+// 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y1, color);
+// 		y1++;
+// 	}
+// }
 
 void ft_render(t_data *data)
 {
@@ -178,7 +178,7 @@ void ft_render(t_data *data)
 		// verLine(x, drawStart, drawEnd, color);
 		// printf("drawStart: %d, drawEnd: %d\n", drawStart, drawEnd);
 		// ft_draw_line(data, x, drawStart, x, drawEnd, color);
-		ft_draw_vertical_line(data, x, drawStart, drawEnd, color);
+		// ft_draw_vertical_line(data, x, drawStart, drawEnd, color);
 	}
 	// ft_cast_ray(data);
 }

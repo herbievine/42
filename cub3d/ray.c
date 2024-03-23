@@ -17,14 +17,14 @@
 #include "mlx/mlx.h"
 #include <math.h>
 
-// static void	ft_draw_vertical_line(t_data *data, int x, int y1, int y2, int color)
-// {
-// 	while (y1 < y2)
-// 	{
-// 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y1, color);
-// 		y1++;
-// 	}
-// }
+static void	ft_draw_vertical_line(t_data *data, int x, int y1, int y2, int color)
+{
+	while (y1 < y2)
+	{
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y1, color);
+		y1++;
+	}
+}
 
 static void	ft_init_ray(t_ray *ray, int x, t_player *player)
 {
@@ -112,8 +112,8 @@ void	ft_cast_ray(t_data *data)
 		ft_calculate_wall_height(&ray);
 		// ft_update_pixel_map(data, ray, x);
 
-		// ft_draw_vertical_line(data, x, 
-		// 		ray.ds, ray.de, 0xFFFFFF);
+		ft_draw_vertical_line(data, x, 
+				ray.ds, ray.de, 0xFFFFFF);
 		x++;
 	}
 }

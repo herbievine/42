@@ -141,14 +141,14 @@ int	ft_on_render(t_data *data)
 		return (0);
 	ft_create_pixel_map(data);
 	ft_render_bg(data);
-	ft_render(data);
+	// ft_render(data);
 	printf("new player x: %f\n", data->player.x);
 	printf("new player y: %f\n", data->player.y);
 	printf("new player dx: %f\n", data->player.dx);
 	printf("new player dy: %f\n", data->player.dy);
 	printf("new player px: %f\n", data->player.px);
 	printf("new player py: %f\n", data->player.py);
-	// ft_cast_ray(data);
+	ft_cast_ray(data);
 	// ft_render_bg(data);
 	// ft_render_minimap(data);
 	// ft_render_player(data);
