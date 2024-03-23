@@ -6,11 +6,12 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 18:02:50 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/22 09:31:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "textures.h"
+#include "pixels.h"
 #include "structs.h"
 #include "mlx/mlx.h"
 #include "str.h"
@@ -134,3 +135,35 @@ static bool	ft_load_texture(t_data *data, t_cardinal_direction dir, char *path)
 		return (false);
 	return (true);
 }
+// #define TEXTURES 4
+
+// /**
+//  * @brief The ft_load_texture function loads the texture into the data struct.
+//  * If it fails to load a texture, it frees all the textures that were loaded
+//  * before and returns false.
+//  * 
+//  * @param data 
+//  * @return bool 
+//  */
+// bool	ft_load_textures(t_data *data, char *path)
+// {
+// 	t_img	tmp;
+// 	int		i;
+
+// 	i = -1;
+// 	while (++i < TEXTURES)
+// 	{
+// 		tmp.img = mlx_xpm_file_to_image(data->mlx_ptr,
+// 				path, &tmp.width, &tmp.height);
+// 		if (tmp.img)
+// 			return (false);
+// 		tmp.addr = mlx_get_data_addr(tmp.img,
+// 				&tmp.bpp, &tmp.line_length, &tmp.endian);
+// 		if (!tmp.addr)
+// 			return (false);
+// 		if (!ft_create_texture_buffer_from_img(data, &tmp, i))
+// 			return (false);
+// 		mlx_destroy_image(data->mlx_ptr, tmp.img);
+// 	}
+// 	return (true);
+// }

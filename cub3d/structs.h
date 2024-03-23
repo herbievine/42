@@ -32,12 +32,24 @@ typedef struct s_texture
 	char	*path;
 	void	*img;
 	int		*addr;
-	int		bits_per_pixel;
+	int		bpp;
 	int		line_length;
 	int		endian;
 	int		width;
 	int		height;
 }	t_texture;
+
+typedef struct s_img
+{
+	char	*path;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
 
 typedef struct s_player
 {
@@ -122,7 +134,11 @@ typedef struct s_data
 	void				*mlx_ptr;
 	void				*win_ptr;
 	t_texture			textures[4];
+	// t_texture			textures[4];
+	char				*texture_paths[4];
+	int					*texture_buffer[4];
 	int					**map2;
+	int					**pixels;
 	t_ray				ray;
 	t_player		player;
 	double			previous_frame_time;

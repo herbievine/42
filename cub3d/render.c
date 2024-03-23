@@ -6,13 +6,14 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:52:56 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 09:48:23 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/22 10:28:09 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "window.h"
 #include "ray.h"
+#include "pixels.h"
 #include "mlx/mlx.h"
 #include <math.h>
 #include <stdio.h>
@@ -153,10 +154,18 @@ void ft_render(t_data *data)
 		case 4:
 			color = 0xFFFFFF;
 			break; // white
+		case 5:
+			color = 0xFFFF00;
+			break; // yellow
+		case 6:
+			color = 0x00FFFF;
+			break; // cyan
 		default:
-			color = 0xFFFFFF;
+			color = 0xFF00FF;
 			break; // yellow
 		}
+
+		// (void)color;
 
 		// give x and y sides different brightness
 		// if (side == 1)
@@ -172,6 +181,4 @@ void ft_render(t_data *data)
 		ft_draw_vertical_line(data, x, drawStart, drawEnd, color);
 	}
 	// ft_cast_ray(data);
-
-	
 }

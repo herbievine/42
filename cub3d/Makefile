@@ -6,14 +6,14 @@
 #    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/03/21 17:32:13 by juliencros       ###   ########.fr        #
+#    Updated: 2024/03/22 11:04:40 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx
@@ -44,6 +44,7 @@ SRCS = \
 	hooks.c \
 	move.c \
 	ray.c \
+	pixels.c \
 	render.c \
 	parse.c \
 	error.c \

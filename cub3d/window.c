@@ -17,6 +17,8 @@
 #include "player.h"
 #include "hooks.h"
 #include "render.h"
+#include "pixels.h"
+#include "ray.h"
 #include "ints.h"
 // #include "hooks.h"
 // #include "ints.h"
@@ -92,71 +94,14 @@ void	ft_render_fps(t_data *data, double fps)
 	{
 		j = -1;
 		while (++j < 16)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, 0x0000FF00);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, 0xFF0000);
 	}
 	mlx_string_put(
-		data->mlx_ptr, data->win_ptr, 10, 12, 0x00FF0000, "FPS: ");
+		data->mlx_ptr, data->win_ptr, 10, 12, 0xFFFFFF, "FPS: ");
 	mlx_string_put(
-		data->mlx_ptr, data->win_ptr, 35, 12, 0x00FF0000, fps_str);
+		data->mlx_ptr, data->win_ptr, 35, 12, 0xFFFFFF, fps_str);
 	free(fps_str);
 }
-
-// /**
-//  * @brief The ft_render_bg function renders the background of the game. It
-//  * handles the rendering of the floor and the walls.
-//  * 
-//  * @param data 
-//  */
-// void	ft_render_bg(t_data *data)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = -1;
-// 	while (++i < data->map->height)
-// 	{
-// 		j = -1;
-// 		while (++j < data->map->width)
-// 		{
-// 			if (data->map->map[i][j] == WALL)
-// 				mlx_put_image_to_window(
-// 					data->mlx_ptr, data->win_ptr, data->textures[1],
-// 					j * TILE_SIZE, i * TILE_SIZE + SCORE_OFFSET);
-// 			else if (!(i == data->map->start.y && j == data->map->start.x)
-// 				&& (data->map->map[i][j] != EXIT || data->map->collectibles)
-// 				&& data->map->map[i][j] != COLL)
-// 				mlx_put_image_to_window(
-// 					data->mlx_ptr, data->win_ptr, data->textures[0],
-// 					j * TILE_SIZE, i * TILE_SIZE + SCORE_OFFSET);
-// 		}
-// 	}
-// }
-
-// void	ft_display_score(t_data *data)
-// {
-// 	char	*moves;
-// 	char	*tmp;
-// 	int		i;
-// 	int		j;
-
-// 	moves = ft_itoa(data->map->moves);
-// 	if (!moves)
-// 		return ;
-// 	tmp = ft_strjoin("moves: ", moves);
-// 	free(moves);
-// 	if (!tmp)
-// 		return ;
-// 	i = -1;
-// 	while (++i < data->map->width * TILE_SIZE)
-// 	{
-// 		j = -1;
-// 		while (++j < SCORE_OFFSET)
-// 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, 0x00000000);
-// 	}
-// 	mlx_string_put(
-// 		data->mlx_ptr, data->win_ptr, 10, 30, 0x00FF0000, tmp);
-// 	free(tmp);
-// }
 
 void	ft_render_bg(t_data *data)
 {
@@ -169,7 +114,7 @@ void	ft_render_bg(t_data *data)
 		y = 0;
 		while (y < WIN_HEIGHT)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x00000000);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x000000);
 			y++;
 		}
 		x++;
@@ -184,23 +129,31 @@ void	ft_render_bg(t_data *data)
  * @param data 
  * @return int 
  */
-// int	ft_on_render(t_data *data)
-// {
-// 	double	fps;
-// 	if (data->win_ptr == NULL)
-// 		return (0);
-// 	fps = ft_calculate_fps(data);
-// 	ft_render_fps(data, fps);
-// 	if (!data->player.is_moving)
-// 		return (0);
-// 	printf("re-rendering...\n");
-// 	ft_render_bg(data);
-// 	ft_render(data);
-// 	// ft_render_bg(data);
-// 	// ft_render_minimap(data);
-// 	// ft_render_player(data);
-// 	return (0);
-// }
+int	ft_on_render(t_data *data)
+{
+	double	fps;
+
+	if (data->win_ptr == NULL)
+		return (0);
+	fps = ft_calculate_fps(data);
+	ft_render_fps(data, fps);
+	if (!data->player.is_moving)
+		return (0);
+	ft_create_pixel_map(data);
+	ft_render_bg(data);
+	ft_render(data);
+	printf("new player x: %f\n", data->player.x);
+	printf("new player y: %f\n", data->player.y);
+	printf("new player dx: %f\n", data->player.dx);
+	printf("new player dy: %f\n", data->player.dy);
+	printf("new player px: %f\n", data->player.px);
+	printf("new player py: %f\n", data->player.py);
+	// ft_cast_ray(data);
+	// ft_render_bg(data);
+	// ft_render_minimap(data);
+	// ft_render_player(data);
+	return (0);
+}
 
 /**
  * @brief The ft_init_window function initializes the window of the game. It
@@ -225,28 +178,28 @@ void	ft_init_window(t_data *data)
 	mlx_loop(data->mlx_ptr);
 }
 
-int ft_on_render(t_data *data)
-{
-	double	fps;
+// int ft_on_render(t_data *data)
+// {
+// 	double	fps;
 
-	if (data->win_ptr == NULL)
-		return (0);
-	fps = ft_calculate_fps(data);
-	ft_render_fps(data, fps);
-	if (!data->player.is_moving)
-		return (0);
-	// ft_create_pixel_map(data);
-	ft_render_bg(data);
-	ft_render(data);
-	printf("new player x: %f\n", data->player.x);
-	printf("new player y: %f\n", data->player.y);
-	printf("new player dx: %f\n", data->player.dx);
-	printf("new player dy: %f\n", data->player.dy);
-	printf("new player px: %f\n", data->player.px);
-	printf("new player py: %f\n", data->player.py);
-	// ft_cast_ray(data);
-	// ft_render_bg(data);
-	// ft_render_minimap(data);
-	// ft_render_player(data);
-	return (0);
-}
+// 	if (data->win_ptr == NULL)
+// 		return (0);
+// 	fps = ft_calculate_fps(data);
+// 	ft_render_fps(data, fps);
+// 	if (!data->player.is_moving)
+// 		return (0);
+// 	// ft_create_pixel_map(data);
+// 	ft_render_bg(data);
+// 	ft_render(data);
+// 	printf("new player x: %f\n", data->player.x);
+// 	printf("new player y: %f\n", data->player.y);
+// 	printf("new player dx: %f\n", data->player.dx);
+// 	printf("new player dy: %f\n", data->player.dy);
+// 	printf("new player px: %f\n", data->player.px);
+// 	printf("new player py: %f\n", data->player.py);
+// 	// ft_cast_ray(data);
+// 	// ft_render_bg(data);
+// 	// ft_render_minimap(data);
+// 	// ft_render_player(data);
+// 	return (0);
+// }
