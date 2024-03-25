@@ -43,7 +43,7 @@ typedef struct s_img
 {
 	char	*path;
 	void	*img;
-	char	*addr;
+	int		*addr;
 	int		bpp;
 	int		line_length;
 	int		endian;
@@ -138,7 +138,6 @@ typedef struct s_data
 	// t_texture			textures[4];
 	char				*texture_paths[4];
 	int					*texture_buffer[4];
-	int					**map2;
 	int					**pixels;
 	t_ray				ray;
 	t_player		player;

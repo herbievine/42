@@ -12,7 +12,9 @@
 
 #include "pixels.h"
 #include "window.h"
+#include "mlx/mlx.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 bool	ft_create_texture_buffer_from_img(t_data *data,
@@ -38,18 +40,18 @@ bool	ft_create_texture_buffer_from_img(t_data *data,
 	return (true);
 }
 
-static t_cardinal_direction	ft_get_cardinal_direction(t_ray ray)
+static t_cardinal_direction	ft_get_cardinal_direction(t_ray *ray)
 {
-	if (ray.side == 0)
+	if (ray->side == 0)
 	{
-		if (ray.dx < 0)
+		if (ray->dx < 0)
 			return (WEST);
 		else
 			return (EAST);
 	}
 	else
 	{
-		if (ray.dy > 0)
+		if (ray->dy > 0)
 			return (SOUTH);
 		else
 			return (NORTH);
@@ -73,23 +75,66 @@ bool	ft_create_pixel_map(t_data *data)
 	return (true);
 }
 
-void	ft_update_pixel_map(t_data *data, t_ray ray, int x)
+void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 {
 	t_cardinal_direction	dir;
-	int						i;
+	int						y;
+	int						tmp_x;
+	int						tmp_pos;
+	int						color;
 
 	dir = ft_get_cardinal_direction(ray);
-	i = -1;
-	while (++i < ray.ds)
-		data->pixels[i][x] = data->texture_buffer[NORTH][i % 64];
-	while (i < ray.de)
+	tmp_x = (int)(ray->wd * 64);
+	if ((ray->side == 0 && ray->dx < 0) || (ray->side == 1 && ray->dy > 0))
+		tmp_x = 64 - tmp_x - 1;
+	tmp_pos = (ray->ds - WIN_HEIGHT / 2 + ray->h / 2) * (1.0 * 64 / ray->h);
+	y = ray->ds;
+	while (y < ray->de)
 	{
-		data->pixels[i][x] = data->texture_buffer[dir][i % 64];
-		i++;
+		color = (data->texture_buffer)[dir][64 *
+				((int)tmp_pos & (64 - 1)) + tmp_x];
+		tmp_pos += 1.0 * 64 / ray->h;
+		if (dir == NORTH || dir == EAST)
+			color = (color >> 1) & 8355711;
+		if (color > 0)
+			data->pixels[y][x] = color;
+		y++;
 	}
-	while (i < WIN_HEIGHT)
+}
+
+void	ft_draw_pixel_map(t_data *data, t_ray ray)
+{
+	t_img	image;
+	int		x;
+	int		y;
+
+	//debug
+	printf("draw pixel map\n");
+	printf("pixels[4][7]: %d\n", data->pixels[4][7]);
+
+
+	image.img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	if (image.img == NULL)
+		return ;
+	image.addr = (int *)mlx_get_data_addr(image.img, &image.bpp,
+			&image.line_length, &image.endian);
+	y = -1;
+	while (++y < WIN_HEIGHT)
 	{
-		data->pixels[i][x] = data->texture_buffer[SOUTH][i % 64];
-		i++;
+		x = -1;
+		while (++x < WIN_WIDTH)
+		{
+			if (data->pixels[y][x] > 0)
+			{
+
+				image.addr[y * (image.line_length / 4) + x] = data->pixels[y][x];
+			}
+			else if (y < WIN_HEIGHT / 2)
+				image.addr[y * (image.line_length / 4) + x] = data->map.ceiling_hex;
+			else if (y < WIN_HEIGHT -1)
+				image.addr[y * (image.line_length / 4) + x] = data->map.floor_hex;
+			// else
+			// 	printf("y: %d, x: %d\n", y, x);
+		}
 	}
 }
