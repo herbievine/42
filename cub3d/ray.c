@@ -97,23 +97,21 @@ static void	ft_calculate_wall_height(t_ray *ray)
 		ray->de = WIN_HEIGHT - 1;
 }
 
-void	ft_cast_ray(t_data *data)
+void	ft_cast_ray(t_data *data, t_ray *ray)
 {
-	t_ray	ray;
 	int				x;
 
-	ray = data->ray;
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
-		ft_init_ray(&ray, x, &data->player);
-		ft_calculate_step(&ray, &data->player);
-		ft_calculate_wall_distance(&ray, data->map.map);
-		ft_calculate_wall_height(&ray);
-		// ft_update_pixel_map(data, ray, x);
+		ft_init_ray(ray, x, &data->player);
+		ft_calculate_step(ray, &data->player);
+		ft_calculate_wall_distance(ray, data->map.map);
+		ft_calculate_wall_height(ray);
+		ft_update_pixel_map(data, ray, x);
 
-		ft_draw_vertical_line(data, x, 
-				ray.ds, ray.de, 0xFFFFFF);
+		// ft_draw_vertical_line(data, x, 
+		// 		ray.ds, ray.de, 0xFFFFFF);
 		x++;
 	}
 }

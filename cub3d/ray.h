@@ -15,6 +15,6 @@
 
 # include "structs.h"
 
-void	ft_cast_ray(t_data *data);
+void	ft_cast_ray(t_data *data, t_ray *ray);
 
 #endif /* RAY_H */

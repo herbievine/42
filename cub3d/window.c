@@ -131,6 +131,7 @@ void	ft_render_bg(t_data *data)
  */
 int	ft_on_render(t_data *data)
 {
+	t_ray		ray;
 	double	fps;
 
 	if (data->win_ptr == NULL)
@@ -148,7 +149,8 @@ int	ft_on_render(t_data *data)
 	printf("new player dy: %f\n", data->player.dy);
 	printf("new player px: %f\n", data->player.px);
 	printf("new player py: %f\n", data->player.py);
-	ft_cast_ray(data);
+	ft_cast_ray(data, &ray);
+	ft_draw_pixel_map(data, ray);
 	// ft_render_bg(data);
 	// ft_render_minimap(data);
 	// ft_render_player(data);

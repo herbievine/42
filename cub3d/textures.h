@@ -16,7 +16,7 @@
 # include "structs.h"
 # include <stdbool.h>
 
-# define TILE_SIZE 48
+# define TEXTURE_SIZE 64
 
 # define FLOOR_PATH "./assets/floor.xpm"
 # define WALL_PATH "./assets/wall.xpm"
