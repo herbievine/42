@@ -12,6 +12,7 @@
 
 #include "pixels.h"
 #include "window.h"
+#include "textures.h"
 #include "mlx/mlx.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -32,9 +33,7 @@ bool	ft_create_texture_buffer_from_img(t_data *data,
 	{
 		j = -1;
 		while (++j < img->width)
-		{
 			pixels[i * img->width + j] = img->addr[i * img->line_length + j];
-		}
 	}
 	data->texture_buffer[dir] = pixels;
 	return (true);
@@ -79,25 +78,31 @@ void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 {
 	t_cardinal_direction	dir;
 	int						y;
-	int						tmp_x;
+	int						text_x;
+	int						text_y;
 	int						tmp_pos;
 	int						color;
 
 	dir = ft_get_cardinal_direction(ray);
-	tmp_x = (int)(ray->wd * 64);
+	text_x = (int)(ray->wd * TEXTURE_SIZE);
 	if ((ray->side == 0 && ray->dx < 0) || (ray->side == 1 && ray->dy > 0))
-		tmp_x = 64 - tmp_x - 1;
-	tmp_pos = (ray->ds - WIN_HEIGHT / 2 + ray->h / 2) * (1.0 * 64 / ray->h);
+		text_x = TEXTURE_SIZE - text_x - 1;
+	tmp_pos = (ray->ds - WIN_HEIGHT / 2 + ray->h / 2)
+		* (1.0 * TEXTURE_SIZE / ray->h);
 	y = ray->ds;
 	while (y < ray->de)
 	{
-		color = (data->texture_buffer)[dir][64 *
-				((int)tmp_pos & (64 - 1)) + tmp_x];
-		tmp_pos += 1.0 * 64 / ray->h;
+		text_y = (int)tmp_pos & (TEXTURE_SIZE - 1);
+		color = (data->texture_buffer)[dir][7];
+		// printf("color: %d @ y: %d x: %d\n", color, dir, TEXTURE_SIZE * ((int)tmp_pos & (TEXTURE_SIZE - 1)) + text_x);
+		tmp_pos += 1.0 * TEXTURE_SIZE / ray->h;
 		if (dir == NORTH || dir == EAST)
 			color = (color >> 1) & 8355711;
 		if (color > 0)
+		{
+			printf("update at x: %d y: %d color: %d\n", x, y, color);
 			data->pixels[y][x] = color;
+		}
 		y++;
 	}
 }
@@ -137,4 +142,5 @@ void	ft_draw_pixel_map(t_data *data, t_ray ray)
 			// 	printf("y: %d, x: %d\n", y, x);
 		}
 	}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, image.img, 0, 0);
 }
