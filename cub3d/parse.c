@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 09:43:13 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/23 19:31:11 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,15 +213,23 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		return (ft_err("EMAP2"), false);
 	if (!ft_to_int_map(&data->map))
 		return (ft_err("EMAP3"), false);
+	if (!ft_load_textures(data))
+		return (ft_err("ETXTUR2"), false);
+	for (int i = 0; i < 4; i++)
+	{
+		if (data->texture_buffer[i])
+		printf("texture_buffer[%d] = %p\n", i, data->texture_buffer[i]);
+	}
 	ft_print_data(data);
 	return (true);
 }
 
 static bool	ft_parse_args(t_data *data)
 {
-	if (data->textures[0].img == NULL || data->textures[1].img == NULL 
-		|| data->textures[2].img == NULL || data->textures[3].img == NULL 
-		|| data->map.floor_hex == -1 || data->map.ceiling_hex == -1)
+	// if (data->textures[0].img == NULL || data->textures[1].img == NULL 
+	// 	|| data->textures[2].img == NULL || data->textures[3].img == NULL 
+	
+	if ( data->map.floor_hex == -1 || data->map.ceiling_hex == -1)
 			return (false);
 	return (true);
 }

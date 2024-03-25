@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 08:50:00 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/23 19:22:40 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,4 +134,6 @@ void	ft_free_data(t_data *data)
 		ft_free_array_int(data->map.map, -1);
 	if (data->map.map_in_string)
 		free(data->map.map_in_string);
+	if (data->map.path_texture)
+		ft_free_array(data->map.path_texture, 5);
 }

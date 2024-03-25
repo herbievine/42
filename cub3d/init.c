@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/23 15:26:26 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/25 08:46:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void	ft_init(t_data *data)
 	data->map.offset = 0;
 	data->mlx_ptr = NULL;
 	data->fd = 0;
+	data->map.path_texture = malloc(sizeof(char *) * 5);
+	if (data->map.path_texture == NULL)
+		ft_err("Malloc failed");
+	data->map.path_texture[5] = NULL;
 	data->mlx_ptr = mlx_init();
 }
 
