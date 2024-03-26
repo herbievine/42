@@ -33,7 +33,6 @@
 void	ft_handle_move(int keysym, t_data *data)
 {
 	data->player.is_moving = true;
-	printf("key: %d\n", keysym);
 	if (keysym == XK_w)
 		ft_move_player_forward(data);
 	else if (keysym == XK_s)

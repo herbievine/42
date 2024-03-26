@@ -25,6 +25,8 @@ void	ft_move_player_forward(t_data *data)
 	double		y;
 	double		move_speed;
 
+	printf("ft_move_player_forward\n");
+
 	map = data->map.map;
 	p = &data->player;
 	move_speed = ft_min(p->movespeed, 1.0);
@@ -45,6 +47,8 @@ void	ft_move_player_backward(t_data *data)
 	double		y;
 	double		move_speed;
 
+	printf("ft_move_player_backward\n");
+
 	map = data->map.map;
 	p = &data->player;
 	move_speed = ft_min(p->movespeed, 1.0);
@@ -64,6 +68,8 @@ void	ft_move_player_right(t_data *data)
 	double		prev_px;
 	double		rot_speed;
 
+	printf("ft_move_player_right\n");
+
 	p = &data->player;
 	prev_dx = p->dx;
 	prev_px = p->px;
@@ -81,6 +87,8 @@ void	ft_move_player_left(t_data *data)
 	double		prev_dx;
 	double		prev_px;
 	double		rot_speed;
+
+	printf("ft_move_player_left\n");
 
 	p = &data->player;
 	prev_dx = p->dx;

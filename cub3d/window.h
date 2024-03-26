@@ -15,8 +15,8 @@
 
 # include "structs.h"
 
-# define WIN_WIDTH 960
-# define WIN_HEIGHT 540
+# define WIN_WIDTH 640
+# define WIN_HEIGHT 360
 
 void	ft_init_window(t_data *data);
 void	ft_render_bg(t_data *data);
