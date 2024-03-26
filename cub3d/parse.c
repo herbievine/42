@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/23 19:31:11 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/26 15:13:30 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,12 +215,7 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		return (ft_err("EMAP3"), false);
 	if (!ft_load_textures(data))
 		return (ft_err("ETXTUR2"), false);
-	for (int i = 0; i < 4; i++)
-	{
-		if (data->texture_buffer[i])
-		printf("texture_buffer[%d] = %p\n", i, data->texture_buffer[i]);
-	}
-	ft_print_data(data);
+	// ft_print_data(data);
 	return (true);
 }
 
@@ -242,10 +237,12 @@ static bool ft_parse_map(t_data *data, t_map *map)
 
 
 	start = ft_split("N S W E", ' ', 0);
+	if (start == NULL)
+		return (false);
 	i = 0;
 	copy_map = ft_split(map->map_in_string + ft_count_nl(map), '\n', 1);
 	if (copy_map == NULL)
-		return (false);
+		return (ft_free_array(start, 5), false);
 	while (copy_map[i] != NULL)
 	{
 		if (ft_strchr_array(start, copy_map[i]) != -1)
@@ -258,5 +255,8 @@ static bool ft_parse_map(t_data *data, t_map *map)
 		i++;
 	}
 	copy_map[map->row][map->col] = 'S';
-	return (ft_resolve_map(data, copy_map));
+	ft_free_array(start, 5);
+	if (!ft_resolve_map(data, copy_map))
+		return (ft_free_array(copy_map, -1), false);
+	return (ft_free_array(copy_map, -1), true);
 }

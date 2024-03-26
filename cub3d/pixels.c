@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixels.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:25:30 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 09:31:56 by herbie           ###   ########.fr       */
+/*   Updated: 2024/03/26 15:45:24 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ bool	ft_create_texture_buffer_from_img(t_data *data,
 	while (++i < img->height)
 	{
 		j = -1;
+		//TODO: when herbie respond about line_lengthor width
 		while (++j < img->width)
-			pixels[i * img->width + j] = img->addr[i * img->line_length + j];
+			pixels[i * img->width + j] = img->addr[i * img->width + j];
 	}
 	data->texture_buffer[dir] = pixels;
-	return (true);
+return (true);
 }
 
 static t_cardinal_direction	ft_get_cardinal_direction(t_ray *ray)

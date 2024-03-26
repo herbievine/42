@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/23 19:22:40 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/26 15:44:06 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,11 @@ void	ft_free_2d_array(char ***array, int n)
  */
 void	ft_free_mlx(t_data *data)
 {
+	// TODO:check why error when destroy img
 	if (data->mlx_ptr)
 	{
-		if (data->win_ptr)
-			mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		// if (data->win_ptr != NULL)
+		// 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 	}
@@ -131,9 +132,9 @@ void	ft_free_data(t_data *data)
 	if (data->map.char_map)
 		ft_free_array(data->map.char_map, -1);
 	if (data->map.map)
-		ft_free_array_int(data->map.map, -1);
+		ft_free_array_int(data->map.map, data->map.height);
 	if (data->map.map_in_string)
 		free(data->map.map_in_string);
 	if (data->map.path_texture)
-		ft_free_array(data->map.path_texture, 5);
+		ft_free_array(data->map.path_texture, 4);
 }
