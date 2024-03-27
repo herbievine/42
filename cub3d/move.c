@@ -33,9 +33,9 @@ void	ft_move_player_forward(t_data *data)
 	x = p->x + p->dx * move_speed;
 	y = p->y + p->dy * move_speed;
 
-	if (x > 0.25 && map[(int)(x)][(int)(p->y)] == 0)
+	if (map[(int)(p->y)][(int)(x)] == 0)
 		p->x += p->dx * move_speed;
-	if (y > 0.25 && map[(int)(p->x)][(int)(y)] == 0)
+	if (map[(int)(y)][(int)(p->x)] == 0)
 		p->y += p->dy * move_speed;
 }
 
@@ -55,9 +55,9 @@ void	ft_move_player_backward(t_data *data)
 	x = p->x - p->dx * move_speed;
 	y = p->y - p->dy * move_speed;
 
-	if (x > 0.25 && map[(int)(x)][(int)(p->y)] == 0)
+	if (map[(int)(p->y)][(int)(x)] == 0)
 		p->x -= p->dx * move_speed;
-	if (y > 0.25 && map[(int)(p->x)][(int)(y)] == 0)
+	if (map[(int)(y)][(int)(p->x)] == 0)
 		p->y -= p->dy * move_speed;
 }
 

@@ -175,7 +175,7 @@ bool	ft_load_textures(t_data *data)
 			return (false);
 		if (!ft_create_texture_buffer_from_img(data, &tmp, i))
 			return (false);
-		// mlx_destroy_image(data->mlx_ptr, tmp.img);
+		mlx_destroy_image(data->mlx_ptr, tmp.img);
 	}
 	return (true);
 }

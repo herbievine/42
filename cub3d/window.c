@@ -76,7 +76,7 @@ double	ft_calculate_fps(t_data *data)
 	frame_time = (data->current_frame_time - data->previous_frame_time)
 		/ (double)1000;
 	data->player.movespeed = frame_time * 5;
-	data->player.rotspeed = frame_time * 3;
+	data->player.rotspeed = frame_time * 2;
 	return (1.0 / frame_time);
 }
 
