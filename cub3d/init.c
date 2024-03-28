@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/27 18:49:59 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/28 17:55:35 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ bool ft_resize_map(t_map *map)
 			else
 				new_map[i][j] = '0';
 		}
-		new_map[i][j - 1] = '\n';
 		new_map[i][j] = '\0';
 	}
 	new_map[i] = NULL;
@@ -131,7 +130,7 @@ bool	ft_init_map(t_map *map)
 
 	i = 0;
 	map->char_map = ft_split(map->map_in_string + ft_count_nl(map), '\n', 1);
-	if (map->char_map == NULL)
+		if (map->char_map == NULL)
 		return (false);
 	while (map->char_map[i])
 		i++;

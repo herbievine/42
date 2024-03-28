@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/26 15:13:30 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/28 17:56:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int	ft_print_data(t_data *data)
 	printf("C = %ld\n", data->map.ceiling_hex);
 	printf("width = %d\n", data->map.width);
 	printf("height = %d\n", data->map.height);
+	printf("offset = %d\n", data->map.offset);
 	printf("map: \n");
 	int i = 0;
 	int j = 0;
@@ -174,7 +175,7 @@ static bool ft_to_int_map(t_map *map)
 	if (map->map == NULL)
 		return (false);
 	i = -1;
-	while (++i < map->height)
+		while (++i < map->height)
 	{
 		map->map[i] = malloc((map->width + map->offset) * sizeof(int));
 		if (map->map[i] == NULL)
@@ -211,7 +212,7 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		return (ft_err("EMAP"), false);
 	if (!ft_parse_map(data, &data->map))
 		return (ft_err("EMAP2"), false);
-	if (!ft_to_int_map(&data->map))
+		if (!ft_to_int_map(&data->map))
 		return (ft_err("EMAP3"), false);
 	if (!ft_load_textures(data))
 		return (ft_err("ETXTUR2"), false);
