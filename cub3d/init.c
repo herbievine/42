@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/26 14:49:47 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/27 18:49:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ bool	ft_init_map(t_map *map)
 		if (map->width < (int)ft_strlen(parsed_line[i]))
 		{
 			map->width = ft_strlen(parsed_line[i]);
-			map->offset = ft_strlen(map->char_map[i]) - ft_strlen(parsed_line[i]);
+			map->offset = (ft_strlen(map->char_map[i]) - 1) - ft_strlen(parsed_line[i]);
 		}
 	}
 	parsed_line[i] = NULL;

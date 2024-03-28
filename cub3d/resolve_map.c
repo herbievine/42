@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:08:49 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/21 15:55:09 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/27 20:06:20 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,14 @@ static bool ft_move(t_data *data, char **copy_map, int way, char c)
 static bool ft_move_backward(t_data *data, char **copy_map)
 {
 	if (ft_move(data, copy_map, -1, data->map.index - 1) == 0)
+	{
+		if (data->map.index == 'a')
+			data->map.index = 'z';
+		else
+			data->map.index -= 1;
 		return (true);
-	else if (data->map.index == 'a' && ft_find_character(data, copy_map, 'z'))
+	}
+	else if ((data->map.index == 'a' && ft_find_character(data, copy_map, 'z')))
 	{
 		ft_move(data, copy_map, -1, 'z');
 		data->map.index = 'z';
