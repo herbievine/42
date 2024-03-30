@@ -109,6 +109,7 @@ typedef struct s_map
  * @param h The height of the wall
  * @param ds The draw start
  * @param de The draw end
+ * @param wx The wall x
  */
 typedef struct s_ray
 {
@@ -128,6 +129,7 @@ typedef struct s_ray
 	int		h;
 	int		ds;
 	int		de;
+	double	wx;
 }	t_ray;
 
 typedef struct s_data

@@ -82,12 +82,13 @@ void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 	t_cardinal_direction	dir;
 	int						y;
 	int						text_x;
+	int						text_y;
 	int						pos;
 	int						color;
 	int						step;
 
 	dir = ft_get_cardinal_direction(ray);
-	text_x = (int)(ray->wd * TEXTURE_SIZE);
+	text_x = (int)(ray->wx * TEXTURE_SIZE);
 	if ((ray->side == 0 && ray->dx < 0) || (ray->side == 1 && ray->dy > 0))
 		text_x = TEXTURE_SIZE - text_x - 1;
 	step = 1.0 * TEXTURE_SIZE / ray->h;
@@ -95,8 +96,9 @@ void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 	y = ray->ds;
 	while (y < ray->de)
 	{
-		color = (data->texture_buffer)[dir][TEXTURE_SIZE * ((int)pos & (TEXTURE_SIZE - 1)) + text_x];
+		text_y = (int)pos & (TEXTURE_SIZE - 1);
 		pos += step;
+		color = (data->texture_buffer)[dir][TEXTURE_SIZE * text_y + text_x];
 		if (dir == NORTH || dir == EAST)
 			color = (color >> 1) & 0x7F7F7F;
 		if (color > 0)

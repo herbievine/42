@@ -86,7 +86,7 @@ static void	ft_calculate_wall_distance(t_ray *ray, int **map)
 		ray->wd = ray->sdy - ray->ddy;
 }
 
-static void	ft_calculate_wall_height(t_ray *ray)
+static void	ft_calculate_wall_height(t_ray *ray, t_player *player)
 {
 	ray->h = (int)(WIN_HEIGHT / ray->wd);
 	ray->ds = -ray->h / 2 + WIN_HEIGHT / 2;
@@ -95,6 +95,11 @@ static void	ft_calculate_wall_height(t_ray *ray)
 	ray->de = ray->h / 2 + WIN_HEIGHT / 2;
 	if (ray->de >= WIN_HEIGHT)
 		ray->de = WIN_HEIGHT - 1;
+	if (ray->side == 0)
+		ray->wx = player->y + ray->wd * ray->dy;
+	else
+		ray->wx = player->x + ray->wd * ray->dx;
+	ray->wx -= floor(ray->wx);
 }
 
 void	ft_cast_ray(t_data *data, t_ray *ray)
@@ -107,7 +112,7 @@ void	ft_cast_ray(t_data *data, t_ray *ray)
 		ft_init_ray(ray, x, &data->player);
 		ft_calculate_step(ray, &data->player);
 		ft_calculate_wall_distance(ray, data->map.map);
-		ft_calculate_wall_height(ray);
+		ft_calculate_wall_height(ray, &data->player);
 		ft_update_pixel_map(data, ray, x);
 
 		// ft_draw_vertical_line(data, x, 
