@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:38:21 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/30 17:00:40 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/30 17:12:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "mlx/mlx.h"
 #include <stdio.h>
 
-// Long = E W
-// Lat = N S
+static void	ft_init_long(t_player *player, t_data *data);
+static void	ft_init_lat(t_player *player, t_data *data);
 
 void	ft_init_player(t_player *player, t_data *data)
 {
@@ -27,7 +27,7 @@ void	ft_init_player(t_player *player, t_data *data)
 		ft_init_long(player, data);
 }
 
-void	ft_init_long(t_player *player, t_data *data)
+static void	ft_init_long(t_player *player, t_data *data)
 {
 	if (data->map.start_dir == EAST)
 	{
@@ -45,7 +45,7 @@ void	ft_init_long(t_player *player, t_data *data)
 	}
 }
 
-void	ft_init_lat(t_player *player, t_data *data)
+static void	ft_init_lat(t_player *player, t_data *data)
 {
 	if (data->map.start_dir == NORTH)
 	{
