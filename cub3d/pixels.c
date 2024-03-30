@@ -80,33 +80,30 @@ bool	ft_create_pixel_map(t_data *data)
 void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 {
 	t_cardinal_direction	dir;
-	int						y;
-	int						text_x;
-	int						text_y;
-	int						pos;
+	int						i;
+	int						tex_x;
+	int						tex_y;
 	int						color;
-	int						step;
+	double				pos;
+	double				step;
 
 	dir = ft_get_cardinal_direction(ray);
-	text_x = (int)(ray->wx * TEXTURE_SIZE);
+	tex_x = (int)(ray->wx * TEXTURE_SIZE);
 	if ((ray->side == 0 && ray->dx < 0) || (ray->side == 1 && ray->dy > 0))
-		text_x = TEXTURE_SIZE - text_x - 1;
+		tex_x = TEXTURE_SIZE - tex_x - 1;
 	step = 1.0 * TEXTURE_SIZE / ray->h;
 	pos = (ray->ds - WIN_HEIGHT / 2 + ray->h / 2) * step;
-	y = ray->ds;
-	while (y < ray->de)
+	i = ray->ds;
+	while (i < ray->de)
 	{
-		text_y = (int)pos & (TEXTURE_SIZE - 1);
+		tex_y = (int)pos & (TEXTURE_SIZE - 1);
 		pos += step;
-		color = (data->texture_buffer)[dir][TEXTURE_SIZE * text_y + text_x];
+		color = (data->texture_buffer)[dir][TEXTURE_SIZE * tex_y + tex_x];
 		if (dir == NORTH || dir == EAST)
 			color = (color >> 1) & 0x7F7F7F;
 		if (color > 0)
-		{
-			// printf("color @ %d:%d: %d\n", x, y, color);
-			data->pixels[y][x] = color;
-		}
-		y++;
+			data->pixels[i][x] = color;
+		i++;
 	}
 }
 
