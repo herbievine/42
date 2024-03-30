@@ -53,6 +53,8 @@ void	ft_init(t_data *data)
 		ft_err("Malloc failed");
 	// data->map.path_texture[5] = NULL;
 	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		return (ft_err(EX11));
 }
 
 int	ft_count_nl(t_map *map)

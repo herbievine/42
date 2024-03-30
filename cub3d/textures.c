@@ -175,6 +175,7 @@ bool	ft_load_textures(t_data *data)
 			return (false);
 		if (!ft_create_texture_buffer_from_img(data, &tmp, i))
 			return (false);
+		printf("Texture %d loaded, width: %d, height: %d\n", i, tmp.width, tmp.height);
 		mlx_destroy_image(data->mlx_ptr, tmp.img);
 	}
 	return (true);

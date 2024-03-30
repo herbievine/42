@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixels.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:25:30 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/26 15:45:24 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/30 15:13:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ bool	ft_create_texture_buffer_from_img(t_data *data,
 	pixels = malloc(sizeof(int) * img->width * img->height);
 	if (!pixels)
 		return (false);
+	printf("img->width: %d\n", img->width);
+	printf("img->height: %d\n", img->height);
+	printf("img->line_length: %d\n", img->line_length);
 	i = -1;
 	while (++i < img->height)
 	{
 		j = -1;
 		while (++j < img->width)
-			pixels[i * img->width + j] = img->addr[i * img->line_length + j];
+			pixels[i * img->width + j] = img->addr[i * img->width + j];
 	}
 	data->texture_buffer[dir] = pixels;
 	return (true);
@@ -79,24 +82,28 @@ void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 	t_cardinal_direction	dir;
 	int						y;
 	int						text_x;
-	int						tmp_pos;
+	int						pos;
 	int						color;
+	int						step;
 
 	dir = ft_get_cardinal_direction(ray);
 	text_x = (int)(ray->wd * TEXTURE_SIZE);
 	if ((ray->side == 0 && ray->dx < 0) || (ray->side == 1 && ray->dy > 0))
 		text_x = TEXTURE_SIZE - text_x - 1;
-	tmp_pos = (ray->ds - WIN_HEIGHT / 2 + ray->h / 2)
-		* (1.0 * TEXTURE_SIZE / ray->h);
+	step = 1.0 * TEXTURE_SIZE / ray->h;
+	pos = (ray->ds - WIN_HEIGHT / 2 + ray->h / 2) * step;
 	y = ray->ds;
 	while (y < ray->de)
 	{
-		color = (data->texture_buffer)[dir][7];
-		tmp_pos += 1.0 * TEXTURE_SIZE / ray->h;
+		color = (data->texture_buffer)[dir][TEXTURE_SIZE * ((int)pos & (TEXTURE_SIZE - 1)) + text_x];
+		pos += step;
 		if (dir == NORTH || dir == EAST)
-			color = (color >> 1) & 8355711;
+			color = (color >> 1) & 0x7F7F7F;
 		if (color > 0)
+		{
+			// printf("color @ %d:%d: %d\n", x, y, color);
 			data->pixels[y][x] = color;
+		}
 		y++;
 	}
 }

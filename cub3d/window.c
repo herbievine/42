@@ -157,9 +157,6 @@ int	ft_on_render(t_data *data)
  */
 void	ft_init_window(t_data *data)
 {
-	data->mlx_ptr = mlx_init();
-	if (!data->mlx_ptr)
-		return (ft_err(EX11));
 	data->win_ptr = mlx_new_window(
 			data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "franprix");
 	if (!data->win_ptr)
