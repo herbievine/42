@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:48 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/18 18:17:37 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/31 17:18:06 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 void	ft_init(t_data *data);
 int		ft_count_nl(t_map *map);
 bool	ft_init_map(t_map *map);
+bool    ft_resize_map(t_map *map, bool with_err);
 
 
 #endif

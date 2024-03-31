@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/31 16:30:35 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 17:20:26 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 #include <stdbool.h>
 
 static bool	ft_check_map(t_map *map, char **parsed_line);
-static bool	ft_verify_size(t_map *map);
 
 void	ft_init(t_data *data)
 {
@@ -94,7 +93,7 @@ int	ft_count_nl(t_map *map)
 // 	return (true);
 // }
 
-bool ft_resize_map(t_map *map)
+bool ft_resize_map(t_map *map, bool with_err)
 {
 	int		i;
 	int		j;
@@ -113,9 +112,11 @@ bool ft_resize_map(t_map *map)
 		j = 0;
 		while (j < map->width + map->offset)
 		{
-			if (map->char_map[i] && map->char_map[i] && ft_strlen(map->char_map[i]) > j && ft_strchr("10NOWSE", map->char_map[i][j]))
+			if (map->char_map[i] && ft_strlen(map->char_map[i]) > j && ft_strchr("10NOWSE", map->char_map[i][j]))
 				new_map[i][j] = map->char_map[i][j];
-			else
+			else if (map->char_map[i] && ft_strlen(map->char_map[i]) > j && !ft_strchr("10NOWSE", map->char_map[i][j]) && with_err)
+				new_map[i][j] = map->char_map[i][j];
+			else		
 				new_map[i][j] = '0';
 			j++;
 		}
@@ -156,26 +157,10 @@ bool	ft_init_map(t_map *map)
 		}
 	}
 	parsed_line[i] = NULL;
-	if (!ft_check_map(map, parsed_line)|| !ft_resize_map(map))
+	if (!ft_check_map(map, parsed_line)|| !ft_resize_map(map, true))
 		return (ft_free_array(parsed_line, i),  false);
 	return (ft_free_array(parsed_line, i), true);
 }
-
-static bool	ft_verify_size(t_map *map)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (map->char_map[i])
-	{
-		if ((int)ft_strlen(map->char_map[i]) < map->width)
-			return (printf("line %d is not the same size as the first line\n", i), false);
-		i++;
-	}
-	return (true);
-}
-
 
 static bool	ft_check_map(t_map *map, char **parsed_line)
 {

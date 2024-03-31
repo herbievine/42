@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:08:49 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/31 16:32:01 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 17:10:05 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ bool ft_resolve_map(t_data *data, char **copy_map)
 {
 	while (1)
 	{
-		int index = 0;
-		while (index < data->map.height)
-		{
-			printf("%s", copy_map[index]);
-			index++;
-		}
 				if (ft_find_character(data, copy_map, ' ') 
 			|| ft_find_character(data, copy_map, '\n') 
 			|| ft_find_character(data, copy_map, '	')  
