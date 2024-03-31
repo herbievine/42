@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/31 16:19:45 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 18:13:06 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ static char	**ft_init_split(char const *s, char c, int with_sep)
 	}
 	if (s[i - 1] != c)
 		len++;
-	return ((char **)ft_calloc(len + 1, sizeof(char *)));
+	return ((char **)ft_calloc(len + 2, sizeof(char *)));
 }
+//TODO: fix problem with len + 2
 
 static void	ft_fill_split(char const *s, char **split, char c, int with_sep)
 {
