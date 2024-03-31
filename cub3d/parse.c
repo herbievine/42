@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/31 16:30:27 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 17:06:56 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,13 @@ static bool ft_parse_map(t_data *data, t_map *map)
 	if (start == NULL)
 		return (false);
 	i = 0;
-	copy_map = ft_split(map->map_in_string + ft_count_nl(map), '\n', 1);
+	// copy_map = ft_split(map->map_in_string + ft_count_nl(map), '\n', 1);
+	copy_map  = ft_calloc(map->height + 1, sizeof(char *));
+	while (i < map->height)
+	{
+		copy_map[i] = ft_strdup(map->char_map[i]);
+		i++;
+	}
 	if (copy_map == NULL)
 		return (ft_free_array(start, 5), false);
 	while (copy_map[i] != NULL)
