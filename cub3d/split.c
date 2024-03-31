@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/31 18:13:06 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 20:15:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "str.h"
 #include <stdlib.h>
 
-static char		**ft_init_split(char const *s, char c , int with_sep);
-static void		ft_fill_split(char const *s, char **split, char c, int with_sep);
-static void		ft_free(char **split, size_t j);
+static char	**ft_init_split(char const *s, char c, int with_sep);
+static void	ft_fill_split(char const *s, char **split, char c, int with_sep);
+static void	ft_free(char **split, size_t j);
 
 char	**ft_split(char const *s, char c, int with_sep)
 {
@@ -25,7 +25,7 @@ char	**ft_split(char const *s, char c, int with_sep)
 
 	if (!s)
 		return (0);
-	split = ft_init_split(s, c , with_sep);
+	split = ft_init_split(s, c, with_sep);
 	if (!split)
 		return (0);
 	ft_fill_split(s, split, c, with_sep);
@@ -45,7 +45,7 @@ static char	**ft_init_split(char const *s, char c, int with_sep)
 		return (ft_calloc(1, sizeof(char *)));
 	while (s[i])
 	{
-		if ( (s[i] == c && s[i -1] && s[i - 1] != c) || (with_sep && s[i] == c))
+		if ((s[i] == c && s[i -1] && s[i - 1] != c) || (with_sep && s[i] == c))
 			len++;
 		i++;
 	}

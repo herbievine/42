@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:08:47 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/18 18:10:45 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/31 20:09:48 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "structs.h"
 # include <stdbool.h>
 
-bool ft_resolve_map(t_data *data, char **copy_map);
+bool	ft_resolve_map(t_data *data, char **copy_map);
 
 #endif

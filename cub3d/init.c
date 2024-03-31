@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/31 18:13:22 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 19:44:01 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_init(t_data *data)
 	data->map.path_texture = malloc(sizeof(char *) * 4);
 	if (data->map.path_texture == NULL)
 		ft_err("Malloc failed");
-	// data->map.path_texture[5] = NULL;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (ft_err(EX11));
@@ -64,7 +63,7 @@ int	ft_count_nl(t_map *map)
 
 	i = 0;
 	count = 0;
-	while (map->map_in_string[i] != '\0' &&  count < map->str_index)
+	while (map->map_in_string[i] != '\0' && count < map->str_index)
 	{
 		if (map->map_in_string[i] == '\n')
 			count++;
@@ -73,27 +72,7 @@ int	ft_count_nl(t_map *map)
 	return (i);
 }
 
-// bool ft_resize_end(t_map *map, int start_col)
-// {
-// 	int row;
-// 	int col;
-
-// 	row = map->height;
-// 	while (map->map[row])
-// 	{
-// 		col = 0;
-// 		while (map->map[row][col] != '\0')
-// 		{
-// 			if (col < start_col)
-// 				map->map[row][col] = '0';
-// 			col++;
-// 		}
-// 		row++;
-// 	}
-// 	return (true);
-// }
-
-bool ft_resize_map(t_map *map, bool with_err)
+bool	ft_resize_map(t_map *map, bool with_err)
 {
 	int		i;
 	int		j;
@@ -112,11 +91,13 @@ bool ft_resize_map(t_map *map, bool with_err)
 		j = 0;
 		while (j < map->width + map->offset)
 		{
-			if (map->char_map[i] && ft_strlen(map->char_map[i]) > j && ft_strchr("10NOWSE", map->char_map[i][j]))
+			if (map->char_map[i] && ft_strlen(map->char_map[i]) > j
+				&& ft_strchr("10NOWSE", map->char_map[i][j]))
 				new_map[i][j] = map->char_map[i][j];
-			else if (map->char_map[i] && ft_strlen(map->char_map[i]) > j && !ft_strchr("10NOWSE", map->char_map[i][j]) && with_err)
+			else if (map->char_map[i] && ft_strlen(map->char_map[i]) > j
+				&& !ft_strchr("10NOWSE", map->char_map[i][j]) && with_err)
 				new_map[i][j] = map->char_map[i][j];
-			else		
+			else
 				new_map[i][j] = '0';
 			j++;
 		}
@@ -127,7 +108,7 @@ bool ft_resize_map(t_map *map, bool with_err)
 	ft_free_array(map->char_map, map->height);
 	map->char_map = new_map;
 	return (true);
-}	
+}
 
 bool	ft_init_map(t_map *map)
 {
@@ -136,7 +117,7 @@ bool	ft_init_map(t_map *map)
 
 	i = 0;
 	map->char_map = ft_split(map->map_in_string + ft_count_nl(map), '\n', 1);
-		if (map->char_map == NULL)
+	if (map->char_map == NULL)
 		return (false);
 	while (map->char_map[i])
 		i++;
@@ -149,16 +130,17 @@ bool	ft_init_map(t_map *map)
 		map->height++;
 		parsed_line[i] = ft_strtrim(map->char_map[i], "\t \n");
 		if (parsed_line == NULL)
-			return (ft_free_array(parsed_line, i - 1) ,false);
+			return (ft_free_array(parsed_line, i - 1), false);
 		if (map->width < (int)ft_strlen(parsed_line[i]))
 		{
 			map->width = ft_strlen(parsed_line[i]);
-			map->offset = (ft_strlen(map->char_map[i]) - 1) - ft_strlen(parsed_line[i]);
+			map->offset = (ft_strlen(map->char_map[i]) - 1)
+				- ft_strlen(parsed_line[i]);
 		}
 	}
 	parsed_line[i] = NULL;
-	if (!ft_check_map(map, parsed_line)|| !ft_resize_map(map, true))
-		return (ft_free_array(parsed_line, i),  false);
+	if (!ft_check_map(map, parsed_line) || !ft_resize_map(map, true))
+		return (ft_free_array(parsed_line, i), false);
 	return (ft_free_array(parsed_line, i), true);
 }
 
@@ -178,11 +160,18 @@ static bool	ft_check_map(t_map *map, char **parsed_line)
 		while (parsed_line[i] && parsed_line[i][j])
 		{
 			if (!ft_strchr(valid_char, parsed_line[i][j]))
-				return (printf("parsed_line[%d][%d] = %c\n", i, j, parsed_line[i][j]),false);
-			if (parsed_line[i][j] == 'N' || parsed_line[i][j] == 'S' || parsed_line[i][j] == 'W' || parsed_line[i][j] == 'E')
+				return (false);
+			if (parsed_line[i][j] == 'N' || parsed_line[i][j] == 'S' 
+				|| parsed_line[i][j] == 'W' || parsed_line[i][j] == 'E')
 			{
-				map->start_dir = parsed_line[i][j] == 'N' ? NORTH : parsed_line[i][j] == 'S'
-					? SOUTH : parsed_line[i][j] == 'W' ? WEST : EAST;
+				if (parsed_line[i][j] == 'N')
+					map->start_dir = NORTH;
+				else if (parsed_line[i][j] == 'S')
+					map->start_dir = SOUTH;
+				else if (parsed_line[i][j] == 'W')
+					map->start_dir = WEST;
+				else if (parsed_line[i][j] == 'E')
+					map->start_dir = EAST;
 				num_of_start++;
 			}
 			j++;

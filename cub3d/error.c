@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:24:23 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/12 15:51:30 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/31 20:17:24 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,4 @@ void	ft_err(char *msg)
 	write(2, "Error\n", 6);
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
-	// exit(1);
 }
