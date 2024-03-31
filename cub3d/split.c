@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/20 19:00:28 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/31 16:19:45 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "str.h"
 #include <stdlib.h>
 
-static char		**ft_init_split(char const *s, char c);
+static char		**ft_init_split(char const *s, char c , int with_sep);
 static void		ft_fill_split(char const *s, char **split, char c, int with_sep);
 static void		ft_free(char **split, size_t j);
 
@@ -25,7 +25,7 @@ char	**ft_split(char const *s, char c, int with_sep)
 
 	if (!s)
 		return (0);
-	split = ft_init_split(s, c);
+	split = ft_init_split(s, c , with_sep);
 	if (!split)
 		return (0);
 	ft_fill_split(s, split, c, with_sep);
@@ -34,7 +34,7 @@ char	**ft_split(char const *s, char c, int with_sep)
 	return (split);
 }
 
-static char	**ft_init_split(char const *s, char c)
+static char	**ft_init_split(char const *s, char c, int with_sep)
 {
 	size_t	i;
 	size_t	len;
@@ -45,7 +45,7 @@ static char	**ft_init_split(char const *s, char c)
 		return (ft_calloc(1, sizeof(char *)));
 	while (s[i])
 	{
-		if (s[i] == c && s[i - 1] != '\0')
+		if ( (s[i] == c && s[i -1] && s[i - 1] != c) || (with_sep && s[i] == c))
 			len++;
 		i++;
 	}
@@ -68,9 +68,19 @@ static void	ft_fill_split(char const *s, char **split, char c, int with_sep)
 		while (s[i] && s[i] != c)
 			if (++i && ++len)
 				continue ;
-		if (len >= 0)
+		if (len > 0)
 		{
 			split[j++] = ft_substr(s, i - len, len + with_sep);
+			if (!split[j - 1])
+			{
+				ft_free(split, j);
+				return ;
+			}
+		}
+		else if (with_sep && s[i] == c && len == 0)
+		{
+			split[j] = ft_calloc(2, sizeof(char));
+			split[j++][0] = c;
 			if (!split[j - 1])
 			{
 				ft_free(split, j);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/28 17:55:35 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/31 16:30:35 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <stdbool.h>
 
 static bool	ft_check_map(t_map *map, char **parsed_line);
+static bool	ft_verify_size(t_map *map);
 
 void	ft_init(t_data *data)
 {
@@ -99,25 +100,27 @@ bool ft_resize_map(t_map *map)
 	int		j;
 	char	**new_map;
 
-	i = -1;
-	new_map = ft_calloc(sizeof(char *), (map->height + 1));
+	i = 0;
+	new_map = malloc(sizeof(char *) * (map->height + 1));
 	if (new_map == NULL)
 		return (false);
-	while (++i < map->height)
+	while (i < map->height)
 	{
-		new_map[i] = ft_calloc(sizeof(char), (map->width + map->offset + 1));
+		new_map[i] = malloc(sizeof(char) * (map->width + map->offset + 1));
 		ft_bzero(new_map[i], map->width + map->offset, '0');
 		if (new_map[i] == NULL)
 			return (ft_free_array(new_map, i - 1), false);
-		j = -1;
-		while (++j < map->width + map->offset)
+		j = 0;
+		while (j < map->width + map->offset)
 		{
-			if (map->char_map[i][j] && ft_strchr("10NOWSE", map->char_map[i][j]))
+			if (map->char_map[i] && map->char_map[i] && ft_strlen(map->char_map[i]) > j && ft_strchr("10NOWSE", map->char_map[i][j]))
 				new_map[i][j] = map->char_map[i][j];
 			else
 				new_map[i][j] = '0';
+			j++;
 		}
 		new_map[i][j] = '\0';
+		i++;
 	}
 	new_map[i] = NULL;
 	ft_free_array(map->char_map, map->height);
@@ -153,9 +156,24 @@ bool	ft_init_map(t_map *map)
 		}
 	}
 	parsed_line[i] = NULL;
-	if (!ft_check_map(map, parsed_line) || !ft_resize_map(map))
+	if (!ft_check_map(map, parsed_line)|| !ft_resize_map(map))
 		return (ft_free_array(parsed_line, i),  false);
 	return (ft_free_array(parsed_line, i), true);
+}
+
+static bool	ft_verify_size(t_map *map)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (map->char_map[i])
+	{
+		if ((int)ft_strlen(map->char_map[i]) < map->width)
+			return (printf("line %d is not the same size as the first line\n", i), false);
+		i++;
+	}
+	return (true);
 }
 
 
@@ -172,7 +190,7 @@ static bool	ft_check_map(t_map *map, char **parsed_line)
 	while (parsed_line && parsed_line[i])
 	{
 		j = 0;
-		while (parsed_line[i]&& parsed_line[i][j])
+		while (parsed_line[i] && parsed_line[i][j])
 		{
 			if (!ft_strchr(valid_char, parsed_line[i][j]))
 				return (printf("parsed_line[%d][%d] = %c\n", i, j, parsed_line[i][j]),false);

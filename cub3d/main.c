@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/26 15:42:30 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 15:55:39 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ int	main(int argc, char *argv[])
 	if (!ft_fill_and_parse_data(argv, &data))
 		return (ft_free_data(&data), 1);
 	ft_init_player(&data.player, &data);
-	// ft_modify_map(&data);
+	// ft_modify_map(&data); 
 	// ft_print_map(&data);
-	ft_print_data(&data);
-	ft_init_window(&data);
+	// ft_print_data(&data);
+	// ft_init_window(&data);
 	ft_free_data(&data);
 	return (0);
 }
