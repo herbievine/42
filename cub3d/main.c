@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/31 15:55:39 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 17:23:39 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char *argv[])
 
 	(void)argv;
 	if (argc != 2)
-		ft_err(EIO);
+		return (ft_err(EIO), 1);
 	ft_init(&data);
 	if (!ft_fill_and_parse_data(argv, &data))
 		return (ft_free_data(&data), 1);
