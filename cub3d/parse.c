@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/31 20:25:01 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/01 15:11:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,6 @@
 static bool	ft_parse_args(t_data *data);
 static bool	ft_parse_map(t_data *data, t_map *map);
 static bool	ft_to_int_map(t_map *map);
-
-int	ft_print_data(t_data *data)
-{
-	int	i;
-	int	j;
-
-	printf(" ------ print data ------ \n");
-	printf("NO = %p\n", data->textures[0].img);
-	printf("SO = %p\n", data->textures[1].img);
-	printf("WE = %p\n", data->textures[2].img);
-	printf("EA = %p\n", data->textures[3].img);
-	printf("F = %ld\n", data->map.floor_hex);
-	printf("C = %ld\n", data->map.ceiling_hex);
-	printf("width = %d\n", data->map.width);
-	printf("height = %d\n", data->map.height);
-	printf("offset = %d\n", data->map.offset);
-	printf("map: \n");
-	i = 0;
-	j = 0;
-	while (i < data->map.height)
-	{
-		j = 0;
-		while (j < data->map.width + data->map.offset)
-		{
-			printf("%d", data->map.map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	printf(" ------------ \n");
-	return (0);
-}
 
 static bool	ft_to_int_map(t_map *map)
 {
@@ -123,40 +90,43 @@ static bool	ft_parse_args(t_data *data)
 	return (true);
 }
 
+static bool	ft_find_start(t_map *map, char **copy_map)
+{
+	char	**start;
+	int		i;
+
+	start = ft_split("N S W E", ' ', 0);
+	if (start == NULL)
+		return (false);
+	i = -1;
+	while (copy_map[++i] != NULL)
+	{
+		if (ft_strchr_array(start, copy_map[i]) != -1)
+		{
+			map->start_row = i;
+			map->start_col = ft_strchr_array(start, map->char_map[i]);
+		}
+	}
+	return (ft_free_array(start, 5), true);
+}
+
 static bool	ft_parse_map(t_data *data, t_map *map)
 {
 	char	**copy_map;
 	int		i;
 	char	**start;
 
-	start = ft_split("N S W E", ' ', 0);
-	if (start == NULL)
-		return (false);
-	i = 0;
+	i = -1;
 	copy_map = ft_calloc(map->height + 1, sizeof(char *));
-	while (i < map->height)
-	{
+	if (copy_map == NULL)
+		return (false);
+	while (++i < map->height)
 		copy_map[i] = ft_strdup(map->char_map[i]);
-		i++;
-	}
-	i = 0;
 	if (copy_map == NULL)
 		return (ft_free_array(start, 5), false);
-	while (copy_map[i] != NULL)
-	{
-		if (ft_strchr_array(start, copy_map[i]) != -1)
-		{
-			map->start_row = i;
-			map->start_col = ft_strchr_array(start, map->char_map[i]);
-			map->row = i;
-			map->col = map->start_col;
-		}
-		i++;
-	}
-	copy_map[map->row][map->col] = 'S';
-	ft_free_array(start, 5);
+	if (!ft_find_start(map, copy_map))
+		return (ft_free_array(copy_map, -1), false);
 	if (!ft_resolve_map(data, copy_map))
 		return (ft_free_array(copy_map, -1), false);
-	ft_resize_map(map, false);
-	return (ft_free_array(copy_map, -1), true);
+	return (ft_free_array(copy_map, -1), ft_resize_map(map, false));
 }

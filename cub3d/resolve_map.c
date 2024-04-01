@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:08:49 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/31 20:09:31 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/31 20:41:37 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static bool	ft_find_character(t_data *data, char **copy_map, char c);
 
 bool	ft_resolve_map(t_data *data, char **copy_map)
 {
+	data->map.row = data->map.start_row;
+	data->map.col = data->map.start_col;
 	while (1)
 	{
 		if (ft_find_character(data, copy_map, ' ')
