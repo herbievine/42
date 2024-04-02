@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/01 15:17:31 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/02 15:05:18 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ bool	ft_init_map(t_map *map)
 
 bool	ft_define_cardinal(t_map *map, char **parsed_line, int i, int j)
 {
-	if (parsed_line[i][j] == 'N' || parsed_line[i][j] == 'S' 
+	if (parsed_line[i][j] == 'N' || parsed_line[i][j] == 'S'
 				|| parsed_line[i][j] == 'W' || parsed_line[i][j] == 'E')
 	{
 		if (parsed_line[i][j] == 'N')
