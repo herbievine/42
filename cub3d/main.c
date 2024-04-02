@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 14:35:08 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/02 14:41:17 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "player.h"
 #include "init.h"
 #include "free.h"
+#include "mem.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -70,7 +71,7 @@ void	ft_init(t_data *data)
 	data->map.offset = 0;
 	data->mlx_ptr = NULL;
 	data->fd = 0;
-	data->map.path_texture = ft_calloc(sizeof(char *) * 4);
+	data->map.path_texture = ft_calloc(sizeof(char *) , 4);
 	if (data->map.path_texture == NULL)
 		ft_err("Malloc failed");
 	data->mlx_ptr = mlx_init();
