@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/26 15:44:06 by jcros            ###   ########.fr       */
+/*   Updated: 2024/03/31 20:20:36 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_free_array(char **array, int n)
 	free(array);
 }
 
-void ft_free_array_int(int **array, int n)
+void	ft_free_array_int(int **array, int n)
 {
 	int	i;
 
@@ -98,13 +98,11 @@ void	ft_free_2d_array(char ***array, int n)
  * 
  * @param data 
  */
+	// TODO:check why error when destroy img
 void	ft_free_mlx(t_data *data)
 {
-	// TODO:check why error when destroy img
 	if (data->mlx_ptr)
 	{
-		// if (data->win_ptr != NULL)
-		// 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 	}

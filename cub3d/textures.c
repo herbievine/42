@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/23 19:29:06 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/03/31 18:16:49 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ bool	ft_load_textures(t_data *data)
 				data->map.path_texture[i], &tmp.width, &tmp.height);
 		if (!tmp.img)
 			return (false);
-		tmp.addr = mlx_get_data_addr(tmp.img,
+		tmp.addr = (int *)mlx_get_data_addr(tmp.img,
 				&tmp.bpp, &tmp.line_length, &tmp.endian);
 		if (!tmp.addr)
 			return (false);
