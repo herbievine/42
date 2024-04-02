@@ -16,7 +16,6 @@
 #include "free.h"
 #include "player.h"
 #include "hooks.h"
-#include "render.h"
 #include "pixels.h"
 #include "ray.h"
 #include "ints.h"
