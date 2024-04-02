@@ -15,7 +15,6 @@
 #include "window.h"
 #include "free.h"
 #include "move.h"
-#include "render.h"
 #include "mlx/mlx.h"
 #include "print.h"
 #include <stdlib.h>
