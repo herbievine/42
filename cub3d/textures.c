@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 15:46:45 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/02 15:51:34 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static long	ft_char_to_hex(char *str)
 	if (splited[0] == NULL || splited[1] == NULL
 		|| splited[2] == NULL || splited[3] != NULL)
 		return (ft_free_array(splited, -1), -1);
-	if (ft_strlen(splited[0]) > 3 
+	if (ft_strlen(splited[0]) > 3
 		|| ft_strlen(splited[1]) > 3 || ft_strlen(splited[2]) > 3)
 		return (ft_free_array(splited, -1), -1);
 	rgb_color = malloc(sizeof(int) * 3);
@@ -89,7 +89,7 @@ static long	ft_char_to_hex(char *str)
 	rgb_color[1] = ft_atoi(splited[1]);
 	rgb_color[2] = ft_atoi(splited[2]);
 	ft_free_array(splited, -1);
-	if (rgb_color[0] < 0 || rgb_color[0] > 255 || rgb_color[1] < 0 
+	if (rgb_color[0] < 0 || rgb_color[0] > 255 || rgb_color[1] < 0
 		|| rgb_color[1] > 255 || rgb_color[2] < 0 || rgb_color[2] > 255)
 		return (free(rgb_color), -1);
 	hex_color = (rgb_color[0] << 16) + (rgb_color[1] << 8) + rgb_color[2];
