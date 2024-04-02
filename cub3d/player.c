@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:38:21 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/31 20:17:01 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/02 16:04:29 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 static void	ft_init_long(t_player *player, t_data *data);
 static void	ft_init_lat(t_player *player, t_data *data);
 
+/**
+ * @brief initialize the player structure with the starting position
+ * 	and direction.
+ * @param player
+ * @param data
+ * @return void
+ */
 void	ft_init_player(t_player *player, t_data *data)
 {
 	player->y = data->map.start_row + 0.5;
@@ -27,6 +34,13 @@ void	ft_init_player(t_player *player, t_data *data)
 		ft_init_long(player, data);
 }
 
+/**
+ * @brief initialize the player position with the starting position and direction
+ * 	when the direction is EAST or WEST.
+ * @param player
+ * @param data
+ * @return void
+ */
 static void	ft_init_long(t_player *player, t_data *data)
 {
 	if (data->map.start_dir == EAST)
@@ -45,6 +59,13 @@ static void	ft_init_long(t_player *player, t_data *data)
 	}
 }
 
+/**
+ * @brief initialize the player position with the starting position and direction
+ * 	when the direction is NORTH or SOUTH.
+ * @param player
+ * @param data
+ * @return void
+ */
 static void	ft_init_lat(t_player *player, t_data *data)
 {
 	if (data->map.start_dir == NORTH)

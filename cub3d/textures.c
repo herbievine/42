@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 15:51:34 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/02 16:32:47 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@
 static long	ft_char_to_hex(char *str);
 static void	ft_fill(char *line, t_data *data, t_map *map);
 
+/**
+ * @brief The ft_fill_texture function fills the texture path. 
+ * 	If it fails to find a texture, it returns false.
+ * 
+ * @param data 
+ * @param map 
+ * @return bool 
+ */
 bool	ft_fill_texture(t_data *data, t_map *map)
 {
 	int		params;
@@ -54,6 +62,14 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 	return (true);
 }
 
+/**
+ * @brief The ft_create_texture_buffer_from_img function
+ * 	creates a texture buffer from an image.
+ * 
+ * @param data 
+ * @param x
+ * @return bool 
+ */
 void	ft_apply_texture(t_data *data, int x)
 {
 	t_ray	ray;
@@ -67,6 +83,13 @@ void	ft_apply_texture(t_data *data, int x)
 	}
 }
 
+/**
+ * @brief the function take a string, check it and return the
+ * 	hex value passing by the rgb value.
+ * 
+ * @param string
+ * @return bool 
+ */
 static long	ft_char_to_hex(char *str)
 {
 	char	**splited;
@@ -96,6 +119,14 @@ static long	ft_char_to_hex(char *str)
 	return (free(rgb_color), hex_color);
 }
 
+/**
+ * @brief The ft_fill function fill the texture path.
+ * 
+ * @param line 
+ * @param data 
+ * @param map 
+ * @return void
+ */
 static void	ft_fill(char *line, t_data *data, t_map *map)
 {
 	char	*parssed_line;
@@ -121,14 +152,14 @@ static void	ft_fill(char *line, t_data *data, t_map *map)
 }
 #define TEXTURES 4
 
-// /**
-//  * @brief The ft_load_texture function loads the texture into the
-//  * data struct. If it fails to load a texture, it frees all the
-//  * textures that were loaded before and returns false.
-//  * 
-//  * @param data 
-//  * @return bool 
-//  */
+/**
+  * @brief The ft_load_texture function loads the texture into the
+  * data struct. If it fails to load a texture, it frees all the
+  * textures that were loaded before and returns false.
+  * 
+  * @param data 
+  * @return bool 
+*/
 bool	ft_load_textures(t_data *data)
 {
 	t_img	tmp;

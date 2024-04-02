@@ -3,16 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   str2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:41:08 by juliencros        #+#    #+#             */
-/*   Updated: 2024/03/31 20:17:14 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/02 16:38:52 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "str.h"
 #include <stdio.h>
 
+/**
+ * @brief The function return a duplicate of the string s without 
+ * 	the set characters at the beginning and the end of the string.
+ * 	The function does not search for the set characters in the middle
+ * 	of the string.
+ * 	It uses malloc.
+ * @param s string
+ * @return size_t
+*/
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*new;
@@ -41,6 +50,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (new);
 }
 
+/**
+ * @brief The function return the index of the the first occurence
+ * 	of the string s1 in the string s2, -1 otherwise.
+ * @param s1 string
+ * @param s2 string
+ * @return int
+*/
 int	ft_strschr(char *s1, char *s2)
 {
 	int	i;
@@ -66,6 +82,12 @@ int	ft_strschr(char *s1, char *s2)
 	return (-1);
 }
 
+/**
+ * @brief The function return the index of the first character
+ * of the string s2 in the string s1.
+ * @param sep array of separator
+ * @param string
+*/
 int	ft_strchr_array(char **sep, char *str)
 {
 	int	i;
@@ -80,6 +102,13 @@ int	ft_strchr_array(char **sep, char *str)
 	return (-1);
 }
 
+/**
+ * @brief The function return the duplicate of the string s
+ * by using calloc.
+ * It uses malloc.
+ * @param string
+ * @return char*
+*/
 char	*ft_strdup(const char *s)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 15:22:51 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/02 16:43:41 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ static int	ft_print_data(t_data *data)
 	return (0);
 }
 
+/**
+ * @brief initialize the data structure
+ * @param data
+ * @return
+ *
+*/
 void	ft_init(t_data *data)
 {
 	data->map.map_in_string = NULL;

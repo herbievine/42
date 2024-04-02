@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:14:22 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/31 15:32:53 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/02 16:39:16 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_strchr(const char *s, int c)
 /**
  * @brief The ft_strjoin funtion allocates (with malloc(3)) and returns a new
  * string, which is the result of the concatenation of 's1' and 's2'.
- *
+ * It uses malloc.
  * @param s1
  * @param s2
  * @return char*
@@ -103,7 +103,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
  * @brief The ft_substr funtion allocates (with malloc(3)) and returns a
  * substring from the string 's'. The substring begins at index 'start' and is of
  * maximum size 'len'.
- * 
+ * It uses malloc.
  * @param s 
  * @param start 
  * @param len 

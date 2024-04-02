@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 14:26:10 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/02 16:38:15 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ static bool	ft_parse_args(t_data *data);
 static bool	ft_parse_map(t_data *data, t_map *map);
 static bool	ft_to_int_map(t_map *map);
 
+/**
+ * @brief The function that convert the char ** map to an int ** map
+ * @param map
+ * @return true if the map is converted, false otherwise
+ */
 static bool	ft_to_int_map(t_map *map)
 {
 	int	i;
@@ -50,17 +55,26 @@ static bool	ft_to_int_map(t_map *map)
 		{
 			if (ft_strchr("01", map->char_map[i][j]))
 				map->map[i][j] = map->char_map[i][j] - '0';
-			else 
+			else
 				map->map[i][j] = 0;
 		}
 	}
 	return (true);
 }
 
+/**
+ * @brief fill the data structure with the map and the textures
+ * 	This function is the main function of the init process and parse process
+ * 	of the textures and the map
+ * @param argv
+ * @param data
+ * @return true if the data is filled, false otherwise
+ 
+ */
 bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 {
 	if (argv[1][ft_strlen(argv[1]) - 3] != 'c'
-		|| argv[1][ft_strlen(argv[1]) - 2] != 'u' 
+		|| argv[1][ft_strlen(argv[1]) - 2] != 'u'
 		|| argv[1][ft_strlen(argv[1]) - 1] != 'b'
 		|| argv[1][ft_strlen(argv[1]) - 4] != '.')
 		return (ft_err("EFILE"), false);
@@ -83,6 +97,11 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 	return (true);
 }
 
+/**
+ * @brief only check if the floor and ceiling are set
+ * 	like a simple checker
+ * @param data
+*/
 static bool	ft_parse_args(t_data *data)
 {
 	if (data->map.floor_hex == -1 || data->map.ceiling_hex == -1)
@@ -90,6 +109,12 @@ static bool	ft_parse_args(t_data *data)
 	return (true);
 }
 
+/**
+ * @brief find the start of the map and define the start_row and start_col
+ * @param map
+ * @param copy_map
+ * @return true if the map is found, false if something went wrong
+ */
 static bool	ft_find_start(t_map *map, char **copy_map)
 {
 	char	**start;
@@ -110,6 +135,12 @@ static bool	ft_find_start(t_map *map, char **copy_map)
 	return (ft_free_array(start, 5), true);
 }
 
+/**
+ * @brief parse the map and resolve it
+ * @param data
+ * @param map
+ * @return true if the map is parsed and resolved, false otherwise
+ */
 static bool	ft_parse_map(t_data *data, t_map *map)
 {
 	char	**copy_map;

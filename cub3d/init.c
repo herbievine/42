@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/02 15:05:18 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/02 16:23:39 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@
 
 static bool	ft_check_map(t_map *map, char **parsed_line);
 
+/**
+ * @brief create a new map in char ** format in the same with a
+ * 	same width for all lines add fill with '0' the empty spaces.
+ * 
+ * @param map
+ * @param with_err if true, the function will keep the characters
+ * 	possible wrong characters and will not remove them. 
+ * 	If false, the function will remove all characters that are not
+ * 	'0' or '1' or "NEWS".
+ * @return bool
+ */
 bool	ft_resize_map(t_map *map, bool with_err)
 {
 	int		i;
@@ -55,6 +66,14 @@ bool	ft_resize_map(t_map *map, bool with_err)
 	return (true);
 }
 
+/**
+ * @brief The function find amd define the offset and the width of the map
+ * 	the width is the biggest line of the map and the offset is the number
+ * 	of space before the first character of the biggest line.
+ * @param map
+ * @param parsed_line
+ * @return bool
+ */
 bool	ft_define_offset_and_width(t_map *map, char **parsed_line)
 {
 	int	i;
@@ -78,6 +97,13 @@ bool	ft_define_offset_and_width(t_map *map, char **parsed_line)
 	return (true);
 }
 
+/**
+ * @brief The function initialize the map and will check if the
+ * 	map is valid. At the end of the function, the map will be
+ * 	resized in char ** and the offset and width will be defined. 
+ * @param map
+ * @return bool
+ */
 bool	ft_init_map(t_map *map)
 {
 	int		i;
@@ -107,6 +133,16 @@ bool	ft_init_map(t_map *map)
 	return (ft_free_array(parsed_line, -1), true);
 }
 
+/**
+ * @brief The function will define the cardinal point of the map,
+ * 	if where we are, we find a cardinal point, we will define
+ * 	the direction of the player. and return true.
+ * @param map
+ * @param parsed_line
+ * @param i
+ * @param j
+ * @return bool
+ */
 bool	ft_define_cardinal(t_map *map, char **parsed_line, int i, int j)
 {
 	if (parsed_line[i][j] == 'N' || parsed_line[i][j] == 'S'
@@ -125,6 +161,16 @@ bool	ft_define_cardinal(t_map *map, char **parsed_line, int i, int j)
 	return (false);
 }
 
+/**
+ * @brief The function will define the cardinal point of the
+ * 	map and check if there is vaild characters in the map.
+ * 	If the function find more than one cardinal point, it will
+ * 	return false. Same if the map is not valid.
+ * @param map
+ * @param parsed_line need a parsed line with only valid characters
+ * 	characters, spaces and \ n are not valid characters.
+ * @return bool
+ */
 static bool	ft_check_map(t_map *map, char **parsed_line)
 {
 	int		i;

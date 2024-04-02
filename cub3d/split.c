@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/01 15:21:14 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/02 16:40:30 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ static char	**ft_init_split(char const *s, char c, int with_sep);
 static void	ft_fill_split(char const *s, char **split, char c, int with_sep);
 static void	ft_free(char **split, size_t j);
 
+/**
+ * @brief The ft_split function splits the string s using
+ * 	the character c. The function returns an array of strings.
+ * @param s string
+ * @param c character
+ * @param with_sep 1 if the separator
+ * 	should be included in the split, 0 otherwise
+*/
 char	**ft_split(char const *s, char c, int with_sep)
 {
 	char	**split;
