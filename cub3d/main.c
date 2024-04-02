@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/01 15:10:50 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/02 14:35:08 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_init(t_data *data)
 	data->map.offset = 0;
 	data->mlx_ptr = NULL;
 	data->fd = 0;
-	data->map.path_texture = malloc(sizeof(char *) * 4);
+	data->map.path_texture = ft_calloc(sizeof(char *) * 4);
 	if (data->map.path_texture == NULL)
 		ft_err("Malloc failed");
 	data->mlx_ptr = mlx_init();

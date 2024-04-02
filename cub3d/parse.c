@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/01 15:11:22 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/02 14:26:10 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 	if (data->fd < 0)
 	{
 		ft_err("ENOENT");
-		exit(0);
+		return (false);
 	}
 	ft_read(&data->map.map_in_string, data->fd);
 	if (data->map.map_in_string == NULL)
