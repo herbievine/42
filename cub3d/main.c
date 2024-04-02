@@ -28,10 +28,6 @@ static int	ft_print_data(t_data *data)
 	int	j;
 
 	printf(" ------ print data ------ \n");
-	printf("NO = %p\n", data->textures[0].img);
-	printf("SO = %p\n", data->textures[1].img);
-	printf("WE = %p\n", data->textures[2].img);
-	printf("EA = %p\n", data->textures[3].img);
 	printf("F = %ld\n", data->map.floor_hex);
 	printf("C = %ld\n", data->map.ceiling_hex);
 	printf("width = %d\n", data->map.width);
@@ -62,10 +58,6 @@ void	ft_init(t_data *data)
 	data->map.map_in_string = NULL;
 	data->map.char_map = NULL;
 	data->map.map = NULL;
-	data->map.no_img = NULL;
-	data->map.so_img = NULL;
-	data->map.we_img = NULL;
-	data->map.ea_img = NULL;
 	data->map.floor_hex = -1;
 	data->map.ceiling_hex = -1;
 	data->map.width = 0;
@@ -75,7 +67,6 @@ void	ft_init(t_data *data)
 	data->map.start_col = 0;
 	data->map.str_index = 0;
 	data->map.offset = 0;
-	data->mlx_ptr = NULL;
 	data->fd = 0;
 	data->map.path_texture = ft_calloc(sizeof(char *), 4);
 	if (data->map.path_texture == NULL)

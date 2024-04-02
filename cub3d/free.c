@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "free.h"
+#include "textures.h"
 #include "structs.h"
 #include "mlx/mlx.h"
 #include <unistd.h>
@@ -18,13 +19,14 @@
 #include <stdio.h>
 
 /**
- * @brief The ft_free_array function takes in an array and frees all memory.
- * If n if provided, it will only free the memory of the first n elements.
- *
- * @param array
- * @param n
+ * @brief The ft_free_void_array function takes in an array and frees all
+ * memory. If n if provided, it will only free the memory of the first n 
+ * elements.
+ * 
+ * @param array 
+ * @param n 
  */
-void	ft_free_array(char **array, int n)
+void	ft_free_void_array(void **array, int n)
 {
 	int	i;
 
@@ -39,19 +41,17 @@ void	ft_free_array(char **array, int n)
 	free(array);
 }
 
-void	ft_free_array_int(int **array, int n)
+/**
+ * @brief The ft_free_array function takes in an array of chars and frees
+ * all memory. If n if provided, it will only free the memory of the first
+ * n elements.
+ * 
+ * @param array 
+ * @param n 
+ */
+void	ft_free_array(char **array, int n)
 {
-	int	i;
-
-	i = -1;
-	if (n == -1)
-		while (array[++i])
-			free(array[i]);
-	else
-		while (++i < n)
-			if (array[i])
-				free(array[i]);
-	free(array);
+	ft_free_void_array((void **)array, n);
 }
 
 /**
@@ -61,36 +61,20 @@ void	ft_free_array_int(int **array, int n)
  *
  * @param array
  */
-void	ft_free_2d_array(char ***array, int n)
+void	ft_free_2d_array(void ***array, int n)
 {
 	int	i;
 
 	i = -1;
 	if (n == -1)
 		while (array[++i])
-			ft_free_array(array[i], -1);
+			ft_free_void_array(array[i], -1);
 	else
 		while (++i < n)
 			if (array[i])
-				ft_free_array(array[i], -1);
+				ft_free_void_array(array[i], -1);
 	free(array);
 }
-
-/**
- * @brief The ft_free_textures function takes in a data struct and frees all
- * textures.
- * 
- * @param data 
- */
-// void	ft_free_textures(t_data *data)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (++i < 5)
-// 		if (data->textures[i])
-// 			mlx_destroy_image(data->mlx_ptr, data->textures[i]);
-// }
 
 /**
  * @brief The ft_free_mlx function takes in a data struct and frees all mlx
@@ -98,11 +82,12 @@ void	ft_free_2d_array(char ***array, int n)
  * 
  * @param data 
  */
-	// TODO:check why error when destroy img
 void	ft_free_mlx(t_data *data)
 {
 	if (data->mlx_ptr)
 	{
+		if (data->win_ptr != NULL)
+			mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 	}
@@ -116,23 +101,20 @@ void	ft_free_mlx(t_data *data)
  */
 void	ft_free_data(t_data *data)
 {
+	int	i;
+
 	if (data->fd > 0)
 		close(data->fd);
-	if (data->map.no_img != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->map.no_img);
-	if (data->map.so_img != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->map.so_img);
-	if (data->map.we_img != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->map.we_img);
-	if (data->map.ea_img != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->map.ea_img);
-	ft_free_mlx(data);
 	if (data->map.char_map)
 		ft_free_array(data->map.char_map, -1);
 	if (data->map.map)
-		ft_free_array_int(data->map.map, data->map.height);
+		ft_free_void_array((void **)data->map.map, data->map.height);
 	if (data->map.map_in_string)
 		free(data->map.map_in_string);
 	if (data->map.path_texture)
 		ft_free_array(data->map.path_texture, 4);
+	i = -1;
+	while (++i < TEXTURE_COUNT)
+		if (data->texture_buffer[i])
+			free(data->texture_buffer[i]);
 }

@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jcros <jcros@student.42.fr>                +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/03/26 13:57:33 by jcros            ###   ########.fr        #
+#    Updated: 2024/04/02 15:37:46 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx
@@ -39,23 +39,21 @@ SRCS = \
 	str2.c \
 	math2.c \
 	window.c \
-	minimap.c \
 	player.c \
 	hooks.c \
 	move.c \
 	ray.c \
+	textures.c \
 	pixels.c \
-	render.c \
-	parse.c \
-	error.c \
 	free.c \
+	error.c \
+	parse.c \
 	init.c \
 	get_line.c \
 	io.c \
 	split.c \
 	ints.c \
 	resolve_map.c \
-	textures.c \
 	# display.c \
 	# print.c \
 	# hooks.c \

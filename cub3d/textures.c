@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
 /*   Updated: 2024/04/02 16:32:47 by jcros            ###   ########.fr       */
@@ -150,23 +150,22 @@ static void	ft_fill(char *line, t_data *data, t_map *map)
 		map->ceiling_hex = ft_char_to_hex(parssed_line);
 	free(parssed_line);
 }
-#define TEXTURES 4
 
 /**
-  * @brief The ft_load_texture function loads the texture into the
-  * data struct. If it fails to load a texture, it frees all the
-  * textures that were loaded before and returns false.
-  * 
-  * @param data 
-  * @return bool 
-*/
+ * @brief The ft_load_texture function loads the texture into the data struct.
+ * If it fails to load a texture, it frees all the textures that were loaded
+ * before and returns false.
+ * 
+ * @param data 
+ * @return bool 
+ */
 bool	ft_load_textures(t_data *data)
 {
 	t_img	tmp;
 	int		i;
 
 	i = -1;
-	while (++i < TEXTURES)
+	while (++i < TEXTURE_COUNT)
 	{
 		tmp.img = mlx_xpm_file_to_image(data->mlx_ptr,
 				data->map.path_texture[i], &tmp.width, &tmp.height);
@@ -177,7 +176,7 @@ bool	ft_load_textures(t_data *data)
 		if (!tmp.addr)
 			return (false);
 		if (!ft_create_texture_buffer_from_img(data, &tmp, i))
-			return (false);
+			return (mlx_destroy_image(data->mlx_ptr, tmp.img), false);
 		mlx_destroy_image(data->mlx_ptr, tmp.img);
 	}
 	return (true);

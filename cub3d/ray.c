@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:12:20 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 09:47:56 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/01 10:15:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@
 #include "mlx/mlx.h"
 #include <math.h>
 
-static void	ft_draw_vertical_line(t_data *data, int x, int y1, int y2, int color)
-{
-	while (y1 < y2)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y1, color);
-		y1++;
-	}
-}
-
+/**
+ * @brief The ft_init_ray function initializes the ray structure with the
+ * necessary values to calculate the ray.
+ *
+ * @param ray
+ * @param x
+ * @param player
+ */
 static void	ft_init_ray(t_ray *ray, int x, t_player *player)
 {
 	ray->cx = 2 * x / (double)WIN_WIDTH - 1;
@@ -37,6 +36,13 @@ static void	ft_init_ray(t_ray *ray, int x, t_player *player)
 	ray->ddy = fabs(1 / ray->dy);
 }
 
+/**
+ * @brief The ft_calculate_step function calculates the step of the ray which is
+ * then used to calculate the distance to the wall.
+ *
+ * @param ray
+ * @param player
+ */
 static void	ft_calculate_step(t_ray *ray, t_player *player)
 {
 	if (ray->dx < 0)
@@ -61,6 +67,13 @@ static void	ft_calculate_step(t_ray *ray, t_player *player)
 	}
 }
 
+/**
+ * @brief The ft_calculate_wall_distance function calculates the distance to the
+ * wall by calculating the distance to the next x or y side of the map.
+ *
+ * @param ray
+ * @param map
+ */
 static void	ft_calculate_wall_distance(t_ray *ray, int **map)
 {
 	while (42)
@@ -86,6 +99,13 @@ static void	ft_calculate_wall_distance(t_ray *ray, int **map)
 		ray->wd = ray->sdy - ray->ddy;
 }
 
+/**
+ * @brief The ft_calculate_wall_height function calculates the height of the wall
+ * and the draw start and draw end of the wall.
+ * 
+ * @param ray 
+ * @param player 
+ */
 static void	ft_calculate_wall_height(t_ray *ray, t_player *player)
 {
 	ray->h = (int)(WIN_HEIGHT / ray->wd);
@@ -102,9 +122,17 @@ static void	ft_calculate_wall_height(t_ray *ray, t_player *player)
 	ray->wx -= floor(ray->wx);
 }
 
+/**
+ * @brief The ft_cast_ray function handles the raycasting by initializing the
+ * ray, calculating the step, calculating the wall distance, calculating the
+ * wall height and finally, updating the pixel map.
+ * 
+ * @param data 
+ * @param ray 
+ */
 void	ft_cast_ray(t_data *data, t_ray *ray)
 {
-	int				x;
+	int	x;
 
 	x = 0;
 	while (x < WIN_WIDTH)
@@ -114,9 +142,6 @@ void	ft_cast_ray(t_data *data, t_ray *ray)
 		ft_calculate_wall_distance(ray, data->map.map);
 		ft_calculate_wall_height(ray, &data->player);
 		ft_update_pixel_map(data, ray, x);
-
-		// ft_draw_vertical_line(data, x, 
-		// 		ray.ds, ray.de, 0xFFFFFF);
 		x++;
 	}
 }

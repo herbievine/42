@@ -16,10 +16,10 @@
 # include "structs.h"
 
 void	ft_free_array(char **array, int n);
-void	ft_free_2d_array(char ***array, int n);
+void	ft_free_void_array(void **array, int n);
+void	ft_free_2d_array(void ***array, int n);
 // void	ft_free_textures(t_data *data);
 void	ft_free_mlx(t_data *data);
 void	ft_free_data(t_data *data);
-void	ft_free_array_int(int **array, int n);
 
 #endif /* FREE_H */

@@ -28,9 +28,6 @@ bool	ft_create_texture_buffer_from_img(t_data *data,
 	pixels = malloc(sizeof(int) * img->width * img->height);
 	if (!pixels)
 		return (false);
-	printf("img->width: %d\n", img->width);
-	printf("img->height: %d\n", img->height);
-	printf("img->line_length: %d\n", img->line_length);
 	i = -1;
 	while (++i < img->height)
 	{
@@ -72,7 +69,12 @@ bool	ft_create_pixel_map(t_data *data)
 	{
 		data->pixels[i] = malloc(sizeof(int) * WIN_WIDTH);
 		if (!data->pixels[i])
+		{
+			while (--i >= 0)
+				free(data->pixels[i]);
+			free(data->pixels);
 			return (false);
+		}
 	}
 	return (true);
 }
@@ -80,12 +82,10 @@ bool	ft_create_pixel_map(t_data *data)
 void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 {
 	t_cardinal_direction	dir;
-	int						i;
 	int						tex_x;
-	int						tex_y;
 	int						color;
-	double				pos;
-	double				step;
+	double					pos;
+	double					step;
 
 	dir = ft_get_cardinal_direction(ray);
 	tex_x = (int)(ray->wx * TEXTURE_SIZE);
@@ -93,21 +93,20 @@ void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 		tex_x = TEXTURE_SIZE - tex_x - 1;
 	step = 1.0 * TEXTURE_SIZE / ray->h;
 	pos = (ray->ds - WIN_HEIGHT / 2 + ray->h / 2) * step;
-	i = ray->ds;
-	while (i < ray->de)
+	while (ray->ds < ray->de)
 	{
-		tex_y = (int)pos & (TEXTURE_SIZE - 1);
 		pos += step;
-		color = (data->texture_buffer)[dir][TEXTURE_SIZE * tex_y + tex_x];
-		if (dir == NORTH || dir == EAST)
+		color = (data->texture_buffer)[dir][TEXTURE_SIZE
+			* ((int)pos & (TEXTURE_SIZE - 1)) + tex_x];
+		if (dir == NORTH || dir == SOUTH)
 			color = (color >> 1) & 0x7F7F7F;
 		if (color > 0)
-			data->pixels[i][x] = color;
-		i++;
+			data->pixels[ray->ds][x] = color;
+		ray->ds++;
 	}
 }
 
-void	ft_draw_pixel_map(t_data *data, t_ray ray)
+void	ft_draw_pixel_map(t_data *data)
 {
 	t_img	image;
 	int		x;
@@ -133,4 +132,5 @@ void	ft_draw_pixel_map(t_data *data, t_ray ray)
 		}
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, image.img, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, image.img);
 }

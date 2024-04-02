@@ -79,10 +79,8 @@ int	ft_on_keyrelease(int keysym, t_data *data)
  */
 int	ft_on_close(t_data *data)
 {
-	(void)data;
-	// ft_free_textures(data);
-	// ft_free_mlx(data);
-	// ft_free_data(data);
+	ft_free_mlx(data);
+	ft_free_data(data);
 	exit(0);
 	return (0);
 }

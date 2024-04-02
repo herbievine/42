@@ -17,6 +17,7 @@
 # include <stdbool.h>
 
 # define TEXTURE_SIZE 64
+# define TEXTURE_COUNT 4
 
 # define FLOOR_PATH "./assets/floor.xpm"
 # define WALL_PATH "./assets/wall.xpm"

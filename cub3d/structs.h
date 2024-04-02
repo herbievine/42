@@ -59,7 +59,6 @@ typedef struct s_player
 	double	dy;
 	double	px;
 	double	py;
-	
 	double	movespeed;
 	double	rotspeed;
 	bool	is_moving;
@@ -136,9 +135,6 @@ typedef struct s_data
 {
 	void				*mlx_ptr;
 	void				*win_ptr;
-	t_texture			textures[4];
-	// t_texture			textures[4];
-	char				*texture_paths[4];
 	int					*texture_buffer[4];
 	int					**pixels;
 	t_ray				ray;

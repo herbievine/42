@@ -49,7 +49,7 @@ static bool	ft_to_int_map(t_map *map)
 	{
 		map->map[i] = malloc((map->width + map->offset) * sizeof(int));
 		if (map->map[i] == NULL)
-			return (ft_free_array_int(map->map, i - 1), false);
+			return (ft_free_void_array((void **)map->map, i - 1), false);
 		j = -1;
 		while (map->char_map[i][++j])
 		{
