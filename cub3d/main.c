@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 15:04:56 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/02 15:22:51 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "player.h"
 #include "init.h"
 #include "free.h"
-#include "mem.h`"
+#include "mem.h"
 #include <stdio.h>
 #include <stdlib.h>
 
