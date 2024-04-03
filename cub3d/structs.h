@@ -71,7 +71,7 @@ typedef struct s_map
 	int						start_row;
 	int						start_col;
 	int						start_map;
-	char					**path_texture;
+	char					*path_texture[4];
 	int						offset;
 	t_cardinal_direction	start_dir;
 }	t_map;

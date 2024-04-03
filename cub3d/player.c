@@ -28,6 +28,7 @@ void	ft_init_player(t_player *player, t_data *data)
 {
 	player->y = data->map.start_row + 0.5;
 	player->x = data->map.start_col + 0.5;
+	player->is_moving = false;
 	if (data->map.start_dir == NORTH || data->map.start_dir == SOUTH)
 		ft_init_lat(player, data);
 	else

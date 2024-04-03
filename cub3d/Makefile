@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/04/03 11:20:48 by herbie           ###   ########.fr        #
+#    Updated: 2024/04/03 10:27:35 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx
@@ -53,10 +53,7 @@ SRCS = \
 	io.c \
 	split.c \
 	ints.c \
-	resolve_map.c \
-	# display.c \
-	# print.c \
-	# hooks.c \
+	resolve_map.c
 
 OBJS = $(SRCS:.c=.o)
 

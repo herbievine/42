@@ -16,7 +16,6 @@
 #include "free.h"
 #include "move.h"
 #include "mlx/mlx.h"
-#include "print.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <X11/keysym.h>

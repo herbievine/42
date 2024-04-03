@@ -53,7 +53,7 @@ static int	ft_print_data(t_data *data)
  * @return
  *
 */
-void	ft_init(t_data *data)
+bool	ft_init(t_data *data)
 {
 	data->map.map_in_string = NULL;
 	data->map.char_map = NULL;
@@ -68,31 +68,12 @@ void	ft_init(t_data *data)
 	data->map.str_index = 0;
 	data->map.offset = 0;
 	data->fd = 0;
-	data->map.path_texture = ft_calloc(sizeof(char *), 4);
-	if (data->map.path_texture == NULL)
-		ft_err("Malloc failed");
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
-		return (ft_err(EX11));
-}
-
-void	ft_print_map(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < data->map.height)
-	{
-		j = 0;
-		while (j < data->map.width + data->map.offset)
-		{
-			printf("%d", data->map.map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
+		return (ft_err(EX11), false);
+	data->current_frame_time = 0.0;
+	data->previous_frame_time = 0.0;
+	return (true);
 }
 
 int	main(int argc, char *argv[])
@@ -102,11 +83,11 @@ int	main(int argc, char *argv[])
 	(void)argv;
 	if (argc != 2)
 		return (ft_err(EIO), 1);
-	ft_init(&data);
+	if (!ft_init(&data))
+		return (1);
 	if (!ft_fill_and_parse_data(argv, &data))
 		return (ft_free_data(&data), 1);
 	ft_init_player(&data.player, &data);
-	ft_print_data(&data);
 	ft_init_window(&data);
 	ft_free_data(&data);
 	return (0);

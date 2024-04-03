@@ -111,8 +111,10 @@ void	ft_free_data(t_data *data)
 		ft_free_void_array((void **)data->map.map, data->map.height);
 	if (data->map.map_in_string)
 		free(data->map.map_in_string);
-	if (data->map.path_texture)
-		ft_free_array(data->map.path_texture, 4);
+	i = -1;
+	while (++i < TEXTURE_COUNT)
+		if (data->map.path_texture[i])
+			free(data->map.path_texture[i]);
 	i = -1;
 	while (++i < TEXTURE_COUNT)
 		if (data->texture_buffer[i])
