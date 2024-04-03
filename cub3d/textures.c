@@ -63,29 +63,8 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 }
 
 /**
- * @brief The ft_create_texture_buffer_from_img function
- * 	creates a texture buffer from an image.
- * 
- * @param data 
- * @param x
- * @return bool 
- */
-void	ft_apply_texture(t_data *data, int x)
-{
-	t_ray	ray;
-
-	printf("ft_apply_texturefrom %d@ de %d\n", ray.ds, ray.de);
-	ray = data->ray;
-	while (ray.ds < ray.de)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, ray.ds, 0xFF0000);
-		ray.ds++;
-	}
-}
-
-/**
- * @brief the function take a string, check it and return the
- * 	hex value passing by the rgb value.
+ * @brief The ft_char_to_hex function takes a string, checks it and returns
+ * the hexadecimal value of the color as a long.
  * 
  * @param string
  * @return bool 
@@ -120,7 +99,7 @@ static long	ft_char_to_hex(char *str)
 }
 
 /**
- * @brief The ft_fill function fill the texture path.
+ * @brief The ft_fill function fills the texture path.
  * 
  * @param line 
  * @param data 
@@ -129,26 +108,26 @@ static long	ft_char_to_hex(char *str)
  */
 static void	ft_fill(char *line, t_data *data, t_map *map)
 {
-	char	*parssed_line;
+	char	*parsed_line;
 
 	if (line == NULL)
 		return ;
-	parssed_line = ft_strtrim(line, " 	\n");
-	if (parssed_line == NULL)
+	parsed_line = ft_strtrim(line, " 	\n");
+	if (parsed_line == NULL)
 		return ;
 	if (ft_strncmp(line, "NO", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[NORTH] = ft_strdup(ft_strchr(parssed_line, '.'));
+		map->path_texture[NORTH] = ft_strdup(ft_strchr(parsed_line, '.'));
 	else if (ft_strncmp(line, "SO", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[SOUTH] = ft_strdup(ft_strchr(parssed_line, '.'));
+		map->path_texture[SOUTH] = ft_strdup(ft_strchr(parsed_line, '.'));
 	else if (ft_strncmp(line, "WE", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[WEST] = ft_strdup(ft_strchr(parssed_line, '.'));
+		map->path_texture[WEST] = ft_strdup(ft_strchr(parsed_line, '.'));
 	else if (ft_strncmp(line, "EA", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[EAST] = ft_strdup(ft_strchr(parssed_line, '.'));
-	else if (ft_strncmp(parssed_line, "F", 1) == 0)
-		map->floor_hex = ft_char_to_hex(parssed_line);
-	else if (ft_strncmp(parssed_line, "C", 1) == 0)
-		map->ceiling_hex = ft_char_to_hex(parssed_line);
-	free(parssed_line);
+		map->path_texture[EAST] = ft_strdup(ft_strchr(parsed_line, '.'));
+	else if (ft_strncmp(parsed_line, "F", 1) == 0)
+		map->floor_hex = ft_char_to_hex(parsed_line);
+	else if (ft_strncmp(parsed_line, "C", 1) == 0)
+		map->ceiling_hex = ft_char_to_hex(parsed_line);
+	free(parsed_line);
 }
 
 /**
@@ -172,7 +151,7 @@ bool	ft_load_textures(t_data *data)
 		if (!tmp.img)
 			return (false);
 		tmp.addr = (int *)mlx_get_data_addr(tmp.img,
-				&tmp.bpp, &tmp.line_length, &tmp.endian);
+				&tmp.bpp, &tmp.line_len, &tmp.endian);
 		if (!tmp.addr)
 			return (false);
 		if (!ft_create_texture_buffer_from_img(data, &tmp, i))

@@ -13,6 +13,7 @@
 #include "pixels.h"
 #include "window.h"
 #include "textures.h"
+#include "mem.h"
 #include "mlx/mlx.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -25,7 +26,7 @@ bool	ft_create_texture_buffer_from_img(t_data *data,
 	int	i;
 	int	j;
 
-	pixels = malloc(sizeof(int) * img->width * img->height);
+	pixels = ft_calloc(sizeof(int), img->width * img->height);
 	if (!pixels)
 		return (false);
 	i = -1;
@@ -61,13 +62,13 @@ bool	ft_create_pixel_map(t_data *data)
 {
 	int	i;
 
-	data->pixels = malloc(sizeof(int *) * (WIN_HEIGHT + 1));
+	data->pixels = ft_calloc(sizeof(int *), WIN_HEIGHT + 1);
 	if (!data->pixels)
 		return (false);
 	i = -1;
 	while (++i < WIN_HEIGHT)
 	{
-		data->pixels[i] = malloc(sizeof(int) * WIN_WIDTH);
+		data->pixels[i] = ft_calloc(sizeof(int), WIN_WIDTH);
 		if (!data->pixels[i])
 		{
 			while (--i >= 0)
@@ -108,15 +109,15 @@ void	ft_update_pixel_map(t_data *data, t_ray *ray, int x)
 
 void	ft_draw_pixel_map(t_data *data)
 {
-	t_img	image;
+	t_img	img;
 	int		x;
 	int		y;
 
-	image.img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	if (image.img == NULL)
+	img.img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	if (img.img == NULL)
 		return ;
-	image.addr = (int *)mlx_get_data_addr(image.img, &image.bpp,
-			&image.line_length, &image.endian);
+	img.addr = (int *)mlx_get_data_addr(img.img, &img.bpp,
+			&img.line_len, &img.endian);
 	y = -1;
 	while (++y < WIN_HEIGHT)
 	{
@@ -124,13 +125,13 @@ void	ft_draw_pixel_map(t_data *data)
 		while (++x < WIN_WIDTH)
 		{
 			if (data->pixels[y][x] > 0)
-				image.addr[y * (image.line_length / 4) + x] = data->pixels[y][x];
+				img.addr[y * (img.line_len / 4) + x] = data->pixels[y][x];
 			else if (y < WIN_HEIGHT / 2)
-				image.addr[y * (image.line_length / 4) + x] = data->map.ceiling_hex;
+				img.addr[y * (img.line_len / 4) + x] = data->map.ceiling_hex;
 			else if (y < WIN_HEIGHT -1)
-				image.addr[y * (image.line_length / 4) + x] = data->map.floor_hex;
+				img.addr[y * (img.line_len / 4) + x] = data->map.floor_hex;
 		}
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, image.img, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, image.img);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, img.img);
 }

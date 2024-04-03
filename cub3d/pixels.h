@@ -17,7 +17,7 @@
 # include <stdbool.h>
 
 bool	ft_create_texture_buffer_from_img(t_data *data,
-		t_img *img, t_cardinal_direction dir);
+			t_img *img, t_cardinal_direction dir);
 bool	ft_create_pixel_map(t_data *data);
 void	ft_update_pixel_map(t_data *data, t_ray *ray, int x);
 void	ft_draw_pixel_map(t_data *data);

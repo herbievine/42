@@ -84,8 +84,7 @@ int	ft_on_render(t_data *data)
 	ft_create_pixel_map(data);
 	ft_cast_ray(data, &ray);
 	ft_draw_pixel_map(data);
-	// TODO: Why does this cause visual glitches?
-	// ft_free_void_array((void **)data->pixels, WIN_HEIGHT);
+	ft_free_void_array((void **)data->pixels, WIN_HEIGHT);
 	return (0);
 }
 

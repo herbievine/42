@@ -17,7 +17,6 @@
 
 # define WALL '1'
 # define EMPT '0'
-# define OUT NULL
 
 typedef enum e_cardinal_direction
 {
@@ -27,25 +26,13 @@ typedef enum e_cardinal_direction
 	EAST = 3
 }	t_cardinal_direction;
 
-typedef struct s_texture
-{
-	char	*path;
-	void	*img;
-	int		*addr;
-	int		bpp;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-}	t_texture;
-
 typedef struct s_img
 {
 	char	*path;
 	void	*img;
 	int		*addr;
 	int		bpp;
-	int		line_length;
+	int		line_len;
 	int		endian;
 	int		width;
 	int		height;
@@ -66,27 +53,27 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	char	**char_map;
-	int 	**map;
-	char 	*map_in_string;
-	int 	str_index;
-	int		width;
-	int		height;
-	void	*no_img;
-	void	*so_img;
-	void	*we_img;
-	void	*ea_img;
-	long floor_hex;
-	long ceiling_hex;
-	int		col;
-	int		row;
-	char	index;
-	int		start_row;
-	int		start_col;
-	int 	start_map;
-	char 	**path_texture;
+	char					**char_map;
+	char					*map_in_string;
+	int						**map;
+	int						str_index;
+	int						width;
+	int						height;
+	void					*no_img;
+	void					*so_img;
+	void					*we_img;
+	void					*ea_img;
+	long					floor_hex;
+	long					ceiling_hex;
+	int						col;
+	int						row;
+	char					index;
+	int						start_row;
+	int						start_col;
+	int						start_map;
+	char					**path_texture;
+	int						offset;
 	t_cardinal_direction	start_dir;
-	int		offset;
 }	t_map;
 
 /**
@@ -138,9 +125,9 @@ typedef struct s_data
 	int					*texture_buffer[4];
 	int					**pixels;
 	t_ray				ray;
-	t_player		player;
-	double			previous_frame_time;
-	double			current_frame_time;
+	t_player			player;
+	double				previous_frame_time;
+	double				current_frame_time;
 	t_map				map;
 	int					fd;
 }	t_data;
