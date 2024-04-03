@@ -13,6 +13,7 @@
 #include "pixels.h"
 #include "window.h"
 #include "textures.h"
+#include "free.h"
 #include "mem.h"
 #include "mlx/mlx.h"
 #include <stdbool.h>
@@ -70,12 +71,7 @@ bool	ft_create_pixel_map(t_data *data)
 	{
 		data->pixels[i] = ft_calloc(sizeof(int), WIN_WIDTH);
 		if (!data->pixels[i])
-		{
-			while (--i >= 0)
-				free(data->pixels[i]);
-			free(data->pixels);
-			return (false);
-		}
+			return (ft_free_void_array((void **)data->pixels, i), false);
 	}
 	return (true);
 }

@@ -81,7 +81,8 @@ int	ft_on_render(t_data *data)
 	ft_render_fps(data, fps);
 	if (!data->player.is_moving)
 		return (0);
-	ft_create_pixel_map(data);
+	if (!ft_create_pixel_map(data))
+		return (0);
 	ft_cast_ray(data, &ray);
 	ft_draw_pixel_map(data);
 	ft_free_void_array((void **)data->pixels, WIN_HEIGHT);
@@ -99,7 +100,7 @@ void	ft_init_window(t_data *data)
 	data->win_ptr = mlx_new_window(
 			data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "franprix");
 	if (!data->win_ptr)
-		return (ft_err(EX11));
+		return (ft_free_mlx(data), ft_err(EX11));
 	mlx_hook(
 		data->win_ptr, DestroyNotify, StructureNotifyMask, ft_on_close, data);
 	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, ft_on_keypress, data);
