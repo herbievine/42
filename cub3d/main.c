@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 16:43:41 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 12:02:39 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,20 @@ bool	ft_init(t_data *data)
 	data->map.map = NULL;
 	data->map.floor_hex = -1;
 	data->map.ceiling_hex = -1;
-	data->map.width = 0;
-	data->map.height = 0;
 	data->map.index = 'a';
 	data->map.start_row = 0;
 	data->map.start_col = 0;
 	data->map.str_index = 0;
 	data->map.offset = 0;
+	data->fd = -1;
+	while (++data->fd < 5)
+	{
+		data->texture_buffer[data->fd] = NULL;
+		data->map.path_texture[data->fd] = NULL;
+	}
 	data->fd = 0;
+	data->current_frame_time = 0.0;
+	data->previous_frame_time = 0.0;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (ft_err(EX11), false);
