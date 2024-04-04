@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 12:39:56 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 14:44:19 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ void	ft_free_void_array(void **array, int n)
 			if (array[i])
 				free(array[i]);
 	free(array);
+}
+
+void	ft_free_and_null(void ***ptr, int n)
+{
+	ft_free_void_array(*ptr, n);
+	*ptr = NULL;
 }
 
 /**

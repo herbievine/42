@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 13:58:53 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 14:43:59 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 		if (ft_strchr_array((char *[]){"NO", "SO", "WE", "EA", "F", "C"},
 			buffer_map[map->str_index]) != -1)
 		{
-			buffer = ft_strtrim(buffer_map[map->str_index], "	 ");	
+			buffer = ft_strtrim(buffer_map[map->str_index], "	 ");
 			if (buffer == NULL)
 				return (ft_free_array(buffer_map, -1), false);
 			(ft_fill(buffer, data, map), free(buffer), params++);

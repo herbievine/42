@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 13:45:03 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 14:43:04 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static bool	ft_to_int_map(t_map *map)
 	{
 		map->map[i] = malloc((map->width + map->offset) * sizeof(int));
 		if (map->map[i] == NULL)
-			return (ft_free_void_array((void **)map->map, i - 1), false);
+			return (ft_free_and_null((void ***)&map->map, i), false);
 		j = -1;
 		while (map->char_map[i][++j])
 		{
