@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 16:38:15 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 13:45:03 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		|| argv[1][ft_strlen(argv[1]) - 4] != '.')
 		return (ft_err("EFILE"), false);
 	data->fd = open(argv[1], O_RDONLY);
-	if (data->fd < 0)
+	if (data->fd <= 0)
 	{
 		ft_err("ENOENT");
 		return (false);
@@ -105,6 +105,11 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 static bool	ft_parse_args(t_data *data)
 {
 	if (data->map.floor_hex == -1 || data->map.ceiling_hex == -1)
+		return (false);
+	if (data->map.path_texture[NORTH] == NULL
+		|| data->map.path_texture[SOUTH] == NULL
+		|| data->map.path_texture[WEST] == NULL
+		|| data->map.path_texture[EAST] == NULL)
 		return (false);
 	return (true);
 }
@@ -152,9 +157,11 @@ static bool	ft_parse_map(t_data *data, t_map *map)
 	if (copy_map == NULL)
 		return (false);
 	while (++i < map->height)
+	{
 		copy_map[i] = ft_strdup(map->char_map[i]);
-	if (copy_map == NULL)
-		return (ft_free_array(start, 5), false);
+		if (copy_map[i] == NULL)
+			return (ft_free_array(copy_map, i), false);
+	}
 	if (!ft_find_start(map, copy_map))
 		return (ft_free_array(copy_map, -1), false);
 	if (!ft_resolve_map(data, copy_map))

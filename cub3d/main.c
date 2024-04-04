@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 12:05:16 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 12:37:18 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ bool	ft_init(t_data *data)
 	data->map.start_row = 0;
 	data->map.start_col = 0;
 	data->map.str_index = 0;
-	data->map.width = 0;
-	data->map.height = 0;
 	data->map.offset = 0;
 	data->fd = -1;
 	data->current_frame_time = 0.0;
@@ -75,6 +73,7 @@ bool	ft_init(t_data *data)
 		data->texture_buffer[data->fd] = NULL;
 		data->map.path_texture[data->fd] = NULL;
 	}
+	data->win_ptr = NULL;
 	data->fd = 0;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)

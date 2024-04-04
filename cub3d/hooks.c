@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 14:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/07 14:09:20 by herbie           ###   ########.fr       */
+/*   Updated: 2024/04/04 14:00:52 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	ft_on_keyrelease(int keysym, t_data *data)
  */
 int	ft_on_close(t_data *data)
 {
-	ft_free_mlx(data);
 	ft_free_data(data);
 	exit(0);
 	return (0);

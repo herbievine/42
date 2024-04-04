@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/02 16:32:47 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 13:58:53 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 		if (ft_strchr_array((char *[]){"NO", "SO", "WE", "EA", "F", "C"},
 			buffer_map[map->str_index]) != -1)
 		{
-			buffer = ft_strtrim(buffer_map[map->str_index], "	 ");
+			buffer = ft_strtrim(buffer_map[map->str_index], "	 ");	
 			if (buffer == NULL)
 				return (ft_free_array(buffer_map, -1), false);
 			(ft_fill(buffer, data, map), free(buffer), params++);
@@ -153,7 +153,7 @@ bool	ft_load_textures(t_data *data)
 		tmp.addr = (int *)mlx_get_data_addr(tmp.img,
 				&tmp.bpp, &tmp.line_len, &tmp.endian);
 		if (!tmp.addr)
-			return (false);
+			return (mlx_destroy_image(data->mlx_ptr, tmp.img), false);
 		if (!ft_create_texture_buffer_from_img(data, &tmp, i))
 			return (mlx_destroy_image(data->mlx_ptr, tmp.img), false);
 		mlx_destroy_image(data->mlx_ptr, tmp.img);

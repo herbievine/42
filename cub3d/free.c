@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:41:40 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/31 20:20:36 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/04 12:39:56 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,5 @@ void	ft_free_data(t_data *data)
 	while (++i < TEXTURE_COUNT)
 		if (data->texture_buffer[i])
 			free(data->texture_buffer[i]);
+	ft_free_mlx(data);
 }
