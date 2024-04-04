@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 14:43:04 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/04 17:32:38 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static bool	ft_to_int_map(t_map *map)
 	{
 		map->map[i] = malloc((map->width + map->offset) * sizeof(int));
 		if (map->map[i] == NULL)
-			return (ft_free_and_null((void ***)&map->map, i), false);
+			return (ft_free_void_array((void **)map->map, i),
+				map->map = NULL, false);
 		j = -1;
 		while (map->char_map[i][++j])
 		{
