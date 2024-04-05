@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:08:49 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/05 19:36:12 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/05 19:41:17 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	ft_resolve_map(t_data *data, char **copy_map)
 			|| ft_find_character(data, copy_map, ' ')
 			|| ft_find_character(data, copy_map, '\n')
 			|| ft_find_character(data, copy_map, '	'))
-			return (printf("error"), false);
+			return (false);
 		if (!ft_move(data, copy_map, 1, '0'))
 		{
 			if (!ft_move_backward(data, copy_map))

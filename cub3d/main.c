@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 12:37:18 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/05 19:41:07 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int	ft_print_data(t_data *data)
-{
-	int	i;
-	int	j;
+// static int	ft_print_data(t_data *data)
+// {
+// 	int	i;
+// 	int	j;
 
-	printf(" ------ print data ------ \n");
-	printf("F = %ld\n", data->map.floor_hex);
-	printf("C = %ld\n", data->map.ceiling_hex);
-	printf("width = %d\n", data->map.width);
-	printf("height = %d\n", data->map.height);
-	printf("offset = %d\n", data->map.offset);
-	i = -1;
-	while (++i < data->map.height)
-	{
-		j = -1;
-		while (++j < data->map.width + data->map.offset)
-		{
-			printf("%d", data->map.map[i][j]);
-		}
-		printf("\n");
-	}
-	printf(" ------------ \n");
-	return (0);
-}
+// 	printf(" ------ print data ------ \n");
+// 	printf("F = %ld\n", data->map.floor_hex);
+// 	printf("C = %ld\n", data->map.ceiling_hex);
+// 	printf("width = %d\n", data->map.width);
+// 	printf("height = %d\n", data->map.height);
+// 	printf("offset = %d\n", data->map.offset);
+// 	i = -1;
+// 	while (++i < data->map.height)
+// 	{
+// 		j = -1;
+// 		while (++j < data->map.width + data->map.offset)
+// 		{
+// 			printf("%d", data->map.map[i][j]);
+// 		}
+// 		printf("\n");
+// 	}
+// 	printf(" ------------ \n");
+// 	return (0);
+// }
 
 /**
  * @brief initialize the data structure
