@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 17:32:38 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/05 16:02:26 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		ft_err("ENOENT");
 		return (false);
 	}
-	ft_read(&data->map.map_in_string, data->fd);
+	if (ft_read(&data->map.map_in_string, data->fd) <= 1)
+		return (ft_err("EREAD"), false);
 	if (data->map.map_in_string == NULL)
 		return (ft_err("EMAP"), false);
 	if (!ft_fill_texture(data, &data->map) || !ft_parse_args(data))

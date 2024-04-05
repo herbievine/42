@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:41:08 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/02 16:38:52 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/05 17:50:34 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_strschr(char *s1, char *s2)
 		j = 0;
 		if (s2[i] == s1[j])
 		{
-			while (s1[j] && s2[i] == s1[j])
+			while (s2[i] && s1[j] && s1[j] && s2[i] == s1[j])
 			{
 				i++;
 				j++;
@@ -93,6 +93,8 @@ int	ft_strchr_array(char **sep, char *str)
 	int	i;
 
 	i = 0;
+	if (!sep || !str)
+		return (-1);
 	while (sep[i])
 	{
 		if (ft_strschr(sep[i], str) != -1)
