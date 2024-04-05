@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/02 16:23:39 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/05 15:28:29 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	ft_resize_map(t_map *map, bool with_err)
 	{
 		new_map[i] = ft_calloc(sizeof(char), (map->width + map->offset + 1));
 		if (new_map[i] == NULL)
-			return (ft_free_array(new_map, i - 1), false);
+			return (ft_free_array(new_map, i), false);
 		ft_bzero(new_map[i], map->width + map->offset, '0');
 		j = -1;
 		while (++j < map->width + map->offset)
@@ -113,10 +113,8 @@ bool	ft_init_map(t_map *map)
 	i = -1;
 	count = 0;
 	while (map->map_in_string[++i] != '\0' && count < map->str_index)
-	{
 		if (map->map_in_string[i] == '\n')
 			count++;
-	}
 	map->char_map = ft_split(map->map_in_string + i, '\n', 1);
 	i = 0;
 	if (map->char_map == NULL)
