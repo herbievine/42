@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/05 17:52:33 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/05 19:26:55 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,26 @@
 
 static long	ft_char_to_hex(char *str);
 static void	ft_fill(char *line, t_data *data, t_map *map);
+
+bool	ft_is_valid_rgb(char **splited)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (splited[++i])
+	{
+		j = -1;
+		while (splited[i][++j])
+			if (!ft_strchr("0123456789", splited[i][j]))
+				return (false);
+		if (j < 1 || j > 3)
+			return (false);
+	}
+	if (i != 3)
+		return (false);
+	return (true);
+}
 
 /**
  * @brief The ft_fill_texture function fills the texture path. 
@@ -75,14 +95,12 @@ static long	ft_char_to_hex(char *str)
 	int		*rgb_color;
 	long	hex_color;
 
+	if (str[1] != ' ')
+		return (-1);
 	splited = ft_split(str + 2, ',', 0);
 	if (splited == NULL)
 		return (-1);
-	if (splited[0] == NULL || splited[1] == NULL
-		|| splited[2] == NULL || splited[3] != NULL)
-		return (ft_free_array(splited, -1), -1);
-	if (ft_strlen(splited[0]) > 3
-		|| ft_strlen(splited[1]) > 3 || ft_strlen(splited[2]) > 3)
+	if (ft_is_valid_rgb(splited) == false)
 		return (ft_free_array(splited, -1), -1);
 	rgb_color = malloc(sizeof(int) * 3);
 	if (rgb_color == NULL)

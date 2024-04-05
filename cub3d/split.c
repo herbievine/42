@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/02 16:40:30 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/05 19:05:23 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	ft_fill_split(char const *s, char **split, char c, int with_sep)
 			split[j] = ft_calloc(2, sizeof(char));
 			split[j++][0] = c;
 		}
-		if (!split[j - 1] && j != 0)
+		if (j > 0 && !split[j - 1])
 			return (ft_free(split, j), (void)0);
 		if (s[i])
 			i++;
