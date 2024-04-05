@@ -62,6 +62,17 @@ void	ft_render_fps(t_data *data, double fps)
 	free(fps_str);
 }
 
+void	ft_render(t_data *data)
+{
+	t_ray	ray;
+
+	if (!ft_create_pixel_map(data))
+		return ;
+	ft_cast_ray(data, &ray);
+	ft_draw_pixel_map(data);
+	ft_free_void_array((void **)data->pixels, WIN_HEIGHT);
+}
+
 /**
  * @brief The ft_on_render function is the main loop of the game. It gets
  * called every time the window needs to be refreshed. It renders the
@@ -81,11 +92,7 @@ int	ft_on_render(t_data *data)
 	ft_render_fps(data, fps);
 	if (!data->player.is_moving)
 		return (0);
-	if (!ft_create_pixel_map(data))
-		return (0);
-	ft_cast_ray(data, &ray);
-	ft_draw_pixel_map(data);
-	ft_free_void_array((void **)data->pixels, WIN_HEIGHT);
+	ft_render(data);
 	return (0);
 }
 
@@ -97,17 +104,11 @@ int	ft_on_render(t_data *data)
  */
 void	ft_init_window(t_data *data)
 {
-	t_ray	ray;
-
 	data->win_ptr = mlx_new_window(
 			data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "franprix");
 	if (!data->win_ptr)
 		return (ft_free_mlx(data), ft_err(EX11));
-	if (!ft_create_pixel_map(data))
-		return ;
-	ft_cast_ray(data, &ray);
-	ft_draw_pixel_map(data);
-	ft_free_void_array((void **)data->pixels, WIN_HEIGHT);
+	ft_render(data);
 	mlx_hook(
 		data->win_ptr, DestroyNotify, StructureNotifyMask, ft_on_close, data);
 	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, ft_on_keypress, data);
