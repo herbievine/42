@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:08:49 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/04 11:26:22 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/05 19:36:12 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ bool	ft_resolve_map(t_data *data, char **copy_map)
 	data->map.col = data->map.start_col;
 	while (1)
 	{
-		if (ft_find_character(data, copy_map, ' ')
-			|| ft_find_character(data, copy_map, '\n')
-			|| ft_find_character(data, copy_map, '	')
-			|| !copy_map[data->map.row - 1][data->map.col]
+		if (data->map.row <= 0 || data->map.col <= 0
+			||!copy_map[data->map.row - 1][data->map.col]
 			|| !copy_map[data->map.row][data->map.col + 1]
 			|| !copy_map[data->map.row + 1]
-			|| !copy_map[data->map.row][data->map.col - 1])
+			|| !copy_map[data->map.row][data->map.col - 1]
+			|| ft_find_character(data, copy_map, ' ')
+			|| ft_find_character(data, copy_map, '\n')
+			|| ft_find_character(data, copy_map, '	'))
 			return (printf("error"), false);
 		if (!ft_move(data, copy_map, 1, '0'))
 		{
