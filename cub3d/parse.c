@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/05 16:02:26 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/08 14:57:22 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ static bool	ft_parse_map(t_data *data, t_map *map)
 {
 	char	**copy_map;
 	int		i;
-	char	**start;
 
 	i = -1;
 	copy_map = ft_calloc(map->height + 1, sizeof(char *));

@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/05 15:28:29 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/08 14:57:50 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	ft_resize_map(t_map *map, bool with_err)
 		j = -1;
 		while (++j < map->width + map->offset)
 		{
-			if (map->char_map[i] && ft_strlen(map->char_map[i]) > j
+			if (map->char_map[i] && (int)ft_strlen(map->char_map[i]) > j
 				&& (ft_strchr("10NOWSE", map->char_map[i][j]) || with_err))
 				new_map[i][j] = map->char_map[i][j];
 		}

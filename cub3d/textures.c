@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/05 19:26:55 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/08 14:57:22 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <stdio.h>
 
 static long	ft_char_to_hex(char *str);
-static void	ft_fill(char *line, t_data *data, t_map *map);
+static void	ft_fill(char *line, t_map *map);
 
 bool	ft_is_valid_rgb(char **splited)
 {
@@ -72,7 +72,7 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 			buffer = ft_strtrim(buffer_map[map->str_index], "	 ");
 			if (buffer == NULL)
 				return (ft_free_array(buffer_map, -1), false);
-			(ft_fill(buffer, data, map), free(buffer), params++);
+			(ft_fill(buffer, map), free(buffer), params++);
 		}
 		map->str_index++;
 	}
@@ -124,7 +124,7 @@ static long	ft_char_to_hex(char *str)
  * @param map 
  * @return void
  */
-static void	ft_fill(char *line, t_data *data, t_map *map)
+static void	ft_fill(char *line, t_map *map)
 {
 	char	*parsed_line;
 
