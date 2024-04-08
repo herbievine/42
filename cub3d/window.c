@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:36:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/08 19:01:27 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/08 19:14:42 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ double	ft_calculate_fps(t_data *data)
 	data->previous_frame_time = data->current_frame_time;
 	data->current_frame_time = clock();
 	frame_time = (data->current_frame_time - data->previous_frame_time)
-		/ (double)1000;
+		/ (double)1000.0;
 	data->player.movespeed = frame_time * 5;
 	data->player.rotspeed = frame_time * 2;
-	return (1.0 / frame_time);
+	return (frame_time);
 }
 
 void	ft_render_fps(t_data *data, double fps)
