@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/05 19:41:07 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/08 18:57:01 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,14 @@ bool	ft_init(t_data *data)
 	return (true);
 }
 
+void	ft_init_keys(t_keypress *keypress)
+{
+	keypress->forw = false;
+	keypress->back = false;
+	keypress->left = false;
+	keypress->right = false;
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	data;
@@ -93,6 +101,7 @@ int	main(int argc, char *argv[])
 	if (!ft_fill_and_parse_data(argv, &data))
 		return (ft_free_data(&data), 1);
 	ft_init_player(&data.player, &data);
+	ft_init_keys(&data.keypress);
 	ft_init_window(&data);
 	ft_free_data(&data);
 	return (0);

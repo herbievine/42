@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:38:05 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/22 09:44:03 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/08 18:02:46 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,5 @@
 # define KEY_D 100
 
 void	ft_init_player(t_player *player, t_data *data);
-void	ft_render_player(t_data *data);
-void	ft_move_player(t_data *data, int key);
 
 #endif

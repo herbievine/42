@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:59:56 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/23 17:25:12 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/08 16:53:13 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_move_player_forward(t_data *data)
 
 	map = data->map.map;
 	p = &data->player;
-	move_speed = ft_min(p->movespeed, 1.0);
+	move_speed = ft_min(p->movespeed, 0.1);
 	x = p->x + p->dx * move_speed;
 	y = p->y + p->dy * move_speed;
 	if (map[(int)(p->y)][(int)(x)] == 0)
@@ -46,7 +46,7 @@ void	ft_move_player_backward(t_data *data)
 
 	map = data->map.map;
 	p = &data->player;
-	move_speed = ft_min(p->movespeed, 1.0);
+	move_speed = ft_min(p->movespeed, 0.1);
 	x = p->x - p->dx * move_speed;
 	y = p->y - p->dy * move_speed;
 	if (map[(int)(p->y)][(int)(x)] == 0)
@@ -65,7 +65,7 @@ void	ft_move_player_right(t_data *data)
 	p = &data->player;
 	prev_dx = p->dx;
 	prev_px = p->px;
-	rot_speed = ft_min(p->rotspeed, 0.6);
+	rot_speed = ft_min(p->rotspeed, 0.1);
 	p->dx = p->dx * cos(rot_speed) - p->dy * sin(rot_speed);
 	p->dy = prev_dx * sin(rot_speed) + p->dy * cos(rot_speed);
 	p->px = p->px * cos(rot_speed) - p->py * sin(rot_speed);
@@ -82,7 +82,7 @@ void	ft_move_player_left(t_data *data)
 	p = &data->player;
 	prev_dx = p->dx;
 	prev_px = p->px;
-	rot_speed = ft_min(p->rotspeed, 0.6);
+	rot_speed = ft_min(p->rotspeed, 0.1);
 	p->dx = p->dx * cos(-rot_speed) - p->dy * sin(-rot_speed);
 	p->dy = prev_dx * sin(-rot_speed) + p->dy * cos(-rot_speed);
 	p->px = p->px * cos(-rot_speed) - p->py * sin(-rot_speed);

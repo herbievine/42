@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/23 19:19:54 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/08 18:57:16 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,14 @@ typedef struct s_ray
 	double	wx;
 }	t_ray;
 
+typedef struct s_keypress
+{
+	bool	forw;
+	bool	back;
+	bool	left;
+	bool	right;
+}	t_keypress;
+
 typedef struct s_data
 {
 	void				*mlx_ptr;
@@ -130,6 +138,7 @@ typedef struct s_data
 	double				current_frame_time;
 	t_map				map;
 	int					fd;
+	t_keypress			keypress;
 }	t_data;
 
 #endif /* STRUCTS_H */

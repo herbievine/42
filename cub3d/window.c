@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 13:36:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/23 17:02:04 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/08 19:01:27 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "pixels.h"
 #include "ray.h"
 #include "ints.h"
+#include "move.h"
 #include "mlx/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -89,9 +90,8 @@ int	ft_on_render(t_data *data)
 		return (0);
 	fps = ft_calculate_fps(data);
 	ft_render_fps(data, fps);
-	if (!data->player.is_moving)
-		return (0);
 	ft_render(data);
+	ft_move_player(data);
 	return (0);
 }
 

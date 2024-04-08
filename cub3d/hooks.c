@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 14:33:04 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/04 14:00:52 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/08 19:01:38 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,25 @@
 #include <X11/keysym.h>
 
 /**
+ * @brief The ft_move_player_forward function moves the player forward. It
+ * checks if the player is moving into a wall, and if not, it moves the player
+ * and increments the move counter.
+ * 
+ * @param data 
+ */
+void	ft_move_player(t_data *data)
+{
+	if (data->keypress.forw)
+		ft_move_player_forward(data);
+	if (data->keypress.back)
+		ft_move_player_backward(data);
+	if (data->keypress.left)
+		ft_move_player_left(data);
+	if (data->keypress.right)
+		ft_move_player_right(data);
+}
+
+/**
  * @brief The ft_handle_move function handles the movement of the player. It
  * checks if the player is moving into a wall, and if not, it moves the player
  * and increments the move counter.
@@ -32,13 +51,13 @@ void	ft_handle_move(int keysym, t_data *data)
 {
 	data->player.is_moving = true;
 	if (keysym == XK_w)
-		ft_move_player_forward(data);
-	else if (keysym == XK_s)
-		ft_move_player_backward(data);
-	else if (keysym == XK_a)
-		ft_move_player_left(data);
-	else if (keysym == XK_d)
-		ft_move_player_right(data);
+		data->keypress.forw = true;
+	if (keysym == XK_s)
+		data->keypress.back = true;
+	if (keysym == XK_a)
+		data->keypress.left = true;
+	if (keysym == XK_d)
+		data->keypress.right = true;
 }
 
 /**
@@ -62,9 +81,14 @@ int	ft_on_keypress(int keysym, t_data *data)
 
 int	ft_on_keyrelease(int keysym, t_data *data)
 {
-	data->player.is_moving = false;
-	(void)keysym;
-	(void)data;
+	if (keysym == XK_w)
+		data->keypress.forw = false;
+	if (keysym == XK_s)
+		data->keypress.back = false;
+	if (keysym == XK_a)
+		data->keypress.left = false;
+	if (keysym == XK_d)
+		data->keypress.right = false;
 	return (0);
 }
 
