@@ -13,7 +13,7 @@
 NAME = cub3d
 
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx

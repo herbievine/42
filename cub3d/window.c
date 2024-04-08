@@ -84,7 +84,6 @@ void	ft_render(t_data *data)
 int	ft_on_render(t_data *data)
 {
 	double	fps;
-	t_ray	ray;
 
 	if (data->win_ptr == NULL)
 		return (0);
