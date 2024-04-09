@@ -120,8 +120,8 @@ typedef struct s_ray
 
 typedef struct s_keypress
 {
-	bool	forw;
-	bool	back;
+	bool	forward;
+	bool	backward;
 	bool	left;
 	bool	right;
 }	t_keypress;

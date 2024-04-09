@@ -21,17 +21,15 @@
 #include <X11/keysym.h>
 
 /**
- * @brief The ft_move_player_forward function moves the player forward. It
- * checks if the player is moving into a wall, and if not, it moves the player
- * and increments the move counter.
+ * @brief The ft_move_player function handles the player movement. 
  * 
  * @param data 
  */
 void	ft_move_player(t_data *data)
 {
-	if (data->keypress.forw)
+	if (data->keypress.forward)
 		ft_move_player_forward(data);
-	if (data->keypress.back)
+	if (data->keypress.backward)
 		ft_move_player_backward(data);
 	if (data->keypress.left)
 		ft_move_player_left(data);
@@ -40,31 +38,8 @@ void	ft_move_player(t_data *data)
 }
 
 /**
- * @brief The ft_handle_move function handles the movement of the player. It
- * checks if the player is moving into a wall, and if not, it moves the player
- * and increments the move counter.
- * 
- * @param keysym 
- * @param data 
- */
-void	ft_handle_move(int keysym, t_data *data)
-{
-	data->player.is_moving = true;
-	if (keysym == XK_w)
-		data->keypress.forw = true;
-	if (keysym == XK_s)
-		data->keypress.back = true;
-	if (keysym == XK_a)
-		data->keypress.left = true;
-	if (keysym == XK_d)
-		data->keypress.right = true;
-}
-
-/**
  * @brief The ft_on_keypress function handles the keypresses. It checks if the
- * player has pressed the escape key, and if so, it calls the ft_on_close
- * function. Otherwise, it calls the ft_handle_move function. It also handles
- * the win condition.
+ * player has pressed the escape key or one of the movement keys.
  * 
  * @param keysym 
  * @param data 
@@ -72,19 +47,35 @@ void	ft_handle_move(int keysym, t_data *data)
  */
 int	ft_on_keypress(int keysym, t_data *data)
 {
+	data->player.is_moving = true;
 	if (keysym == XK_Escape)
 		ft_on_close(data);
-	else
-		ft_handle_move(keysym, data);
+	else if (keysym == XK_w)
+		data->keypress.forward = true;
+	else if (keysym == XK_s)
+		data->keypress.backward = true;
+	else if (keysym == XK_a)
+		data->keypress.left = true;
+	else if (keysym == XK_d)
+		data->keypress.right = true;
 	return (0);
 }
 
+/**
+ * @brief The ft_on_keyrelease function handles the keyreleases. When the player
+ * releases a movement key, we update the active keypress.
+ * 
+ * @param keysym 
+ * @param data 
+ * @return int 
+ */
 int	ft_on_keyrelease(int keysym, t_data *data)
 {
+	data->player.is_moving = false;
 	if (keysym == XK_w)
-		data->keypress.forw = false;
+		data->keypress.forward = false;
 	if (keysym == XK_s)
-		data->keypress.back = false;
+		data->keypress.backward = false;
 	if (keysym == XK_a)
 		data->keypress.left = false;
 	if (keysym == XK_d)

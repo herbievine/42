@@ -33,8 +33,7 @@ double	ft_calculate_fps(t_data *data)
 
 	data->previous_frame_time = data->current_frame_time;
 	data->current_frame_time = clock();
-	frame_time = (data->current_frame_time - data->previous_frame_time)
-		/ (double)1000.0;
+	frame_time = (data->current_frame_time - data->previous_frame_time) * 1000.0 / CLOCKS_PER_SEC;
 	data->player.movespeed = frame_time * 5;
 	data->player.rotspeed = frame_time * 2;
 	return (frame_time);
@@ -90,8 +89,9 @@ int	ft_on_render(t_data *data)
 		return (0);
 	fps = ft_calculate_fps(data);
 	ft_render_fps(data, fps);
-	ft_render(data);
 	ft_move_player(data);
+	if (data->player.is_moving)
+		ft_render(data);
 	return (0);
 }
 
