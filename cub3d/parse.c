@@ -128,7 +128,7 @@ static bool	ft_find_start(t_map *map, char **copy_map)
 	char	**start;
 	int		i;
 
-	start = ft_split("N S W E", ' ', 0);
+	start = ft_split("N S W E", ' ');
 	if (start == NULL)
 		return (false);
 	i = -1;

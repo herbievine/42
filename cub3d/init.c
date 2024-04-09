@@ -24,6 +24,27 @@
 #include "textures.h"
 #include <stdbool.h>
 
+char	**ft_split_and_join_sep(const char *str, char sep)
+{
+	int		i;
+	char	**split;
+	char	*tmp;
+
+	split = ft_split(str, sep);
+	if (split == NULL)
+		return (NULL);
+	i = -1;
+	while (split[++i])
+	{
+		tmp = split[i];
+		split[i] = ft_strjoin(split[i], "\n");
+		free(tmp);
+		if (split[i] == NULL)
+			return (ft_free_array(split, i), NULL);
+	}
+	return (split);
+}
+
 static bool	ft_check_map(t_map *map, char **parsed_line);
 
 /**
@@ -113,9 +134,14 @@ bool	ft_init_map(t_map *map)
 	i = -1;
 	count = 0;
 	while (map->map_in_string[++i] != '\0' && count < map->str_index)
+	{
 		if (map->map_in_string[i] == '\n')
 			count++;
-	map->char_map = ft_split(map->map_in_string + i, '\n', 1);
+		if (map->map_in_string[i] == '\n' && map->map_in_string[i]
+			&& map->map_in_string[i + 1] == '\n')
+			return (false);
+	}
+	map->char_map = ft_split_and_join_sep(map->map_in_string + i, '\n');
 	i = 0;
 	if (map->char_map == NULL)
 		return (false);

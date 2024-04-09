@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 
-char	**ft_split(char const *s, char c, int with_sep);
-void	ft_free_list(char **list, size_t idx);
+char	**ft_split(char const *s, char c);
 
 #endif /* SPLIT_H */
