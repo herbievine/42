@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: jcros <jcros@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/04/03 10:27:35 by codespace        ###   ########.fr        #
+#    Updated: 2024/04/09 14:08:10 by jcros            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ SRCS = \
 	io.c \
 	split.c \
 	ints.c \
-	resolve_map.c
+	resolve_map.c \
+	fps.c
 
 OBJS = $(SRCS:.c=.o)
 

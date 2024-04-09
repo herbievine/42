@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:06 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/08 18:57:16 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:13:30 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define WALL '1'
 # define EMPT '0'
+# define MAX_FPS_AVG 10000
 
 typedef enum e_cardinal_direction
 {
@@ -126,18 +127,26 @@ typedef struct s_keypress
 	bool	right;
 }	t_keypress;
 
+typedef struct s_fps
+{
+	double	previous_frame_time;
+	double	current_frame_time;
+	double	fps_avg[MAX_FPS_AVG];
+	int		fps_index;
+	double	fps;
+}	t_fps;
+
 typedef struct s_data
 {
+	int					fd;
 	void				*mlx_ptr;
 	void				*win_ptr;
 	int					*texture_buffer[4];
 	int					**pixels;
 	t_ray				ray;
 	t_player			player;
-	double				previous_frame_time;
-	double				current_frame_time;
 	t_map				map;
-	int					fd;
+	t_fps				fps;
 	t_keypress			keypress;
 }	t_data;
 

@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:00:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/08 18:57:01 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:14:40 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,9 @@
 #include "init.h"
 #include "free.h"
 #include "mem.h"
+#include "fps.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-// static int	ft_print_data(t_data *data)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	printf(" ------ print data ------ \n");
-// 	printf("F = %ld\n", data->map.floor_hex);
-// 	printf("C = %ld\n", data->map.ceiling_hex);
-// 	printf("width = %d\n", data->map.width);
-// 	printf("height = %d\n", data->map.height);
-// 	printf("offset = %d\n", data->map.offset);
-// 	i = -1;
-// 	while (++i < data->map.height)
-// 	{
-// 		j = -1;
-// 		while (++j < data->map.width + data->map.offset)
-// 		{
-// 			printf("%d", data->map.map[i][j]);
-// 		}
-// 		printf("\n");
-// 	}
-// 	printf(" ------------ \n");
-// 	return (0);
-// }
 
 /**
  * @brief initialize the data structure
@@ -66,8 +42,6 @@ bool	ft_init(t_data *data)
 	data->map.str_index = 0;
 	data->map.offset = 0;
 	data->fd = -1;
-	data->current_frame_time = 0.0;
-	data->previous_frame_time = 0.0;
 	while (++data->fd < 5)
 	{
 		data->texture_buffer[data->fd] = NULL;
@@ -83,8 +57,8 @@ bool	ft_init(t_data *data)
 
 void	ft_init_keys(t_keypress *keypress)
 {
-	keypress->forw = false;
-	keypress->back = false;
+	keypress->forward = false;
+	keypress->backward = false;
 	keypress->left = false;
 	keypress->right = false;
 }
@@ -102,6 +76,7 @@ int	main(int argc, char *argv[])
 		return (ft_free_data(&data), 1);
 	ft_init_player(&data.player, &data);
 	ft_init_keys(&data.keypress);
+	ft_init_fps(&data);
 	ft_init_window(&data);
 	ft_free_data(&data);
 	return (0);

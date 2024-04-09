@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/08 14:57:50 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/09 12:25:16 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	ft_resize_map(t_map *map, bool with_err)
 /**
  * @brief The function find amd define the offset and the width of the map
  * 	the width is the biggest line of the map and the offset is the number
- * 	of space before the first character of the biggest line.
+* 	of space before the first character of the biggest line.
  * @param map
  * @param parsed_line
  * @return bool
