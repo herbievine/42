@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:04:38 by jcros             #+#    #+#             */
-/*   Updated: 2024/04/09 14:12:27 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:20:56 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 
 void	ft_init_fps(t_data *data)
 {
+	int	i;
+
+	i = -1;
+	while (++i < MAX_FPS_AVG)
+		data->fps.fps_avg[i] = 0;
 	data->fps.current_frame_time = clock();
 	data->fps.previous_frame_time = clock();
 	data->fps.fps = 0;
@@ -36,7 +41,7 @@ void	ft_calculate_fps(t_data *data)
 	frame_time = (data->fps.current_frame_time - data->fps.previous_frame_time)
 		/ CLOCKS_PER_SEC;
 	data->player.movespeed = frame_time * 5;
-	data->player.rotspeed = frame_time * 2;
+	data->player.rotspeed = frame_time * 3;
 	data->fps.fps = 1.0 / frame_time;
 	sum = 0;
 	data->fps.fps_avg[data->fps.fps_index++] = data->fps.fps;
