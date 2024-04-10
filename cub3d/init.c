@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/10 11:20:52 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:20:17 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,21 +110,20 @@ bool	ft_init_map(t_map *map)
 
 	i = -1;
 	count = 0;
-	while (map->map_in_string[++i] != '\0' && count < map->str_index)
-		if (map->map_in_string[i] == '\n')
-			count++;
-	map->char_map = ft_split_and_join_sep(map->map_in_string + i, '\n');
+	map->char_map = ft_split_and_join_sep(map->map_in_string + map->str_index, '\n');
 	i = 0;
 	if (map->char_map == NULL)
 		return (false);
 	while (map->char_map[i])
-		i++;
+	i++;
 	parsed_line = ft_calloc(sizeof(char *), (i + 1));
 	if (parsed_line == NULL)
 		return (false);
 	if (!ft_define_offset_and_width(map, parsed_line))
 		return (ft_free_array(parsed_line, -1), false);
-	if (!ft_check_map(map, parsed_line) || !ft_resize_map(map, true))
+	if (!ft_check_map(map, parsed_line))
+		return (ft_free_array(parsed_line, -1), false);
+	if (!ft_resize_map(map, true))
 		return (ft_free_array(parsed_line, -1), false);
 	return (ft_free_array(parsed_line, -1), true);
 }

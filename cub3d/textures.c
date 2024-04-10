@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/10 10:53:42 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 12:56:58 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,38 +48,40 @@ bool	ft_is_valid_rgb(char **splited)
 }
 
 /**
- * @brief The ft_fill_texture function fills the texture path. 
+ * @brief The ft_fill_map_config function fills the texture path. 
  * 	If it fails to find a texture, it returns false.
  * 
  * @param data 
  * @param map 
  * @return bool 
  */
-bool	ft_fill_texture(t_data *data, t_map *map)
+bool	ft_fill_map_config(t_map *map)
 {
 	int		params;
-	char	**buffer_map;
-	char	*buffer;
+	char *buffer;
 
 	params = 0;
-	buffer_map = ft_split_and_join_sep(data->map.map_in_string, '\n');
-	if (buffer_map == NULL)
-		return (false);
-	while (params < 6 && buffer_map[map->str_index] != NULL)
+	buffer = NULL;
+	while (map->map_in_string[map->str_index]
+		&& map->map_in_string[map->str_index + 1] != '\0' && params < 6)
 	{
+		buffer = ft_substr(map->map_in_string, map->str_index,
+			ft_strchr(map->map_in_string + map->str_index, '\n')
+			- map->map_in_string - map->str_index);
+		if (buffer == NULL)
+			return (false);
 		if (ft_strchr_array((char *[7]){"NO", "SO", "WE", "EA", "F", "C", NULL},
-			buffer_map[map->str_index]) != -1)
+			buffer) != -1)
 		{
-			buffer = ft_strtrim(buffer_map[map->str_index], "	 ");
-			if (buffer == NULL)
-				return (ft_free_array(buffer_map, -1), false);
-			(ft_fill(buffer, map), free(buffer), params++);
+			ft_fill(buffer, map);
+			params++;
+			map->str_index += ft_strchr(map->map_in_string + map->str_index, '\n')
+			- map->map_in_string - map->str_index;
 		}
-		map->str_index++;
+		else
+			map->str_index++;
+		free(buffer);
 	}
-	(ft_free_array(buffer_map, -1));
-	if (params != 6)
-		return (false);
 	return (true);
 }
 
@@ -96,8 +98,6 @@ static long	ft_char_to_rgb(char *str)
 	int		*rgb_array;
 	long	rgb;
 
-	if (str[1] != ' ')
-		return (-1);
 	splited = ft_split(str + 2, ',');
 	if (splited == NULL)
 		return (-1);
@@ -131,22 +131,28 @@ static void	ft_fill(char *line, t_map *map)
 
 	if (line == NULL)
 		return ;
-	parsed_line = ft_strtrim(line, " 	\n");
-	if (parsed_line == NULL)
-		return ;
+	if (ft_strchr(line, 'C') || ft_strchr(line, 'F'))
+		parsed_line = ft_strtrim(line + 2, " \t");
+	else
+		parsed_line = ft_strtrim(line + 3, " \t");
 	if (ft_strncmp(line, "NO", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[NORTH] = ft_strdup(ft_strchr(parsed_line, '.'));
+		map->path_texture[NORTH] = parsed_line;
 	else if (ft_strncmp(line, "SO", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[SOUTH] = ft_strdup(ft_strchr(parsed_line, '.'));
+		map->path_texture[SOUTH] = parsed_line;
 	else if (ft_strncmp(line, "WE", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[WEST] = ft_strdup(ft_strchr(parsed_line, '.'));
+		map->path_texture[WEST] = parsed_line;
 	else if (ft_strncmp(line, "EA", 2) == 0 && ft_strschr(".xpm", line) != -1)
-		map->path_texture[EAST] = ft_strdup(ft_strchr(parsed_line, '.'));
-	else if (ft_strncmp(parsed_line, "F", 1) == 0)
+		map->path_texture[EAST] = parsed_line;
+	else if (ft_strncmp(line, "F", 1) == 0)
+	{
 		map->floor_hex = ft_char_to_rgb(parsed_line);
-	else if (ft_strncmp(parsed_line, "C", 1) == 0)
+		free(parsed_line);
+	}
+	else if (ft_strncmp(line, "C", 1) == 0)
+	{
 		map->ceiling_hex = ft_char_to_rgb(parsed_line);
-	free(parsed_line);
+		free(parsed_line);
+	}
 }
 
 /**
