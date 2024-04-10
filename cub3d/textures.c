@@ -17,6 +17,7 @@
 #include "str.h"
 #include "split.h"	
 #include "error.h"
+#include "init.h"
 #include "free.h"
 #include "ints.h"
 #include <stdlib.h>
@@ -61,7 +62,7 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 	char	*buffer;
 
 	params = 0;
-	buffer_map = ft_split(data->map.map_in_string, '\n', 1);
+	buffer_map = ft_split_and_join_sep(data->map.map_in_string, '\n');
 	if (buffer_map == NULL)
 		return (false);
 	while (params < 6 && buffer_map[map->str_index] != NULL)
@@ -97,7 +98,7 @@ static long	ft_char_to_hex(char *str)
 
 	if (str[1] != ' ')
 		return (-1);
-	splited = ft_split(str + 2, ',', 0);
+	splited = ft_split(str + 2, ',');
 	if (splited == NULL)
 		return (-1);
 	if (ft_is_valid_rgb(splited) == false)

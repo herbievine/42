@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/08 15:11:31 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 10:25:13 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ static bool	ft_find_start(t_map *map, char **copy_map)
 	char	**start;
 	int		i;
 
-	start = ft_split("N S W E", ' ', 0);
+	start = ft_split("N S W E", ' ');
 	if (start == NULL)
 		return (false);
 	i = -1;

@@ -18,5 +18,6 @@
 
 bool	ft_init_map(t_map *map);
 bool	ft_resize_map(t_map *map, bool with_err);
+char	**ft_split_and_join_sep(const char *str, char sep);
 
 #endif

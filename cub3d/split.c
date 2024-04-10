@@ -5,104 +5,86 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/05 19:05:23 by jcros            ###   ########.fr       */
+/*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
+/*   Updated: 2024/04/10 10:06:04 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "split.h"
 #include "mem.h"
 #include "str.h"
-#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
 
-static char	**ft_init_split(char const *s, char c, int with_sep);
-static void	ft_fill_split(char const *s, char **split, char c, int with_sep);
-static void	ft_free(char **split, size_t j);
+static char	**ft_init_list(char const *s, char c);
+static char	**ft_fill_list_with_strs(char **list, char const *s, char c);
+static void	ft_free_list(char **list, size_t idx);
 
 /**
- * @brief The ft_split function splits the string s using
- * 	the character c. The function returns an array of strings.
- * @param s string
- * @param c character
- * @param with_sep 1 if the separator
- * 	should be included in the split, 0 otherwise
-*/
-char	**ft_split(char const *s, char c, int with_sep)
+ * @brief The ft_split funtion allocates (with malloc(3)) and returns an array
+ * of strings obtained by splitting 's' using the character 'c' as a delimiter.
+ * 
+ * @param s 
+ * @param c 
+ * @return char** 
+ */
+char	**ft_split(char const *s, char c)
 {
-	char	**split;
+	char	**list;
 
 	if (!s)
 		return (0);
-	split = ft_init_split(s, c, with_sep);
-	if (!split)
+	list = ft_init_list(s, c);
+	if (!list)
 		return (0);
-	ft_fill_split(s, split, c, with_sep);
-	if (!split)
-		return (0);
-	return (split);
+	return (ft_fill_list_with_strs(list, s, c));
 }
 
-static char	**ft_init_split(char const *s, char c, int with_sep)
+static char	**ft_init_list(char const *s, char c)
 {
 	size_t	i;
-	size_t	len;
 
-	i = 1;
-	len = 0;
+	i = 0;
 	if (!*s)
 		return (ft_calloc(1, sizeof(char *)));
-	while (s[i])
-	{
-		if ((s[i] == c && s[i -1] && s[i - 1] != c) || (with_sep && s[i] == c))
-			len++;
+	while (*++s)
+		if (*s == c && *(s - 1) != c && *(s - 1) != '\0')
+			i++;
+	if (*--s != c)
 		i++;
-	}
-	if (s[i - 1] != c)
-		len++;
-	return ((char **)ft_calloc(len + 2, sizeof(char *)));
+	return (ft_calloc(i + 1, sizeof(char *)));
 }
-//TODO: fix problem with len + 2
 
-static void	ft_fill_split(char const *s, char **split, char c, int with_sep)
+static char	**ft_fill_list_with_strs(char **list, char const *s, char c)
 {
 	size_t	i;
-	size_t	j;
+	size_t	idx;
 	size_t	len;
 
 	i = 0;
-	j = 0;
+	idx = 0;
+	len = 0;
 	while (s[i])
 	{
-		len = 0;
 		while (s[i] && s[i] != c)
 			if (++i && ++len)
 				continue ;
 		if (len > 0)
-			split[j++] = ft_substr(s, i - len, len + with_sep);
-		else if (with_sep && s[i] == c && len == 0)
 		{
-			split[j] = ft_calloc(2, sizeof(char));
-			split[j++][0] = c;
+			list[idx++] = ft_substr(s, i - len, len);
+			if (!list[idx - 1])
+				return (ft_free_list(list, idx), NULL);
+			len = 0;
 		}
-		if (j > 0 && !split[j - 1])
-			return (ft_free(split, j), (void)0);
 		if (s[i])
 			i++;
 	}
+	return (list);
 }
 
-static void	ft_free(char **split, size_t j)
+static void	ft_free_list(char **list, size_t idx)
 {
-	if (j != (size_t)(-1))
-	{
-		while (j)
-		{
-			free(split[j]);
-			j--;
-		}
-		free(split);
-	}
-	else
-		while (*split)
-			free(*split++);
+	while (idx--)
+		free(list[idx]);
+	free(list);
+	list = NULL;
 }
