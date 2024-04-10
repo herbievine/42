@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/09 12:25:16 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 10:25:48 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,9 @@
 #include "io.h"
 #include "split.h"
 #include "ints.h"
+#include "parse.h"
 #include "textures.h"
 #include <stdbool.h>
-
-char	**ft_split_and_join_sep(const char *str, char sep)
-{
-	int		i;
-	char	**split;
-	char	*tmp;
-
-	split = ft_split(str, sep);
-	if (split == NULL)
-		return (NULL);
-	i = -1;
-	while (split[++i])
-	{
-		tmp = split[i];
-		split[i] = ft_strjoin(split[i], "\n");
-		free(tmp);
-		if (split[i] == NULL)
-			return (ft_free_array(split, i), NULL);
-	}
-	return (split);
-}
-
-static bool	ft_check_map(t_map *map, char **parsed_line);
 
 /**
  * @brief create a new map in char ** format in the same with a
@@ -134,13 +112,8 @@ bool	ft_init_map(t_map *map)
 	i = -1;
 	count = 0;
 	while (map->map_in_string[++i] != '\0' && count < map->str_index)
-	{
 		if (map->map_in_string[i] == '\n')
 			count++;
-		if (map->map_in_string[i] == '\n' && map->map_in_string[i]
-			&& map->map_in_string[i + 1] == '\n')
-			return (false);
-	}
 	map->char_map = ft_split_and_join_sep(map->map_in_string + i, '\n');
 	i = 0;
 	if (map->char_map == NULL)
@@ -155,69 +128,4 @@ bool	ft_init_map(t_map *map)
 	if (!ft_check_map(map, parsed_line) || !ft_resize_map(map, true))
 		return (ft_free_array(parsed_line, -1), false);
 	return (ft_free_array(parsed_line, -1), true);
-}
-
-/**
- * @brief The function will define the cardinal point of the map,
- * 	if where we are, we find a cardinal point, we will define
- * 	the direction of the player. and return true.
- * @param map
- * @param parsed_line
- * @param i
- * @param j
- * @return bool
- */
-bool	ft_define_cardinal(t_map *map, char **parsed_line, int i, int j)
-{
-	if (parsed_line[i][j] == 'N' || parsed_line[i][j] == 'S'
-				|| parsed_line[i][j] == 'W' || parsed_line[i][j] == 'E')
-	{
-		if (parsed_line[i][j] == 'N')
-			map->start_dir = NORTH;
-		else if (parsed_line[i][j] == 'S')
-			map->start_dir = SOUTH;
-		else if (parsed_line[i][j] == 'W')
-			map->start_dir = WEST;
-		else if (parsed_line[i][j] == 'E')
-			map->start_dir = EAST;
-		return (true);
-	}
-	return (false);
-}
-
-/**
- * @brief The function will define the cardinal point of the
- * 	map and check if there is vaild characters in the map.
- * 	If the function find more than one cardinal point, it will
- * 	return false. Same if the map is not valid.
- * @param map
- * @param parsed_line need a parsed line with only valid characters
- * 	characters, spaces and \ n are not valid characters.
- * @return bool
- */
-static bool	ft_check_map(t_map *map, char **parsed_line)
-{
-	int		i;
-	int		j;
-	char	*valid_char;
-	int		num_of_start;
-
-	i = 0;
-	num_of_start = 0;
-	valid_char = "10NOWSE ";
-	while (parsed_line && parsed_line[i])
-	{
-		j = 0;
-		while (parsed_line[i] && parsed_line[i][j])
-		{
-			if (!ft_strchr(valid_char, parsed_line[i][j]))
-				return (false);
-			num_of_start += ft_define_cardinal(map, parsed_line, i, j);
-			j++;
-		}
-		i++;
-	}
-	if (num_of_start != 1)
-		return (false);
-	return (true);
 }

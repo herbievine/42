@@ -6,7 +6,7 @@
 #    By: jcros <jcros@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 21:43:09 by herbie            #+#    #+#              #
-#    Updated: 2024/04/09 14:08:10 by jcros            ###   ########.fr        #
+#    Updated: 2024/04/10 10:26:09 by jcros            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRCS = \
 	free.c \
 	error.c \
 	parse.c \
+	parse2.c \
 	init.c \
 	get_line.c \
 	io.c \

@@ -5,28 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/09 15:23:13 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/05 19:05:23 by jcros            ###   ########.fr       */
+/*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
+/*   Updated: 2024/04/10 10:06:04 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "split.h"
 #include "mem.h"
-#include "free.h"
 #include "str.h"
-#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
 
 static char	**ft_init_list(char const *s, char c);
-static void	ft_fill_list_with_strs(char **list, char const *s, char c);
-static void	ft_free_list2(char **list, size_t idx);
+static char	**ft_fill_list_with_strs(char **list, char const *s, char c);
+static void	ft_free_list(char **list, size_t idx);
 
 /**
  * @brief The ft_split funtion allocates (with malloc(3)) and returns an array
  * of strings obtained by splitting 's' using the character 'c' as a delimiter.
- *
- * @param s
- * @param c
- * @return char**
+ * 
+ * @param s 
+ * @param c 
+ * @return char** 
  */
 char	**ft_split(char const *s, char c)
 {
@@ -37,8 +36,7 @@ char	**ft_split(char const *s, char c)
 	list = ft_init_list(s, c);
 	if (!list)
 		return (0);
-	ft_fill_list_with_strs(list, s, c);
-	return (list);
+	return (ft_fill_list_with_strs(list, s, c));
 }
 
 static char	**ft_init_list(char const *s, char c)
@@ -56,7 +54,7 @@ static char	**ft_init_list(char const *s, char c)
 	return (ft_calloc(i + 1, sizeof(char *)));
 }
 
-static void	ft_fill_list_with_strs(char **list, char const *s, char c)
+static char	**ft_fill_list_with_strs(char **list, char const *s, char c)
 {
 	size_t	i;
 	size_t	idx;
@@ -72,20 +70,18 @@ static void	ft_fill_list_with_strs(char **list, char const *s, char c)
 				continue ;
 		if (len > 0)
 		{
-			list[idx++] = NULL;//ft_substr(s, i - len, len);
+			list[idx++] = ft_substr(s, i - len, len);
 			if (!list[idx - 1])
-			{
-				ft_free_list2(list, idx);
-				return ;
-			}
+				return (ft_free_list(list, idx), NULL);
 			len = 0;
 		}
 		if (s[i])
 			i++;
 	}
+	return (list);
 }
 
-static void	ft_free_list2(char **list, size_t idx)
+static void	ft_free_list(char **list, size_t idx)
 {
 	while (idx--)
 		free(list[idx]);

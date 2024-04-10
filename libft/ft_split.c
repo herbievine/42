@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:59:50 by hvine             #+#    #+#             */
-/*   Updated: 2024/04/10 09:58:52 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 10:01:22 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,9 @@ static char	**ft_fill_list_with_strs(char **list, char const *s, char c)
 				continue ;
 		if (len > 0)
 		{
-			list[idx++] = NULL;
+			list[idx++] = ft_substr(s, i - len, len);
 			if (!list[idx - 1])
-			{
-				ft_free_list(list, idx);
-				return (NULL);
-			}
+				return (ft_free_list(list, idx), NULL);
 			len = 0;
 		}
 		if (s[i])
