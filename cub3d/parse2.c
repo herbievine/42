@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 10:17:42 by jcros             #+#    #+#             */
-/*   Updated: 2024/04/10 10:42:25 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 11:29:00 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,24 @@ char	**ft_split_and_join_sep(const char *str, char sep)
 
 static bool	ft_verify_double_nl(t_map *map)
 {
-	int	i;
+	int		i;
+	int		count;
+	bool	start_map;
 
 	i = -1;
+	count = 0;
+	start_map = false;
+	while (map->map_in_string[++i] != '\0' && count < map->str_index)
+		if (map->map_in_string[i] == '\n')
+			count++;
 	while (map->map_in_string[++i])
 	{
+		if (map->map_in_string[i] == '1' || map->map_in_string[i] == '0')
+			start_map = true;
 		if (map->map_in_string[i] == '\n'
 			&& map->map_in_string[i + 1]
 			&& map->map_in_string[i + 1] == '\n'
+			&& start_map
 			&& (ft_strchr(map->map_in_string + i + 1, '1')
 				|| ft_strchr(map->map_in_string + i + 1, '0')))
 			return (false);

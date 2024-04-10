@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:15:16 by herbie            #+#    #+#             */
-/*   Updated: 2024/03/21 15:52:58 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/04/10 11:21:47 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,4 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	while (n-- > 0)
 		*ptr_dest++ = *ptr_src++;
 	return (dest);
-}
-
-char	*ft_realloc(char *ptr, size_t size)
-{
-	char	*new_ptr;
-
-	new_ptr = malloc(size);
-	if (!new_ptr)
-		return (NULL);
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	return (new_ptr);
 }
