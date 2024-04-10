@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/10 13:29:21 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:38:14 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ bool	ft_init_map(t_map *map)
 	count = 0;
 	map->char_map = ft_split_and_join_sep(map->map_in_string
 			+ map->str_index, '\n');
-	i = 0;
 	if (map->char_map == NULL)
 		return (false);
+	i = 0;
 	while (map->char_map[i])
-	i++;
+		i++;
 	parsed_line = ft_calloc(sizeof(char *), (i + 1));
 	if (parsed_line == NULL)
 		return (false);
