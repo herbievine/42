@@ -6,12 +6,11 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/10 10:25:48 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 11:20:52 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init.h"
-#include "get_line.h"
 #include <stdlib.h>
 #include <fcntl.h>
 #include "mlx.h"
