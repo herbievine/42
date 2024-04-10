@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/10 12:56:58 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:30:12 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	ft_is_valid_rgb(char **splited)
 bool	ft_fill_map_config(t_map *map)
 {
 	int		params;
-	char *buffer;
+	char	*buffer;
 
 	params = 0;
 	buffer = NULL;
@@ -66,17 +66,16 @@ bool	ft_fill_map_config(t_map *map)
 		&& map->map_in_string[map->str_index + 1] != '\0' && params < 6)
 	{
 		buffer = ft_substr(map->map_in_string, map->str_index,
-			ft_strchr(map->map_in_string + map->str_index, '\n')
-			- map->map_in_string - map->str_index);
+				ft_strchr(map->map_in_string + map->str_index, '\n')
+				- map->map_in_string - map->str_index);
 		if (buffer == NULL)
 			return (false);
 		if (ft_strchr_array((char *[7]){"NO", "SO", "WE", "EA", "F", "C", NULL},
 			buffer) != -1)
 		{
-			ft_fill(buffer, map);
-			params++;
-			map->str_index += ft_strchr(map->map_in_string + map->str_index, '\n')
-			- map->map_in_string - map->str_index;
+			(ft_fill(buffer, map), params++);
+			map->str_index += ft_strchr(map->map_in_string + map->str_index,
+					'\n') - map->map_in_string - map->str_index;
 		}
 		else
 			map->str_index++;
@@ -144,15 +143,11 @@ static void	ft_fill(char *line, t_map *map)
 	else if (ft_strncmp(line, "EA", 2) == 0 && ft_strschr(".xpm", line) != -1)
 		map->path_texture[EAST] = parsed_line;
 	else if (ft_strncmp(line, "F", 1) == 0)
-	{
 		map->floor_hex = ft_char_to_rgb(parsed_line);
-		free(parsed_line);
-	}
 	else if (ft_strncmp(line, "C", 1) == 0)
-	{
 		map->ceiling_hex = ft_char_to_rgb(parsed_line);
+	if (ft_strchr(line, 'C') || ft_strchr(line, 'F'))
 		free(parsed_line);
-	}
 }
 
 /**

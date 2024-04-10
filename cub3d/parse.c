@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:54:31 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/10 12:58:27 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:28:33 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		return (ft_err(EFILE), false);
 	data->fd = open(argv[1], O_RDONLY);
 	if (data->fd <= 0)
-	{
-		ft_err(ENOENT);
-		return (false);
-	}
+		return (ft_err(ENOENT), false);
 	if (ft_read(&data->map.map_in_string, data->fd) <= 1)
 		return (ft_err(EFILE), false);
 	if (data->map.map_in_string == NULL)
@@ -94,12 +91,9 @@ bool	ft_fill_and_parse_data(char *argv[], t_data *data)
 		return (ft_err(ETXTUR), false);
 	if (!ft_parse_args(data))
 		return (ft_err(ETXTUR), false);
-	if (!ft_init_map(&data->map))
-		return (ft_err("init"), false);
-	if (!ft_parse_map(data, &data->map))
-		return (ft_err("parse"), false);
-	if (!ft_to_int_map(&data->map))
-		return (ft_err("int to"), false);
+	if (!ft_init_map(&data->map) || !ft_parse_map(data, &data->map)
+		|| !ft_to_int_map(&data->map))
+		return (ft_err(EMAP), false);
 	if (!ft_load_textures(data))
 		return (ft_err(ETXTUR), false);
 	return (true);
