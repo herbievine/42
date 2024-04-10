@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/08 14:57:22 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 10:53:42 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-static long	ft_char_to_hex(char *str);
+static long	ft_char_to_rgb(char *str);
 static void	ft_fill(char *line, t_map *map);
 
 bool	ft_is_valid_rgb(char **splited)
@@ -84,17 +84,17 @@ bool	ft_fill_texture(t_data *data, t_map *map)
 }
 
 /**
- * @brief The ft_char_to_hex function takes a string, checks it and returns
+ * @brief The ft_char_to_rgb function takes a string, checks it and returns
  * the hexadecimal value of the color as a long.
  * 
  * @param string
  * @return bool 
  */
-static long	ft_char_to_hex(char *str)
+static long	ft_char_to_rgb(char *str)
 {
 	char	**splited;
-	int		*rgb_color;
-	long	hex_color;
+	int		*rgb_array;
+	long	rgb;
 
 	if (str[1] != ' ')
 		return (-1);
@@ -103,18 +103,18 @@ static long	ft_char_to_hex(char *str)
 		return (-1);
 	if (ft_is_valid_rgb(splited) == false)
 		return (ft_free_array(splited, -1), -1);
-	rgb_color = malloc(sizeof(int) * 3);
-	if (rgb_color == NULL)
+	rgb_array = malloc(sizeof(int) * 3);
+	if (rgb_array == NULL)
 		return (ft_free_array(splited, -1), -1);
-	rgb_color[0] = ft_atoi(splited[0]);
-	rgb_color[1] = ft_atoi(splited[1]);
-	rgb_color[2] = ft_atoi(splited[2]);
+	rgb_array[0] = ft_atoi(splited[0]);
+	rgb_array[1] = ft_atoi(splited[1]);
+	rgb_array[2] = ft_atoi(splited[2]);
 	ft_free_array(splited, -1);
-	if (rgb_color[0] < 0 || rgb_color[0] > 255 || rgb_color[1] < 0
-		|| rgb_color[1] > 255 || rgb_color[2] < 0 || rgb_color[2] > 255)
-		return (free(rgb_color), -1);
-	hex_color = (rgb_color[0] << 16) + (rgb_color[1] << 8) + rgb_color[2];
-	return (free(rgb_color), hex_color);
+	if (rgb_array[0] < 0 || rgb_array[0] > 255 || rgb_array[1] < 0
+		|| rgb_array[1] > 255 || rgb_array[2] < 0 || rgb_array[2] > 255)
+		return (free(rgb_array), -1);
+	rgb = (rgb_array[0] << 16) + (rgb_array[1] << 8) + rgb_array[2];
+	return (free(rgb_array), rgb);
 }
 
 /**
@@ -143,9 +143,9 @@ static void	ft_fill(char *line, t_map *map)
 	else if (ft_strncmp(line, "EA", 2) == 0 && ft_strschr(".xpm", line) != -1)
 		map->path_texture[EAST] = ft_strdup(ft_strchr(parsed_line, '.'));
 	else if (ft_strncmp(parsed_line, "F", 1) == 0)
-		map->floor_hex = ft_char_to_hex(parsed_line);
+		map->floor_hex = ft_char_to_rgb(parsed_line);
 	else if (ft_strncmp(parsed_line, "C", 1) == 0)
-		map->ceiling_hex = ft_char_to_hex(parsed_line);
+		map->ceiling_hex = ft_char_to_rgb(parsed_line);
 	free(parsed_line);
 }
 
