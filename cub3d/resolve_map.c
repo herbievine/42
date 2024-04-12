@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resolve_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:08:49 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/05 19:41:17 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/12 17:51:52 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ static bool	ft_move(t_data *data, char **copy_map, int way, char c)
 
 static bool	ft_move_backward(t_data *data, char **copy_map)
 {
+	if (!ft_move(data, copy_map, 1, '0')
+		&& data->map.col == data->map.start_col
+		&& data->map.row == data->map.start_row)
+		return (false);
 	if (ft_move(data, copy_map, -1, data->map.index - 1) == 0)
 	{
 		if (data->map.index == 'a')
@@ -83,10 +87,6 @@ static bool	ft_move_backward(t_data *data, char **copy_map)
 		ft_move(data, copy_map, -1, 'z');
 		data->map.index = 'z';
 	}
-	if (!ft_move(data, copy_map, 1, '0')
-		&& data->map.col == data->map.start_col
-		&& data->map.row == data->map.start_row)
-		return (false);
 	return (true);
 }
 
