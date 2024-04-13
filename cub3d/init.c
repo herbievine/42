@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 15:36:56 by juliencros        #+#    #+#             */
-/*   Updated: 2024/04/10 13:38:14 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/13 12:39:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,8 @@ bool	ft_init_map(t_map *map)
 {
 	int		i;
 	char	**parsed_line;
-	int		count;
 
 	i = -1;
-	count = 0;
 	map->char_map = ft_split_and_join_sep(map->map_in_string
 			+ map->str_index, '\n');
 	if (map->char_map == NULL)

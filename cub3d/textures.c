@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 09:56:07 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/10 13:30:12 by jcros            ###   ########.fr       */
+/*   Updated: 2024/04/13 12:49:22 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	ft_is_valid_rgb(char **splited)
 	int	j;
 
 	i = -1;
-	while (splited[++i])
+		while (splited[++i])
 	{
 		j = -1;
 		while (splited[i][++j])
@@ -97,7 +97,7 @@ static long	ft_char_to_rgb(char *str)
 	int		*rgb_array;
 	long	rgb;
 
-	splited = ft_split(str + 2, ',');
+	splited = ft_split(str, ',');
 	if (splited == NULL)
 		return (-1);
 	if (ft_is_valid_rgb(splited) == false)
