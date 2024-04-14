@@ -26,6 +26,8 @@ projects = [
 	"cpp04/ex01",
 	"cpp04/ex02",
 	"cpp04/ex03",
+	"cpp05/ex00",
+	"cpp05/ex01",
 ]
 
 [scripts]

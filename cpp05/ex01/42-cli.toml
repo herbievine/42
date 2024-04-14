@@ -1,0 +1,6 @@
+name = "cpp05/ex01"
+
+[scripts]
+build = { cmd = "make" }
+clean = { cmd = "make fclean" }
+lint = { cmd = "cppcheck --suppress=missingIncludeSystem --inline-suppr --enable=all ." }

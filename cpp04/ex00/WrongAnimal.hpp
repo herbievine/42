@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:49:17 by herbie            #+#    #+#             */
-/*   Updated: 2023/12/28 18:22:28 by herbie           ###   ########.fr       */
+/*   Updated: 2024/04/12 10:20:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ public:
 	WrongAnimal &operator=(const WrongAnimal &rhs);
 
 	std::string getType() const;
-	void makeSound(void) const;
+	virtual void makeSound(void) const;
 
 protected:
 	std::string type;
