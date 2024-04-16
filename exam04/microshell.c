@@ -28,22 +28,12 @@ void ft_err(char *str, char *reason)
 
 void ft_exec(int argc, char *argv[], char *envp[], int tmp_fd)
 {
-	if (fork() == 0)
-	{
-		argv[argc] = NULL;
-		dup2(tmp_fd, STDIN_FILENO);
-		close(tmp_fd);
-		execve(argv[0], argv, envp);
-		ft_err("error: cannot execute ", argv[0]);
-		exit(1);
-	}
-	else
-	{
-		close(tmp_fd);
-		while (waitpid(-1, NULL, WUNTRACED) != -1)
-			;
-		tmp_fd = dup(STDIN_FILENO);
-	}
+    argv[argc] = NULL;
+    dup2(tmp_fd, STDIN_FILENO);
+    close(tmp_fd);
+    execve(argv[0], argv, envp);
+    ft_err("error: cannot execute ", argv[0]);
+    exit(1);
 }
 
 void ft_cd(int argc, char *argv[])
@@ -52,24 +42,6 @@ void ft_cd(int argc, char *argv[])
 		ft_err("error: cd: bad arguments", NULL);
 	else if (chdir(argv[1]) != 0)
 		ft_err("error: cd: cannot change directory to ", argv[1]);
-}
-
-void ft_pipe(int argc, char *argv[], char *envp[], int fd[2], int tmp_fd)
-{
-	pipe(fd);
-	if (fork() == 0)
-	{
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-		ft_exec(argc, argv, envp, tmp_fd);
-	}
-	else
-	{
-		close(fd[1]);
-		close(tmp_fd);
-		tmp_fd = fd[0];
-	}
 }
 
 int main(int argc, char *argv[], char *envp[])
@@ -88,9 +60,34 @@ int main(int argc, char *argv[], char *envp[])
 		if (strcmp(argv[0], "cd") == 0)
 			ft_cd(i, argv);
 		else if (i != 0 && (!argv[i] || strcmp(argv[i], ";") == 0))
-			ft_exec(i, argv, envp, tmp_fd);
+		{
+            if (fork() == 0)
+                ft_exec(i, argv, envp, tmp_fd);
+            else
+            {
+                close(tmp_fd);
+                while (waitpid(-1, NULL, WUNTRACED) != -1)
+                    ;
+                tmp_fd = dup(STDIN_FILENO);
+            }
+        }
 		else if (i != 0 && strcmp(argv[i], "|") == 0)
-			ft_pipe(i, argv, envp, fd, tmp_fd);
+		{
+			pipe(fd);
+			if (fork() == 0)
+			{
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[0]);
+				close(fd[1]);
+				ft_exec(i, argv, envp, tmp_fd);
+			}
+			else
+			{
+				close(fd[1]);
+				close(tmp_fd);
+				tmp_fd = fd[0];
+			}
+		}
 	}
 	close(tmp_fd);
 	return (0);
