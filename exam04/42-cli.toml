@@ -1,0 +1,10 @@
+name = "exam04"
+
+[scripts]
+build = { cmd = "gcc -Wall -Wextra -Werror microshell.c -o microshell" }
+test = [
+	{ cmd = "git clone https://github.com/Tripouille/printfTester.git tester" },
+	{ cmd = "make m", dir = "tester" },
+	{ cmd = "rm -rf tester" },
+]
+clean = { cmd = "rm microshell" }
