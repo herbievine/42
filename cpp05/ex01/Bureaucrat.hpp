@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:49:17 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/12 09:52:39 by herbie           ###   ########.fr       */
+/*   Updated: 2024/04/22 09:59:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ public:
 
 	void signForm(Form &form);
 
-	friend std::ostream &operator<<(std::ostream &o, const Bureaucrat &i);
-
 	class GradeTooLowException : public std::exception
 	{
 	public:
@@ -58,5 +56,7 @@ private:
 	int grade;
 	std::string name;
 };
+
+std::ostream &operator<<(std::ostream &o, const Bureaucrat &i);
 
 #endif /* BUREAUCRAT_HPP */

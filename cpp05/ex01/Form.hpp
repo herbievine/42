@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:17:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/12 09:52:30 by herbie           ###   ########.fr       */
+/*   Updated: 2024/04/22 09:59:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ public:
 
 	void beSigned(const Bureaucrat &bureaucrat);
 
-	friend std::ostream &operator<<(std::ostream &o, const Form &form);
-
 	class GradeTooHighException : public std::exception
 	{
 	public:
@@ -60,5 +58,7 @@ private:
 	int gradeToSign;
 	int gradeToExec;
 };
+
+std::ostream &operator<<(std::ostream &o, const Form &form);
 
 #endif /* FORM_HPP */

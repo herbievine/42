@@ -1,4 +1,4 @@
-name = "cpp05/ex02"
+name = "cpp05/ex03"
 
 [scripts]
 build = { cmd = "make" }

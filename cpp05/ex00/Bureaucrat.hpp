@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:49:17 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/11 14:55:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/04/22 09:59:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ public:
 	int getGrade() const;
 	void incrementGrade();
 	void decrementGrade();
-
-	friend std::ostream &operator<<(std::ostream &o, const Bureaucrat &i);
 
 	class GradeTooLowException : public std::exception
 	{
@@ -53,5 +51,7 @@ private:
 	int grade;
 	std::string name;
 };
+
+std::ostream &operator<<(std::ostream &o, const Bureaucrat &i);
 
 #endif /* BUREAUCRAT_HPP */
