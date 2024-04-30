@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/04/22 13:29:50 by codespace        ###   ########.fr        #
+#    Updated: 2024/04/29 15:22:44 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 RM = rm
 RMFLAG = -f
 
-SRCS = main.cpp ScalarConverter.cpp converter.cpp
+SRCS = main.cpp ScalarConverter.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

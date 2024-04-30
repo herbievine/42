@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:22:29 by codespace         #+#    #+#             */
-/*   Updated: 2024/04/22 12:43:18 by codespace        ###   ########.fr       */
+/*   Updated: 2024/04/30 13:06:18 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,14 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	ScalarConverter::convert(argv[1]);
+	try
+	{
+		ScalarConverter::convert(argv[1]);
+	}
+	catch (ScalarConverter::InvalidScalarException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 
 	return 0;
 }
