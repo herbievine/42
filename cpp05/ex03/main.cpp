@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:48:23 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/22 10:11:16 by codespace        ###   ########.fr       */
+/*   Updated: 2024/05/04 09:30:49 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ int main(void)
 
 		delete form;
 	}
-	catch (AForm::GradeTooLowException &e)
-	{
-		std::cerr << "Exception caught: " << e.what() << std::endl;
-	}
-	catch (AForm::GradeTooHighException &e)
+	catch (std::exception &e)
 	{
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 	}

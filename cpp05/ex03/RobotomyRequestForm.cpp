@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 07:48:11 by codespace         #+#    #+#             */
-/*   Updated: 2024/04/22 09:05:22 by codespace        ###   ########.fr       */
+/*   Updated: 2024/05/04 10:21:53 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void RobotomyRequestForm::execute(const Bureaucrat &executor) const
 	if (executor.getGrade() > this->getGradeToExec())
 		throw GradeTooLowException();
 
-	// cppcheck-suppress unassignedVariable
+	// cppcheck-suppress unmatchedSuppression
 	int rand;
 
 	// cppcheck-suppress uninitvar

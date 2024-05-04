@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:48:23 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/12 10:14:06 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/04 09:31:15 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(void)
 		std::cout << "getName(): " << bureaucrat.getName() << std::endl;
 		std::cout << "getGrade(): " << bureaucrat.getGrade() << std::endl;
 	}
-	catch (Bureaucrat::GradeTooHighException &e)
+	catch (std::exception &e)
 	{
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 	}

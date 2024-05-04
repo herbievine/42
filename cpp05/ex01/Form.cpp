@@ -6,13 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:36:20 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/12 10:15:10 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/04 10:13:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Form.hpp"
 
-Form::Form(const std::string &name, int gradeToSign, int gradeToExec)
+Form::Form(const std::string &name, const int gradeToSign, const int gradeToExec)
 {
 	if (gradeToSign < 1 || gradeToExec < 1)
 		throw GradeTooHighException();
@@ -42,8 +42,8 @@ Form &Form::operator=(const Form &rhs)
 {
 	this->name = rhs.name;
 	this->isSigned = rhs.isSigned;
-	this->gradeToSign = rhs.gradeToSign;
-	this->gradeToExec = rhs.gradeToExec;
+	this->gradeToSign = rhs.getGradeToSign();
+	this->gradeToExec = rhs.getGradeToExec();
 	return *this;
 }
 
@@ -62,7 +62,6 @@ int Form::getGradeToSign() const
 	return this->gradeToSign;
 }
 
-// cppcheck-suppress unusedFunction
 int Form::getGradeToExec() const
 {
 	return this->gradeToExec;

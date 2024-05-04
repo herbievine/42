@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:17:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/22 09:59:52 by codespace        ###   ########.fr       */
+/*   Updated: 2024/05/04 09:59:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class Bureaucrat;
 class Form
 {
 public:
-	explicit Form(const std::string &name, int gradeToSign, int gradeToExec);
+	explicit Form(const std::string &name, const int gradeToSign, const int gradeToExec);
 	Form(const Form &form);
 	~Form();
 

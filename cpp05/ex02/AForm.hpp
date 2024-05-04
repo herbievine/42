@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:17:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/22 10:00:01 by codespace        ###   ########.fr       */
+/*   Updated: 2024/05/04 10:00:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class Bureaucrat;
 class AForm
 {
 public:
-	explicit AForm(const std::string &name, int gradeToSign, int gradeToExec);
+	explicit AForm(const std::string &name, const int gradeToSign, const int gradeToExec);
 	AForm(const AForm &form);
 	virtual ~AForm();
 

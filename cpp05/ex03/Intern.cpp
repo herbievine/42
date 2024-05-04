@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Intern.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:53:22 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/22 10:10:17 by codespace        ###   ########.fr       */
+/*   Updated: 2024/05/04 09:21:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ AForm *Intern::makeForm(const std::string &name, const std::string &target) cons
 {
 	const int supportedForms = 3;
 
-	std::string formAliases[supportedForms] = {
+	const std::string formAliases[supportedForms] = {
 			"shrubbery creation",
 			"robotomy request",
 			"presidential pardon"};
