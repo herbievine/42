@@ -6,29 +6,25 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:22:29 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/04 09:52:37 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/04 09:52:32 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "ScalarConverter.hpp"
+#include "Serializer.hpp"
 
-int main(int argc, const char *argv[])
+int main()
 {
-	if (argc != 2)
-	{
-		std::cout << "usage: ./convert <arg>" << std::endl;
-		return 1;
-	}
+	Data data = {"John", 42};
 
-	try
-	{
-		ScalarConverter::convert(argv[1]);
-	}
-	catch (ScalarConverter::InvalidScalarException &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	uintptr_t raw = Serializer::serialize(&data);
+
+	std::cout << "Raw: " << raw << std::endl;
+
+	const Data *data2 = Serializer::deserialize(raw);
+
+	std::cout << "Name: " << data2->name << std::endl;
+	std::cout << "Age: " << data2->age << std::endl;
 
 	return 0;
 }

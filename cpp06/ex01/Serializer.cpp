@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Serializer.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 12:22:29 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/04 09:52:37 by herbie           ###   ########.fr       */
+/*   Created: 2024/04/22 12:08:36 by codespace         #+#    #+#             */
+/*   Updated: 2024/05/04 09:14:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "ScalarConverter.hpp"
+#include "Serializer.hpp"
 
-int main(int argc, const char *argv[])
+uintptr_t Serializer::serialize(Data *data)
 {
-	if (argc != 2)
-	{
-		std::cout << "usage: ./convert <arg>" << std::endl;
-		return 1;
-	}
+	return (reinterpret_cast<uintptr_t>(data));
+}
 
-	try
-	{
-		ScalarConverter::convert(argv[1]);
-	}
-	catch (ScalarConverter::InvalidScalarException &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-
-	return 0;
+Data *Serializer::deserialize(uintptr_t raw)
+{
+	return (reinterpret_cast<Data *>(raw));
 }
