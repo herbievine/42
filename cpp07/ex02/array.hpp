@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:08:39 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/06 14:55:14 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/06 16:43:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ public:
 	explicit Array();
 	explicit Array(unsigned int n);
 	Array(const Array &src);
-	Array &operator=(const Array &rhs);
 	~Array();
 
-	unsigned int size() const;
-
+	Array &operator=(const Array &rhs);
 	T &operator[](unsigned int index) const;
+
+	unsigned int size() const;
 
 	class OutOfBoundsException : public std::exception
 	{
