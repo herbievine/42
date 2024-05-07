@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:08:39 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/07 11:01:06 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/07 09:22:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ public:
 	class SpanFullException : public std::exception
 	{
 	public:
-		virtual const char *what()
+		virtual const char *what() const throw()
 		{
 			return "Span full";
 		}
@@ -45,7 +45,7 @@ public:
 	class SpanNotEnoughValuesException : public std::exception
 	{
 	public:
-		virtual const char *what()
+		virtual const char *what() const throw()
 		{
 			return "Span not enough values";
 		}
