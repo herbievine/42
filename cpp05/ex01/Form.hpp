@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:17:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/05/04 09:59:41 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:02:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,22 @@ class Form
 {
 public:
 	explicit Form(const std::string &name, const int gradeToSign, const int gradeToExec);
-	Form(const Form &form);
+	Form(const Form &src);
 	~Form();
 
 	Form &operator=(const Form &rhs);
 
 	const std::string &getName() const;
 	bool getIsSigned() const;
-	int getGradeToSign() const;
-	int getGradeToExec() const;
+	const int getGradeToSign() const;
+	const int getGradeToExec() const;
 
 	void beSigned(const Bureaucrat &bureaucrat);
 
 	class GradeTooHighException : public std::exception
 	{
 	public:
-		virtual const char *what()
+		virtual const char *what() const throw()
 		{
 			return "Grade is too high";
 		}
@@ -46,17 +46,17 @@ public:
 	class GradeTooLowException : public std::exception
 	{
 	public:
-		virtual const char *what()
+		virtual const char *what() const throw()
 		{
 			return "Grade is too low";
 		}
 	};
 
 private:
-	std::string name;
+	const std::string name;
 	bool isSigned;
-	int gradeToSign;
-	int gradeToExec;
+	const int gradeToSign;
+	const int gradeToExec;
 };
 
 std::ostream &operator<<(std::ostream &o, const Form &form);

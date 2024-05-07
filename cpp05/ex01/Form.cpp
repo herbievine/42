@@ -3,35 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   Form.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:36:20 by herbie            #+#    #+#             */
-/*   Updated: 2024/05/04 10:13:08 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:07:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Form.hpp"
 
-Form::Form(const std::string &name, const int gradeToSign, const int gradeToExec)
+Form::Form(const std::string &name, const int gradeToSign, const int gradeToExec) : name(name), gradeToSign(gradeToSign), gradeToExec(gradeToExec)
 {
 	if (gradeToSign < 1 || gradeToExec < 1)
 		throw GradeTooHighException();
 	else if (gradeToSign > 150 || gradeToExec > 150)
 		throw GradeTooLowException();
 
-	this->name = name;
 	this->isSigned = false;
-	this->gradeToSign = gradeToSign;
-
-	if (gradeToSign > gradeToExec)
-		this->gradeToExec = gradeToExec;
-	else
-		this->gradeToExec = gradeToSign;
 }
 
-Form::Form(const Form &form)
+Form::Form(const Form &src) : name(src.getName()), gradeToSign(src.getGradeToSign()), gradeToExec(src.getGradeToExec())
 {
-	*this = form;
+	*this = src;
 }
 
 Form::~Form()
@@ -40,10 +33,6 @@ Form::~Form()
 
 Form &Form::operator=(const Form &rhs)
 {
-	this->name = rhs.name;
-	this->isSigned = rhs.isSigned;
-	this->gradeToSign = rhs.getGradeToSign();
-	this->gradeToExec = rhs.getGradeToExec();
 	return *this;
 }
 
@@ -57,12 +46,12 @@ bool Form::getIsSigned() const
 	return this->isSigned;
 }
 
-int Form::getGradeToSign() const
+const int Form::getGradeToSign() const
 {
 	return this->gradeToSign;
 }
 
-int Form::getGradeToExec() const
+const int Form::getGradeToExec() const
 {
 	return this->gradeToExec;
 }

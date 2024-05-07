@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 17:53:22 by herbie            #+#    #+#             */
-/*   Updated: 2024/04/12 10:15:03 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/07 11:59:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+
+Bureaucrat::Bureaucrat(int grade) : name("John")
+{
+	if (grade < 1)
+		throw GradeTooHighException();
+	else if (grade > 150)
+		throw GradeTooLowException();
+
+	this->grade = grade;
+}
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade) : name(name)
 {
@@ -22,9 +32,9 @@ Bureaucrat::Bureaucrat(const std::string &name, int grade) : name(name)
 	this->grade = grade;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &bureaucrat)
+Bureaucrat::Bureaucrat(const Bureaucrat &src)
 {
-	*this = bureaucrat;
+	*this = src;
 }
 
 Bureaucrat::~Bureaucrat()
@@ -33,8 +43,11 @@ Bureaucrat::~Bureaucrat()
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &rhs)
 {
-	this->name = rhs.name;
-	this->grade = rhs.grade;
+	if (&rhs != this)
+	{
+		this->grade = rhs.grade;
+	}
+
 	return *this;
 }
 
