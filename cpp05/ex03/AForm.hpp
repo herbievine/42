@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:17:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/05/07 12:30:17 by codespace        ###   ########.fr       */
+/*   Updated: 2024/05/07 13:14:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class AForm
 public:
 	explicit AForm(const std::string &name, const int gradeToSign, const int gradeToExec);
 	AForm(const AForm &src);
-	~AForm();
+	virtual ~AForm();
 
 	AForm &operator=(const AForm &rhs);
 
