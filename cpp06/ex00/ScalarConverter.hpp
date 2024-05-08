@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:08:39 by codespace         #+#    #+#             */
-/*   Updated: 2024/04/30 13:45:45 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/08 09:31:09 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ class ScalarConverter
 {
 public:
 	typedef ScalarConverter SC;
+
 	static void convert(const std::string &str);
 
 	class InvalidScalarException : public std::exception

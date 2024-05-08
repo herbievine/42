@@ -39,6 +39,7 @@ projects = [
 	"cpp08/ex00",
 	"cpp08/ex01",
 	"cpp08/ex02",
+	"cpp09/ex00",
 ]
 
 [scripts]
