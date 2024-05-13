@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:08:39 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/08 20:16:35 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/13 08:27:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ public:
 	};
 
 private:
-	// std::vector<DataPoint> _data;
 	std::map<std::string, float> _csv;
 
 	void _loadCsv(const std::string &file);
