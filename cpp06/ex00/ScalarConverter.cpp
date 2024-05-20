@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:08:36 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/08 08:14:46 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/20 08:38:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 
 std::string ScalarConverter::str;
 t_type ScalarConverter::type;
+
+ScalarConverter::ScalarConverter()
+{
+}
+
+ScalarConverter::ScalarConverter(const ScalarConverter &src)
+{
+}
+
+ScalarConverter::~ScalarConverter()
+{
+}
+
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &rhs)
+{
+	return *this;
+}
 
 void ScalarConverter::convert(const std::string &str)
 {

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:08:39 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/08 09:31:09 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/20 08:23:59 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ public:
 	};
 
 private:
+	explicit ScalarConverter();
+	ScalarConverter(const ScalarConverter &src);
+	~ScalarConverter();
+
+	ScalarConverter &operator=(const ScalarConverter &rhs);
+
 	static std::string str;
 	static t_type type;
 

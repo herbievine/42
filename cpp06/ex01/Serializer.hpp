@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:08:39 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/04 09:14:18 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/20 08:37:59 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,11 @@ class Serializer
 public:
 	static uintptr_t serialize(Data *data);
 	static Data *deserialize(uintptr_t raw);
+
+private:
+	explicit Serializer();
+	Serializer(const Serializer &src);
+	~Serializer();
+
+	Serializer &operator=(const Serializer &rhs);
 };
