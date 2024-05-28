@@ -18,6 +18,8 @@
 #include <iterator>
 #include "easyfind.hpp"
 
+#define NUM_LEN
+
 template <typename T>
 void find(T &data, int value)
 {
@@ -31,19 +33,19 @@ void find(T &data, int value)
 
 int main()
 {
-	int nums[8] = {9, 4, 7, 6, 1, 5, 8, 3};
+	int nums[NUM_LEN] = {9, 4, 7, 6, 1, 5, 8, 3};
 	int value = 1;
 
 	std::cout << "Vector: ";
-	std::vector<int> vector(nums, nums + 8);
+	std::vector<int> vector(nums, nums + NUM_LEN);
 	find(vector, value);
 
 	std::cout << "List: ";
-	std::list<int> list(nums, nums + 8);
+	std::list<int> list(nums, nums + NUM_LEN);
 	find(list, value);
 
 	std::cout << "Deque: ";
-	std::deque<int> deque(nums, nums + 8);
+	std::deque<int> deque(nums, nums + NUM_LEN);
 	find(deque, value);
 
 	return 0;

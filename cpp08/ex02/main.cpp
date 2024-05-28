@@ -13,6 +13,7 @@
 #include <iostream>
 #include "MutantStack.hpp"
 #include <list>
+#include <climits>
 
 int main()
 {
@@ -28,10 +29,13 @@ int main()
 	stack.pop();
 
 	std::cout << stack.size() << std::endl;
+
 	stack.push(3);
 	stack.push(5);
 	stack.push(737);
 	stack.push(0);
+	stack.push(INT_MIN);
+	stack.push(INT_MAX);
 
 	MutantStack<int>::iterator stackBegin = stack.begin();
 	MutantStack<int>::iterator stackEnd = stack.end();
@@ -66,6 +70,8 @@ int main()
 	list.push_back(5);
 	list.push_back(737);
 	list.push_back(0);
+	list.push_back(INT_MIN);
+	list.push_back(INT_MAX);	
 
 	std::list<int>::iterator listBegin = list.begin();
 	std::list<int>::iterator listEnd = list.end();

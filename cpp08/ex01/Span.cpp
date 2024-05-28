@@ -59,16 +59,12 @@ int Span::shortestSpan() const
 	if (_deque.size() < 2)
 		throw SpanNotEnoughValuesException();
 
-	std::deque<int> copy = _deque;
+	std::deque<int> copy(_deque);
 	std::sort(copy.begin(), copy.end(), std::less<int>());
-
-	int min = copy[1] - copy[0];
-
-	for (size_t i = 1; i < copy.size() - 1; i++)
-		if (copy[i + 1] - copy[i] < min)
-			min = copy[i + 1] - copy[i];
-
-	return min;
+	std::deque<int> diff(copy);
+	std::adjacent_difference(copy.begin(), copy.end(), diff.begin());
+	
+	return *std::min_element(diff.begin(), diff.end()); 
 }
 
 int Span::longestSpan() const
@@ -76,8 +72,8 @@ int Span::longestSpan() const
 	if (_deque.size() < 2)
 		throw SpanNotEnoughValuesException();
 
-	std::deque<int> copy = _deque;
-	std::sort(copy.begin(), copy.end(), std::greater<int>());
+	std::deque<int> copy(_deque);
+	std::sort(copy.begin(), copy.end());
 
-	return copy[0] - copy[copy.size() - 1];
+	return copy[copy.size() - 1] - copy[0];
 }
