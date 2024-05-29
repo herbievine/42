@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:22:29 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/06 16:55:15 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/29 14:29:09 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <algorithm>
 #include <iterator>
 #include "easyfind.hpp"
-
-#define NUM_LEN
 
 template <typename T>
 void find(T &data, int value)
@@ -33,19 +31,19 @@ void find(T &data, int value)
 
 int main()
 {
-	int nums[NUM_LEN] = {9, 4, 7, 6, 1, 5, 8, 3};
+	int nums[8] = {9, 4, 7, 6, 1, 5, 8, 3};
 	int value = 1;
 
 	std::cout << "Vector: ";
-	std::vector<int> vector(nums, nums + NUM_LEN);
+	std::vector<int> vector(nums, nums + 8);
 	find(vector, value);
 
 	std::cout << "List: ";
-	std::list<int> list(nums, nums + NUM_LEN);
+	std::list<int> list(nums, nums + 8);
 	find(list, value);
 
 	std::cout << "Deque: ";
-	std::deque<int> deque(nums, nums + NUM_LEN);
+	std::deque<int> deque(nums, nums + 8);
 	find(deque, value);
 
 	return 0;
