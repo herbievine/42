@@ -6,12 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:22:29 by codespace         #+#    #+#             */
-/*   Updated: 2024/05/29 14:19:43 by herbie           ###   ########.fr       */
+/*   Updated: 2024/05/29 14:32:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <iomanip>
+#include <iterator>
 #include <time.h>
 #include "PmergeMe.hpp"
 
