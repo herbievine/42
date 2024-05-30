@@ -57,8 +57,6 @@ double RPN::expr(const std::string &str)
 			int left = _nums.top();
 			_nums.pop();
 
-			std::cout << left << "+" << right << std::endl;
-
 			_nums.push(left + right);
 		}
 		else if (c == '-')
@@ -68,8 +66,6 @@ double RPN::expr(const std::string &str)
 			int left = _nums.top();
 			_nums.pop();
 
-			std::cout << left << "-" << right << std::endl;
-
 			_nums.push(left - right);
 		}
 		else if (c == '*')
@@ -78,8 +74,6 @@ double RPN::expr(const std::string &str)
 			_nums.pop();
 			int left = _nums.top();
 			_nums.pop();
-
-			std::cout << left << "*" << right << std::endl;
 
 			_nums.push(left * right);
 		}
@@ -92,8 +86,6 @@ double RPN::expr(const std::string &str)
 
 			if (right == 0)
 				throw DivisionByZeroException();
-
-			std::cout << left << "/" << right << std::endl;
 
 			_nums.push(left / right);
 		}

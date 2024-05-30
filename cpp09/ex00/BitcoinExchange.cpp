@@ -195,7 +195,15 @@ std::string BitcoinExchange::_parseDate(const std::string &date) const
  */
 float BitcoinExchange::_parsePrice(const std::string &price) const
 {
-	float value = std::stof(price);
+	float value = 0.0;
+
+	try 
+	{
+		value = std::stof(price);
+	} catch (std::exception &e) 
+	{
+		throw std::runtime_error("Not a positive number");
+	}
 
 	if (value < 0)
 		throw std::runtime_error("Not a positive number");
