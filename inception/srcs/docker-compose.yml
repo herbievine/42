@@ -1,41 +1,52 @@
-version: '3.8'
+version: "3.9"
 
 services:
+
   db:
-    image: mariadb:11
+    container_name: mariadb
     restart: always
+    build: ./requirements/mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
     networks:
       - net
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db
-      MYSQL_USER: me
-      MYSQL_PASSWORD: herbie
-    ports:
-      - "3306:3306"
-    volumes:
-      - mariadb:/var/lib/mysql
-  wordpress:
-    image: wordpress:php8.3
-    restart: always
-    depends_on:
-      - db
-    networks:
-      - net
-    ports:
-      - 8080:9000
-    environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
-    volumes:
-      - wp:/var/www/html
+  # CONTAINER - WORDPRESS : https://hub.docker.com/_/wordpress
+  # wordpress:
+  #   depends_on:
+  #     - db
+  #   image: wordpress:latest
+  #   container_name: wp
+  #   restart: always
+  #   volumes: [ "./:/var/www/html" ]
+  #   environment:
+  #     WORDPRESS_DB_HOST: db:3306
+  #     WORDPRESS_DB_USER: wordpress
+  #     WORDPRESS_DB_PASSWORD: wordpress
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - net
+
+  # # CONTAINER - PHPMYADMIN : https://hub.docker.com/r/phpmyadmin/phpmyadmin
+  # phpmyadmin:
+  #   depends_on:
+  #     - db
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   container_name: phpmyadmin
+  #   restart: always
+  #   environment:
+  #     PMA_HOST: db
+  #     MYSQL_ROOT_PASSWORD: password
+  #   ports:
+  #     - "8080:80"
+  #   networks:
+  #     - net
 
 networks:
   net:
 
 
 volumes:
-  mariadb:
-  wp:
+  db_data:
