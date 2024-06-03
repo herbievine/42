@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:11
+    restart: always
+    networks:
+      - net
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: me
+      MYSQL_PASSWORD: herbie
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb:/var/lib/mysql
+  wordpress:
+    image: wordpress:php8.3
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - net
+    ports:
+      - 8080:9000
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp:/var/www/html
+
+networks:
+  net:
+
+
+volumes:
+  mariadb:
+  wp:
