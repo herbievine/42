@@ -1,24 +1,36 @@
 #!/bin/sh
 
-# Initialize the database
-mysql_install_db --user=mysql --datadir=/var/lib/mysql
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    echo "Initializing MariaDB data directory..."
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
+fi
 
-# Start MariaDB temporarily to run initialization commands
+# start mariadb server temporarily in the background
 mysqld --user=mysql --datadir=/var/lib/mysql --skip-networking &
 pid="$!"
 
-# Wait for the MariaDB server to start
+# wait for the mariadb server to start
 while ! mysqladmin ping --silent; do
     sleep 1
 done
 
-# Create database and users
-mysql -u root <<-EOSQL
-    CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
-    CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-    GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
-    FLUSH PRIVILEGES;
-EOSQL
+# if database does not exist, create it and set up users
+if [ -z "$(mysql -u "$MYSQL_USER" -p"${MYSQL_ROOT_PASSWORD}" -e "SHOW DATABASES LIKE '${MYSQL_DATABASE}'" | grep ${MYSQL_DATABASE})" ]; then
+    echo "Initializing DB"
 
-# Stop the temporary MariaDB server
+		mysql -u "$MYSQL_USER" -p"${MYSQL_ROOT_PASSWORD}" -e "\
+			SHOW DATABASES LIKE '${MYSQL_DATABASE}';\
+			CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};\
+			GRANT ALL ON *.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';\
+			FLUSH PRIVILEGES;"
+    
+		echo "Initialization complete"
+else
+    echo "Database already exists"
+fi
+
+# stop the mariadb server
 mysqladmin shutdown -p"$pid"
+
+# start mariadb server in the foreground
+exec mysqld --user=mysql --datadir=/var/lib/mysql
