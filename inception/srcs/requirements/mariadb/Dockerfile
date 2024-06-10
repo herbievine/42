@@ -13,6 +13,8 @@ RUN chown -R mysql:mysql /var/run/mysqld
 COPY ./tools/init.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/init.sh
 
+ENTRYPOINT ["/usr/local/bin/init.sh"]
+
 EXPOSE 3306
 
-CMD ["/usr/local/bin/init.sh"]
+CMD ["mysqld", "--user=mysql", "--datadir=/var/lib/mysql"]

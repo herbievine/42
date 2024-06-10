@@ -1,26 +1,37 @@
 version: "3.9"
 
 services:
-  # db:
-  #   container_name: mariadb
-  #   restart: unless-stopped
-  #   build: ./requirements/mariadb
-  #   volumes:
-  #     - db_data:/var/lib/mysql
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - net
+  mariadb:
+    container_name: mariadb
+    restart: unless-stopped
+    build: requirements/mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - net
   nginx:
     container_name: nginx
     restart: unless-stopped
-    build: ./requirements/nginx
+    build: requirements/nginx
     ports:
       - "80:80"
-      # - "9000:80"
-      # - "9000:443"
+      - "443:443"
     volumes:
-      - db_data:/var/lib/mysql
+      - wp_data:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - net
+  wordpress:
+    container_name: wordpress
+    restart: unless-stopped
+    build: requirements/wordpress
+    depends_on:
+      - mariadb
+    volumes:
+      - wp_data:/var/www/html
     env_file:
       - .env
     networks:
@@ -32,4 +43,14 @@ networks:
 
 volumes:
   db_data:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: /home/hvine/data/db
+    #   o: bind
   wp_data:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   device: /home/hvine/data/wp
+    #   o: bind

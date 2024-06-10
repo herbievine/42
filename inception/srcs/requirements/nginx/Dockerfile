@@ -14,9 +14,6 @@ RUN openssl req -new -newkey rsa:2048 -nodes \
 
 RUN mkdir -p /run/nginx
 
-RUN mkdir -p /var/www/html
-RUN echo "<!DOCTYPE html>\n<html>\n<body>\n<h1>Hello World!</h1>\n</body>\n</html>" >> /var/www/html/index.html
-
-EXPOSE 80
+EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
