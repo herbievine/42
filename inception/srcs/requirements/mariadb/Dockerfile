@@ -7,10 +7,16 @@ RUN rm -f /var/cache/apk/*
 COPY conf/my.cnf /etc/mysql/my.cnf
 RUN chmod 644 /etc/mysql/my.cnf	
 
-RUN mkdir -p /var/run/mysqld
-RUN chown -R mysql:mysql /var/run/mysqld
+COPY tools/init.sql /etc/mysql/init.sql
+RUN chmod 644 /etc/mysql/init.sql	
 
-COPY ./tools/init.sh /usr/local/bin/
+RUN mkdir -p /var/lib/mysql
+RUN chown -R mysql:mysql /var/lib/mysql
+
+RUN mkdir -p /run/mysqld
+RUN chown -R mysql:mysql /run/mysqld
+
+COPY ./tools/init.sh /usr/local/bin/init.sh
 RUN chmod +x /usr/local/bin/init.sh
 
 ENTRYPOINT ["/usr/local/bin/init.sh"]
