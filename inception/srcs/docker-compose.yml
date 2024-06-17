@@ -31,9 +31,9 @@ services:
     ports:
       - "80:80"
       # - "443:443"
-      # volumes:
+    volumes:
       #   - wp_data:/var/www/html
-      # - ./web:/var/www/html
+      - ./web:/var/www/html
       # env_file:
       #   - .env
       # networks:
