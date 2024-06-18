@@ -1,16 +1,16 @@
 version: "3.9"
 
 services:
-  # mariadb:
-  #   container_name: mariadb
-  #   restart: unless-stopped
-  #   build: requirements/mariadb
-  #   volumes:
-  #     - db_data:/var/lib/mysql
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - net
+  mariadb:
+    container_name: mariadb
+    restart: unless-stopped
+    build: requirements/mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - net
   #   healthcheck:
   #     test:
   #       [
@@ -32,30 +32,30 @@ services:
       - "80:80"
       # - "443:443"
     volumes:
-      #   - wp_data:/var/www/html
+      # - wp_data:/var/www/html
       - ./web:/var/www/html
       # env_file:
       #   - .env
-      # networks:
-      #   - net
-      # wordpress:
-      #   container_name: wordpress
-      #   restart: unless-stopped
-      #   build: requirements/wordpress
-      #   depends_on:
-      #     - mariadb
-      #   volumes:
-      #     - wp_data:/var/www/html
-      #     - ./web:/var/www/html
-      #   env_file:
-      #     - .env
-      #   networks:
-      #     - net
-      #   healthcheck:
-      #     test: [ 'CMD', 'curl', '--fail', 'http://localhost:9000' ]
-      #     interval: 1m
-      #     timeout: 10s
-      #     retries: 5
+    networks:
+      - net
+  wordpress:
+    container_name: wordpress
+    restart: unless-stopped
+    build: requirements/wordpress
+    depends_on:
+      - mariadb
+    volumes:
+      # - wp_data:/var/www/html
+      - ./web:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - net
+      # healthcheck:
+      #   test: [ 'CMD', 'curl', '--fail', 'http://localhost:9000' ]
+      #   interval: 1m
+      #   timeout: 10s
+      #   retries: 5
 
 networks:
   net:

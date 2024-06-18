@@ -1,6 +1,6 @@
 # FROM alpine:3.20.0
 
-FROM debian:latest
+FROM debian:12
 
 # RUN apk update 
 # RUN apk add --no-cache nginx 
@@ -11,8 +11,7 @@ RUN apt update
 RUN apt upgrade
 RUN apt install -y nginx
 
-# COPY conf/default /etc/nginx/sites-available/default
-# RUN chmod 644 /etc/nginx/sites-available/default
+COPY conf/default /etc/nginx/sites-available/default
 
 # RUN openssl req -new -newkey rsa:2048 -nodes \
 # 	-subj "/C=FR/ST=Paris/O=Herbie, Inc./CN=hvine.42.fr" \
