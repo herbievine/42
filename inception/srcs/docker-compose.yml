@@ -11,31 +11,15 @@ services:
       - .env
     networks:
       - net
-  #   healthcheck:
-  #     test:
-  #       [
-  #         'CMD',
-  #         'mysqladmin',
-  #         'ping',
-  #         '-u',
-  #         'root',
-  #         '-p${MYSQL_ROOT_PASSWORD}'
-  #       ]
-  #     interval: 1m
-  #     timeout: 10s
-  #     retries: 5
   nginx:
     container_name: nginx
     restart: unless-stopped
     build: requirements/nginx
     ports:
-      - "80:80"
-      # - "443:443"
+      # - "80:80"
+      - "443:443"
     volumes:
-      # - wp_data:/var/www/html
-      - ./web:/var/www/html
-      # env_file:
-      #   - .env
+      - wp_data:/var/www/html
     networks:
       - net
   wordpress:
@@ -45,17 +29,11 @@ services:
     depends_on:
       - mariadb
     volumes:
-      # - wp_data:/var/www/html
-      - ./web:/var/www/html
+      - wp_data:/var/www/html
     env_file:
       - .env
     networks:
       - net
-      # healthcheck:
-      #   test: [ 'CMD', 'curl', '--fail', 'http://localhost:9000' ]
-      #   interval: 1m
-      #   timeout: 10s
-      #   retries: 5
 
 networks:
   net:
