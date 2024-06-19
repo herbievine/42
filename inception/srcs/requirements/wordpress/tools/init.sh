@@ -6,27 +6,14 @@ if [ ! -f "./wp-config.php" ]; then
 	mv wp-cli.phar /usr/local/bin/wp
 
 	if php -m | grep -q Phar; then
-	  wp cli version --allow-root
 		wp core download --allow-root
-
-		# wait a bit to make sure the db is up and running
-		sleep 10
-
-		# sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
-		# sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
-		# # sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php
-		# sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
-		# cp wp-config-sample.php wp-config.php
-
-		wp config create --dbname="$MYSQL_DATABASE" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --dbhost=mariadb --allow-root
-		
-		wp core install --url=hvine.42.fr --title=Inception --admin_user=hvine --admin_password=hvine --admin_email=hvine@student.42.fr --allow-root
+		wp config create --dbname="$MYSQL_DATABASE" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --dbhost="$MYSQL_HOSTNAME" --allow-root
+		wp core install --url="$WP_SITE_URL" --title=Inception --admin_user="$WP_ADMIN" --admin_password="$WP_ADMIN_PASSWORD" --admin_email="$WP_ADMIN_EMAIL" --allow-root
+		wp user create "$WP_USER" "$WP_USER_EMAIL" --role=author --user_pass="$WP_USER_PASSWORD" --allow-root
   else
 	  echo "php phar is not installed"
     exit 1
 	fi
 fi
-
-echo "wordpress is running"
 
 exec "$@"
