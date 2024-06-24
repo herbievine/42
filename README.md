@@ -12,7 +12,14 @@ all my projects for 42paris.
 - cpp00: 80
 - cpp01: 90
 - cpp02: 80
-- cpp03: TBD
-- cpp04: TBD
+- cpp03: 80
+- cpp04: 100
+- cpp05: 100
+- cpp06: 100
+- cpp07: 100
+- cpp08: 100
+- cpp09: 100
+- cub3d: 100
+- inception: TBD
 
 using [42 cli](https://github.com/herbievine/42-cli) for ci/cd
