@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/06/25 09:36:01 by herbie           ###   ########.fr        #
+#    Updated: 2024/06/25 10:11:33 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ RMFLAG = -f
 
 SRCS = \
 	src/main.cpp \
-	src/config/ConfigReader.cpp
+	src/config/Config.cpp \
+	src/config/Server.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

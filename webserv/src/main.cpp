@@ -6,11 +6,11 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:18:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/06/25 09:37:46 by herbie           ###   ########.fr       */
+/*   Updated: 2024/06/25 10:24:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "config/ConfigReader.hpp"
+#include "config/Config.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -23,17 +23,19 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	std::vector<std::string> tokens = ConfigReader().read(argv[1]);
+	Config config(argv[1]);
 
-	std::cout << "Tokens:" << std::endl;
+	config.parse();
 
-	std::vector<std::string>::iterator it = tokens.begin();
+	// std::cout << "Tokens:" << std::endl;
 
-	while (it != tokens.end())
-	{
-		std::cout << *it << std::endl;
-		it++;
-	}
+	// std::vector<std::string>::iterator it = tokens.begin();
+
+	// while (it != tokens.end())
+	// {
+	// 	std::cout << *it << std::endl;
+	// 	it++;
+	// }
 
 	return 0;
 }

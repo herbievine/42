@@ -6,11 +6,12 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/06/24 10:36:22 by herbie           ###   ########.fr       */
+/*   Updated: 2024/06/25 10:12:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iostream"
+#include "Server.hpp"
+#include <iostream>
 
 class Config
 {
@@ -21,6 +22,9 @@ public:
 
 	Config &operator=(const Config &rhs);
 
+	void parse() const;
+
 private:
-	std::string _serverName;
+	std::vector<std::string> _tokens;
+	std::vector<Server> _servers;
 };
