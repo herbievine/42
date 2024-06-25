@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ConfigReader.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 09:18:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/06/25 09:37:46 by herbie           ###   ########.fr       */
+/*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
+/*   Updated: 2024/06/24 10:44:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "config/ConfigReader.hpp"
 #include <iostream>
+#include <fstream>
 #include <vector>
-#include <string>
 
-int main(int argc, char *argv[])
+class ConfigReader
 {
-	if (argc != 2)
-	{
-		std::cout << "Error: please provide a config file" << std::endl;
-		return 1;
-	}
+public:
+	explicit ConfigReader();
+	ConfigReader(const ConfigReader &src);
+	~ConfigReader();
 
-	std::vector<std::string> tokens = ConfigReader().read(argv[1]);
+	ConfigReader &operator=(const ConfigReader &rhs);
 
-	std::cout << "Tokens:" << std::endl;
-
-	std::vector<std::string>::iterator it = tokens.begin();
-
-	while (it != tokens.end())
-	{
-		std::cout << *it << std::endl;
-		it++;
-	}
-
-	return 0;
-}
+	std::vector<std::string> read(std::string path) const;
+};
