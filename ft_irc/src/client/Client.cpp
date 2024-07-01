@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/01 15:27:30 by herbie           ###   ########.fr       */
+/*   Updated: 2024/07/01 17:34:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include <sys/socket.h>
 #include <fstream>
 
-Client::Client(int fd, std::string ip) : _fd(fd), _ip(ip)
+Client::Client(int fd, std::string ip, std::string hostname) : _fd(fd),
+																															 _ip(ip),
+																															 _hostname(hostname)
 {
 }
 
@@ -38,7 +40,17 @@ Client &Client::operator=(const Client &rhs)
 	return *this;
 }
 
-int Client::getFd() const
+void Client::reply(const std::string &msg) const
 {
-	return this->_fd;
+	std::string username = _username.empty() ? "" : "!" + _username;
+	std::string hostname = _hostname.empty() ? "" : "@" + _hostname;
+	std::string prefix = _nickname + username + hostname;
+	std::string message = ":" + prefix + " " + msg + "\r\n";
+
+	std::cout << "[" << _fd << "] " << message;
+
+	if (send(_fd, message.c_str(), message.size(), 0) < 0)
+		throw std::runtime_error("Failed to send message to client");
+
+	std::cout << "[" << _fd << "] Connected" << std::endl;
 }

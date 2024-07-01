@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/01 16:12:53 by herbie           ###   ########.fr       */
+/*   Updated: 2024/07/01 17:33:31 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 
 bool Server::stop = false;
 
@@ -58,7 +59,7 @@ Server &Server::operator=(const Server &rhs)
 
 void Server::start()
 {
-	struct sockaddr_in add = {
+	struct sockaddr_in addr = {
 			.sin_family = AF_INET,
 			.sin_port = htons(this->_port),
 			.sin_addr.s_addr = INADDR_ANY};
@@ -76,7 +77,7 @@ void Server::start()
 		throw std::runtime_error("Could not set socket options");
 
 	// Bind the socket
-	if (bind(_lsd, (struct sockaddr *)&add, sizeof(add)) < 0)
+	if (bind(_lsd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 		throw std::runtime_error("Failed to bind socket");
 
 	// Listen for incoming connections
@@ -118,25 +119,32 @@ void Server::start()
 
 void Server::acceptConnection()
 {
-	struct sockaddr_in add;
-	socklen_t len = sizeof(add);
+	struct sockaddr_in addr;
+	socklen_t len = sizeof(addr);
 
-	int fd = accept(_lsd, (struct sockaddr *)&add, &len);
+	int fd = accept(_lsd, (struct sockaddr *)&addr, &len);
 	if (fd < 0)
 		throw std::runtime_error("Failed to accept connection");
 
 	if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
 		throw std::runtime_error("Could not set socket options");
 
+	char hostname[NI_MAXHOST];
+	int res = getnameinfo((struct sockaddr *)&addr, sizeof(addr), hostname, NI_MAXHOST, NULL, 0, NI_NUMERICSERV);
+	if (res != 0)
+		throw std::runtime_error("Error while getting a hostname on a new client!");
+
 	struct pollfd pfd = {
 			.fd = fd,
 			.events = POLLIN,
 			.revents = 0};
 
-	_fds.push_back(pfd);
-	_clients.push_back(Client(fd, inet_ntoa(add.sin_addr)));
+	Client client(fd, inet_ntoa(addr.sin_addr), hostname);
 
-	std::cout << "[" << fd << "] Connected" << std::endl;
+	client.reply(RPL_WELCOME(client.getNickname()));
+
+	_fds.push_back(pfd);
+	_clients.push_back(client);
 }
 
 void Server::readFromClient(int fd)
