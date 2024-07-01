@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Response.hpp                                       :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/06/24 09:30:48 by herbie           ###   ########.fr       */
+/*   Updated: 2024/07/01 15:27:19 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iostream"
+#include <iostream>
 
-class Response
+class Client
 {
 public:
-	explicit Response();
-	Response(const Response &src);
-	~Response();
+	explicit Client(int fd, std::string ip);
+	Client(const Client &src);
+	~Client();
 
-	Response &operator=(const Response &rhs);
+	Client &operator=(const Client &rhs);
+
+	int getFd() const;
 
 private:
+	int _fd;
+	std::string _ip;
 };
+
+std::ostream &operator<<(std::ostream &o, const Client &Client);

@@ -1,30 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Config.hpp                                         :+:      :+:    :+:   */
+/*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/06/25 10:12:11 by herbie           ###   ########.fr       */
+/*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
+/*   Updated: 2024/07/01 15:27:30 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
-#include <iostream>
+#include "Client.hpp"
+#include "iostream"
+#include <sys/socket.h>
+#include <fstream>
 
-class Config
+Client::Client(int fd, std::string ip) : _fd(fd), _ip(ip)
 {
-public:
-	explicit Config(std::string path);
-	Config(const Config &src);
-	~Config();
+}
 
-	Config &operator=(const Config &rhs);
+Client::Client(const Client &src)
+{
+}
 
-	void parse() const;
+Client::~Client()
+{
+}
 
-private:
-	std::vector<std::string> _tokens;
-	std::vector<Server> _servers;
-};
+Client &Client::operator=(const Client &rhs)
+{
+	if (this != &rhs)
+	{
+		this->_fd = rhs._fd;
+		this->_ip = rhs._ip;
+	}
+
+	return *this;
+}
+
+int Client::getFd() const
+{
+	return this->_fd;
+}

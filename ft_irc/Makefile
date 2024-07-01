@@ -6,11 +6,11 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/06/25 10:11:33 by herbie           ###   ########.fr        #
+#    Updated: 2024/07/01 15:35:17 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = webserv
+NAME = ircserv
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
@@ -20,8 +20,8 @@ RMFLAG = -f
 
 SRCS = \
 	src/main.cpp \
-	src/config/Config.cpp \
-	src/config/Server.cpp
+	src/client/Client.cpp \
+	src/server/Server.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
