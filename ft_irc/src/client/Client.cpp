@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/01 17:34:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/07/02 17:40:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 #include "iostream"
 #include <sys/socket.h>
 #include <fstream>
+
+Client::Client() : _fd(-1),
+									 _ip(""),
+									 _hostname(""),
+									 _nickname(""),
+									 _username(""),
+									 _realname("")
+
+{
+}
 
 Client::Client(int fd, std::string ip, std::string hostname) : _fd(fd),
 																															 _ip(ip),
@@ -47,10 +57,8 @@ void Client::reply(const std::string &msg) const
 	std::string prefix = _nickname + username + hostname;
 	std::string message = ":" + prefix + " " + msg + "\r\n";
 
-	std::cout << "[" << _fd << "] " << message;
+	std::cout << message << std::endl;
 
 	if (send(_fd, message.c_str(), message.size(), 0) < 0)
 		throw std::runtime_error("Failed to send message to client");
-
-	std::cout << "[" << _fd << "] Connected" << std::endl;
 }

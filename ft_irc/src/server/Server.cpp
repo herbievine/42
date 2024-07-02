@@ -6,12 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/01 17:33:31 by herbie           ###   ########.fr       */
+/*   Updated: 2024/07/02 17:56:31 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
-#include "iostream"
+#include "../utils/utils.hpp"
+#include <iostream>
 #include <sys/socket.h>
 #include <fstream>
 #include <poll.h>
@@ -42,7 +43,10 @@ Server::Server(const Server &src)
 Server::~Server()
 {
 	if (_lsd != -1)
+	{
 		close(_lsd);
+		_lsd = -1;
+	}
 }
 
 Server &Server::operator=(const Server &rhs)
@@ -91,6 +95,8 @@ void Server::start()
 
 	_fds.push_back(fd);
 
+	std::cout << "Server started on port " << _port << std::endl;
+
 	while (Server::stop == false)
 	{
 		if (poll(_fds.data(), _fds.size(), -1) < 0)
@@ -101,11 +107,7 @@ void Server::start()
 			int fd = _fds[i].fd;
 
 			if (_fds[i].revents & POLLHUP)
-			{
 				disconnectClient(fd);
-				close(fd);
-				std::cout << "[" << fd << "] Disconnected" << std::endl;
-			}
 			else if (_fds[i].revents & POLLIN)
 			{
 				if (fd == _lsd)
@@ -115,6 +117,8 @@ void Server::start()
 			}
 		}
 	}
+
+	std::cout << "Gracefully shut server down" << std::endl;
 }
 
 void Server::acceptConnection()
@@ -134,17 +138,19 @@ void Server::acceptConnection()
 	if (res != 0)
 		throw std::runtime_error("Error while getting a hostname on a new client!");
 
+	std::cout << "New connection from " << inet_ntoa(addr.sin_addr) << " (" << fd << ")" << std::endl;
+
 	struct pollfd pfd = {
 			.fd = fd,
 			.events = POLLIN,
 			.revents = 0};
 
-	Client client(fd, inet_ntoa(addr.sin_addr), hostname);
+	Client *client = new Client(fd, inet_ntoa(addr.sin_addr), hostname);
 
-	client.reply(RPL_WELCOME(client.getNickname()));
+	std::cout << "New connection from " << client->getFd() << " (" << fd << ")" << std::endl;
 
 	_fds.push_back(pfd);
-	_clients.push_back(client);
+	_clients.insert(std::pair<int, Client *>(fd, client));
 }
 
 void Server::readFromClient(int fd)
@@ -158,12 +164,27 @@ void Server::readFromClient(int fd)
 	if (bytes > 0)
 	{
 		buffer[bytes] = '\0';
-		std::cout << "[" << fd << "]" << buffer;
+
+		try
+		{
+			std::cout << "[" << _clients[fd]->getFd() << "] " << buffer << std::endl;
+
+			if (std::string(buffer).rfind("PASS", 0) == 0)
+				pass(_clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("NICK", 0) == 0)
+				nick(_clients[fd], split(std::string(buffer).substr(5)));
+		}
+		catch (const std::exception &e)
+		{
+			std::cerr << e.what() << '\n';
+		}
 	}
 }
 
 void Server::disconnectClient(int fd)
 {
+	Client *client = _clients.at(fd);
+
 	for (size_t i = 0; i < _fds.size(); i++)
 	{
 		if (_fds[i].fd == fd)
@@ -173,14 +194,12 @@ void Server::disconnectClient(int fd)
 		}
 	}
 
-	for (size_t i = 0; i < _clients.size(); i++)
-	{
-		if (_clients[i].getFd() == fd)
-		{
-			_clients.erase(_clients.begin() + i);
-			break;
-		}
-	}
+	_clients.erase(fd);
+	close(fd);
+
+	std::cout << "[" << client->getNickname() << "]" << " disconnected" << std::endl;
+
+	delete client;
 }
 
 void Server::handleSignal(int signal)

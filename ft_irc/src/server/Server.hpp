@@ -6,14 +6,18 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/01 15:34:54 by herbie           ###   ########.fr       */
+/*   Updated: 2024/07/02 17:56:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
 #include <iostream>
 #include <vector>
+#include <map>
 #include <poll.h>
+
+void pass(Client *client, std::vector<std::string> const &args);
+void nick(Client *client, std::vector<std::string> const &args);
 
 class Server
 {
@@ -38,5 +42,5 @@ private:
 	int _port;
 	int _lsd; // Listen Socket Descriptor
 	std::vector<struct pollfd> _fds;
-	std::vector<Client> _clients;
+	std::map<int, Client *> _clients;
 };
