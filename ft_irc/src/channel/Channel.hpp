@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.hpp                                         :+:      :+:    :+:   */
+/*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/12 16:03:55 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/12 16:03:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
-#include "../channel/Channel.hpp"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -20,29 +19,31 @@
 void pass(Client *client, std::vector<std::string> const &args);
 void nick(Client *client, std::vector<std::string> const &args);
 
-class Server
+class Channel
 {
 public:
-	explicit Server(std::string port, std::string password);
-	Server(const Server &src);
-	~Server();
+	explicit Channel(std::string &name, std::string &password, Client *admin);
+	Channel(const Channel &src);
+	~Channel();
 
-	Server &operator=(const Server &rhs);
+	Channel &operator=(const Channel &rhs);
 
-	void start();
+	std::string getName() const { return _name; }
+	Client *getAdmin() const { return _admin; }
+	std::vector<Client *> getClients() const { return _clients; }
 
-	void acceptConnection();
-	void readFromClient(int fd);
+	void setName(std::string name) { _name = name; }
+	void setAdmin(Client *admin) { _admin = admin; }
 
-	void disconnectClient(int fd);
-
-	static bool stop;
-	static void handleSignal(int signal);
+	void addClient(Client *);
 
 private:
-	int _port;
-	int _lsd; // Listen Socket Descriptor
-	std::vector<struct pollfd> _fds;
-	std::vector<Channel *> _channels;
-	std::map<int, Client *> _clients;
+	std::string _name;
+	Client *_admin;
+	std::vector<Client *> _clients;
+
+	// Channel key (password)
+	std::string _k;
+	// Channel limit
+	size_t _l;
 };

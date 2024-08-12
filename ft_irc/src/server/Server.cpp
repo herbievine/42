@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/02 17:56:31 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/12 16:03:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ void Server::readFromClient(int fd)
 				pass(_clients[fd], split(std::string(buffer).substr(5)));
 			else if (std::string(buffer).rfind("NICK", 0) == 0)
 				nick(_clients[fd], split(std::string(buffer).substr(5)));
+			else
+				std::cout << "[WARN] Command unhandled: " << buffer << std::endl;
 		}
 		catch (const std::exception &e)
 		{
