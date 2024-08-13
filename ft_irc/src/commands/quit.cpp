@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nick.cpp                                           :+:      :+:    :+:   */
+/*   quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/13 11:50:57 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/13 11:50:50 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
 
-void nick(Client *client, std::vector<std::string> const &args)
+void quit(Client *client, std::vector<std::string> const &args)
 {
-	if (args.empty() || args[0].empty())
-	{
-		client->reply(ERR_NONICKNAMEGIVEN(client->getNickname()));
-		return;
-	}
+	std::string reason = args.empty() ? "Leaving..." : args[0];
 
-	client->setNickname(args[0]);
-	client->reply(RPL_WELCOME(client->getNickname()));
+	if (reason.at(0) == ':')
+		reason = reason.substr(1);
+
+	// TODO: disconnect when we have access to server
+	// server->disconnectClient(client->getFd())
+	client->reply(RPL_QUIT(client->getHost(), reason));
 }

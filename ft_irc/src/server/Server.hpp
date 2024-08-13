@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/12 16:03:55 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/13 13:31:15 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 #include <map>
 #include <poll.h>
 
-void pass(Client *client, std::vector<std::string> const &args);
 void nick(Client *client, std::vector<std::string> const &args);
+void pass(Client *client, std::vector<std::string> const &args);
+void ping(Client *client, std::vector<std::string> const &args);
+void pong(Client *client, std::vector<std::string> const &args);
+void quit(Client *client, std::vector<std::string> const &args);
 
 class Server
 {

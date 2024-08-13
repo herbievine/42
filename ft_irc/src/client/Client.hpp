@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/02 16:57:04 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/13 15:48:05 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ public:
 
 	int getFd() const { return _fd; }
 	std::string getNickname() const { return _nickname; }
+	std::string getPrefix() const;
 
 	void authenticate() { _auth = true; }
 

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/12 16:03:57 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/13 13:31:49 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,14 +167,20 @@ void Server::readFromClient(int fd)
 
 		try
 		{
-			std::cout << "[" << _clients[fd]->getFd() << "] " << buffer << std::endl;
+			std::cout << "[NEW] " << buffer;
 
-			if (std::string(buffer).rfind("PASS", 0) == 0)
-				pass(_clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("NICK", 0) == 0)
+			if (std::string(buffer).rfind("NICK", 0) == 0)
 				nick(_clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("PASS", 0) == 0)
+				pass(_clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("PING", 0) == 0)
+				ping(_clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("PONG", 0) == 0)
+				pong(_clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("QUIT", 0) == 0)
+				quit(_clients[fd], split(std::string(buffer).substr(5)));
 			else
-				std::cout << "[WARN] Command unhandled: " << buffer << std::endl;
+				std::cout << "[WARN] Command unhandled: " << buffer;
 		}
 		catch (const std::exception &e)
 		{
