@@ -6,17 +6,17 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/17 08:55:27 by herbie            #+#    #+#              #
-#    Updated: 2024/08/17 08:59:20 by herbie           ###   ########.fr        #
+#    Updated: 2024/08/17 09:10:34 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all: up
 
 build:
-  docker compose -f srcs/docker-compose.yml build
+	docker compose -f srcs/docker-compose.yml build
 up:
-	mkdir -p /home/hvine/data/mariadb
-	mkdir -p /home/hvine/data/wordpress
+	sudo mkdir -p /home/hvine/data/mariadb
+	sudo mkdir -p /home/hvine/data/wordpress
 	docker compose -f srcs/docker-compose.yml up -d
 down:
 	docker compose -f srcs/docker-compose.yml down
