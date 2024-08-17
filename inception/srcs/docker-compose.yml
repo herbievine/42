@@ -3,6 +3,11 @@ services:
     container_name: mariadb
     restart: unless-stopped
     build: requirements/mariadb
+    healthcheck:
+      test: [ "/usr/bin/mysql", "--user=$$MYSQL_USER --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\"" ]
+      interval: 15s
+      retries: 10
+      start_period: 20s
     volumes:
       - db_data:/var/lib/mysql
     env_file:
@@ -25,7 +30,8 @@ services:
     restart: unless-stopped
     build: requirements/wordpress
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     volumes:
       - wp_data:/var/www/html
     env_file:
