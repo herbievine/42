@@ -9,7 +9,7 @@ services:
       retries: 10
       start_period: 20s
     volumes:
-      - /home/hvine/data/mariadb:/var/lib/mysql
+      - db_data:/var/lib/mysql
     env_file:
       - .env
     networks:
@@ -22,7 +22,7 @@ services:
       # - "80:80"
       - "443:443"
     volumes:
-      - /home/hvine/data/wordpress:/var/www/html
+      - wp_data:/var/www/html
     networks:
       - net
   wordpress:
@@ -33,7 +33,7 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - /home/hvine/data/wordpress:/var/www/html
+      - wp_data:/var/www/html
     env_file:
       - .env
     networks:
@@ -42,3 +42,17 @@ services:
 networks:
   net:
     driver: bridge
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/hvine/data/mariadb
+      o: bind
+  wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/hvine/data/wordpress
+      o: bind
