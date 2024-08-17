@@ -42,17 +42,3 @@ services:
 networks:
   net:
     driver: bridge
-
-volumes:
-  db_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/hvine/data/db
-      o: bind
-  wp_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/hvine/data/wp
-      o: bind
