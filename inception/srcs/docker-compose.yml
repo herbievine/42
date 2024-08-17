@@ -4,12 +4,12 @@ services:
     restart: unless-stopped
     build: requirements/mariadb
     healthcheck:
-      test: [ "/usr/bin/mysql", "--user=$$MYSQL_USER --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\"" ]
+      test: [ "CMD-SHELL", "/usr/bin/mysql  --execute \"SHOW DATABASES;\"" ]
       interval: 15s
       retries: 10
       start_period: 20s
     volumes:
-      - db_data:/var/lib/mysql
+      - /home/hvine/data/mariadb:/var/lib/mysql
     env_file:
       - .env
     networks:
@@ -22,7 +22,7 @@ services:
       # - "80:80"
       - "443:443"
     volumes:
-      - wp_data:/var/www/html
+      - /home/hvine/data/wordpress:/var/www/html
     networks:
       - net
   wordpress:
@@ -33,7 +33,7 @@ services:
       mariadb:
         condition: service_healthy
     volumes:
-      - wp_data:/var/www/html
+      - /home/hvine/data/wordpress:/var/www/html
     env_file:
       - .env
     networks:
