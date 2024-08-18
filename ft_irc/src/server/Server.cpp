@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/13 13:31:49 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 12:40:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <cstring>
 
 bool Server::stop = false;
 
@@ -63,10 +64,11 @@ Server &Server::operator=(const Server &rhs)
 
 void Server::start()
 {
-	struct sockaddr_in addr = {
-			.sin_family = AF_INET,
-			.sin_port = htons(this->_port),
-			.sin_addr.s_addr = INADDR_ANY};
+	struct sockaddr_in addr;
+
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(this->_port);
+	addr.sin_addr.s_addr = INADDR_ANY;
 
 	// Create a socket
 	_lsd = socket(AF_INET, SOCK_STREAM, 0);
