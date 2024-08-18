@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 12:40:54 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/18 16:19:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ Server &Server::operator=(const Server &rhs)
 	return *this;
 }
 
+void Server::createChannel(std::string name, std::string password, Client *admin)
+{
+	Channel *channel = new Channel(name, password, admin);
+
+	_channels.push_back(channel);
+}
+
+Channel *Server::getChannel(std::string name)
+{
+	for (size_t i = 0; i < _channels.size(); i++)
+	{
+		if (_channels[i]->getName() == name)
+			return _channels[i];
+	}
+
+	return nullptr;
+}
+
 void Server::start()
 {
 	struct sockaddr_in addr;
@@ -79,8 +97,8 @@ void Server::start()
 	const int enable = 1;
 	if (setsockopt(_lsd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
 		throw std::runtime_error("Could not set socket options");
-	else if (fcntl(_lsd, F_SETFL, O_NONBLOCK) < 0)
-		throw std::runtime_error("Could not set socket options");
+	// else if (fcntl(_lsd, F_SETFL, O_NONBLOCK) < 0)
+	// 	throw std::runtime_error("Could not set socket options");
 
 	// Bind the socket
 	if (bind(_lsd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
@@ -132,15 +150,13 @@ void Server::acceptConnection()
 	if (fd < 0)
 		throw std::runtime_error("Failed to accept connection");
 
-	if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
-		throw std::runtime_error("Could not set socket options");
+	// if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
+	// 	throw std::runtime_error("Could not set socket options");
 
 	char hostname[NI_MAXHOST];
 	int res = getnameinfo((struct sockaddr *)&addr, sizeof(addr), hostname, NI_MAXHOST, NULL, 0, NI_NUMERICSERV);
 	if (res != 0)
 		throw std::runtime_error("Error while getting a hostname on a new client!");
-
-	std::cout << "New connection from " << inet_ntoa(addr.sin_addr) << " (" << fd << ")" << std::endl;
 
 	struct pollfd pfd = {
 			.fd = fd,
@@ -171,7 +187,9 @@ void Server::readFromClient(int fd)
 		{
 			std::cout << "[NEW] " << buffer;
 
-			if (std::string(buffer).rfind("NICK", 0) == 0)
+			if (std::string(buffer).rfind("JOIN", 0) == 0)
+				join(this, _clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("NICK", 0) == 0)
 				nick(_clients[fd], split(std::string(buffer).substr(5)));
 			else if (std::string(buffer).rfind("PASS", 0) == 0)
 				pass(_clients[fd], split(std::string(buffer).substr(5)));
@@ -181,6 +199,8 @@ void Server::readFromClient(int fd)
 				pong(_clients[fd], split(std::string(buffer).substr(5)));
 			else if (std::string(buffer).rfind("QUIT", 0) == 0)
 				quit(_clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("USER", 0) == 0)
+				user(_clients[fd], split(std::string(buffer).substr(5)));
 			else
 				std::cout << "[WARN] Command unhandled: " << buffer;
 		}

@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/08/13 13:32:10 by herbie           ###   ########.fr        #
+#    Updated: 2024/08/18 17:19:42 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,14 @@ SRCS = \
 	src/main.cpp \
 	src/client/Client.cpp \
 	src/server/Server.cpp \
+	src/channel/Channel.cpp \
+	src/commands/join.cpp \
 	src/commands/nick.cpp \
 	src/commands/pass.cpp \
 	src/commands/ping.cpp \
 	src/commands/pong.cpp \
 	src/commands/quit.cpp \
+	src/commands/user.cpp \
 	src/utils/split.cpp \
 	src/utils/trim.cpp
 

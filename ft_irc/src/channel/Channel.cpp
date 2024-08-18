@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/12 16:03:06 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 17:18:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-Channel::Channel(std::string &name, std::string &password, Client *admin) : _l(0)
+Channel::Channel(std::string &name, std::string &password, Client *admin) : _limit(0)
 {
 	_name = name;
-	_k = password;
+	_key = password;
 	_admin = admin;
 }
 
@@ -46,6 +46,32 @@ Channel &Channel::operator=(const Channel &rhs)
 	}
 
 	return *this;
+}
+
+void Channel::broadcast(std::string message)
+{
+	std::vector<Client *>::iterator it = _clients.begin();
+
+	while (it != _clients.end())
+	{
+		(*it)->reply(message);
+		it++;
+	}
+}
+
+std::vector<std::string> Channel::getNicknames() const
+{
+	std::vector<std::string> nicknames;
+
+	std::vector<Client *>::const_iterator it = _clients.begin();
+
+	while (it != _clients.end())
+	{
+		nicknames.push_back((*it)->isChannelOperator() ? "@" : "" + (*it)->getNickname());
+		it++;
+	}
+
+	return nicknames;
 }
 
 void Channel::addClient(Client *client)

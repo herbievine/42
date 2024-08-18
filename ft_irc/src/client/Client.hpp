@@ -6,14 +6,17 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/13 15:48:05 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 17:30:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
+#include "../channel/Channel.hpp"
 #include <iostream>
+
+class Channel;
 
 #define RPL_WELCOME(source) "001 " + source + " :Welcome " + source + " to the ft_irc network"
 
@@ -57,9 +60,19 @@ public:
 	Client &operator=(const Client &rhs);
 
 	void reply(const std::string &msg) const;
+	void joinChannel(Channel *channel);
 
 	int getFd() const { return _fd; }
+
+	std::string getUsername() const { return _username; }
+	std::string getRealname() const { return _realname; }
 	std::string getNickname() const { return _nickname; }
+	bool isRegistered() const { return _isRegistered; }
+	bool hasBeenWelcomed() const { return _hasBeenWelcomed; }
+
+	Channel *getChannel() const { return _channel; }
+	bool isChannelOperator() const { return _isChannelOperator; }
+
 	std::string getPrefix() const;
 
 	void authenticate() { _auth = true; }
@@ -67,17 +80,27 @@ public:
 	void setNickname(const std::string &nickname) { _nickname = nickname; }
 	void setUsername(const std::string &username) { _username = username; }
 	void setRealname(const std::string &realname) { _realname = realname; }
+	void setIsRegistered(bool isRegistered) { _isRegistered = isRegistered; }
+	void setHasBeenWelcomed(bool hasBeenWelcomed) { _hasBeenWelcomed = hasBeenWelcomed; }
+
+	void setChannel(Channel *channel) { _channel = channel; }
+	void setIsChannelOperator(bool isChannelOperator) { _isChannelOperator = isChannelOperator; }
 
 private:
 	int _fd;
 	std::string _ip;
 	std::string _hostname;
 
-	bool _auth = false;
+	bool _auth;
 
 	std::string _username;
 	std::string _realname;
 	std::string _nickname;
+	bool _isRegistered;
+	bool _hasBeenWelcomed;
+
+	Channel *_channel;
+	bool _isChannelOperator;
 };
 
 #endif /* CLIENT_HPP */

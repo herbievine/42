@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/13 15:48:06 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 17:00:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@ Client::Client()
 	_fd = -1;
 	_ip = "";
 	_hostname = "";
+
+	_auth = false;
+
 	_nickname = "";
 	_username = "";
 	_realname = "";
+	_isRegistered = false;
+	_hasBeenWelcomed = false;
 }
 
 Client::Client(int fd, std::string ip, std::string hostname)
@@ -30,9 +35,14 @@ Client::Client(int fd, std::string ip, std::string hostname)
 	_fd = fd;
 	_ip = ip;
 	_hostname = hostname;
+
+	_auth = false;
+
 	_nickname = "";
 	_username = "";
 	_realname = "";
+	_isRegistered = false;
+	_hasBeenWelcomed = false;
 }
 
 Client::Client(const Client &src)
@@ -65,6 +75,27 @@ void Client::reply(const std::string &msg) const
 	// TODO: this is debug
 	else
 		std::cout << "[SENT] " << message;
+}
+
+void Client::joinChannel(Channel *channel)
+{
+	channel->addClient(this);
+	_channel = channel;
+
+	std::string users = "";
+	std::vector<std::string> nicknames = _channel->getNicknames();
+	std::vector<std::string>::iterator it = nicknames.begin();
+
+	while (it != nicknames.end())
+	{
+		users.append(*it + " ");
+		it++;
+	}
+
+	reply(RPL_NAMREPLY(_nickname, _channel->getName(), users));
+	reply(RPL_ENDOFNAMES(_nickname, _channel->getName()));
+
+	_channel->broadcast(RPL_JOIN(getPrefix(), _channel->getName()));
 }
 
 std::string Client::getPrefix() const
