@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 16:19:45 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 21:00:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void Server::acceptConnection()
 
 	std::cout << "New connection from " << client->getFd() << " (" << fd << ")" << std::endl;
 
+	client->sendRaw(":ft_irc.server NOTICE * :***Welcome to ft_irc!\r\n");
+
 	_fds.push_back(pfd);
 	_clients.insert(std::pair<int, Client *>(fd, client));
 }
@@ -187,7 +189,9 @@ void Server::readFromClient(int fd)
 		{
 			std::cout << "[NEW] " << buffer;
 
-			if (std::string(buffer).rfind("JOIN", 0) == 0)
+			if (std::string(buffer).rfind("CAP", 0) == 0)
+				cap(_clients[fd], split(std::string(buffer).substr(5)));
+			else if (std::string(buffer).rfind("JOIN", 0) == 0)
 				join(this, _clients[fd], split(std::string(buffer).substr(5)));
 			else if (std::string(buffer).rfind("NICK", 0) == 0)
 				nick(_clients[fd], split(std::string(buffer).substr(5)));

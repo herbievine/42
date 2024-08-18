@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 17:00:43 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 20:58:22 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,15 @@ void Client::reply(const std::string &msg) const
 	// TODO: this is debug
 	else
 		std::cout << "[SENT] " << message;
+}
+
+void Client::sendRaw(const std::string &msg) const
+{
+	if (send(_fd, msg.c_str(), msg.size(), 0) < 0)
+		throw std::runtime_error("Failed to send message to client");
+	// TODO: this is debug
+	else
+		std::cout << "[SENT] " << msg;
 }
 
 void Client::joinChannel(Channel *channel)

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 17:30:22 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 20:57:55 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ public:
 	Client &operator=(const Client &rhs);
 
 	void reply(const std::string &msg) const;
+	void sendRaw(const std::string &msg) const;
 	void joinChannel(Channel *channel);
 
 	int getFd() const { return _fd; }

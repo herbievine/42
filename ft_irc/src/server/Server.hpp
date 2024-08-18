@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 17:20:40 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/18 20:53:25 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 class Server;
 
+void cap(Client *client, std::vector<std::string> const &args);
 void join(Server *server, Client *client, std::vector<std::string> const &args);
 void nick(Client *client, std::vector<std::string> const &args);
 void pass(Client *client, std::vector<std::string> const &args);
