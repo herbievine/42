@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 20:53:25 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 12:35:19 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ public:
 
 	Server &operator=(const Server &rhs);
 
-	void createChannel(std::string name, std::string password, Client *admin);
-
 	Channel *getChannel(std::string name);
+	Channel *createChannel(std::string name, std::string password);
 
 	void start();
 

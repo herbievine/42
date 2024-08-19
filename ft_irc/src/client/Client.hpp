@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 20:57:55 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 12:25:45 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ public:
 	std::string getRealname() const { return _realname; }
 	std::string getNickname() const { return _nickname; }
 	bool isRegistered() const { return _isRegistered; }
-	bool hasBeenWelcomed() const { return _hasBeenWelcomed; }
 
 	Channel *getChannel() const { return _channel; }
-	bool isChannelOperator() const { return _isChannelOperator; }
 
 	std::string getPrefix() const;
 
@@ -82,10 +80,8 @@ public:
 	void setUsername(const std::string &username) { _username = username; }
 	void setRealname(const std::string &realname) { _realname = realname; }
 	void setIsRegistered(bool isRegistered) { _isRegistered = isRegistered; }
-	void setHasBeenWelcomed(bool hasBeenWelcomed) { _hasBeenWelcomed = hasBeenWelcomed; }
 
 	void setChannel(Channel *channel) { _channel = channel; }
-	void setIsChannelOperator(bool isChannelOperator) { _isChannelOperator = isChannelOperator; }
 
 private:
 	int _fd;
@@ -98,10 +94,8 @@ private:
 	std::string _realname;
 	std::string _nickname;
 	bool _isRegistered;
-	bool _hasBeenWelcomed;
 
 	Channel *_channel;
-	bool _isChannelOperator;
 };
 
 #endif /* CLIENT_HPP */

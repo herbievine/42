@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 16:23:08 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 12:38:35 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,35 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 	if (args.size() > 1)
 		password = args[1];
 
-	Channel *channel = client->getChannel();
+	// Channel *channel = client->getChannel();
 
-	if (channel)
-	{
-		client->reply(ERR_TOOMANYCHANNELS(client->getNickname(), channelName));
-		return;
-	}
+	// if (channel)
+	// {
+	// 	client->reply(ERR_TOOMANYCHANNELS(client->getNickname(), channelName));
+	// 	return;
+	// }
 
-	channel = server->getChannel(channelName);
+	Channel *channel = server->getChannel(channelName);
 
 	if (!channel)
 	{
-		server->createChannel(channelName, password, client);
-		channel = server->getChannel(channelName);
+		channel = server->createChannel(channelName, password);
+		channel->addOperator(client);
 
-		if (!channel)
-		{
-			client->reply(ERR_NOSUCHCHANNEL(client->getNickname(), channelName));
-			return;
-		}
+		client->joinChannel(channel);
 
-		if (channel->getLimit() > 0 && channel->getClients().size() >= channel->getLimit())
-		{
-			client->reply(ERR_CHANNELISFULL(client->getNickname(), channelName));
-			return;
-		}
-		else if (!password.empty() && channel->getKey() != password)
-		{
-			client->reply(ERR_BADCHANNELKEY(client->getNickname(), channelName));
-			return;
-		}
+		return;
+	}
+
+	if (channel->getLimit() > 0 && channel->getClients().size() >= channel->getLimit())
+	{
+		client->reply(ERR_CHANNELISFULL(client->getNickname(), channelName));
+		return;
+	}
+	else if (!password.empty() && channel->getKey() != password)
+	{
+		client->reply(ERR_BADCHANNELKEY(client->getNickname(), channelName));
+		return;
 	}
 
 	client->joinChannel(channel);

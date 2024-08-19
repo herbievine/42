@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:05:23 by herbie            #+#    #+#             */
-/*   Updated: 2024/07/02 17:02:14 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 09:52:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <iostream>
 #include <vector>
 
-std::vector<std::string> split(std::string str)
+std::vector<std::string> split(std::string str, int sep)
 {
 	std::vector<std::string> tokens;
 	std::string tok = "";
@@ -24,7 +24,7 @@ std::vector<std::string> split(std::string str)
 	{
 		c = str[i];
 
-		if (c == ' ')
+		if (c == sep)
 		{
 			trim(tok);
 			tokens.push_back(tok);

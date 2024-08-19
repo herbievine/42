@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 15:48:58 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 10:06:36 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,5 @@ void user(Client *client, std::vector<std::string> const &args)
 	client->setUsername(args[0]);
 	client->setRealname(args[3]);
 
-	if (!client->hasBeenWelcomed())
-	{
-		client->reply(RPL_WELCOME(client->getUsername()));
-		client->setHasBeenWelcomed(true);
-	}
+	client->reply(RPL_WELCOME(client->getUsername()));
 }

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 21:00:10 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 12:35:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ Server &Server::operator=(const Server &rhs)
 	return *this;
 }
 
-void Server::createChannel(std::string name, std::string password, Client *admin)
+Channel *Server::createChannel(std::string name, std::string password)
 {
-	Channel *channel = new Channel(name, password, admin);
+	Channel *channel = new Channel(name, password);
 
 	_channels.push_back(channel);
+
+	return channel;
 }
 
 Channel *Server::getChannel(std::string name)
@@ -150,13 +152,24 @@ void Server::acceptConnection()
 	if (fd < 0)
 		throw std::runtime_error("Failed to accept connection");
 
+	std::string welcome = ":ft_irc.server NOTICE * :*** Looking up your hostname...\r\n";
+	send(fd, welcome.c_str(), welcome.size(), 0);
+
 	// if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
 	// 	throw std::runtime_error("Could not set socket options");
 
 	char hostname[NI_MAXHOST];
 	int res = getnameinfo((struct sockaddr *)&addr, sizeof(addr), hostname, NI_MAXHOST, NULL, 0, NI_NUMERICSERV);
 	if (res != 0)
+	{
+		std::string message = ":ft_irc.server NOTICE * :*** Could not get hostname\r\n";
+		send(fd, message.c_str(), message.size(), 0);
+
 		throw std::runtime_error("Error while getting a hostname on a new client!");
+	}
+
+	std::string message = ":ft_irc.server NOTICE * :*** Found your hostname\r\n";
+	send(fd, message.c_str(), message.size(), 0);
 
 	struct pollfd pfd = {
 			.fd = fd,
@@ -164,10 +177,6 @@ void Server::acceptConnection()
 			.revents = 0};
 
 	Client *client = new Client(fd, inet_ntoa(addr.sin_addr), hostname);
-
-	std::cout << "New connection from " << client->getFd() << " (" << fd << ")" << std::endl;
-
-	client->sendRaw(":ft_irc.server NOTICE * :***Welcome to ft_irc!\r\n");
 
 	_fds.push_back(pfd);
 	_clients.insert(std::pair<int, Client *>(fd, client));
@@ -185,28 +194,42 @@ void Server::readFromClient(int fd)
 	{
 		buffer[bytes] = '\0';
 
+		// std::cout << "**** BUFFER ****" << std::endl;
+		// std::cout << buffer;
+		// std::cout << "**** END BUFFER ****" << std::endl;
+
 		try
 		{
-			std::cout << "[NEW] " << buffer;
+			std::vector<std::string> args = split(buffer, '\n');
+			std::vector<std::string>::iterator it = args.begin();
 
-			if (std::string(buffer).rfind("CAP", 0) == 0)
-				cap(_clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("JOIN", 0) == 0)
-				join(this, _clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("NICK", 0) == 0)
-				nick(_clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("PASS", 0) == 0)
-				pass(_clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("PING", 0) == 0)
-				ping(_clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("PONG", 0) == 0)
-				pong(_clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("QUIT", 0) == 0)
-				quit(_clients[fd], split(std::string(buffer).substr(5)));
-			else if (std::string(buffer).rfind("USER", 0) == 0)
-				user(_clients[fd], split(std::string(buffer).substr(5)));
-			else
-				std::cout << "[WARN] Command unhandled: " << buffer;
+			while (it != args.end())
+			{
+				std::string line = *it;
+
+				std::cout << "LINE: <" << line << ">" << std::endl;
+
+				if (std::string(line).rfind("CAP", 0) == 0)
+					cap(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("JOIN", 0) == 0)
+					join(this, _clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("NICK", 0) == 0)
+					nick(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("PASS", 0) == 0)
+					pass(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("PING", 0) == 0)
+					ping(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("PONG", 0) == 0)
+					pong(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("QUIT", 0) == 0)
+					quit(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("USER", 0) == 0)
+					user(_clients[fd], split(std::string(line).substr(5)));
+				else
+					std::cout << "[WARN] Command unhandled: " << line;
+
+				it++;
+			}
 		}
 		catch (const std::exception &e)
 		{
@@ -231,7 +254,7 @@ void Server::disconnectClient(int fd)
 	_clients.erase(fd);
 	close(fd);
 
-	std::cout << "[" << client->getNickname() << "]" << " disconnected" << std::endl;
+	std::cout << "[" << client->getFd() << "]" << " disconnected" << std::endl;
 
 	delete client;
 }

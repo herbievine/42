@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 20:58:22 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 13:17:52 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ Client::Client()
 	_username = "";
 	_realname = "";
 	_isRegistered = false;
-	_hasBeenWelcomed = false;
 }
 
 Client::Client(int fd, std::string ip, std::string hostname)
@@ -42,7 +41,6 @@ Client::Client(int fd, std::string ip, std::string hostname)
 	_username = "";
 	_realname = "";
 	_isRegistered = false;
-	_hasBeenWelcomed = false;
 }
 
 Client::Client(const Client &src)
@@ -101,10 +99,15 @@ void Client::joinChannel(Channel *channel)
 		it++;
 	}
 
-	reply(RPL_NAMREPLY(_nickname, _channel->getName(), users));
-	reply(RPL_ENDOFNAMES(_nickname, _channel->getName()));
+	sendRaw(":" + getPrefix() + " JOIN " + _channel->getName() + "\r\n");
+	sendRaw(":ft_irc.server MODE " + _channel->getName() + " +nt\r\n");
+	sendRaw(":ft_irc.server 353 " + getNickname() + " = " + _channel->getName() + " :" + users + "\r\n");
+	sendRaw(":ft_irc.server 366 " + getNickname() + " " + _channel->getName() + " :End of /NAMES list.\r\n");
 
-	_channel->broadcast(RPL_JOIN(getPrefix(), _channel->getName()));
+	// reply(RPL_NAMREPLY(_nickname, _channel->getName(), users));
+	// reply(RPL_ENDOFNAMES(_nickname, _channel->getName()));
+
+	// _channel->broadcast(RPL_JOIN(getPrefix(), _channel->getName()));
 }
 
 std::string Client::getPrefix() const

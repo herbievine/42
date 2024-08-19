@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 15:48:44 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 10:02:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,4 @@ void nick(Client *client, std::vector<std::string> const &args)
 	}
 
 	client->setNickname(args[0]);
-
-	if (!client->hasBeenWelcomed())
-	{
-		client->reply(RPL_WELCOME(client->getNickname()));
-		client->setHasBeenWelcomed(true);
-	}
 }

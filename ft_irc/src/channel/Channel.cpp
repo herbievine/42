@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 17:18:45 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/19 13:17:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-Channel::Channel(std::string &name, std::string &password, Client *admin) : _limit(0)
+Channel::Channel(std::string &name, std::string &password) : _limit(0)
 {
 	_name = name;
 	_key = password;
-	_admin = admin;
 }
 
 Channel::Channel(const Channel &src)
@@ -42,7 +41,6 @@ Channel &Channel::operator=(const Channel &rhs)
 	if (this != &rhs)
 	{
 		this->_name = rhs._name;
-		this->_admin = rhs._admin;
 	}
 
 	return *this;
@@ -67,14 +65,51 @@ std::vector<std::string> Channel::getNicknames() const
 
 	while (it != _clients.end())
 	{
-		nicknames.push_back((*it)->isChannelOperator() ? "@" : "" + (*it)->getNickname());
+		nicknames.push_back((isOperator(*it) ? "@" : "") + (*it)->getNickname());
+
 		it++;
 	}
 
 	return nicknames;
 }
 
+bool Channel::isOperator(Client *client) const
+{
+	std::map<std::string, bool>::const_iterator it = _operators.find(client->getNickname());
+
+	if (it != _operators.end())
+		return it->second;
+
+	return false;
+}
+
 void Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
+}
+
+void Channel::removeClient(Client *client)
+{
+	std::vector<Client *>::iterator it = _clients.begin();
+
+	while (it != _clients.end())
+	{
+		if (*it == client)
+		{
+			_clients.erase(it);
+			break;
+		}
+
+		it++;
+	}
+}
+
+void Channel::addOperator(Client *client)
+{
+	_operators[client->getNickname()] = true;
+}
+
+void Channel::removeOperator(Client *client)
+{
+	_operators[client->getNickname()] = false;
 }

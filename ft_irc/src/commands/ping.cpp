@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 12:42:55 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/19 10:42:04 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ void ping(Client *client, std::vector<std::string> const &args)
 		return;
 	}
 
-	client->reply(RPL_PING(client->getPrefix(), args.at(0)));
+	// client->reply(RPL_PING(client->getPrefix(), args.at(0)));
+	client->sendRaw(":ft_irc.server PONG ft_irc.server :" + args.at(0) + "\r\n");
 }
