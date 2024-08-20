@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/19 12:35:26 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/20 15:15:11 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,8 @@ void Server::readFromClient(int fd)
 					join(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("NICK", 0) == 0)
 					nick(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("PART", 0) == 0)
+					part(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("PASS", 0) == 0)
 					pass(_clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("PING", 0) == 0)

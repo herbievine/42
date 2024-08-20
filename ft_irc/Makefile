@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/08/18 20:53:56 by herbie           ###   ########.fr        #
+#    Updated: 2024/08/20 15:15:20 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS = \
 	src/commands/cap.cpp \
 	src/commands/join.cpp \
 	src/commands/nick.cpp \
+	src/commands/part.cpp \
 	src/commands/pass.cpp \
 	src/commands/ping.cpp \
 	src/commands/pong.cpp \
