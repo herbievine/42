@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 11:08:53 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 11:28:13 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 Channel::Channel(std::string &name, std::string &password) : _limit(0)
 {
 	_name = name;
-	_key = password;
+	_k = password;
 }
 
 Channel::Channel(const Channel &src)
@@ -52,7 +52,7 @@ void Channel::broadcast(std::string message)
 
 	while (it != _clients.end())
 	{
-		(*it)->reply(message);
+		(*it)->sendRaw(message);
 		it++;
 	}
 }
@@ -125,4 +125,18 @@ void Channel::addOperator(Client *client)
 void Channel::removeOperator(Client *client)
 {
 	_operators[client->getNickname()] = false;
+}
+
+Client *Channel::getClientByNickname(std::string nickname)
+{
+	std::vector<Client *>::iterator it = _clients.begin();
+
+	while (it != _clients.end())
+	{
+		if ((*it)->getNickname() == nickname)
+			return *it;
+
+		it++;
+	}
+	return nullptr;
 }

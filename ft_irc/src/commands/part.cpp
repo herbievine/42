@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/20 15:14:22 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/23 17:51:36 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 	}
 
 	channel->removeClient(client);
+	channel->broadcast(":" + client->getNickname() + " PART " + channelName + " :" + (args.size() > 1 ? args[1] : ""));
 }

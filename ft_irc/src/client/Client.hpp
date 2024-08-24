@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 09:50:02 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 10:25:04 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ public:
 	Client &operator=(const Client &rhs);
 
 	void reply(const std::string &msg) const;
+
 	void sendRaw(const std::string &msg) const;
 	void joinChannel(Channel *channel);
 

@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 12:42:50 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/24 11:48:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
+#include "../server/Server.hpp"
 #include <vector>
 
-void pass(Client *client, std::vector<std::string> const &args)
+void pass(Server *server, Client *client, std::vector<std::string> const &args)
 {
-	if (args.size() != 1)
+	if (args.empty())
 	{
 		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "PASS"));
 		return;
@@ -27,7 +28,7 @@ void pass(Client *client, std::vector<std::string> const &args)
 		return;
 	}
 
-	if (args[0] != "password")
+	if (args[0] != server->getPassword())
 	{
 		client->reply(ERR_PASSWDMISMATCH(client->getNickname()));
 		return;

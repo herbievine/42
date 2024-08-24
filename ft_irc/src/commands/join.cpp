@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/19 12:38:35 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/21 15:45:10 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 		client->reply(ERR_CHANNELISFULL(client->getNickname(), channelName));
 		return;
 	}
-	else if (!password.empty() && channel->getKey() != password)
+	else if (!password.empty() && channel->getK() != password)
 	{
 		client->reply(ERR_BADCHANNELKEY(client->getNickname(), channelName));
 		return;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 11:08:26 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 11:12:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,33 @@ public:
 	Channel &operator=(const Channel &rhs);
 
 	void broadcast(std::string message);
-	void Channel::broadcast(std::string message, Client *exclude);
+	void broadcast(std::string message, Client *exclude);
 
 	std::string getName() const { return _name; }
 	std::vector<Client *> getClients() const { return _clients; }
 	std::vector<std::string> getNicknames() const;
 	bool isOperator(Client *client) const;
 
-	std::string getKey() const { return _key; }
+	std::string getK() const { return _k; }
 	size_t getLimit() const { return _limit; }
+	std::string getTopic() const { return _topic; }
+	bool isInviteOnly() const { return _isInviteOnly; }
 
 	void setName(std::string name) { _name = name; }
 
-	void setKey(std::string key) { _key = key; }
+	void setK(std::string k) { _k = k; }
+	void setTopicPrivilege(bool _topicPrivilege) { _topicPrivilege = _topicPrivilege; }
 	void setLimit(size_t limit) { _limit = limit; }
+	void setTopic(std::string topic) { _topic = topic; }
+	void setInviteOnly(bool isInviteOnly) { _isInviteOnly = isInviteOnly; }
 
 	void addClient(Client *client);
 	void removeClient(Client *client);
 
 	void addOperator(Client *client);
 	void removeOperator(Client *client);
+
+	Client *getClientByNickname(std::string nickname);
 
 private:
 	Channel(const Channel &src);
@@ -58,7 +65,10 @@ private:
 	std::vector<Client *> _clients;
 	std::map<std::string, bool> _operators;
 
-	std::string _key; // aka password
+	std::string _k; // aka password
+	bool _isInviteOnly;
+	bool _topicPrivilege; // aka topic protection for all user or only operator
+	std::string _topic;
 	size_t _limit;
 };
 

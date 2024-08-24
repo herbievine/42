@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 10:01:07 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 10:44:54 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 bool Server::stop = false;
 
-Server::Server(std::string port, std::string password) : _lsd(-1) //: _password(password)
+Server::Server(std::string port, std::string password) : _lsd(-1), _password(password)
 {
 	try
 	{
@@ -210,7 +210,7 @@ void Server::readFromClient(int fd)
 				std::cout << "LINE: <" << line << ">" << std::endl;
 
 				if (std::string(line).rfind("CAP", 0) == 0)
-					cap(_clients[fd], split(std::string(line).substr(5)));
+					cap(_clients[fd], split(std::string(line).substr(4)));
 				else if (std::string(line).rfind("JOIN", 0) == 0)
 					join(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("NICK", 0) == 0)
@@ -218,7 +218,7 @@ void Server::readFromClient(int fd)
 				else if (std::string(line).rfind("PART", 0) == 0)
 					part(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("PASS", 0) == 0)
-					pass(_clients[fd], split(std::string(line).substr(5)));
+					pass(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("PING", 0) == 0)
 					ping(_clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("PONG", 0) == 0)
@@ -228,9 +228,15 @@ void Server::readFromClient(int fd)
 				else if (std::string(line).rfind("USER", 0) == 0)
 					user(_clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("WHO", 0) == 0)
-					who(this, _clients[fd], split(std::string(line).substr(5)));
+					who(this, _clients[fd], split(std::string(line).substr(4)));
+				else if (std::string(line).rfind("MODE", 0) == 0)
+					mode(this, _clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("KICK", 0) == 0)
+					kick(this, _clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("PRIVMSG", 0) == 0)
+					privmsg(this, _clients[fd], split(std::string(line).substr(8)));
 				else
-					std::cout << "[WARN] Command unhandled: " << line;
+					std::cout << "[WARN] Command unhandled: `" << line << '`' << std::endl;
 
 				it++;
 			}

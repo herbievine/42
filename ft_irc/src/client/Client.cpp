@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 11:09:23 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 11:53:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void Client::joinChannel(Channel *channel)
 	sendRaw(":ft_irc.server 353 " + getNickname() + " = " + _channel->getName() + " :" + users + "\r\n");
 	sendRaw(":ft_irc.server 366 " + getNickname() + " " + _channel->getName() + " :End of /NAMES list.\r\n");
 
-	_channel->broadcast(RPL_JOIN(getPrefix(), _channel->getName()), this);
+	_channel->broadcast(RPL_JOIN(getPrefix(), _channel->getName()) + "\r\n", this);
 }
 
 std::string Client::getPrefix() const

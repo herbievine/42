@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/08/24 11:23:56 by herbie           ###   ########.fr        #
+#    Updated: 2024/08/24 11:55:31 by juliencros       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,14 @@ SRCS = \
 	src/channel/Channel.cpp \
 	src/commands/cap.cpp \
 	src/commands/join.cpp \
+	src/commands/kick.cpp \
+	src/commands/mode.cpp \
 	src/commands/nick.cpp \
 	src/commands/part.cpp \
 	src/commands/pass.cpp \
 	src/commands/ping.cpp \
 	src/commands/pong.cpp \
+	src/commands/privmsg.cpp \
 	src/commands/quit.cpp \
 	src/commands/user.cpp \
 	src/commands/who.cpp \
