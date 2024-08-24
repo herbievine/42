@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 12:37:23 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:00:47 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void cap(Client *client, std::vector<std::string> const &args);
 void join(Server *server, Client *client, std::vector<std::string> const &args);
 void kick(Server *server, Client *client, std::vector<std::string> const &args);
 void mode(Server *server, Client *client, std::vector<std::string> const &args);
-void nick(Client *client, std::vector<std::string> const &args);
+void nick(Server *server, Client *client, std::vector<std::string> const &args);
 void part(Server *server, Client *client, std::vector<std::string> const &args);
 void pass(Server *server, Client *client, std::vector<std::string> const &args);
 void ping(Client *client, std::vector<std::string> const &args);
@@ -56,6 +56,8 @@ public:
 	void readFromClient(int fd);
 
 	void disconnectClient(int fd);
+
+	Client *getClientByNickname(std::string nickname);
 
 	static bool stop;
 	static void handleSignal(int signal);

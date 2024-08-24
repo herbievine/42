@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 11:53:28 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/24 13:50:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void Client::sendRaw(const std::string &msg) const
 
 void Client::joinChannel(Channel *channel)
 {
+	// TODO implement this in channel.cpp instead
+
 	channel->addClient(this);
 	_channel = channel;
 

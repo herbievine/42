@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:34:15 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 13:38:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void user(Client *client, std::vector<std::string> const &args)
 	}
 
 	client->setUsername(args[0]);
+
+	// TODO: may contains spaces!
 	client->setRealname(args[3]);
 
 	client->reply(RPL_WELCOME(client->getUsername()));

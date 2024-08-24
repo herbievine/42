@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 12:39:26 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:00:55 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void Server::readFromClient(int fd)
 				else if (std::string(line).rfind("JOIN", 0) == 0)
 					join(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("NICK", 0) == 0)
-					nick(_clients[fd], split(std::string(line).substr(5)));
+					nick(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("PART", 0) == 0)
 					part(this, _clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("PASS", 0) == 0)
@@ -269,6 +269,21 @@ void Server::disconnectClient(int fd)
 	std::cout << "[" << client->getFd() << "]" << " disconnected" << std::endl;
 
 	delete client;
+}
+
+Client *Server::getClientByNickname(std::string nickname)
+{
+	std::map<int, Client *>::iterator it = _clients.begin();
+
+	while (it != _clients.end())
+	{
+		if (it->second->getNickname() == nickname)
+			return it->second;
+
+		it++;
+	}
+
+	return nullptr;
 }
 
 void Server::handleSignal(int signal)

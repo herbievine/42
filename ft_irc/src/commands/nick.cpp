@@ -6,10 +6,11 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:30:21 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:01:21 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../server/Server.hpp"
 #include "../client/Client.hpp"
 #include <vector>
 
@@ -26,11 +27,30 @@
  *
  * @related https://modern.ircdocs.horse/#nick-message
  */
-void nick(Client *client, std::vector<std::string> const &args)
+void nick(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty() || args[0].empty())
 	{
-		client->reply(ERR_NONICKNAMEGIVEN(client->getNickname()));
+		client->sendRaw(":ft_irc.server 431 " + client->getNickname() + " :No nickname given\r\n");
+		return;
+	}
+
+	for (size_t i = 0; i < args[0].length(); i++)
+	{
+		std::string allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[]{}\\|";
+
+		if (allowed.find(args[0][i]) == std::string::npos)
+		{
+			client->sendRaw(":ft_irc.server 432 " + client->getNickname() + " :Erroneous nickname\r\n");
+			return;
+		}
+	}
+
+	Client *other = server->getClientByNickname(args[0]);
+
+	if (other)
+	{
+		client->sendRaw(":ft_irc.server 433 " + client->getNickname() + " " + args[0] + " :Nickname is already in use\r\n");
 		return;
 	}
 
