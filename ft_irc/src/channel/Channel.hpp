@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/19 13:15:57 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 11:08:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ public:
 	Channel &operator=(const Channel &rhs);
 
 	void broadcast(std::string message);
+	void Channel::broadcast(std::string message, Client *exclude);
 
 	std::string getName() const { return _name; }
 	std::vector<Client *> getClients() const { return _clients; }

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/19 13:17:08 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 11:08:53 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,19 @@ void Channel::broadcast(std::string message)
 	while (it != _clients.end())
 	{
 		(*it)->reply(message);
+		it++;
+	}
+}
+
+void Channel::broadcast(std::string message, Client *exclude)
+{
+	std::vector<Client *>::iterator it = _clients.begin();
+
+	while (it != _clients.end())
+	{
+		if (*it != exclude)
+			(*it)->sendRaw(message);
+
 		it++;
 	}
 }
