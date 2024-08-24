@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 09:52:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 10:18:33 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 
 		while (it != clients.end())
 		{
-			client->sendRaw(":ft_irc.server 352 " + client->getNickname() + " " + args[0] + " ~" + (*it)->getUsername() + " " + (*it)->getHostname() + " " + (*it)->getNickname() + " H :0 " + (*it)->getRealname() + "\r\n");
+			client->sendRaw(":ft_irc.server 352 " + client->getNickname() + " " + args[0] + " ~" + (*it)->getUsername() + " " + (*it)->getHostname() + " ft_irc.server " + (*it)->getNickname() + (channel->isOperator(*it) ? " *H :0 " : " H :0 ") + (*it)->getRealname() + "\r\n");
 			it++;
 		}
 
