@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/20 15:05:39 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 09:46:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,6 @@ void Client::joinChannel(Channel *channel)
 	sendRaw(":ft_irc.server MODE " + _channel->getName() + " +nt\r\n");
 	sendRaw(":ft_irc.server 353 " + getNickname() + " = " + _channel->getName() + " :" + users + "\r\n");
 	sendRaw(":ft_irc.server 366 " + getNickname() + " " + _channel->getName() + " :End of /NAMES list.\r\n");
-
-	// send all above messages in single command
-
-	// sendRaw(":" + getPrefix() + " JOIN " + _channel->getName() + "\r\n:ft_irc.server MODE " + _channel->getName() + " +nt\r\n:ft_irc.server 332 " + _channel->getName() + " :This is a topic\r\n:ft_irc.server 353 " + getNickname() + " = " + _channel->getName() + " :" + users + "\r\n:ft_irc.server 366 " + getNickname() + " " + _channel->getName() + " :End of /NAMES list.\r\n");
-
-	// reply(RPL_NAMREPLY(_nickname, _channel->getName(), users));
-	// reply(RPL_ENDOFNAMES(_nickname, _channel->getName()));
 
 	_channel->broadcast(RPL_JOIN(getPrefix(), _channel->getName()));
 }

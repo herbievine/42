@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/19 12:25:45 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 09:50:02 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ public:
 	void joinChannel(Channel *channel);
 
 	int getFd() const { return _fd; }
+	std::string getHostname() const { return _hostname; }
 
 	std::string getUsername() const { return _username; }
 	std::string getRealname() const { return _realname; }

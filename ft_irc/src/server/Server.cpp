@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/20 15:15:11 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 10:01:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,8 @@ void Server::readFromClient(int fd)
 					quit(_clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("USER", 0) == 0)
 					user(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("WHO", 0) == 0)
+					who(this, _clients[fd], split(std::string(line).substr(5)));
 				else
 					std::cout << "[WARN] Command unhandled: " << line;
 
