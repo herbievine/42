@@ -3,16 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/18 12:43:01 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/24 13:32:46 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
 #include <vector>
 
+/**
+ * @brief The QUIT command is used to terminate a client’s connection to the
+ * server. The server acknowledges this by replying with an ERROR message and
+ * closing the connection to the client.
+ *
+ * This message may also be sent from the server to a client to show that a
+ * client has exited from the network. This is typically only dispatched to
+ * clients that share a channel with the exiting user. When the QUIT message is
+ * sent to clients, <source> represents the client that has exited the network.
+
+ * When connections are terminated by a client-sent QUIT command, servers SHOULD
+ * prepend <reason> with the ASCII string "Quit: " when sending QUIT messages to
+ * other clients, to represent that this user terminated the connection
+ * themselves. This applies even if <reason> is empty, in which case the reason
+ * sent to other clients SHOULD be just this "Quit: " string. However, clients
+ * SHOULD NOT change behaviour based on the prefix of QUIT message reasons, as
+ * this is not required behaviour from servers.
+ *
+ * @param client
+ * @param args
+ *
+ * @related https://modern.ircdocs.horse/#quit-message
+ */
 void quit(Client *client, std::vector<std::string> const &args)
 {
 	std::string reason = args.empty() ? "Leaving..." : args[0];

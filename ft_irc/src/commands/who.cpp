@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 11:24:28 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 13:34:38 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 #include "../utils/utils.hpp"
 #include <vector>
 
+/**
+ * @brief This command is used to query a list of users who match the provided
+ * mask. The server will answer this command with zero, one or more
+ * RPL_WHOREPLY, and end the list with RPL_ENDOFWHO.
+ *
+ * @param server
+ * @param client
+ * @param args
+ *
+ * @related https://modern.ircdocs.horse/#who-message
+ */
 void who(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/23 17:51:36 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/24 13:28:24 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,11 @@
  * the server for each channel they have been removed from. <reason> is the
  * reason that the client has left the channel(s).
  *
- * For each channel in the parameter of this command, if the channel exists and
- * the client is not joined to it, they will receive an ERR_NOTONCHANNEL (442)
- * reply and that channel will be ignored. If the channel does not exist, the
- * client will receive an ERR_NOSUCHCHANNEL (403) reply and that channel will be
- * ignored.
- *
- * This message may be sent from a server to a client to notify the client that
- * someone has been removed from a channel. In this case, the message <source>
- * will be the client who is being removed, and <channel> will be the channel
- * which that client has been removed from. Servers SHOULD NOT send multiple
- * channels in this message to clients, and SHOULD distribute these
- * multiple-channel PART messages as a series of messages with a single channel
- * name on each. If a PART message is distributed in this way, <reason> (if it
- * exists) should be on each of these messages.
- *
  * @param server
  * @param client
  * @param args
+ *
+ * @related https://modern.ircdocs.horse/#part-message
  */
 void part(Server *server, Client *client, std::vector<std::string> const &args)
 {

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/19 14:21:52 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 13:25:21 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 #include <vector>
 
 /**
- * @brief The CAP command is used to negotiate capabilities between the client and the server.
+ * @brief The CAP command is used to negotiate capabilities between the client
+ * and the server.
  *
  * @param client
  * @param args
  *
- * @related https://ircv3.net/specs/extensions/capability-negotiation.html
+ * @related https://modern.ircdocs.horse/#cap-message
  */
 
 void cap(Client *client, std::vector<std::string> const &args)
