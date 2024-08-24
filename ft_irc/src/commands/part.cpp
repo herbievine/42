@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 14:05:06 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 15:10:09 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 			return;
 		}
 
+		client->sendRaw(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "Leaving...") + "\r\n");
+
 		channel->removeClient(client);
-		channel->broadcast(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "") + "\r\n");
+		channel->broadcast(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "Leaving...") + "\r\n");
 	}
 }

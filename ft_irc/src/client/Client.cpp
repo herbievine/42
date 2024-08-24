@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:50:56 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 15:08:18 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void Client::reply(const std::string &msg) const
 	if (send(_fd, message.c_str(), message.size(), 0) < 0)
 		throw std::runtime_error("Failed to send message to client");
 	// TODO: this is debug
-	else
-		std::cout << "" << message;
+
+	std::cout << message;
 }
 
 void Client::sendRaw(const std::string &msg) const
@@ -80,8 +80,8 @@ void Client::sendRaw(const std::string &msg) const
 	if (send(_fd, msg.c_str(), msg.size(), 0) < 0)
 		throw std::runtime_error("Failed to send message to client");
 	// TODO: this is debug
-	else
-		std::cout << "" << msg;
+
+	std::cout << msg;
 }
 
 void Client::joinChannel(Channel *channel)
@@ -106,7 +106,7 @@ void Client::joinChannel(Channel *channel)
 	sendRaw(":ft_irc.server 353 " + getNickname() + " = " + _channel->getName() + " :" + users + "\r\n");
 	sendRaw(":ft_irc.server 366 " + getNickname() + " " + _channel->getName() + " :End of /NAMES list.\r\n");
 
-	_channel->broadcast(RPL_JOIN(getPrefix(), _channel->getName()) + "\r\n", this);
+	_channel->broadcast(":ft_irc.server JOIN " + _channel->getName() + "\r\n");
 }
 
 std::string Client::getPrefix() const
