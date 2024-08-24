@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:31:14 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:11:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void pong(Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "PONG"));
+		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " PONG :Not enough parameters\r\n");
 		return;
 	}
 
-	client->reply(RPL_PING(client->getPrefix(), args.at(0)));
+	client->sendRaw(":ft_irc.server PONG ft_irc.server :" + args.at(0) + "\r\n");
 }

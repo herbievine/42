@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:30:38 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:08:46 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,17 @@ void pass(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "PASS"));
+		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " PASS :Not enough parameters\r\n");
 		return;
 	}
-
-	if (client->getNickname().length() > 0)
+	else if (client->getNickname().length() > 0)
 	{
-		client->reply(ERR_ALREADYREGISTERED(client->getNickname()));
+		client->sendRaw(":ft_irc.server 462 " + client->getNickname() + " :You may not reregister\r\n");
 		return;
 	}
-
-	if (args[0] != server->getPassword())
+	else if (args[0] != server->getPassword())
 	{
-		client->reply(ERR_PASSWDMISMATCH(client->getNickname()));
+		client->sendRaw(":ft_irc.server 464 " + client->getNickname() + " :Password incorrect\r\n");
 		return;
 	}
 

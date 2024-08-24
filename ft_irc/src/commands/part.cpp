@@ -6,12 +6,13 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:28:24 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:05:06 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
+#include "../utils/utils.hpp"
 #include <vector>
 
 /**
@@ -30,29 +31,34 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "PART"));
+		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " PART :Not enough parameters\r\n");
 		return;
 	}
 
-	std::string channelName = args[0];
+	std::vector<std::string> channels = split(args[0], ',');
 
-	Channel *channel = server->getChannel(channelName);
-
-	if (!channel)
+	for (size_t i = 0; i < channels.size(); i++)
 	{
-		client->reply(ERR_NOSUCHCHANNEL(client->getNickname(), channelName));
-		return;
+		std::string name = channels[i];
+
+		Channel *channel = server->getChannel(name);
+
+		if (!channel)
+		{
+			client->sendRaw(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
+			return;
+		}
+
+		std::vector<Client *> clients = channel->getClients();
+		std::vector<Client *>::iterator it = std::find(clients.begin(), clients.end(), client);
+
+		if (it == clients.end())
+		{
+			client->sendRaw(":ft_irc.server 442 " + client->getNickname() + " " + name + " :You're not on that channel\r\n");
+			return;
+		}
+
+		channel->removeClient(client);
+		channel->broadcast(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "") + "\r\n");
 	}
-
-	std::vector<Client *> clients = channel->getClients();
-	std::vector<Client *>::iterator it = std::find(clients.begin(), clients.end(), client);
-
-	if (it == clients.end())
-	{
-		client->reply(ERR_NOTONCHANNEL(client->getNickname(), channelName));
-		return;
-	}
-
-	channel->removeClient(client);
-	channel->broadcast(":" + client->getNickname() + " PART " + channelName + " :" + (args.size() > 1 ? args[1] : ""));
 }
