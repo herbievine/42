@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 11:28:13 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/24 12:27:08 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,21 @@ bool Channel::isOperator(Client *client) const
 
 	if (it != _operators.end())
 		return it->second;
+
+	return false;
+}
+
+bool Channel::isClientInChannel(Client *client) const
+{
+	std::vector<Client *>::const_iterator it = _clients.begin();
+
+	while (it != _clients.end())
+	{
+		if (*it == client)
+			return true;
+
+		it++;
+	}
 
 	return false;
 }

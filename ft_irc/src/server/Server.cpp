@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 10:44:54 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/24 12:39:26 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,8 @@ void Server::readFromClient(int fd)
 					pong(_clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("QUIT", 0) == 0)
 					quit(_clients[fd], split(std::string(line).substr(5)));
+				else if (std::string(line).rfind("TOPIC", 0) == 0)
+					topic(this, _clients[fd], split(std::string(line).substr(6)));
 				else if (std::string(line).rfind("USER", 0) == 0)
 					user(_clients[fd], split(std::string(line).substr(5)));
 				else if (std::string(line).rfind("WHO", 0) == 0)

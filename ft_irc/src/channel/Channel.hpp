@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 11:12:58 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/24 12:26:50 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ public:
 	std::vector<Client *> getClients() const { return _clients; }
 	std::vector<std::string> getNicknames() const;
 	bool isOperator(Client *client) const;
+	bool isClientInChannel(Client *client) const;
 
 	std::string getK() const { return _k; }
+	bool getTopicPrivilege() const { return _topicPrivilege; }
 	size_t getLimit() const { return _limit; }
 	std::string getTopic() const { return _topic; }
 	bool isInviteOnly() const { return _isInviteOnly; }
