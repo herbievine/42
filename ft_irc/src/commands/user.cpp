@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:38:24 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:14:50 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,25 @@ void user(Client *client, std::vector<std::string> const &args)
 {
 	if (client->isRegistered())
 	{
-		client->reply(ERR_ALREADYREGISTERED(client->getNickname()));
+		client->sendRaw(":ft_irc.server 462 " + client->getNickname() + " :You may not reregister\r\n");
+		return;
+	}
+	else if (args.empty() || args.size() < 4)
+	{
+		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " USER :Not enough parameters\r\n");
 		return;
 	}
 
-	if (args.size() < 4)
-	{
-		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "USER"));
-		return;
-	}
+	std::string realname = args[3];
+
+	for (size_t i = 2; i < args.size(); ++i)
+		realname += " " + args[i];
+
+	if (realname[0] == ':')
+		realname = realname.substr(1);
 
 	client->setUsername(args[0]);
+	client->setRealname(realname);
 
-	// TODO: may contains spaces!
-	client->setRealname(args[3]);
-
-	client->reply(RPL_WELCOME(client->getUsername()));
+	client->sendRaw(":" + client->getPrefix() + " 001 " + client->getNickname() + " :Welcome " + client->getNickname() + " to the ft_irc network\r\n");
 }

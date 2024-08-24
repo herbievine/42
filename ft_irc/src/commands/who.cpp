@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:34:38 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:15:41 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "WHO"));
+		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " WHO :Not enough parameters\r\n");
 		return;
 	}
 
@@ -40,7 +40,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 
 		if (!channel)
 		{
-			client->reply(ERR_NOSUCHCHANNEL(client->getNickname(), args[0]));
+			client->sendRaw(":ft_irc.server 403 " + client->getNickname() + " " + args[0] + " :No such channel\r\n");
 			return;
 		}
 
