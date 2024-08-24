@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 12:26:50 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 13:40:59 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ public:
 	void setName(std::string name) { _name = name; }
 
 	void setK(std::string k) { _k = k; }
-	void setTopicPrivilege(bool _topicPrivilege) { _topicPrivilege = _topicPrivilege; }
+	void setTopicPrivilege(bool topicPrivilege) { _topicPrivilege = topicPrivilege; }
 	void setLimit(size_t limit) { _limit = limit; }
 	void setTopic(std::string topic) { _topic = topic; }
 	void setInviteOnly(bool isInviteOnly) { _isInviteOnly = isInviteOnly; }

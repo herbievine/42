@@ -29,11 +29,14 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 
 	if (channel)
 	{
+		if (!channel->isClientInChannel(client))
+		{
+			client->sendRaw(ERR_CANNOTSENDTOCHAN(client->getNickname(), target) + "\r\n");
+			return;
+		}
 		std::vector<Client *> clients = channel->getClients();
 		for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
 		{
-			std::cout << ":" + client->getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n"
-								<< std::endl;
 			if (*it != client)
 			{
 				(*it)->sendRaw(":" + client->getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n");
@@ -44,14 +47,14 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 	{
 		if (!client->getChannel())
 		{
-			client->reply(ERR_NOSUCHNICK(client->getNickname(), target));
+			client->sendRaw(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
 			return;
 		}
 		channel = client->getChannel();
 		Client *ClientTarget = channel->getClientByNickname(target);
 		if (!ClientTarget)
 		{
-			client->reply(ERR_NOSUCHNICK(client->getNickname(), target));
+			client->sendRaw(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
 		}
 		else
 		{

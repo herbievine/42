@@ -14,7 +14,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 
 	if (args.size() < 2)
 	{
-		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE"));
+		client->sendRaw(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
 		return;
 	}
 
@@ -27,12 +27,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 	Channel *channel = server->getChannel(channelName);
 	if (channel == nullptr)
 	{
-		client->reply(ERR_NOSUCHCHANNEL(client->getNickname(), channelName));
-		return;
-	}
-	if (!channel->isOperator(client))
-	{
-		client->reply(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName));
+		client->sendRaw(ERR_NOSUCHCHANNEL(client->getNickname(), channelName) + "\r\n");
 		return;
 	}
 
@@ -44,20 +39,18 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 			isPositive = false;
 		else if (args[1][i] == 'i')
 		{
+			if (!channel->isOperator(client))
+			{
+				client->sendRaw(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
+				return;
+			}
 			if (isPositive)
 			{
-				if (channel->isInviteOnly())
-				{
-					client->reply("Channel is already invite only");
-					continue;
-				}
 				channel->setInviteOnly(true);
-				client->reply("Channel is now in invite-only mode");
 			}
 			else
 			{
 				channel->setInviteOnly(false);
-				client->reply("Channel is no longer in invite-only mode");
 			}
 		}
 		else if (args[1][i] == 't')
@@ -71,40 +64,49 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 		{
 			if (parameters.empty())
 			{
-				client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE"));
+				client->sendRaw(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
 				return;
 			}
-			Client *client = channel->getClientByNickname(parameters[0]);
-			if (client == nullptr)
+			if (!channel->isOperator(client))
 			{
-				client->reply(ERR_NOSUCHNICK(client->getNickname(), parameters[0]));
+				client->sendRaw(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
+				return;
+			}
+			Client *ClientTarget = channel->getClientByNickname(parameters[0]);
+			if (!ClientTarget)
+			{
+				client->sendRaw(ERR_NOSUCHNICK(client->getNickname(), parameters[0]) + "\r\n");
 				return;
 			}
 			if (isPositive)
-				channel->addOperator(client);
+				channel->addOperator(ClientTarget);
 			else
-				channel->removeOperator(client);
+				channel->removeOperator(ClientTarget);
+			channel->broadcast(RPL_MODE(client->getPrefix(), channelName, (isPositive ? "+o" : "-o"), parameters[0]) + "\r\n");
 			parameters.erase(parameters.begin());
 		}
 		else if (args[1][i] == 'k')
 		{
 			if (parameters.empty() && isPositive)
 			{
-				client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE"));
+				client->sendRaw(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
+				return;
+			}
+			if (!channel->isOperator(client))
+			{
+				client->sendRaw(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
 				return;
 			}
 			if (isPositive)
 			{
 				channel->setK(parameters[0]);
-				parameters.erase(parameters.begin());
 			}
 			else
+			{
 				channel->setK(NULL);
+			}
+			channel->broadcast(RPL_MODE(client->getPrefix(), channelName, (isPositive ? "+k" : "-k"), (isPositive ? parameters[0] : "*")) + "\r\n");
+			parameters.erase(parameters.begin());
 		}
-	}
-	if (!parameters.empty())
-	{
-		client->reply("too few paramters");
-		return;
 	}
 }
