@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 10:18:33 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 11:24:28 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 		return;
 	}
 
-	DetectType type = detect(args[0]);
-
-	if (type == DetectType::Channel)
+	if (args[0][0] == '#')
 	{
 		Channel *channel = server->getChannel(args[0]);
 

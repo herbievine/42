@@ -6,7 +6,7 @@
 #    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/08/24 09:58:10 by herbie           ###   ########.fr        #
+#    Updated: 2024/08/24 11:23:56 by herbie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SRCS = \
 	src/commands/quit.cpp \
 	src/commands/user.cpp \
 	src/commands/who.cpp \
-	src/utils/detect.cpp \
 	src/utils/split.cpp \
 	src/utils/trim.cpp
 
