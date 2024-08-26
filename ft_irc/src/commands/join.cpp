@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 10:26:47 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:43:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 			while (it != nicknames.end())
 			{
 				users.append(*it + " ");
-				it++;
+				++it;
 			}
 
 			client->write(":" + client->getPrefix() + " JOIN " + channel->getName() + "\r\n");
@@ -119,7 +119,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 		while (it != nicknames.end())
 		{
 			users.append(*it + " ");
-			it++;
+			++it;
 		}
 
 		client->write(":" + client->getPrefix() + " JOIN " + channel->getName() + "\r\n");

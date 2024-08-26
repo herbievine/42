@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 18:45:50 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:01:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,25 @@
 class Server;
 class Channel;
 
-void cap(Client *client, std::vector<std::string> const &args);
+void cap(const Client *client, std::vector<std::string> const &args);
 void join(Server *server, Client *client, std::vector<std::string> const &args);
 void kick(Server *server, Client *client, std::vector<std::string> const &args);
 void mode(Server *server, Client *client, std::vector<std::string> const &args);
 void nick(Server *server, Client *client, std::vector<std::string> const &args);
 void part(Server *server, Client *client, std::vector<std::string> const &args);
-void pass(Server *server, Client *client, std::vector<std::string> const &args);
-void ping(Client *client, std::vector<std::string> const &args);
-void pong(Client *client, std::vector<std::string> const &args);
+void pass(const Server *server, Client *client, std::vector<std::string> const &args);
+void ping(const Client *client, std::vector<std::string> const &args);
+void pong(const Client *client, std::vector<std::string> const &args);
 void privmsg(Server *server, Client *client, std::vector<std::string> const &args);
-void quit(Client *client, std::vector<std::string> const &args);
+void quit(const Client *client, std::vector<std::string> const &args);
 void topic(Server *server, Client *client, std::vector<std::string> const &args);
 void user(Client *client, std::vector<std::string> const &args);
-void who(Server *server, Client *client, std::vector<std::string> const &args);
+void who(Server *server, const Client *client, std::vector<std::string> const &args);
 
 class Server
 {
 public:
-	explicit Server(std::string port, std::string password);
+	explicit Server(const std::string &port, std::string &password);
 	~Server();
 
 	void start();
@@ -54,8 +54,8 @@ public:
 	std::string getPassword() const { return _password; }
 
 	void registerNewChannel(Channel *channel);
-	Channel *getChannel(std::string name);
-	Client *getClientByNickname(std::string nickname);
+	Channel *getChannel(std::string &name);
+	Client *getClientByNickname(const std::string &nickname);
 
 	static bool stop;
 	static void handleSignal(int signal);

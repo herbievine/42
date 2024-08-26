@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 11:02:24 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:44:54 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
  *
  * @related https://modern.ircdocs.horse/#pass-message
  */
-void pass(Server *server, Client *client, std::vector<std::string> const &args)
+void pass(const Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{

@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 19:04:54 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:45:12 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  *
  * @related https://modern.ircdocs.horse/#pong-message
  */
-void pong(Client *client, std::vector<std::string> const &args)
+void pong(const Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{

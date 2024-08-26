@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 11:03:54 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:01:44 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 bool Server::stop = false;
 
-Server::Server(std::string port, std::string password) : _lsd(-1), _password(password)
+Server::Server(const std::string &port, std::string &password) : _lsd(-1), _password(password)
 {
 	try
 	{
@@ -37,7 +37,7 @@ Server::Server(std::string port, std::string password) : _lsd(-1), _password(pas
 	}
 }
 
-Server::Server(const Server &src)
+Server::Server(const Server &src) : _port(src._port), _lsd(src._lsd), _fds(src._fds)
 {
 }
 
@@ -62,7 +62,7 @@ Server &Server::operator=(const Server &rhs)
 	return *this;
 }
 
-Channel *Server::getChannel(std::string name)
+Channel *Server::getChannel(std::string &name)
 {
 	std::unordered_map<std::string, Channel *>::iterator it = _channels.find(name);
 
@@ -93,7 +93,7 @@ void Server::start()
 	// 	throw std::runtime_error("Could not set socket options");
 
 	// Bind the socket
-	if (bind(_lsd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	if (bind(_lsd, reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr)) < 0)
 		throw std::runtime_error("Failed to bind socket");
 
 	// Listen for incoming connections
@@ -116,16 +116,16 @@ void Server::start()
 
 		for (size_t i = 0; i < _fds.size(); i++)
 		{
-			int fd = _fds[i].fd;
+			int polled_fd = _fds[i].fd;
 
 			if (_fds[i].revents & POLLHUP)
-				disconnectClient(fd);
+				disconnectClient(polled_fd);
 			else if (_fds[i].revents & POLLIN)
 			{
-				if (fd == _lsd)
+				if (polled_fd == _lsd)
 					acceptConnection();
 				else
-					readFromClient(fd);
+					readFromClient(polled_fd);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ void Server::acceptConnection()
 	struct sockaddr_in addr;
 	socklen_t len = sizeof(addr);
 
-	int fd = accept(_lsd, (struct sockaddr *)&addr, &len);
+	int fd = accept(_lsd, reinterpret_cast<struct sockaddr *>(&addr), &len);
 	if (fd < 0)
 		throw std::runtime_error("Failed to accept connection");
 
@@ -149,7 +149,7 @@ void Server::acceptConnection()
 	// 	throw std::runtime_error("Could not set socket options");
 
 	char hostname[NI_MAXHOST];
-	int res = getnameinfo((struct sockaddr *)&addr, sizeof(addr), hostname, NI_MAXHOST, NULL, 0, NI_NUMERICSERV);
+	int res = getnameinfo(reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr), hostname, NI_MAXHOST, NULL, 0, NI_NUMERICSERV);
 	if (res != 0)
 	{
 		std::string message = ":ft_irc.server NOTICE * :*** Could not get hostname\r\n";
@@ -166,7 +166,10 @@ void Server::acceptConnection()
 			.events = POLLIN,
 			.revents = 0};
 
-	Client *client = new Client(fd, inet_ntoa(addr.sin_addr), hostname);
+	std::string inet_addr = inet_ntoa(addr.sin_addr);
+	std::string hostname_str = hostname;
+
+	Client *client = new Client(fd, inet_addr, hostname_str);
 
 	_fds.push_back(pfd);
 	_clients.insert(std::pair<int, Client *>(fd, client));
@@ -240,7 +243,7 @@ void Server::readFromClient(int fd)
 					client->write(":ft_irc.server 451 * :You have not registered\r\n");
 				}
 
-				it++;
+				++it;
 			}
 		}
 		catch (const std::exception &e)
@@ -267,7 +270,7 @@ void Server::disconnectClient(int fd)
 		}
 		else
 		{
-			it++;
+			++it;
 		}
 	}
 
@@ -293,7 +296,7 @@ void Server::registerNewChannel(Channel *channel)
 	_channels[channel->getName()] = channel;
 }
 
-Client *Server::getClientByNickname(std::string nickname)
+Client *Server::getClientByNickname(const std::string &nickname)
 {
 	std::map<int, Client *>::iterator it = _clients.begin();
 
@@ -302,7 +305,7 @@ Client *Server::getClientByNickname(std::string nickname)
 		if (it->second->getNickname() == nickname)
 			return it->second;
 
-		it++;
+		++it;
 	}
 
 	return nullptr;

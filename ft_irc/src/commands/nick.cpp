@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:44:36 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void nick(Server *server, Client *client, std::vector<std::string> const &args)
 		}
 	}
 
-	Client *other = server->getClientByNickname(args[0]);
+	const Client *other = server->getClientByNickname(args[0]);
 
 	if (other)
 	{

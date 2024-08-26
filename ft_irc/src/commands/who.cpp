@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:46:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  *
  * @related https://modern.ircdocs.horse/#who-message
  */
-void who(Server *server, Client *client, std::vector<std::string> const &args)
+void who(Server *server, const Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
@@ -36,7 +36,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 
 	if (args[0][0] == '#')
 	{
-		Channel *channel = server->getChannel(args[0]);
+		const Channel *channel = server->getChannel(args[0]);
 
 		if (!channel)
 		{
@@ -50,7 +50,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 		while (it != clients.end())
 		{
 			client->write(":ft_irc.server 352 " + client->getNickname() + " " + args[0] + " ~" + (*it)->getUsername() + " " + (*it)->getHostname() + " ft_irc.server " + (*it)->getNickname() + (channel->isOperator(*it) ? " *H :0 " : " H :0 ") + (*it)->getRealname() + "\r\n");
-			it++;
+			++it;
 		}
 
 		client->write(":ft_irc.server 315 " + client->getNickname() + " " + args[0] + " :End of WHO list.\r\n");

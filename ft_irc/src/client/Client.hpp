@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 11:12:42 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:02:29 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,12 @@ enum AuthState
 class Client
 {
 public:
-	explicit Client();
-	explicit Client(int fd, std::string ip, std::string hostname);
-	Client(const Client &src);
+	explicit Client(int fd, std::string &ip, std::string &hostname);
 	~Client();
-
-	Client &operator=(const Client &rhs);
 
 	void reply(const std::string &msg) const;
 
 	void write(const std::string &msg) const;
-	void joinChannel(Channel *channel);
 
 	int getFd() const { return _fd; }
 	std::string getHostname() const { return _hostname; }
@@ -92,6 +87,10 @@ public:
 	void setChannel(Channel *channel) { _channel = channel; }
 
 private:
+	Client(const Client &src);
+
+	Client &operator=(const Client &rhs);
+
 	int _fd;
 	std::string _ip;
 	std::string _hostname;

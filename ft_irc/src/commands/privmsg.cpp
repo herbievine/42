@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:05:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 09:43:28 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:46:56 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 			if (*it != client)
 				(*it)->write(":" + client->getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n");
 
-			it++;
+			++it;
 		}
 
 		return;
@@ -64,7 +64,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 	}
 
 	channel = client->getChannel();
-	Client *TargetClient = channel->getClientByNickname(target);
+	const Client *TargetClient = channel->getClientByNickname(target);
 
 	if (!TargetClient)
 	{

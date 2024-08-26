@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:45:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
  *
  * @related https://modern.ircdocs.horse/#ping-message
  */
-void ping(Client *client, std::vector<std::string> const &args)
+void ping(const Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
