@@ -7,31 +7,31 @@
 
 void mode(Server *server, const Client *client, std::vector<std::string> const &args)
 {
-	std::string channelName;
-	std::vector<std::string> parameters;
-	bool isPositive = true;
-
-	if (args.size() < 2)
+	if (args.empty() || args.size() < 2)
 	{
-		client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
+		client->write(":ft_irc.server 461 " + client->getNickname() + " MODE :Not enough parameters\r\n");
 		return;
 	}
 
-	channelName = args[0];
+	std::string name = args[0];
+
+	std::vector<std::string> params;
 
 	for (int i = 2; i < args.size(); i++)
-		parameters.push_back(args[i]);
+		params.push_back(args[i]);
 
-	Channel *channel = server->getChannel(channelName);
+	Channel *channel = server->getChannel(name);
 
-	if (channel == nullptr)
+	if (!channel)
 	{
-		client->write(ERR_NOSUCHCHANNEL(client->getNickname(), channelName) + "\r\n");
+		client->write(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
 		return;
 	}
 
 	for (int i = 0; i < args[1].size(); i++)
 	{
+		bool isPositive = true;
+
 		if (args[1][i] == '+')
 			isPositive = true;
 		else if (args[1][i] == '-')
@@ -40,17 +40,14 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 		{
 			if (!channel->isOperator(client))
 			{
-				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
+				client->write(":ft_irc.server 482 " + client->getNickname() + " " + name + " :You're not channel operator\r\n");
 				return;
 			}
+
 			if (isPositive)
-			{
 				channel->setInviteOnly(true);
-			}
 			else
-			{
 				channel->setInviteOnly(false);
-			}
 		}
 		else if (args[1][i] == 't')
 		{
@@ -61,23 +58,22 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 		}
 		else if (args[1][i] == 'o')
 		{
-			if (parameters.empty())
+			if (params.empty())
 			{
-				client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
+				client->write(":ft_irc.server 461 " + client->getNickname() + " MODE :Not enough parameters\r\n");
+				return;
+			}
+			else if (!channel->isOperator(client))
+			{
+				client->write(":ft_irc.server 482 " + client->getNickname() + " " + name + " :You're not channel operator\r\n");
 				return;
 			}
 
-			if (!channel->isOperator(client))
-			{
-				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
-				return;
-			}
-
-			const Client *ClientTarget = channel->getClientByNickname(parameters[0]);
+			const Client *ClientTarget = channel->getClientByNickname(params[0]);
 
 			if (!ClientTarget)
 			{
-				client->write(":ft_irc.server 441 " + parameters[0] + " " + channelName + " :They aren't on that channel\r\n");
+				client->write(":ft_irc.server 441 " + params[0] + " " + name + " :They aren't on that channel\r\n");
 				return;
 			}
 
@@ -86,29 +82,29 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 			else
 				channel->removeOperator(ClientTarget);
 
-			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +o " : " -o ") + parameters[0] + "\r\n");
-			parameters.erase(parameters.begin());
+			channel->broadcast(":" + client->getPrefix() + " MODE " + name + (isPositive ? " +o " : " -o ") + params[0] + "\r\n");
+			params.erase(params.begin());
 		}
 		else if (args[1][i] == 'k')
 		{
-			if (parameters.empty() && isPositive)
+			if (params.empty() && isPositive)
 			{
-				client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
+				client->write(":ft_irc.server 461 " + client->getNickname() + " MODE :Not enough parameters\r\n");
 				return;
 			}
 			else if (!channel->isOperator(client))
 			{
-				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
+				client->write(":ft_irc.server 482 " + client->getNickname() + " " + name + " :You're not channel operator\r\n");
 				return;
 			}
 
 			if (isPositive)
-				channel->setK(parameters[0]);
+				channel->setK(params[0]);
 			else
 				channel->setK(NULL);
 		}
 
-		channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +k " : " -k ") + (isPositive ? parameters[0] : " *") + " - bad key" + "\r\n");
-		parameters.erase(parameters.begin());
+		channel->broadcast(":" + client->getPrefix() + " MODE " + name + (isPositive ? " +k " : " -k ") + (isPositive ? params[0] : " *") + " - bad key" + "\r\n");
+		params.erase(params.begin());
 	}
 }
