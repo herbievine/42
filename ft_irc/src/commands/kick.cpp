@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:02:20 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 19:03:39 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:10:54 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void kick(Server *server, Client *client, std::vector<std::string> const &args)
 
 	std::string name = args[0];
 	std::string nickname = args[1];
-	std::string reason = args.size() > 2 ? args[2] : "";
+	std::string reason = args.size() > 2 ? args[2] : nickname;
 
 	Channel *channel = server->getChannel(name);
 
@@ -46,6 +46,6 @@ void kick(Server *server, Client *client, std::vector<std::string> const &args)
 		return;
 	}
 
+	channel->broadcast(RPL_KICK(client->getPrefix(), name, target->getNickname(), reason + "\r\n"));
 	channel->removeClient(target);
-	channel->broadcast(RPL_KICK(client->getNickname(), name, target->getNickname(), reason + "\r\n"));
 }
