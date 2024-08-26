@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 09:00:00 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 11:12:42 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ class Channel;
 #define RPL_KICK(source, channel, target, reason) ":" + source + " KICK " + channel + " " + target + " :" + reason
 #define RPL_MODE(source, channel, modes, args) ":" + source + " MODE " + channel + " " + modes + " " + args
 
+enum AuthState
+{
+	UNAUTHENTICATED,
+	AUTHENTICATED,
+	REGISTERED,
+};
+
 class Client
 {
 public:
@@ -70,18 +77,17 @@ public:
 	std::string getUsername() const { return _username; }
 	std::string getRealname() const { return _realname; }
 	std::string getNickname() const { return _nickname; }
-	bool isRegistered() const { return _isRegistered; }
 
 	Channel *getChannel() const { return _channel; }
 
 	std::string getPrefix() const;
 
-	void authenticate() { _auth = true; }
+	AuthState getState() const { return _state; }
+	void setState(AuthState state) { _state = state; }
 
 	void setNickname(const std::string &nickname) { _nickname = nickname; }
 	void setUsername(const std::string &username) { _username = username; }
 	void setRealname(const std::string &realname) { _realname = realname; }
-	void setIsRegistered(bool isRegistered) { _isRegistered = isRegistered; }
 
 	void setChannel(Channel *channel) { _channel = channel; }
 
@@ -90,12 +96,11 @@ private:
 	std::string _ip;
 	std::string _hostname;
 
-	bool _auth;
+	AuthState _state;
 
 	std::string _username;
 	std::string _realname;
 	std::string _nickname;
-	bool _isRegistered;
 
 	Channel *_channel;
 };

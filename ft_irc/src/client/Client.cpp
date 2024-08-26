@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 10:29:57 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 11:12:53 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ Client::Client()
 	_ip = "";
 	_hostname = "";
 
-	_auth = false;
+	_state = UNAUTHENTICATED;
 
 	_nickname = "";
 	_username = "";
 	_realname = "";
-	_isRegistered = false;
 }
 
 Client::Client(int fd, std::string ip, std::string hostname)
@@ -35,12 +34,11 @@ Client::Client(int fd, std::string ip, std::string hostname)
 	_ip = ip;
 	_hostname = hostname;
 
-	_auth = false;
+	_state = UNAUTHENTICATED;
 
 	_nickname = "";
 	_username = "";
 	_realname = "";
-	_isRegistered = false;
 }
 
 Client::Client(const Client &src)

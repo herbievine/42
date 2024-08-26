@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 11:12:20 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
  */
 void user(Client *client, std::vector<std::string> const &args)
 {
-	if (client->isRegistered())
+	if (client->getState() == REGISTERED)
 	{
 		client->write(":ft_irc.server 462 " + client->getNickname() + " :You may not reregister\r\n");
 		return;
@@ -49,6 +49,7 @@ void user(Client *client, std::vector<std::string> const &args)
 
 	client->setUsername(args[0]);
 	client->setRealname(realname);
+	client->setState(REGISTERED);
 
 	client->write(":" + client->getPrefix() + " 001 " + client->getNickname() + " :Welcome " + client->getNickname() + " to the ft_irc network\r\n");
 }
