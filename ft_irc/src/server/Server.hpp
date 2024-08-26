@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:01:01 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:09:31 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void quit(const Client *client, std::vector<std::string> const &args);
 void topic(Server *server, Client *client, std::vector<std::string> const &args);
 void user(Client *client, std::vector<std::string> const &args);
 void who(Server *server, const Client *client, std::vector<std::string> const &args);
+void invite(Server *server, Client *client, std::vector<std::string> const &args);
 
 class Server
 {

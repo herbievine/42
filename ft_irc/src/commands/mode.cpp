@@ -8,7 +8,6 @@
 void mode(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	std::string channelName;
-	std::string mode;
 	std::vector<std::string> parameters;
 	bool isPositive = true;
 
@@ -19,7 +18,6 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 	}
 
 	channelName = args[0];
-	mode = args[1];
 
 	for (int i = 2; i < args.size(); i++)
 		parameters.push_back(args[i]);
@@ -75,14 +73,14 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 			Client *ClientTarget = channel->getClientByNickname(parameters[0]);
 			if (!ClientTarget)
 			{
-				client->write(ERR_NOSUCHNICK(client->getNickname(), parameters[0]) + "\r\n");
+				client->write(":ft_irc.server 441 " + parameters[0] + " " + channelName + " :They aren't on that channel\r\n");
 				return;
 			}
 			if (isPositive)
 				channel->addOperator(ClientTarget);
 			else
 				channel->removeOperator(ClientTarget);
-			channel->broadcast(RPL_MODE(client->getPrefix(), channelName, (isPositive ? "+o" : "-o"), parameters[0]) + "\r\n");
+			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + " " + (isPositive ? "+o" : "-o") + " " + parameters[0] + "\r\n");
 			parameters.erase(parameters.begin());
 		}
 		else if (args[1][i] == 'k')
@@ -105,7 +103,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 			{
 				channel->setK(NULL);
 			}
-			channel->broadcast(RPL_MODE(client->getPrefix(), channelName, (isPositive ? "+k" : "-k"), (isPositive ? parameters[0] : "*")) + "\r\n");
+			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +k" : " -k") + (isPositive ? parameters[0] : " *") + "\r\n");
 			parameters.erase(parameters.begin());
 		}
 	}
