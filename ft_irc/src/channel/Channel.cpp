@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:53:14 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:57:10 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void Channel::addClient(Client *client)
 	_operators[client->getNickname()] = false;
 }
 
-void Channel::removeClient(const Client *client)
+bool Channel::removeClient(const Client *client)
 {
 	std::vector<Client *>::iterator it = _clients.begin();
 
@@ -149,6 +149,13 @@ void Channel::removeClient(const Client *client)
 	}
 
 	_operators.erase(client->getNickname());
+
+	if (_clients.empty())
+	{
+		delete this;
+		return true;
+	}
+	return false;
 }
 
 void Channel::addOperator(const Client *client)

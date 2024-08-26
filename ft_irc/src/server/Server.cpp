@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:11:27 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/26 14:47:38 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,13 +263,8 @@ void Server::disconnectClient(int fd)
 
 	while (it != _channels.end())
 	{
-		it->second->removeClient(client);
-
-		if (it->second->getClients().empty())
-		{
-			delete it->second;
+		if (it->second->removeClient(client))
 			_channels.erase(it++);
-		}
 		else
 		{
 			++it;

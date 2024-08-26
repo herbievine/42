@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:52:37 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:57:40 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ public:
 	void setInvited(Client *client);
 
 	void addClient(Client *client);
-	void removeClient(const Client *client);
+	bool removeClient(const Client *client);
 
 	void addOperator(const Client *client);
 	void removeOperator(const Client *client);
