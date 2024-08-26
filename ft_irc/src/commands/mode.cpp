@@ -80,7 +80,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 				channel->addOperator(ClientTarget);
 			else
 				channel->removeOperator(ClientTarget);
-			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + " " + (isPositive ? "+o" : "-o") + " " + parameters[0] + "\r\n");
+			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +o " : " -o ") + parameters[0] + "\r\n");
 			parameters.erase(parameters.begin());
 		}
 		else if (args[1][i] == 'k')
@@ -103,7 +103,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 			{
 				channel->setK(NULL);
 			}
-			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +k" : " -k") + (isPositive ? parameters[0] : " *") + "\r\n");
+			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +k " : " -k ") + (isPositive ? parameters[0] : " *") + " - bad key" + "\r\n");
 			parameters.erase(parameters.begin());
 		}
 	}

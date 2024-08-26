@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:08:24 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/26 14:24:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,13 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 			client->write(":ft_irc.server 471 " + client->getNickname() + " " + name + " :Cannot join channel (+l)\r\n");
 			return;
 		}
-		else if (!password.empty() && channel->getK() != password)
+		else if (!channel->getK().empty())
 		{
-			client->write(":ft_irc.server 475 " + client->getNickname() + " " + name + " :Cannot join channel (+k)\r\n");
-			return;
+			if (password.empty() || channel->getK() != password)
+			{
+				client->write(":ft_irc.server 475 " + client->getNickname() + " " + name + " :Cannot join channel (+k)\r\n");
+				return;
+			}
 		}
 		else if (channel->isInviteOnly() && !channel->isInvited(client))
 		{
