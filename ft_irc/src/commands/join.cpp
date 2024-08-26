@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 09:24:46 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 09:43:54 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 			client->write(":ft_irc.server 353 " + client->getNickname() + " = " + channel->getName() + " :" + users + "\r\n");
 			client->write(":ft_irc.server 366 " + client->getNickname() + " " + channel->getName() + " :End of /NAMES list.\r\n");
 
-			channel->broadcast(":ft_irc.server JOIN " + channel->getName() + "\r\n");
+			channel->broadcast(":" + client->getPrefix() + " JOIN " + channel->getName() + "\r\n");
 
 			return;
 		}
@@ -139,6 +139,6 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 		client->write(":ft_irc.server 353 " + client->getNickname() + " = " + channel->getName() + " :" + users + "\r\n");
 		client->write(":ft_irc.server 366 " + client->getNickname() + " " + channel->getName() + " :End of /NAMES list.\r\n");
 
-		channel->broadcast(":ft_irc.server JOIN " + channel->getName() + "\r\n");
+		channel->broadcast(":" + client->getPrefix() + " JOIN " + channel->getName() + "\r\n");
 	}
 }
