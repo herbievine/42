@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 19:06:49 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 12:14:07 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ void topic(Server *server, Client *client, std::vector<std::string> const &args)
 		return;
 	}
 
-	Channel *channel = server->getChannel(args[0]);
+	std::string name = args[0];
+
+	Channel *channel = server->getChannel(name);
 
 	if (!channel)
 	{

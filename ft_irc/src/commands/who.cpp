@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   who.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:46:29 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 12:14:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void who(Server *server, const Client *client, std::vector<std::string> const &a
 
 	if (args[0][0] == '#')
 	{
-		const Channel *channel = server->getChannel(args[0]);
+		std::string name = args[0];
+
+		const Channel *channel = server->getChannel(name);
 
 		if (!channel)
 		{

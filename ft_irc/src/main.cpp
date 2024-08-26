@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:18:58 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:46:39 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 12:11:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int main(int argc, const char *argv[])
 	{
 		Server::stop = false;
 
-		Server server(argv[1], argv[2]);
+		std::string port = argv[1];
+		std::string password = argv[2];
+
+		Server server(port, password);
 
 		signal(SIGINT, Server::handleSignal);
 		signal(SIGQUIT, Server::handleSignal);
