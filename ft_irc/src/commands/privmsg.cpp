@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:05:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:46:56 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:44:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 {
 	if (args.size() < 2)
 	{
-		client->reply(ERR_NEEDMOREPARAMS(client->getNickname(), "PRIVMSG"));
+		client->reply(":ft_irc.server 406 " + client->getNickname() + " PRIVMSG :Not enough parameters\r\n");
 		return;
 	}
 
@@ -39,7 +39,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 	{
 		if (!channel->isClientInChannel(client))
 		{
-			client->write(ERR_CANNOTSENDTOCHAN(client->getNickname(), target) + "\r\n");
+			client->write(":ft_irc.server 404 " + client->getNickname() + " " + target + " :Cannot send to channel\r\n");
 			return;
 		}
 
@@ -59,7 +59,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 
 	if (!client->getChannel())
 	{
-		client->write(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
+		client->write(":ft_irc.server 401 " + client->getNickname() + " PRIVMSG :No such nick/channel\r\n");
 		return;
 	}
 
@@ -68,7 +68,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 
 	if (!TargetClient)
 	{
-		client->write(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
+		client->write(":ft_irc.server 401 " + client->getNickname() + " PRIVMSG :No such nick/channel\r\n");
 	}
 	else
 	{

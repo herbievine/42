@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:45:51 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:53:26 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ void quit(const Client *client, std::vector<std::string> const &args)
 
 	// TODO: disconnect when we have access to server
 	// server->disconnectClient(client->getFd())
-	client->write(RPL_QUIT(client->getNickname(), reason) + "\r\n");
+	client->write(":ft_irc.server " + client->getNickname() + " QUIT :" + reason + "\r\n");
 }
