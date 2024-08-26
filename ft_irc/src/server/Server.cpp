@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:01:44 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:11:27 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,8 @@ void Server::readFromClient(int fd)
 						kick(this, client, split(std::string(line).substr(5)));
 					else if (std::string(line).rfind("PRIVMSG", 0) == 0)
 						privmsg(this, client, split(std::string(line).substr(8)));
+					else if (std::string(line).rfind("INVITE", 0) == 0)
+						invite(this, _clients[fd], split(std::string(line).substr(7)));
 				}
 				else
 				{

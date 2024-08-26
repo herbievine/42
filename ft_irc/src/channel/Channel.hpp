@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 16:18:18 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 11:08:33 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ public:
 	size_t getLimit() const { return _limit; }
 	std::string getTopic() const { return _topic; }
 	bool isInviteOnly() const { return _isInviteOnly; }
+	bool isInvited(Client *client);
 
 	void setName(std::string name) { _name = name; }
 
@@ -51,6 +52,7 @@ public:
 	void setLimit(size_t limit) { _limit = limit; }
 	void setTopic(std::string topic) { _topic = topic; }
 	void setInviteOnly(bool isInviteOnly) { _isInviteOnly = isInviteOnly; }
+	void setInvited(Client *client);
 
 	void addClient(Client *client);
 	void removeClient(Client *client);
@@ -66,6 +68,7 @@ private:
 	std::string _name;
 	std::vector<Client *> _clients;
 	std::map<std::string, bool> _operators;
+	std::vector<Client *> _invited;
 
 	std::string _k; // aka password
 	bool _isInviteOnly;

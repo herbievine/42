@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 09:09:43 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:37:04 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,19 @@ void Channel::removeClient(Client *client)
 		it++;
 	}
 
+	it = _invited.begin();
+
+	while (it != _invited.end())
+	{
+		if (*it == client)
+		{
+			_invited.erase(it);
+			break;
+		}
+
+		it++;
+	}
+
 	_operators.erase(client->getNickname());
 }
 
@@ -158,4 +171,34 @@ Client *Channel::getClientByNickname(std::string nickname)
 	}
 
 	return nullptr;
+}
+
+void Channel::setInvited(Client *client)
+{
+	std::vector<Client *>::iterator it = _invited.begin();
+
+	while (it != _invited.end())
+	{
+		if (*it == client)
+			return;
+
+		it++;
+	}
+
+	_invited.push_back(client);
+}
+
+bool Channel::isInvited(Client *client)
+{
+	std::vector<Client *>::iterator it = _invited.begin();
+
+	while (it != _invited.end())
+	{
+		if (*it == client)
+			return true;
+
+		it++;
+	}
+
+	return false;
 }

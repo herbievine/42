@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: herbie <herbie@student.42.fr>              +#+  +:+       +#+         #
+#    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/08/24 12:36:32 by herbie           ###   ########.fr        #
+#    Updated: 2024/08/26 10:57:01 by juliencros       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS = \
 	src/server/Server.cpp \
 	src/channel/Channel.cpp \
 	src/commands/cap.cpp \
+	src/commands/invite.cpp \
 	src/commands/join.cpp \
 	src/commands/kick.cpp \
 	src/commands/mode.cpp \

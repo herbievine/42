@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:43:43 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:08:24 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 			client->write(":ft_irc.server 475 " + client->getNickname() + " " + name + " :Cannot join channel (+k)\r\n");
 			return;
 		}
-		else if (channel->isInviteOnly())
+		else if (channel->isInviteOnly() && !channel->isInvited(client))
 		{
-			client->write(":ft_irc.server 473 " + client->getNickname() + " " + name + " :Cannot join channel (+i)\r\n");
+			client->write(":ft_irc.server 473 " + client->getNickname() + " " + name + " :Cannot join channel (+i) - you must be invited\r\n");
 			return;
 		}
 
