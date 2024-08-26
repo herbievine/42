@@ -5,7 +5,7 @@
 
 // TODO: add @ to a user +o
 
-void mode(Server *server, Client *client, std::vector<std::string> const &args)
+void mode(Server *server, const Client *client, std::vector<std::string> const &args)
 {
 	std::string channelName;
 	std::vector<std::string> parameters;
@@ -23,6 +23,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 		parameters.push_back(args[i]);
 
 	Channel *channel = server->getChannel(channelName);
+
 	if (channel == nullptr)
 	{
 		client->write(ERR_NOSUCHCHANNEL(client->getNickname(), channelName) + "\r\n");
@@ -65,21 +66,26 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 				client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
 				return;
 			}
+
 			if (!channel->isOperator(client))
 			{
 				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
 				return;
 			}
-			Client *ClientTarget = channel->getClientByNickname(parameters[0]);
+
+			const Client *ClientTarget = channel->getClientByNickname(parameters[0]);
+
 			if (!ClientTarget)
 			{
 				client->write(":ft_irc.server 441 " + parameters[0] + " " + channelName + " :They aren't on that channel\r\n");
 				return;
 			}
+
 			if (isPositive)
 				channel->addOperator(ClientTarget);
 			else
 				channel->removeOperator(ClientTarget);
+
 			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +o " : " -o ") + parameters[0] + "\r\n");
 			parameters.erase(parameters.begin());
 		}
@@ -90,21 +96,19 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 				client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
 				return;
 			}
-			if (!channel->isOperator(client))
+			else if (!channel->isOperator(client))
 			{
 				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
 				return;
 			}
+
 			if (isPositive)
-			{
 				channel->setK(parameters[0]);
-			}
 			else
-			{
 				channel->setK(NULL);
-			}
-			channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +k " : " -k ") + (isPositive ? parameters[0] : " *") + " - bad key" + "\r\n");
-			parameters.erase(parameters.begin());
 		}
+
+		channel->broadcast(":" + client->getPrefix() + " MODE " + channelName + (isPositive ? " +k " : " -k ") + (isPositive ? parameters[0] : " *") + " - bad key" + "\r\n");
+		parameters.erase(parameters.begin());
 	}
 }

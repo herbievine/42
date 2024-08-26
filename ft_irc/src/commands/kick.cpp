@@ -6,14 +6,14 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:02:20 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:10:54 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 14:50:35 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
 
-void kick(Server *server, Client *client, std::vector<std::string> const &args)
+void kick(Server *server, const Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty() || args.size() < 2)
 	{
@@ -38,7 +38,7 @@ void kick(Server *server, Client *client, std::vector<std::string> const &args)
 		return;
 	}
 
-	Client *target = channel->getClientByNickname(nickname);
+	const Client *target = channel->getClientByNickname(nickname);
 
 	if (!target)
 	{

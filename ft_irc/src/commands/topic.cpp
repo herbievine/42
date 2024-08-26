@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 12:14:07 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/26 14:38:52 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
  *
  * @related https://modern.ircdocs.horse/#topic-message
  */
-void topic(Server *server, Client *client, std::vector<std::string> const &args)
+void topic(Server *server, const Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
@@ -95,6 +95,5 @@ void topic(Server *server, Client *client, std::vector<std::string> const &args)
 		newTopic += " " + args[i];
 
 	channel->setTopic(newTopic);
-
 	channel->broadcast(":" + client->getPrefix() + " TOPIC " + channel->getName() + " :" + newTopic + "\r\n");
 }

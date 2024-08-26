@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:37:04 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/26 14:53:14 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-Channel::Channel(std::string &name, std::string &password) : _limit(0)
+Channel::Channel(std::string &name, std::string &password) : _name(name), _k(password), _limit(0), _isInviteOnly(false), _topicPrivilege(false)
 {
-	_name = name;
-	_k = password;
 }
 
-Channel::Channel(const Channel &src)
+Channel::Channel(const Channel &src) : _name(src._name), _k(src._k), _limit(src._limit), _isInviteOnly(src._isInviteOnly), _topicPrivilege(src._topicPrivilege), _topic(src._topic)
 {
 }
 
@@ -40,24 +38,29 @@ Channel &Channel::operator=(const Channel &rhs)
 {
 	if (this != &rhs)
 	{
-		this->_name = rhs._name;
+		_name = rhs._name;
+		_k = rhs._k;
+		_limit = rhs._limit;
+		_isInviteOnly = rhs._isInviteOnly;
+		_topicPrivilege = rhs._topicPrivilege;
+		_topic = rhs._topic;
 	}
 
 	return *this;
 }
 
-void Channel::broadcast(std::string message)
+void Channel::broadcast(const std::string &message)
 {
 	std::vector<Client *>::iterator it = _clients.begin();
 
 	while (it != _clients.end())
 	{
 		(*it)->write(message);
-		it++;
+		++it;
 	}
 }
 
-void Channel::broadcast(std::string message, Client *exclude)
+void Channel::broadcast(const std::string &message, const Client *exclude)
 {
 	std::vector<Client *>::iterator it = _clients.begin();
 
@@ -66,7 +69,7 @@ void Channel::broadcast(std::string message, Client *exclude)
 		if (*it != exclude)
 			(*it)->write(message);
 
-		it++;
+		++it;
 	}
 }
 
@@ -80,13 +83,13 @@ std::vector<std::string> Channel::getNicknames() const
 	{
 		nicknames.push_back((isOperator(*it) ? "@" : "") + (*it)->getNickname());
 
-		it++;
+		++it;
 	}
 
 	return nicknames;
 }
 
-bool Channel::isOperator(Client *client) const
+bool Channel::isOperator(const Client *client) const
 {
 	std::map<std::string, bool>::const_iterator it = _operators.find(client->getNickname());
 
@@ -96,7 +99,7 @@ bool Channel::isOperator(Client *client) const
 	return false;
 }
 
-bool Channel::isClientInChannel(Client *client) const
+bool Channel::isClientInChannel(const Client *client) const
 {
 	std::vector<Client *>::const_iterator it = _clients.begin();
 
@@ -105,7 +108,7 @@ bool Channel::isClientInChannel(Client *client) const
 		if (*it == client)
 			return true;
 
-		it++;
+		++it;
 	}
 
 	return false;
@@ -117,7 +120,7 @@ void Channel::addClient(Client *client)
 	_operators[client->getNickname()] = false;
 }
 
-void Channel::removeClient(Client *client)
+void Channel::removeClient(const Client *client)
 {
 	std::vector<Client *>::iterator it = _clients.begin();
 
@@ -129,7 +132,7 @@ void Channel::removeClient(Client *client)
 			break;
 		}
 
-		it++;
+		++it;
 	}
 
 	it = _invited.begin();
@@ -142,23 +145,23 @@ void Channel::removeClient(Client *client)
 			break;
 		}
 
-		it++;
+		++it;
 	}
 
 	_operators.erase(client->getNickname());
 }
 
-void Channel::addOperator(Client *client)
+void Channel::addOperator(const Client *client)
 {
 	_operators[client->getNickname()] = true;
 }
 
-void Channel::removeOperator(Client *client)
+void Channel::removeOperator(const Client *client)
 {
 	_operators[client->getNickname()] = false;
 }
 
-Client *Channel::getClientByNickname(std::string nickname)
+Client *Channel::getClientByNickname(const std::string &nickname)
 {
 	std::vector<Client *>::iterator it = _clients.begin();
 
@@ -167,7 +170,7 @@ Client *Channel::getClientByNickname(std::string nickname)
 		if ((*it)->getNickname() == nickname)
 			return *it;
 
-		it++;
+		++it;
 	}
 
 	return nullptr;
@@ -182,13 +185,13 @@ void Channel::setInvited(Client *client)
 		if (*it == client)
 			return;
 
-		it++;
+		++it;
 	}
 
 	_invited.push_back(client);
 }
 
-bool Channel::isInvited(Client *client)
+bool Channel::isInvited(const Client *client)
 {
 	std::vector<Client *>::iterator it = _invited.begin();
 
@@ -197,7 +200,7 @@ bool Channel::isInvited(Client *client)
 		if (*it == client)
 			return true;
 
-		it++;
+		++it;
 	}
 
 	return false;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 10:29:19 by juliencros        #+#    #+#             */
-/*   Updated: 2024/08/26 13:59:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/26 14:51:07 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "../utils/utils.hpp"
 #include <vector>
 
-void invite(Server *server, Client *client, std::vector<std::string> const &args)
+void invite(Server *server, const Client *client, std::vector<std::string> const &args)
 {
 	if (args.size() < 2)
 	{
