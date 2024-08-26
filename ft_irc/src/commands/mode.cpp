@@ -14,7 +14,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 
 	if (args.size() < 2)
 	{
-		client->sendRaw(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
+		client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
 		return;
 	}
 
@@ -27,7 +27,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 	Channel *channel = server->getChannel(channelName);
 	if (channel == nullptr)
 	{
-		client->sendRaw(ERR_NOSUCHCHANNEL(client->getNickname(), channelName) + "\r\n");
+		client->write(ERR_NOSUCHCHANNEL(client->getNickname(), channelName) + "\r\n");
 		return;
 	}
 
@@ -41,7 +41,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 		{
 			if (!channel->isOperator(client))
 			{
-				client->sendRaw(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
+				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
 				return;
 			}
 			if (isPositive)
@@ -64,18 +64,18 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 		{
 			if (parameters.empty())
 			{
-				client->sendRaw(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
+				client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
 				return;
 			}
 			if (!channel->isOperator(client))
 			{
-				client->sendRaw(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
+				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
 				return;
 			}
 			Client *ClientTarget = channel->getClientByNickname(parameters[0]);
 			if (!ClientTarget)
 			{
-				client->sendRaw(ERR_NOSUCHNICK(client->getNickname(), parameters[0]) + "\r\n");
+				client->write(ERR_NOSUCHNICK(client->getNickname(), parameters[0]) + "\r\n");
 				return;
 			}
 			if (isPositive)
@@ -89,12 +89,12 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 		{
 			if (parameters.empty() && isPositive)
 			{
-				client->sendRaw(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
+				client->write(ERR_NEEDMOREPARAMS(client->getNickname(), "MODE") + "\r\n");
 				return;
 			}
 			if (!channel->isOperator(client))
 			{
-				client->sendRaw(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
+				client->write(ERR_CHANOPRIVSNEEDED(client->getNickname(), channelName) + "\r\n");
 				return;
 			}
 			if (isPositive)

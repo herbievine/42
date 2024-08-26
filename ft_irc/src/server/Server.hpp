@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 14:00:47 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 18:45:50 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <poll.h>
 
 class Server;
+class Channel;
 
 void cap(Client *client, std::vector<std::string> const &args);
 void join(Server *server, Client *client, std::vector<std::string> const &args);
@@ -41,14 +42,7 @@ class Server
 {
 public:
 	explicit Server(std::string port, std::string password);
-	Server(const Server &src);
 	~Server();
-
-	Server &operator=(const Server &rhs);
-
-	Channel *getChannel(std::string name);
-	Channel *createChannel(std::string name, std::string password);
-	std::string getPassword() const { return _password; }
 
 	void start();
 
@@ -57,18 +51,26 @@ public:
 
 	void disconnectClient(int fd);
 
+	std::string getPassword() const { return _password; }
+
+	void registerNewChannel(Channel *channel);
+	Channel *getChannel(std::string name);
 	Client *getClientByNickname(std::string nickname);
 
 	static bool stop;
 	static void handleSignal(int signal);
 
 private:
+	Server(const Server &src);
+
+	Server &operator=(const Server &rhs);
+
 	int _port;
 	int _lsd; // Listen Socket Descriptor
 	std::string _password;
-	std::vector<struct pollfd>
-			_fds;
-	std::vector<Channel *> _channels;
+	std::vector<struct pollfd> _fds;
+
+	std::unordered_map<std::string, Channel *> _channels;
 	std::map<int, Client *> _clients;
 };
 

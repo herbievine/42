@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 15:08:18 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 09:00:10 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void Client::reply(const std::string &msg) const
 	std::cout << message;
 }
 
-void Client::sendRaw(const std::string &msg) const
+void Client::write(const std::string &msg) const
 {
 	if (send(_fd, msg.c_str(), msg.size(), 0) < 0)
 		throw std::runtime_error("Failed to send message to client");
@@ -101,10 +101,10 @@ void Client::joinChannel(Channel *channel)
 		it++;
 	}
 
-	sendRaw(":" + getPrefix() + " JOIN " + _channel->getName() + "\r\n");
-	sendRaw(":ft_irc.server MODE " + _channel->getName() + " +nt\r\n");
-	sendRaw(":ft_irc.server 353 " + getNickname() + " = " + _channel->getName() + " :" + users + "\r\n");
-	sendRaw(":ft_irc.server 366 " + getNickname() + " " + _channel->getName() + " :End of /NAMES list.\r\n");
+	write(":" + getPrefix() + " JOIN " + _channel->getName() + "\r\n");
+	write(":ft_irc.server MODE " + _channel->getName() + " +nt\r\n");
+	write(":ft_irc.server 353 " + getNickname() + " = " + _channel->getName() + " :" + users + "\r\n");
+	write(":ft_irc.server 366 " + getNickname() + " " + _channel->getName() + " :End of /NAMES list.\r\n");
 
 	_channel->broadcast(":ft_irc.server JOIN " + _channel->getName() + "\r\n");
 }

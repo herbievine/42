@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   privmsg.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/24 19:05:01 by herbie            #+#    #+#             */
+/*   Updated: 2024/08/24 19:05:11 by herbie           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
 #include "../channel/Channel.hpp"
@@ -31,7 +43,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 	{
 		if (!channel->isClientInChannel(client))
 		{
-			client->sendRaw(ERR_CANNOTSENDTOCHAN(client->getNickname(), target) + "\r\n");
+			client->write(ERR_CANNOTSENDTOCHAN(client->getNickname(), target) + "\r\n");
 			return;
 		}
 		std::vector<Client *> clients = channel->getClients();
@@ -39,7 +51,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 		{
 			if (*it != client)
 			{
-				(*it)->sendRaw(":" + client->getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n");
+				(*it)->write(":" + client->getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n");
 			}
 		}
 	}
@@ -47,18 +59,18 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 	{
 		if (!client->getChannel())
 		{
-			client->sendRaw(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
+			client->write(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
 			return;
 		}
 		channel = client->getChannel();
 		Client *ClientTarget = channel->getClientByNickname(target);
 		if (!ClientTarget)
 		{
-			client->sendRaw(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
+			client->write(ERR_NOSUCHNICK(client->getNickname(), target) + "\r\n");
 		}
 		else
 		{
-			ClientTarget->sendRaw(":" + client->getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n");
+			ClientTarget->write(":" + client->getPrefix() + " PRIVMSG " + target + " :" + message + "\r\n");
 		}
 	}
 }

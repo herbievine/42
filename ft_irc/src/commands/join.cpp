@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 15:03:58 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 09:24:46 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " JOIN :Not enough parameters\r\n");
+		client->write(":ft_irc.server 461 " + client->getNickname() + " JOIN :Not enough parameters\r\n");
 		return;
 	}
 
@@ -50,12 +50,12 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 
 		if (channel)
 		{
-			client->sendRaw(":ft_irc.server 405 " + client->getNickname() + " " + name + " :You have joined too many channels\r\n");
+			client->write(":ft_irc.server 405 " + client->getNickname() + " " + name + " :You have joined too many channels\r\n");
 			return;
 		}
 		else if (name[0] != '#' && name[0] != '&')
 		{
-			client->sendRaw(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
+			client->write(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
 			return;
 		}
 
@@ -63,30 +63,82 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 
 		if (!channel)
 		{
-			channel = server->createChannel(name, password);
-			channel->addOperator(client);
+			std::cout << "Creating channel " << name << std::endl;
 
-			client->joinChannel(channel);
+			channel = new Channel(name, password);
+
+			server->registerNewChannel(channel);
+
+			channel->addClient(client);
+			channel->addOperator(client);
+			// client->joinChannel(channel);
+
+			std::string users = "";
+			std::vector<std::string> nicknames = channel->getNicknames();
+			std::vector<std::string>::iterator it = nicknames.begin();
+
+			while (it != nicknames.end())
+			{
+				users.append(*it + " ");
+				it++;
+			}
+
+			client->write(":" + client->getPrefix() + " JOIN " + channel->getName() + "\r\n");
+			client->write(":ft_irc.server MODE " + channel->getName() + " +t\r\n");
+			client->write(":ft_irc.server 353 " + client->getNickname() + " = " + channel->getName() + " :" + users + "\r\n");
+			client->write(":ft_irc.server 366 " + client->getNickname() + " " + channel->getName() + " :End of /NAMES list.\r\n");
+
+			channel->broadcast(":ft_irc.server JOIN " + channel->getName() + "\r\n");
 
 			return;
 		}
 
+		std::cout << "Joining channel " << name << std::endl;
+
 		if (channel->getLimit() > 0 && channel->getClients().size() >= channel->getLimit())
 		{
-			client->sendRaw(":ft_irc.server 471 " + client->getNickname() + " " + name + " :Cannot join channel (+l)\r\n");
+			client->write(":ft_irc.server 471 " + client->getNickname() + " " + name + " :Cannot join channel (+l)\r\n");
 			return;
 		}
 		else if (!password.empty() && channel->getK() != password)
 		{
-			client->sendRaw(":ft_irc.server 475 " + client->getNickname() + " " + name + " :Cannot join channel (+k)\r\n");
+			client->write(":ft_irc.server 475 " + client->getNickname() + " " + name + " :Cannot join channel (+k)\r\n");
 			return;
 		}
 		else if (channel->isInviteOnly())
 		{
-			client->sendRaw(":ft_irc.server 473 " + client->getNickname() + " " + name + " :Cannot join channel (+i)\r\n");
+			client->write(":ft_irc.server 473 " + client->getNickname() + " " + name + " :Cannot join channel (+i)\r\n");
 			return;
 		}
 
-		client->joinChannel(channel);
+		channel->addClient(client);
+
+		// client->joinChannel(channel);
+
+		std::string users = "";
+		std::vector<std::string> nicknames = channel->getNicknames();
+		std::vector<std::string>::iterator it = nicknames.begin();
+
+		while (it != nicknames.end())
+		{
+			users.append(*it + " ");
+			it++;
+		}
+
+		client->write(":" + client->getPrefix() + " JOIN " + channel->getName() + "\r\n");
+
+		if (channel->getTopic().empty())
+		{
+			client->write(":ft_irc.server 331 " + client->getNickname() + " " + channel->getName() + " :No topic is set\r\n");
+		}
+		else
+		{
+			client->write(":ft_irc.server 332 " + client->getNickname() + " " + channel->getName() + " :" + channel->getTopic() + "\r\n");
+		}
+
+		client->write(":ft_irc.server 353 " + client->getNickname() + " = " + channel->getName() + " :" + users + "\r\n");
+		client->write(":ft_irc.server 366 " + client->getNickname() + " " + channel->getName() + " :End of /NAMES list.\r\n");
+
+		channel->broadcast(":ft_irc.server JOIN " + channel->getName() + "\r\n");
 	}
 }

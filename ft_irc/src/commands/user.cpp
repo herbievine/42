@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 14:14:50 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void user(Client *client, std::vector<std::string> const &args)
 {
 	if (client->isRegistered())
 	{
-		client->sendRaw(":ft_irc.server 462 " + client->getNickname() + " :You may not reregister\r\n");
+		client->write(":ft_irc.server 462 " + client->getNickname() + " :You may not reregister\r\n");
 		return;
 	}
 	else if (args.empty() || args.size() < 4)
 	{
-		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " USER :Not enough parameters\r\n");
+		client->write(":ft_irc.server 461 " + client->getNickname() + " USER :Not enough parameters\r\n");
 		return;
 	}
 
@@ -50,5 +50,5 @@ void user(Client *client, std::vector<std::string> const &args)
 	client->setUsername(args[0]);
 	client->setRealname(realname);
 
-	client->sendRaw(":" + client->getPrefix() + " 001 " + client->getNickname() + " :Welcome " + client->getNickname() + " to the ft_irc network\r\n");
+	client->write(":" + client->getPrefix() + " 001 " + client->getNickname() + " :Welcome " + client->getNickname() + " to the ft_irc network\r\n");
 }

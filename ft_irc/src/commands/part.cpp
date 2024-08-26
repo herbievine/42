@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 15:10:09 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 19:04:44 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " PART :Not enough parameters\r\n");
+		client->write(":ft_irc.server 461 " + client->getNickname() + " PART :Not enough parameters\r\n");
 		return;
 	}
 
@@ -45,7 +45,7 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 
 		if (!channel)
 		{
-			client->sendRaw(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
+			client->write(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
 			return;
 		}
 
@@ -54,11 +54,11 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 
 		if (it == clients.end())
 		{
-			client->sendRaw(":ft_irc.server 442 " + client->getNickname() + " " + name + " :You're not on that channel\r\n");
+			client->write(":ft_irc.server 442 " + client->getNickname() + " " + name + " :You're not on that channel\r\n");
 			return;
 		}
 
-		client->sendRaw(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "Leaving...") + "\r\n");
+		client->write(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "Leaving...") + "\r\n");
 
 		channel->removeClient(client);
 		channel->broadcast(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "Leaving...") + "\r\n");

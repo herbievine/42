@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 12:27:08 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 09:09:43 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void Channel::broadcast(std::string message)
 
 	while (it != _clients.end())
 	{
-		(*it)->sendRaw(message);
+		(*it)->write(message);
 		it++;
 	}
 }
@@ -64,7 +64,7 @@ void Channel::broadcast(std::string message, Client *exclude)
 	while (it != _clients.end())
 	{
 		if (*it != exclude)
-			(*it)->sendRaw(message);
+			(*it)->write(message);
 
 		it++;
 	}
@@ -114,6 +114,7 @@ bool Channel::isClientInChannel(Client *client) const
 void Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
+	_operators[client->getNickname()] = false;
 }
 
 void Channel::removeClient(Client *client)
@@ -130,6 +131,8 @@ void Channel::removeClient(Client *client)
 
 		it++;
 	}
+
+	_operators.erase(client->getNickname());
 }
 
 void Channel::addOperator(Client *client)
@@ -153,5 +156,6 @@ Client *Channel::getClientByNickname(std::string nickname)
 
 		it++;
 	}
+
 	return nullptr;
 }

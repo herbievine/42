@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 14:00:55 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/26 09:22:57 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,12 @@ Server &Server::operator=(const Server &rhs)
 	return *this;
 }
 
-Channel *Server::createChannel(std::string name, std::string password)
-{
-	Channel *channel = new Channel(name, password);
-
-	_channels.push_back(channel);
-
-	return channel;
-}
-
 Channel *Server::getChannel(std::string name)
 {
-	for (size_t i = 0; i < _channels.size(); i++)
-	{
-		if (_channels[i]->getName() == name)
-			return _channels[i];
-	}
+	std::unordered_map<std::string, Channel *>::iterator it = _channels.find(name);
+
+	if (it != _channels.end())
+		return it->second;
 
 	return nullptr;
 }
@@ -194,10 +184,6 @@ void Server::readFromClient(int fd)
 	{
 		buffer[bytes] = '\0';
 
-		// std::cout << "**** BUFFER ****" << std::endl;
-		// std::cout << buffer;
-		// std::cout << "**** END BUFFER ****" << std::endl;
-
 		try
 		{
 			std::vector<std::string> args = split(buffer, '\n');
@@ -254,6 +240,23 @@ void Server::disconnectClient(int fd)
 {
 	Client *client = _clients.at(fd);
 
+	std::unordered_map<std::string, Channel *>::iterator it = _channels.begin();
+
+	while (it != _channels.end())
+	{
+		it->second->removeClient(client);
+
+		if (it->second->getClients().empty())
+		{
+			delete it->second;
+			_channels.erase(it++);
+		}
+		else
+		{
+			it++;
+		}
+	}
+
 	for (size_t i = 0; i < _fds.size(); i++)
 	{
 		if (_fds[i].fd == fd)
@@ -269,6 +272,11 @@ void Server::disconnectClient(int fd)
 	std::cout << "[" << client->getFd() << "]" << " disconnected" << std::endl;
 
 	delete client;
+}
+
+void Server::registerNewChannel(Channel *channel)
+{
+	_channels[channel->getName()] = channel;
 }
 
 Client *Server::getClientByNickname(std::string nickname)

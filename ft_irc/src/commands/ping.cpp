@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 14:10:43 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void ping(Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " PING :Not enough parameters\r\n");
+		client->write(":ft_irc.server 461 " + client->getNickname() + " PING :Not enough parameters\r\n");
 		return;
 	}
 
-	client->sendRaw(":ft_irc.server PONG ft_irc.server :" + args.at(0) + "\r\n");
+	client->write(":ft_irc.server PONG ft_irc.server :" + args.at(0) + "\r\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 10:25:04 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/08/26 09:00:00 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ public:
 
 	void reply(const std::string &msg) const;
 
-	void sendRaw(const std::string &msg) const;
+	void write(const std::string &msg) const;
 	void joinChannel(Channel *channel);
 
 	int getFd() const { return _fd; }

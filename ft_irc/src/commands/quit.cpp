@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:32:46 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 19:06:17 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ void quit(Client *client, std::vector<std::string> const &args)
 
 	// TODO: disconnect when we have access to server
 	// server->disconnectClient(client->getFd())
-	client->reply(RPL_QUIT(client->getPrefix(), reason));
+	client->write(RPL_QUIT(client->getNickname(), reason) + "\r\n");
 }

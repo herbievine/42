@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 13:25:21 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@
 
 void cap(Client *client, std::vector<std::string> const &args)
 {
-	client->sendRaw(":ft_irc.server NOTICE * :*** Server doesn't support negotiation capabilities\r\n");
+	client->write(":ft_irc.server NOTICE * :*** Server doesn't support negotiation capabilities\r\n");
 }

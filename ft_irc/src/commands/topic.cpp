@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 12:44:47 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 19:06:49 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void topic(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " TOPIC :Not enough parameters\r\n");
+		client->write(":ft_irc.server 461 " + client->getNickname() + " TOPIC :Not enough parameters\r\n");
 		return;
 	}
 
@@ -58,12 +58,12 @@ void topic(Server *server, Client *client, std::vector<std::string> const &args)
 
 	if (!channel)
 	{
-		client->sendRaw(":ft_irc.server 403 " + client->getNickname() + " " + args[0] + " :No such channel\r\n");
+		client->write(":ft_irc.server 403 " + client->getNickname() + " " + args[0] + " :No such channel\r\n");
 		return;
 	}
 	else if (!channel->isClientInChannel(client))
 	{
-		client->sendRaw(":ft_irc.server 442 " + client->getNickname() + " " + channel->getName() + " :You're not on that channel\r\n");
+		client->write(":ft_irc.server 442 " + client->getNickname() + " " + channel->getName() + " :You're not on that channel\r\n");
 		return;
 	}
 
@@ -71,11 +71,11 @@ void topic(Server *server, Client *client, std::vector<std::string> const &args)
 	{
 		if (channel->getTopic().empty())
 		{
-			client->sendRaw(":ft_irc.server 331 " + client->getNickname() + " " + channel->getName() + " :No topic is set\r\n");
+			client->write(":ft_irc.server 331 " + client->getNickname() + " " + channel->getName() + " :No topic is set\r\n");
 		}
 		else
 		{
-			client->sendRaw(":ft_irc.server 332 " + client->getNickname() + " " + channel->getName() + " :" + channel->getTopic() + "\r\n");
+			client->write(":ft_irc.server 332 " + client->getNickname() + " " + channel->getName() + " :" + channel->getTopic() + "\r\n");
 		}
 
 		return;
@@ -83,7 +83,7 @@ void topic(Server *server, Client *client, std::vector<std::string> const &args)
 
 	if (channel->getTopicPrivilege() && !channel->isOperator(client))
 	{
-		client->sendRaw(":ft_irc.server 482 " + client->getNickname() + " " + channel->getName() + " :You're not channel operator\r\n");
+		client->write(":ft_irc.server 482 " + client->getNickname() + " " + channel->getName() + " :You're not channel operator\r\n");
 		return;
 	}
 

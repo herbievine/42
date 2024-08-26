@@ -6,7 +6,7 @@
 /*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/24 14:15:41 by herbie           ###   ########.fr       */
+/*   Updated: 2024/08/24 16:23:01 by herbie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{
-		client->sendRaw(":ft_irc.server 461 " + client->getNickname() + " WHO :Not enough parameters\r\n");
+		client->write(":ft_irc.server 461 " + client->getNickname() + " WHO :Not enough parameters\r\n");
 		return;
 	}
 
@@ -40,7 +40,7 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 
 		if (!channel)
 		{
-			client->sendRaw(":ft_irc.server 403 " + client->getNickname() + " " + args[0] + " :No such channel\r\n");
+			client->write(":ft_irc.server 403 " + client->getNickname() + " " + args[0] + " :No such channel\r\n");
 			return;
 		}
 
@@ -49,10 +49,10 @@ void who(Server *server, Client *client, std::vector<std::string> const &args)
 
 		while (it != clients.end())
 		{
-			client->sendRaw(":ft_irc.server 352 " + client->getNickname() + " " + args[0] + " ~" + (*it)->getUsername() + " " + (*it)->getHostname() + " ft_irc.server " + (*it)->getNickname() + (channel->isOperator(*it) ? " *H :0 " : " H :0 ") + (*it)->getRealname() + "\r\n");
+			client->write(":ft_irc.server 352 " + client->getNickname() + " " + args[0] + " ~" + (*it)->getUsername() + " " + (*it)->getHostname() + " ft_irc.server " + (*it)->getNickname() + (channel->isOperator(*it) ? " *H :0 " : " H :0 ") + (*it)->getRealname() + "\r\n");
 			it++;
 		}
 
-		client->sendRaw(":ft_irc.server 315 " + client->getNickname() + " " + args[0] + " :End of WHO list.\r\n");
+		client->write(":ft_irc.server 315 " + client->getNickname() + " " + args[0] + " :End of WHO list.\r\n");
 	}
 }
