@@ -28,10 +28,9 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 		return;
 	}
 
+	bool isPositive = true;
 	for (int i = 0; i < args[1].size(); i++)
 	{
-		bool isPositive = true;
-
 		if (args[1][i] == '+')
 			isPositive = true;
 		else if (args[1][i] == '-')
@@ -48,6 +47,7 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 				channel->setInviteOnly(true);
 			else
 				channel->setInviteOnly(false);
+			channel->broadcast(":" + client->getPrefix() + " MODE " + name + (isPositive ? " +i" : " -i") + "\r\n");
 		}
 		else if (args[1][i] == 't')
 		{
@@ -55,6 +55,7 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 				channel->setTopicPrivilege(true);
 			else
 				channel->setTopicPrivilege(false);
+			channel->broadcast(":" + client->getPrefix() + " MODE " + name + (isPositive ? " +t" : " -t") + "\r\n");
 		}
 		else if (args[1][i] == 'o')
 		{
@@ -101,10 +102,13 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 			if (isPositive)
 				channel->setK(params[0]);
 			else
-				channel->setK(NULL);
+				channel->setK("");
+			if (isPositive)
+				channel->broadcast(":" + client->getPrefix() + " MODE " + name + " +k " + params[0] + "\r\n");
+			else if (!isPositive && params.size() > 0)
+				channel->broadcast(":" + client->getPrefix() + " MODE " + name + " -k *\r\n");
+			if (params.size() > 0)
+				params.erase(params.begin());
 		}
-
-		channel->broadcast(":" + client->getPrefix() + " MODE " + name + (isPositive ? " +k " : " -k ") + (isPositive ? params[0] : " *") + " - bad key" + "\r\n");
-		params.erase(params.begin());
 	}
 }
