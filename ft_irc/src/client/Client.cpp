@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:02:36 by herbie           ###   ########.fr       */
+/*   Updated: 2024/09/03 15:21:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,6 @@ Client &Client::operator=(const Client &rhs)
 	}
 
 	return *this;
-}
-
-void Client::reply(const std::string &msg) const
-{
-	std::string message = ":" + getPrefix() + " " + msg + "\r\n";
-
-	std::cout << message << std::endl;
-
-	if (send(_fd, message.c_str(), message.size(), 0) < 0)
-		throw std::runtime_error("Failed to send message to client");
-	// TODO: this is debug
-
-	// std::cout << message;
 }
 
 void Client::write(const std::string &msg) const

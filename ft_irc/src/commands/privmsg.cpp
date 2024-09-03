@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:05:01 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 15:44:02 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/03 15:20:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 {
 	if (args.size() < 2)
 	{
-		client->reply(":ft_irc.server 406 " + client->getNickname() + " PRIVMSG :Not enough parameters\r\n");
+		client->write(":ft_irc.server 406 " + client->getNickname() + " PRIVMSG :Not enough parameters\r\n");
 		return;
 	}
 
