@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 15:17:28 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/03 15:21:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 	}
 
 	std::vector<std::string> channels = split(args[0], ',');
-	std::vector<std::string> keys = split(args[1], ',');
+	std::vector<std::string> keys;
+
+	if (args.size() == 2)
+		keys = split(args[1], ',');
 
 	for (size_t i = 0; i < channels.size(); i++)
 	{
@@ -63,8 +66,6 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 
 		if (!channel)
 		{
-			std::cout << "Creating channel " << name << std::endl;
-
 			channel = new Channel(name, password);
 
 			server->registerNewChannel(channel);
@@ -91,8 +92,6 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 
 			return;
 		}
-
-		std::cout << "Joining channel " << name << std::endl;
 
 		if (channel->getLimit() > 0 && channel->getClients().size() >= channel->getLimit())
 		{
