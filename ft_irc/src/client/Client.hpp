@@ -40,8 +40,6 @@ public:
 	std::string getRealname() const { return _realname; }
 	std::string getNickname() const { return _nickname; }
 
-	Channel *getChannel() const { return _channel; }
-
 	std::string getPrefix() const;
 
 	AuthState getState() const { return _state; }
@@ -50,8 +48,6 @@ public:
 	void setNickname(const std::string &nickname) { _nickname = nickname; }
 	void setUsername(const std::string &username) { _username = username; }
 	void setRealname(const std::string &realname) { _realname = realname; }
-
-	void setChannel(Channel *channel) { _channel = channel; }
 
 private:
 	Client(const Client &src);
@@ -67,8 +63,6 @@ private:
 	std::string _username;
 	std::string _realname;
 	std::string _nickname;
-
-	Channel *_channel;
 };
 
 #endif /* CLIENT_HPP */

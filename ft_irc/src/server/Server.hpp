@@ -54,8 +54,10 @@ public:
 
 	std::string getPassword() const { return _password; }
 
-	void registerNewChannel(Channel *channel);
+	void registerChannel(Channel *channel);
 	Channel *getChannel(std::string &name);
+	void deleteChannel(Channel *channel);
+
 	Client *getClientByNickname(const std::string &nickname);
 
 	static bool stop;

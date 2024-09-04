@@ -49,26 +49,27 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 		std::string name = channels[i];
 		std::string password = keys.size() > i ? keys[i] : "";
 
-		Channel *channel = client->getChannel();
+		// Channel *channel = client->getChannel();
 
-		if (channel)
-		{
-			client->write(":ft_irc.server 405 " + client->getNickname() + " " + name + " :You have joined too many channels\r\n");
-			return;
-		}
-		else if (name[0] != '#' && name[0] != '&')
+		// if (channel)
+		// {
+		// 	client->write(":ft_irc.server 405 " + client->getNickname() + " " + name + " :You have joined too many channels\r\n");
+		// 	return;
+		// }
+		// else 
+		if (name[0] != '#' && name[0] != '&')
 		{
 			client->write(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
 			return;
 		}
 
-		channel = server->getChannel(name);
+		Channel *channel = server->getChannel(name);
 
 		if (!channel)
 		{
 			channel = new Channel(name, password);
 
-			server->registerNewChannel(channel);
+			server->registerChannel(channel);
 
 			channel->addClient(client);
 			channel->addOperator(client);

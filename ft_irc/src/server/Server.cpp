@@ -263,7 +263,9 @@ void Server::disconnectClient(int fd)
 
 	while (it != _channels.end())
 	{
-		if (it->second->removeClient(client))
+		it->second->removeClient(client);
+
+		if (it->second->getClients().size() == 0)
 			_channels.erase(it++);
 		else
 		{
@@ -288,7 +290,7 @@ void Server::disconnectClient(int fd)
 	delete client;
 }
 
-void Server::registerNewChannel(Channel *channel)
+void Server::registerChannel(Channel *channel)
 {
 	_channels[channel->getName()] = channel;
 }
@@ -306,6 +308,11 @@ Client *Server::getClientByNickname(const std::string &nickname)
 	}
 
 	return nullptr;
+}
+
+void Server::deleteChannel(Channel *channel)
+{
+	_channels.erase(channel->getName());
 }
 
 void Server::handleSignal(int signal)

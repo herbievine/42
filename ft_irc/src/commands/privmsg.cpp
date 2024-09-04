@@ -57,14 +57,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 		return;
 	}
 
-	if (!client->getChannel())
-	{
-		client->write(":ft_irc.server 401 " + client->getNickname() + " PRIVMSG :No such nick/channel\r\n");
-		return;
-	}
-
-	channel = client->getChannel();
-	const Client *TargetClient = channel->getClientByNickname(target);
+	const Client *TargetClient = server->getClientByNickname(target);
 
 	if (!TargetClient)
 	{

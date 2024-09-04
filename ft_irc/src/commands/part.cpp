@@ -63,5 +63,10 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 
 		channel->removeClient(client);
 		channel->broadcast(":" + client->getNickname() + " PART " + name + " :" + (args.size() > 1 ? args[1] : "Leaving...") + "\r\n");
+	
+		if (channel->getClients().size() == 0)
+		{
+			
+		}
 	}
 }

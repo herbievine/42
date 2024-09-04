@@ -120,7 +120,7 @@ void Channel::addClient(Client *client)
 	_operators[client->getNickname()] = false;
 }
 
-bool Channel::removeClient(const Client *client)
+void Channel::removeClient(const Client *client)
 {
 	std::vector<Client *>::iterator it = _clients.begin();
 
@@ -149,13 +149,6 @@ bool Channel::removeClient(const Client *client)
 	}
 
 	_operators.erase(client->getNickname());
-
-	if (_clients.empty())
-	{
-		delete this;
-		return true;
-	}
-	return false;
 }
 
 void Channel::addOperator(const Client *client)
