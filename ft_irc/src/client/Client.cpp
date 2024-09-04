@@ -15,11 +15,11 @@
 #include <sys/socket.h>
 #include <fstream>
 
-Client::Client(int fd, std::string &ip, std::string &hostname) : _fd(fd), _ip(ip), _hostname(hostname), _state(UNAUTHENTICATED), _nickname(""), _username(""), _realname("")
+Client::Client(int fd, std::string &ip, std::string &hostname) : _fd(fd), _ip(ip), _hostname(hostname), _state(UNAUTHENTICATED), _channelCount(0)
 {
 }
 
-Client::Client(const Client &src) : _fd(src._fd), _ip(src._ip), _hostname(src._hostname), _state(src._state), _nickname(src._nickname), _username(src._username), _realname(src._realname)
+Client::Client(const Client &src) : _fd(src._fd), _ip(src._ip), _hostname(src._hostname), _state(src._state), _nickname(src._nickname), _username(src._username), _realname(src._realname), _channelCount(src._channelCount)
 {
 }
 
@@ -40,6 +40,8 @@ Client &Client::operator=(const Client &rhs)
 		_nickname = rhs._nickname;
 		_username = rhs._username;
 		_realname = rhs._realname;
+
+		_channelCount = rhs._channelCount;
 	}
 
 	return *this;

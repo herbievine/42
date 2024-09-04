@@ -49,6 +49,10 @@ public:
 	void setUsername(const std::string &username) { _username = username; }
 	void setRealname(const std::string &realname) { _realname = realname; }
 
+	int getChannelCount() const { return _channelCount; }
+	void incrementChannelCount() { _channelCount++; }
+	void decrementChannelCount() { _channelCount--; }
+
 private:
 	Client(const Client &src);
 
@@ -63,6 +67,8 @@ private:
 	std::string _username;
 	std::string _realname;
 	std::string _nickname;
+
+	int _channelCount;
 };
 
 #endif /* CLIENT_HPP */

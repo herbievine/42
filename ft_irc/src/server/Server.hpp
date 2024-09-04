@@ -13,6 +13,8 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#define MAX_CHANNEL_COUNT_PER_CLIENT 10
+
 #include "../client/Client.hpp"
 #include "../channel/Channel.hpp"
 #include <iostream>

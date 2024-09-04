@@ -118,9 +118,11 @@ void Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
 	_operators[client->getNickname()] = false;
+
+	client->incrementChannelCount();
 }
 
-void Channel::removeClient(const Client *client)
+void Channel::removeClient(Client *client)
 {
 	std::vector<Client *>::iterator it = _clients.begin();
 
@@ -149,6 +151,7 @@ void Channel::removeClient(const Client *client)
 	}
 
 	_operators.erase(client->getNickname());
+	client->decrementChannelCount();
 }
 
 void Channel::addOperator(const Client *client)

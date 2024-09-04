@@ -49,7 +49,7 @@ void kick(Server *server, const Client *client, std::vector<std::string> const &
 		return;
 	}
 
-	const Client *target = channel->getClientByNickname(nickname);
+	Client *target = channel->getClientByNickname(nickname);
 
 	if (!target)
 	{

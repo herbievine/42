@@ -53,7 +53,7 @@ public:
 	void setInvited(Client *client);
 
 	void addClient(Client *client);
-	void removeClient(const Client *client);
+	void removeClient(Client *client);
 
 	void addOperator(const Client *client);
 	void removeOperator(const Client *client);
