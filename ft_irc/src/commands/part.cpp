@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   part.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 12:13:15 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/04 14:10:30 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void part(Server *server, Client *client, std::vector<std::string> const &args)
 	
 		if (channel->getClients().size() == 0)
 		{
-			
+			server->deleteChannel(channel);
 		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/03 15:21:43 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/04 14:12:57 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 
 			channel->broadcast(":" + client->getPrefix() + " JOIN " + channel->getName() + "\r\n", client);
 
-			return;
+			continue;
 		}
 
 		if (channel->isClientInChannel(client))

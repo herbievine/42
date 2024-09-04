@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:47:38 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/04 14:02:06 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void Server::start()
 	const int enable = 1;
 	if (setsockopt(_lsd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
 		throw std::runtime_error("Could not set socket options");
-	// else if (fcntl(_lsd, F_SETFL, O_NONBLOCK) < 0)
-	// 	throw std::runtime_error("Could not set socket options");
+	else if (fcntl(_lsd, F_SETFL, O_NONBLOCK) < 0)
+		throw std::runtime_error("Could not set socket options");
 
 	// Bind the socket
 	if (bind(_lsd, reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr)) < 0)
@@ -111,7 +111,7 @@ void Server::start()
 
 	while (Server::stop == false)
 	{
-		if (poll(_fds.data(), _fds.size(), -1) < 0)
+		if (poll(_fds.data(), _fds.size(), -1) < 0 && Server::stop == false)
 			throw std::runtime_error("Poll failed");
 
 		for (size_t i = 0; i < _fds.size(); i++)
@@ -145,8 +145,8 @@ void Server::acceptConnection()
 	std::string welcome = ":ft_irc.server NOTICE * :*** Looking up your hostname...\r\n";
 	send(fd, welcome.c_str(), welcome.size(), 0);
 
-	// if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
-	// 	throw std::runtime_error("Could not set socket options");
+	if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
+		throw std::runtime_error("Could not set socket options");
 
 	char hostname[NI_MAXHOST];
 	int res = getnameinfo(reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr), hostname, NI_MAXHOST, NULL, 0, NI_NUMERICSERV);
