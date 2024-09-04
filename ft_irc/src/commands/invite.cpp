@@ -18,7 +18,7 @@
 #include "../utils/utils.hpp"
 #include <vector>
 
-void invite(Server *server, const Client *client, std::vector<std::string> const &args)
+void invite(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.size() < 2)
 	{

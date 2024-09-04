@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
+#include "../server/Server.hpp"
 #include <vector>
 
 /**
@@ -23,7 +24,10 @@
  * @related https://modern.ircdocs.horse/#cap-message
  */
 
-void cap(const Client *client, std::vector<std::string> const &args)
+void cap(Server *server, Client *client, std::vector<std::string> const &args)
 {
-	client->write(":ft_irc.server NOTICE * :*** Server doesn't support negotiation capabilities\r\n");
+    (void)server;
+    (void)args;
+
+    client->write(":ft_irc.server NOTICE * :*** Server doesn't support negotiation capabilities\r\n");
 }

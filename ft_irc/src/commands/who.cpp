@@ -26,7 +26,7 @@
  *
  * @related https://modern.ircdocs.horse/#who-message
  */
-void who(Server *server, const Client *client, std::vector<std::string> const &args)
+void who(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{

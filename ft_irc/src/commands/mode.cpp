@@ -3,9 +3,7 @@
 #include "../channel/Channel.hpp"
 #include "../utils/utils.hpp"
 
-// TODO: add @ to a user +o
-
-void mode(Server *server, const Client *client, std::vector<std::string> const &args)
+void mode(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty() || args.size() < 2)
 	{
@@ -28,9 +26,14 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 		return;
 	}
 
-	bool isPositive = true;
+	bool isPositive;
 	for (int i = 0; i < args[1].size(); i++)
 	{
+	    if (args[1][i + 1] && (args[1][i] == '-' || args[1][i] == '+') && (args[1][i + 1] == '-' || args[1][i + 1] == '+'))
+    	{
+    	    client->write(":ft_irc.server 501 " + client->getNickname() + " MODE :Unknown MODE flag 🇧🇷\r\n");
+            return;
+    	}
 		if (args[1][i] == '+')
 			isPositive = true;
 		else if (args[1][i] == '-')
@@ -74,7 +77,7 @@ void mode(Server *server, const Client *client, std::vector<std::string> const &
 
 			if (!ClientTarget)
 			{
-				client->write(":ft_irc.server 441 " + params[0] + " " + name + " :They aren't on that channel\r\n");
+				client->write(":ft_irc.server 441 " + client->getNickname() + " " + name + " :They aren't on that channel\r\n");
 				return;
 			}
 

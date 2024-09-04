@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
+#include "../server/Server.hpp"
 #include <vector>
 
 /**
@@ -26,8 +27,10 @@
  *
  * @related https://modern.ircdocs.horse/#user-message
  */
-void user(Client *client, std::vector<std::string> const &args)
+void user(Server *server, Client *client, std::vector<std::string> const &args)
 {
+    (void)server;
+
 	if (client->getState() == REGISTERED)
 	{
 		client->write(":ft_irc.server 462 " + client->getNickname() + " :You may not reregister\r\n");

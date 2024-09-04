@@ -3,4 +3,4 @@ name = "ft_irc"
 [scripts]
 build = { cmd = "make" }
 clean = { cmd = "make fclean" }
-lint = { cmd = "cppcheck --suppress=missingIncludeSystem --inline-suppr --enable=all ." }
+lint = { cmd = "cppcheck --suppress=missingIncludeSystem --suppress=constParameterPointer --inline-suppr --enable=all ." }

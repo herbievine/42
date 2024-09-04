@@ -25,21 +25,21 @@
 class Server;
 class Channel;
 
-void cap(const Client *client, std::vector<std::string> const &args);
+void cap(Server *server, Client *client, std::vector<std::string> const &args);
 void join(Server *server, Client *client, std::vector<std::string> const &args);
-void kick(Server *server, const Client *client, std::vector<std::string> const &args);
-void mode(Server *server, const Client *client, std::vector<std::string> const &args);
+void kick(Server *server, Client *client, std::vector<std::string> const &args);
+void mode(Server *server, Client *client, std::vector<std::string> const &args);
 void nick(Server *server, Client *client, std::vector<std::string> const &args);
 void part(Server *server, Client *client, std::vector<std::string> const &args);
-void pass(const Server *server, Client *client, std::vector<std::string> const &args);
-void ping(const Client *client, std::vector<std::string> const &args);
-void pong(const Client *client, std::vector<std::string> const &args);
+void pass(Server *server, Client *client, std::vector<std::string> const &args);
+void ping(Server *server, Client *client, std::vector<std::string> const &args);
+void pong(Server *server, Client *client, std::vector<std::string> const &args);
 void privmsg(Server *server, Client *client, std::vector<std::string> const &args);
-void quit(const Client *client, std::vector<std::string> const &args);
-void topic(Server *server, const Client *client, std::vector<std::string> const &args);
-void user(Client *client, std::vector<std::string> const &args);
-void who(Server *server, const Client *client, std::vector<std::string> const &args);
-void invite(Server *server, const Client *client, std::vector<std::string> const &args);
+void quit(Server *server, Client *client, std::vector<std::string> const &args);
+void topic(Server *server, Client *client, std::vector<std::string> const &args);
+void user(Server *server, Client *client, std::vector<std::string> const &args);
+void who(Server *server, Client *client, std::vector<std::string> const &args);
+void invite(Server *server, Client *client, std::vector<std::string> const &args);
 
 class Server
 {

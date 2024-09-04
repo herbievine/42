@@ -46,8 +46,10 @@
  *
  * @related https://modern.ircdocs.horse/#topic-message
  */
-void topic(Server *server, const Client *client, std::vector<std::string> const &args)
+void topic(Server *server, Client *client, std::vector<std::string> const &args)
 {
+    (void)server;
+
 	if (args.empty())
 	{
 		client->write(":ft_irc.server 461 " + client->getNickname() + " TOPIC :Not enough parameters\r\n");

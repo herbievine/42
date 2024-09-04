@@ -33,7 +33,7 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 	for (size_t i = 2; i < args.size(); ++i)
 		message += " " + args[i];
 
-	Channel *channel = server->getChannel(target);
+	const Channel *channel = server->getChannel(target);
 
 	if (channel)
 	{

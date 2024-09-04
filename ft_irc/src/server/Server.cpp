@@ -215,53 +215,50 @@ void Server::readFromClient(int fd)
 				std::string line = *it;
 				Client *client = _clients[fd];
 
-				if (client->getState() == UNAUTHENTICATED)
-				{
-					if (std::string(line).rfind("PASS", 0) == 0)
-						pass(this, client, split(std::string(line).substr(5)));
-					else
-						client->write(":ft_irc.server 451 * :You have not registered\r\n");
-				}
-				else if (client->getState() == AUTHENTICATED)
-				{
-					if (std::string(line).rfind("NICK", 0) == 0)
-						nick(this, client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("USER", 0) == 0)
-						user(client, split(std::string(line).substr(5)));
-					else
-						client->write(":ft_irc.server 451 * :You have not registered\r\n");
-				}
-				else if (client->getState() == REGISTERED)
-				{
-					if (std::string(line).rfind("CAP", 0) == 0)
-						cap(client, split(std::string(line).substr(4)));
-					else if (std::string(line).rfind("JOIN", 0) == 0)
-						join(this, client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("PART", 0) == 0)
-						part(this, client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("PING", 0) == 0)
-						ping(client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("PONG", 0) == 0)
-						pong(client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("QUIT", 0) == 0)
-						quit(client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("TOPIC", 0) == 0)
-						topic(this, client, split(std::string(line).substr(6)));
-					else if (std::string(line).rfind("WHO", 0) == 0)
-						who(this, client, split(std::string(line).substr(4)));
-					else if (std::string(line).rfind("MODE", 0) == 0)
-						mode(this, client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("KICK", 0) == 0)
-						kick(this, client, split(std::string(line).substr(5)));
-					else if (std::string(line).rfind("PRIVMSG", 0) == 0)
-						privmsg(this, client, split(std::string(line).substr(8)));
-					else if (std::string(line).rfind("INVITE", 0) == 0)
-						invite(this, _clients[fd], split(std::string(line).substr(7)));
-				}
-				else
-				{
-					client->write(":ft_irc.server 451 * :You have not registered\r\n");
-				}
+				struct command_handler
+                {
+                    std::string label;
+                    void (*handler)(Server *, Client *, const std::vector<std::string> &);
+                    int auth;
+                };
+
+                struct command_handler handlers[] = {
+                    {"CAP", &cap, UNAUTHENTICATED},
+                    {"INVITE", &user, AUTHENTICATED},
+                    {"JOIN", &join, AUTHENTICATED},
+                    {"KICK", &kick, AUTHENTICATED},
+                    {"MODE", &mode, AUTHENTICATED},
+                    {"NICK", &nick, AUTHENTICATED},
+                    {"PART", &part, AUTHENTICATED},
+                    {"PASS", &pass, UNAUTHENTICATED},
+                    {"PING", &ping, AUTHENTICATED},
+                    {"PONG", &pong, AUTHENTICATED},
+                    {"PRIVMSG", &privmsg, AUTHENTICATED},
+                    {"QUIT", &quit, AUTHENTICATED},
+                    {"TOPIC", &topic, AUTHENTICATED},
+                    {"USER", &user, AUTHENTICATED},
+                    {"WHO", &who, AUTHENTICATED},
+                };
+
+				for (size_t i = 0; i < sizeof(handlers) / sizeof(handlers[0]); i++)
+                {
+                    if (std::string(line).rfind(handlers[i].label, 0) == 0)
+                    {
+                        if (line.size() == handlers[i].label.size())
+                            line += " ";
+
+                        std::vector<std::string> args = split(std::string(line).substr(handlers[i].label.size() + 1));
+
+                        if (handlers[i].auth == UNAUTHENTICATED && client->getState() == UNAUTHENTICATED)
+                            handlers[i].handler(this, client, args);
+                        else if (handlers[i].auth == AUTHENTICATED && client->getState() == AUTHENTICATED)
+                            handlers[i].handler(this, client, args);
+                        else if (handlers[i].auth == REGISTERED && client->getState() == REGISTERED)
+                            handlers[i].handler(this, client, args);
+                        else
+                            client->write(":ft_irc.server 451 * :You have not registered\r\n");
+                    }
+                }
 
 				++it;
 			}

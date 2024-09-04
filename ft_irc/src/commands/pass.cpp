@@ -31,7 +31,7 @@
  *
  * @related https://modern.ircdocs.horse/#pass-message
  */
-void pass(const Server *server, Client *client, std::vector<std::string> const &args)
+void pass(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty())
 	{

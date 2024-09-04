@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
+#include "../server/Server.hpp"
 #include <vector>
 
 /**
@@ -27,8 +28,10 @@
  *
  * @related https://modern.ircdocs.horse/#pong-message
  */
-void pong(const Client *client, std::vector<std::string> const &args)
+void pong(Server *server, Client *client, const std::vector<std::string> &args)
 {
+    (void)server;
+
 	if (args.empty())
 	{
 		client->write(":ft_irc.server 461 " + client->getNickname() + " PONG :Not enough parameters\r\n");

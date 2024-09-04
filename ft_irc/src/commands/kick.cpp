@@ -13,7 +13,7 @@
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
 
-void kick(Server *server, const Client *client, std::vector<std::string> const &args)
+void kick(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty() || args.size() < 2)
 	{

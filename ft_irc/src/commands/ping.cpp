@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
+#include "../server/Server.hpp"
 #include <vector>
 
 /**
@@ -29,8 +30,10 @@
  *
  * @related https://modern.ircdocs.horse/#ping-message
  */
-void ping(const Client *client, std::vector<std::string> const &args)
+void ping(Server *server, Client *client, std::vector<std::string> const &args)
 {
+    (void)server;
+
 	if (args.empty())
 	{
 		client->write(":ft_irc.server 461 " + client->getNickname() + " PING :Not enough parameters\r\n");

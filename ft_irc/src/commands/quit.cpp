@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../client/Client.hpp"
+#include "../server/Server.hpp"
 #include <vector>
 
 /**
@@ -36,8 +37,10 @@
  *
  * @related https://modern.ircdocs.horse/#quit-message
  */
-void quit(const Client *client, std::vector<std::string> const &args)
+void quit(Server *server, Client *client, std::vector<std::string> const &args)
 {
+    (void)server;
+
 	std::string reason = args.empty() ? "Leaving..." : args[0];
 
 	if (reason.at(0) == ':')
