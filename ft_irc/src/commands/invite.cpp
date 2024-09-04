@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 10:29:19 by juliencros        #+#    #+#             */
-/*   Updated: 2024/08/26 14:51:07 by herbie           ###   ########.fr       */
+/*   Updated: 2024/09/04 11:42:09 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void invite(Server *server, const Client *client, std::vector<std::string> const
 		return;
 	}
 
-	channel->setInvited(targetClient);
+	if (channel->isInviteOnly())
+	{
+		channel->setInvited(targetClient);
+	}
 	client->write(":ft_irc.server 341 " + client->getPrefix() + " " + nickname + " " + target + "\r\n");
 }
