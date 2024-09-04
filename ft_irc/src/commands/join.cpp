@@ -42,7 +42,9 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 	std::vector<std::string> keys;
 
 	if (args.size() == 2)
+	{
 		keys = split(args[1], ',');
+	}
 
 	for (size_t i = 0; i < channels.size(); i++)
 	{
@@ -56,7 +58,8 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 			client->write(":ft_irc.server 405 " + client->getNickname() + " " + name + " :You have joined too many channels\r\n");
 			return;
 		}
-		else if (name[0] != '#' && name[0] != '&')
+
+		if (name[0] != '#' && name[0] != '&')
 		{
 			client->write(":ft_irc.server 403 " + client->getNickname() + " " + name + " :No such channel\r\n");
 			return;
@@ -73,7 +76,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 			channel->addClient(client);
 			channel->addOperator(client);
 
-			std::string users = "";
+			std::string users;
 			std::vector<std::string> nicknames = channel->getNicknames();
 			std::vector<std::string>::iterator it = nicknames.begin();
 
@@ -93,11 +96,18 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 			return;
 		}
 
+		if (channel->isClientInChannel(client))
+		{
+			client->write(":ft_irc.server 443 " + client->getNickname() + " " + channel->getName() + " :is already on channel\r\n");
+			return;
+		}
+
 		if (channel->getLimit() > 0 && channel->getClients().size() >= channel->getLimit())
 		{
 			client->write(":ft_irc.server 471 " + client->getNickname() + " " + name + " :Cannot join channel (+l)\r\n");
 			return;
 		}
+
 		if (!channel->getK().empty())
 		{
 			if (password.empty() || channel->getK() != password)
@@ -106,6 +116,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 				return;
 			}
 		}
+
 		if (channel->isInviteOnly() && !channel->isInvited(client))
 		{
 			client->write(":ft_irc.server 473 " + client->getNickname() + " " + name + " :Cannot join channel (+i) - you must be invited\r\n");
@@ -114,7 +125,7 @@ void join(Server *server, Client *client, std::vector<std::string> const &args)
 
 		channel->addClient(client);
 
-		std::string users = "";
+		std::string users;
 		std::vector<std::string> nicknames = channel->getNicknames();
 		std::vector<std::string>::iterator it = nicknames.begin();
 
