@@ -22,6 +22,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <cstring>
+#include <unordered_map>
 
 bool Server::stop = false;
 
@@ -48,6 +49,23 @@ Server::~Server()
 		close(_lsd);
 		_lsd = -1;
 	}
+
+	std::unordered_map<std::string, Channel *>::iterator chan_it = _channels.begin();
+
+	while (chan_it != _channels.end())
+    {
+        delete chan_it->second;
+        ++chan_it;
+    }
+
+    std::map<int, Client *>::iterator client_it = _clients.begin();
+
+    while (client_it != _clients.end())
+    {
+        delete client_it->second;
+        close(client_it->first);
+        ++client_it;
+    }
 }
 
 Server &Server::operator=(const Server &rhs)
