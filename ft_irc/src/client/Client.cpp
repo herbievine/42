@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/03 15:21:09 by codespace        ###   ########.fr       */
+/*   Updated: 2024/09/05 14:10:18 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ Client::Client(int fd, std::string &ip, std::string &hostname) : _fd(fd), _ip(ip
 {
 }
 
-Client::Client(const Client &src) : _fd(src._fd), _ip(src._ip), _hostname(src._hostname), _state(src._state), _nickname(src._nickname), _username(src._username), _realname(src._realname), _channelCount(src._channelCount)
+Client::Client(const Client &src) : _fd(src._fd), _ip(src._ip), _hostname(src._hostname), _state(src._state), _username(src._username), _realname(src._realname), _nickname(src._nickname), _channelCount(src._channelCount)
 {
 }
 

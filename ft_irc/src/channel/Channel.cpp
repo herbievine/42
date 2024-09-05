@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:57:10 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 14:13:28 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-Channel::Channel(std::string &name, std::string &password) : _name(name), _k(password), _limit(0), _isInviteOnly(false), _topicPrivilege(false)
+Channel::Channel(std::string &name, std::string &password) : _name(name), _k(password), _isInviteOnly(false), _topicPrivilege(false), _limit(0)
 {
 }
 
-Channel::Channel(const Channel &src) : _name(src._name), _k(src._k), _limit(src._limit), _isInviteOnly(src._isInviteOnly), _topicPrivilege(src._topicPrivilege), _topic(src._topic)
+Channel::Channel(const Channel &src) : _name(src._name), _k(src._k), _isInviteOnly(src._isInviteOnly), _topicPrivilege(src._topicPrivilege), _topic(src._topic), _limit(src._limit)
 {
 }
 

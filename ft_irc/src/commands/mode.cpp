@@ -15,7 +15,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 
 	std::vector<std::string> params;
 
-	for (int i = 2; i < args.size(); i++)
+	for (unsigned long i = 2; i < args.size(); i++)
 		params.push_back(args[i]);
 
 	Channel *channel = server->getChannel(name);
@@ -27,13 +27,13 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 	}
 
 	bool isPositive;
-	for (int i = 0; i < args[1].size(); i++)
+	for (unsigned long i = 0; i < args[1].size(); i++)
 	{
-	    if (args[1][i + 1] && (args[1][i] == '-' || args[1][i] == '+') && (args[1][i + 1] == '-' || args[1][i + 1] == '+'))
-    	{
-    	    client->write(":ft_irc.server 501 " + client->getNickname() + " MODE :Unknown MODE flag 🇧🇷\r\n");
-            return;
-    	}
+		if (args[1][i + 1] && (args[1][i] == '-' || args[1][i] == '+') && (args[1][i + 1] == '-' || args[1][i + 1] == '+'))
+		{
+			client->write(":ft_irc.server 501 " + client->getNickname() + " MODE :Unknown MODE flag 🇧🇷\r\n");
+			return;
+		}
 		if (args[1][i] == '+')
 			isPositive = true;
 		else if (args[1][i] == '-')
@@ -116,7 +116,7 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 		else
 		{
 			client->write(":ft_irc.server 501 " + client->getNickname() + " MODE :Unknown MODE flag 🇧🇷\r\n");
-            return;
+			return;
 		}
 	}
 }
