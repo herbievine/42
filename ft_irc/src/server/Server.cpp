@@ -223,16 +223,16 @@ void Server::readFromClient(int fd)
 				};
 
 				struct command_handler handlers[] = {
-						{"CAP", &cap, AUTHENTICATED},
-						{"INVITE", &user, AUTHENTICATED},
+						{"CAP", &cap, UNAUTHENTICATED},
+						{"INVITE", &invite, REGISTERED},
 						{"JOIN", &join, REGISTERED},
 						{"KICK", &kick, REGISTERED},
 						{"MODE", &mode, REGISTERED},
 						{"NICK", &nick, AUTHENTICATED},
 						{"PART", &part, REGISTERED},
 						{"PASS", &pass, UNAUTHENTICATED},
-						{"PING", &ping, AUTHENTICATED},
-						{"PONG", &pong, AUTHENTICATED},
+						{"PING", &ping, UNAUTHENTICATED},
+						{"PONG", &pong, UNAUTHENTICATED},
 						{"PRIVMSG", &privmsg, REGISTERED},
 						{"QUIT", &quit, UNAUTHENTICATED},
 						{"TOPIC", &topic, REGISTERED},
