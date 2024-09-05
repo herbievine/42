@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kick.cpp                                           :+:      :+:    :+:   */
+/*   debug.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
 
-void kick(Server *server, Client *client, std::vector<std::string> const &args)
+void debug(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty() || args.size() < 2)
 	{
@@ -23,18 +23,18 @@ void kick(Server *server, Client *client, std::vector<std::string> const &args)
 
 	std::string name = args[0];
 	std::string nickname = args[1];
-	std::string reason = "Kicked";
+	std::string reason = "";
 
-	if (args.size() >= 3)
-	{
+	if (args[2][0] == ':')
+		reason = args[2].substr(1);
+	else
 		reason = args[2];
 
-		if (reason[0] == ':')
-			reason.erase(0, 1);
+	for (size_t i = 3; i < args.size(); ++i)
+		reason += " " + args[i];
 
-		for (size_t i = 3; i < args.size(); ++i)
-			reason += " " + args[i];
-	}
+	if (reason.empty())
+		reason = "Kicked";
 
 	Channel *channel = server->getChannel(name);
 

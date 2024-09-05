@@ -222,6 +222,8 @@ void Server::readFromClient(int fd)
 					int auth;
 				};
 
+				std::cout << "line: " << line << std::endl;
+
 				struct command_handler handlers[] = {
 						{"CAP", &cap, UNAUTHENTICATED},
 						{"INVITE", &invite, REGISTERED},

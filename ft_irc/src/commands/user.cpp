@@ -48,7 +48,7 @@ void user(Server *server, Client *client, std::vector<std::string> const &args)
 		realname += " " + args[i];
 
 	if (realname[0] == ':')
-		realname = realname.substr(1);
+		realname = realname.erase(0, 1);
 
 	client->setUsername(args[0]);
 	client->setRealname(realname);
