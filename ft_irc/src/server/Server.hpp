@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 14:51:04 by herbie           ###   ########.fr       */
+/*   Updated: 2024/09/05 10:14:39 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ public:
 	void acceptConnection();
 	void readFromClient(int fd);
 
-	void disconnectClient(int fd);
+	void disconnectClient(int fd, const std::string reason);
 
 	std::string getPassword() const { return _password; }
 

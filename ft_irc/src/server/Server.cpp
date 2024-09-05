@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/04 14:02:06 by jcros            ###   ########.fr       */
+/*   Updated: 2024/09/05 10:16:58 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,19 @@ Server::~Server()
 	std::unordered_map<std::string, Channel *>::iterator chan_it = _channels.begin();
 
 	while (chan_it != _channels.end())
-    {
-        delete chan_it->second;
-        ++chan_it;
-    }
+	{
+		delete chan_it->second;
+		++chan_it;
+	}
 
-    std::map<int, Client *>::iterator client_it = _clients.begin();
+	std::map<int, Client *>::iterator client_it = _clients.begin();
 
-    while (client_it != _clients.end())
-    {
-        delete client_it->second;
-        close(client_it->first);
-        ++client_it;
-    }
+	while (client_it != _clients.end())
+	{
+		delete client_it->second;
+		close(client_it->first);
+		++client_it;
+	}
 }
 
 Server &Server::operator=(const Server &rhs)
@@ -137,7 +137,7 @@ void Server::start()
 			int polled_fd = _fds[i].fd;
 
 			if (_fds[i].revents & POLLHUP)
-				disconnectClient(polled_fd);
+				disconnectClient(polled_fd, "");
 			else if (_fds[i].revents & POLLIN)
 			{
 				if (polled_fd == _lsd)
@@ -216,49 +216,53 @@ void Server::readFromClient(int fd)
 				Client *client = _clients[fd];
 
 				struct command_handler
-                {
-                    std::string label;
-                    void (*handler)(Server *, Client *, const std::vector<std::string> &);
-                    int auth;
-                };
+				{
+					std::string label;
+					void (*handler)(Server *, Client *, const std::vector<std::string> &);
+					int auth;
+				};
 
-                struct command_handler handlers[] = {
-                    {"CAP", &cap, UNAUTHENTICATED},
-                    {"INVITE", &user, AUTHENTICATED},
-                    {"JOIN", &join, AUTHENTICATED},
-                    {"KICK", &kick, AUTHENTICATED},
-                    {"MODE", &mode, AUTHENTICATED},
-                    {"NICK", &nick, AUTHENTICATED},
-                    {"PART", &part, AUTHENTICATED},
-                    {"PASS", &pass, UNAUTHENTICATED},
-                    {"PING", &ping, AUTHENTICATED},
-                    {"PONG", &pong, AUTHENTICATED},
-                    {"PRIVMSG", &privmsg, AUTHENTICATED},
-                    {"QUIT", &quit, AUTHENTICATED},
-                    {"TOPIC", &topic, AUTHENTICATED},
-                    {"USER", &user, AUTHENTICATED},
-                    {"WHO", &who, AUTHENTICATED},
-                };
+				struct command_handler handlers[] = {
+						{"CAP", &cap, AUTHENTICATED},
+						{"INVITE", &user, AUTHENTICATED},
+						{"JOIN", &join, REGISTERED},
+						{"KICK", &kick, REGISTERED},
+						{"MODE", &mode, REGISTERED},
+						{"NICK", &nick, AUTHENTICATED},
+						{"PART", &part, REGISTERED},
+						{"PASS", &pass, UNAUTHENTICATED},
+						{"PING", &ping, AUTHENTICATED},
+						{"PONG", &pong, AUTHENTICATED},
+						{"PRIVMSG", &privmsg, REGISTERED},
+						{"QUIT", &quit, UNAUTHENTICATED},
+						{"TOPIC", &topic, REGISTERED},
+						{"USER", &user, AUTHENTICATED},
+						{"WHO", &who, REGISTERED},
+				};
 
 				for (size_t i = 0; i < sizeof(handlers) / sizeof(handlers[0]); i++)
-                {
-                    if (std::string(line).rfind(handlers[i].label, 0) == 0)
-                    {
-                        if (line.size() == handlers[i].label.size())
-                            line += " ";
+				{
+					if (std::string(line).rfind(handlers[i].label, 0) == 0)
+					{
+						if (line.size() == handlers[i].label.size())
+							line += " ";
 
-                        std::vector<std::string> args = split(std::string(line).substr(handlers[i].label.size() + 1));
+						std::vector<std::string> args = split(std::string(line).substr(handlers[i].label.size() + 1));
 
-                        if (handlers[i].auth == UNAUTHENTICATED && client->getState() == UNAUTHENTICATED)
-                            handlers[i].handler(this, client, args);
-                        else if (handlers[i].auth == AUTHENTICATED && client->getState() == AUTHENTICATED)
-                            handlers[i].handler(this, client, args);
-                        else if (handlers[i].auth == REGISTERED && client->getState() == REGISTERED)
-                            handlers[i].handler(this, client, args);
-                        else
-                            client->write(":ft_irc.server 451 * :You have not registered\r\n");
-                    }
-                }
+						if (handlers[i].auth == UNAUTHENTICATED)
+							handlers[i].handler(this, client, args);
+						else if (handlers[i].auth == AUTHENTICATED && client->getState() != UNAUTHENTICATED)
+							handlers[i].handler(this, client, args);
+						else if (handlers[i].auth == REGISTERED && client->getState() == REGISTERED)
+							handlers[i].handler(this, client, args);
+
+						else
+						{
+							std::cout << line << std::endl;
+							client->write(":ft_irc.server 451 * :You have not registered\r\n");
+						}
+					}
+				}
 
 				++it;
 			}
@@ -270,7 +274,7 @@ void Server::readFromClient(int fd)
 	}
 }
 
-void Server::disconnectClient(int fd)
+void Server::disconnectClient(int fd, const std::string reason)
 {
 	Client *client = _clients.at(fd);
 
@@ -279,6 +283,8 @@ void Server::disconnectClient(int fd)
 	while (it != _channels.end())
 	{
 		it->second->removeClient(client);
+
+		it->second->broadcast(":" + client->getPrefix() + " QUIT :" + reason + "\r\n", client);
 
 		if (it->second->getClients().size() == 0)
 			_channels.erase(it++);
