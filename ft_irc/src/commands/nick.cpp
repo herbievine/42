@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: herbie <herbie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 13:44:36 by herbie           ###   ########.fr       */
+/*   Updated: 2024/09/05 07:59:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ void nick(Server *server, Client *client, std::vector<std::string> const &args)
 {
 	if (args.empty() || args[0].empty())
 	{
-		client->write(":ft_irc.server 431 " + client->getNickname() + " :No nickname given\r\n");
+		if (client->getNickname().empty())
+			client->write(":ft_irc.server 431 * :No nickname given\r\n");
+		else
+			client->write(":ft_irc.server 431 " + client->getNickname() + " :No nickname given\r\n");
+
 		return;
 	}
 
