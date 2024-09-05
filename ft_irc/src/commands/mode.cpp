@@ -113,5 +113,10 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 			if (params.size() > 0)
 				params.erase(params.begin());
 		}
+		else
+		{
+			client->write(":ft_irc.server 501 " + client->getNickname() + " MODE :Unknown MODE flag 🇧🇷\r\n");
+            return;
+		}
 	}
 }
