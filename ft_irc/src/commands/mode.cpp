@@ -1,3 +1,4 @@
+#include <sstream>
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
 #include "../channel/Channel.hpp"
@@ -88,6 +89,48 @@ void mode(Server *server, Client *client, std::vector<std::string> const &args)
 
 			channel->broadcast(":" + client->getPrefix() + " MODE " + name + (isPositive ? " +o " : " -o ") + params[0] + "\r\n");
 			params.erase(params.begin());
+		}
+		else if (args[1][i] == 'l')
+		{
+			if (params.empty() && isPositive)
+			{
+				client->write(":ft_irc.server 461 " + client->getNickname() + " MODE :Not enough parameters\r\n");
+				return;
+			}
+			else if (!channel->isOperator(client))
+			{
+				client->write(":ft_irc.server 482 " + client->getNickname() + " " + name + " :You're not channel operator\r\n");
+				return;
+			}
+
+			if (isPositive)
+			{
+				size_t limit;
+
+				try
+				{
+					limit = stringToInt(params[0]);
+					if (limit >= 2147483647 || (limit == 0 && params[0] != "0"))
+					{
+						client->write(":ft_irc.server 501 " + client->getNickname() + " MODE :Unknown MODE flag 🇧🇷\r\n");
+						return;
+					}
+				}
+				catch (const std::exception &e)
+				{
+					client->write(":ft_irc.server 461 " + client->getNickname() + " MODE :Not enough parameters\r\n");
+					return;
+				}
+				channel->setLimit(limit);
+			}
+			else
+				channel->setLimit(0);
+			if (isPositive)
+				channel->broadcast(":" + client->getPrefix() + " MODE " + name + " +l " + params[0] + "\r\n");
+			else if (!isPositive && params.size() > 0)
+				channel->broadcast(":" + client->getPrefix() + " MODE " + name + " -l *\r\n");
+			if (params.size() > 0)
+				params.erase(params.begin());
 		}
 		else if (args[1][i] == 'k')
 		{

@@ -6,7 +6,7 @@
 #    By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/11 09:59:04 by herbie            #+#    #+#              #
-#    Updated: 2024/09/05 14:08:02 by juliencros       ###   ########.fr        #
+#    Updated: 2024/09/05 17:07:11 by juliencros       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS = \
 	src/commands/user.cpp \
 	src/commands/who.cpp \
 	src/utils/split.cpp \
+	src/utils/stringToInt.cpp \
 	src/utils/trim.cpp
 
 OBJS = $(SRCS:.cpp=.o)

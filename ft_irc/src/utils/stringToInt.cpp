@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   stringToInt.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/02 15:05:13 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 17:01:35 by juliencros       ###   ########.fr       */
+/*   Created: 2024/09/05 17:02:48 by juliencros        #+#    #+#             */
+/*   Updated: 2024/09/05 17:04:02 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-#define UTILS_HPP
-
+#include "utils.hpp"
+#include <string>
 #include <iostream>
-#include <vector>
 
-std::vector<std::string> split(const std::string &str, int sep = ' ');
-void trim(std::string &s);
-size_t stringToInt(const std::string &str);
+size_t stringToInt(const std::string &str)
+{
+	size_t result = 0;
 
-#endif /* UTILS_HPP */
+	for (size_t i = 0; i < str.size(); i++)
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return 0;
+		result = result * 10 + str[i] - '0';
+	}
+
+	return result;
+}
