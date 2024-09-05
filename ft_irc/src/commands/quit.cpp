@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 10:25:12 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 11:13:42 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,16 @@ void quit(Server *server, Client *client, std::vector<std::string> const &args)
 	(void)server;
 	std::string reason = args.empty() ? "Leaving..." : args[0];
 
-	if (reason.at(0) == ':')
-		reason = reason.substr(1);
+	if (client->getState() == REGISTERED)
+	{
 
-	server->disconnectClient(client->getFd(), reason);
-	client->write(":ft_irc.server " + client->getNickname() + " QUIT :" + reason + "\r\n");
+		if (reason.at(0) == ':')
+			reason = reason.substr(1);
+		server->disconnectClient(client->getFd(), reason);
+	}
+
+	if (client->getNickname().empty())
+		client->write(":ft_irc.server * QUIT :" + reason + "\r\n");
+	else
+		client->write(":ft_irc.server " + client->getNickname() + " QUIT :" + reason + "\r\n");
 }
