@@ -23,15 +23,18 @@ void privmsg(Server *server, Client *client, std::vector<std::string> const &arg
 	}
 
 	std::string target = args[0];
-	std::string message = "";
+	std::string message;
 
-	if (args[1][0] == ':')
-		message = args[1].substr(1);
-	else
+	if (args.size() >= 2)
+	{
 		message = args[1];
 
-	for (size_t i = 2; i < args.size(); ++i)
-		message += " " + args[i];
+		if (message[0] == ':')
+			message.erase(0, 1);
+
+		for (size_t i = 2; i < args.size(); ++i)
+			message += " " + args[i];
+	}
 
 	const Channel *channel = server->getChannel(target);
 

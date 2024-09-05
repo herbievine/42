@@ -305,8 +305,6 @@ void Server::disconnectClient(int fd, const std::string reason)
 	_clients.erase(fd);
 	close(fd);
 
-	std::cout << "[" << client->getFd() << "]" << " disconnected" << std::endl;
-
 	delete client;
 }
 

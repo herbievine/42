@@ -23,18 +23,18 @@ void kick(Server *server, Client *client, std::vector<std::string> const &args)
 
 	std::string name = args[0];
 	std::string nickname = args[1];
-	std::string reason = "";
+	std::string reason = "Kicked";
 
-	if (args[2][0] == ':')
-		reason = args[2].substr(1);
-	else
+	if (args.size() >= 3)
+	{
 		reason = args[2];
 
-	for (size_t i = 3; i < args.size(); ++i)
-		reason += " " + args[i];
+		if (reason[0] == ':')
+			reason.erase(0, 1);
 
-	if (reason.empty())
-		reason = "Kicked";
+		for (size_t i = 3; i < args.size(); ++i)
+			reason += " " + args[i];
+	}
 
 	Channel *channel = server->getChannel(name);
 
