@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 13:04:18 by jcros            ###   ########.fr       */
+/*   Updated: 2024/09/05 14:33:55 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <cstring>
-#include <unordered_map>
+#include <map>
+#include <sstream>
 
 bool Server::stop = false;
 
@@ -30,7 +31,7 @@ Server::Server(const std::string &port, std::string &password) : _lsd(-1), _pass
 {
 	try
 	{
-		_port = std::stoi(port);
+		std::istringstream(port) >> _port;
 	}
 	catch (std::exception &e)
 	{
@@ -50,7 +51,7 @@ Server::~Server()
 		_lsd = -1;
 	}
 
-	std::unordered_map<std::string, Channel *>::iterator chan_it = _channels.begin();
+	std::map<std::string, Channel *>::iterator chan_it = _channels.begin();
 
 	while (chan_it != _channels.end())
 	{
@@ -82,12 +83,12 @@ Server &Server::operator=(const Server &rhs)
 
 Channel *Server::getChannel(std::string &name)
 {
-	std::unordered_map<std::string, Channel *>::iterator it = _channels.find(name);
+	std::map<std::string, Channel *>::iterator it = _channels.find(name);
 
 	if (it != _channels.end())
 		return it->second;
 
-	return nullptr;
+	return NULL;
 }
 
 void Server::start()
@@ -277,7 +278,7 @@ void Server::disconnectClient(int fd, const std::string reason)
 {
 	Client *client = _clients.at(fd);
 
-	std::unordered_map<std::string, Channel *>::iterator it = _channels.begin();
+	std::map<std::string, Channel *>::iterator it = _channels.begin();
 
 	while (it != _channels.end())
 	{
@@ -325,7 +326,7 @@ Client *Server::getClientByNickname(const std::string &nickname)
 		++it;
 	}
 
-	return nullptr;
+	return NULL;
 }
 
 void Server::deleteChannel(Channel *channel)

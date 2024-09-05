@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:21:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 10:14:39 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 14:22:42 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "../channel/Channel.hpp"
 #include <iostream>
 #include <vector>
-#include <unordered_map>
+#include <map>
 #include <poll.h>
 
 class Server;
@@ -75,7 +75,7 @@ private:
 	std::string _password;
 	std::vector<struct pollfd> _fds;
 
-	std::unordered_map<std::string, Channel *> _channels;
+	std::map<std::string, Channel *> _channels;
 	std::map<int, Client *> _clients;
 };
 

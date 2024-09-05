@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 14:13:28 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 14:27:55 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ Client *Channel::getClientByNickname(const std::string &nickname)
 		++it;
 	}
 
-	return nullptr;
+	return NULL;
 }
 
 void Channel::setInvited(Client *client)
