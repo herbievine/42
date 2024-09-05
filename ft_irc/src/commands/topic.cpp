@@ -91,10 +91,18 @@ void topic(Server *server, Client *client, std::vector<std::string> const &args)
 		return;
 	}
 
-	std::string newTopic = args[1];
+	std::string newTopic = "";
 
-	for (size_t i = 2; i < args.size(); ++i)
-		newTopic += " " + args[i];
+	if (args.size() >= 2)
+	{
+		newTopic = args[1];
+
+		if (newTopic[0] == ':')
+			newTopic.erase(0, 1);
+
+		for (size_t i = 2; i < args.size(); ++i)
+			newTopic += " " + args[i];
+	}
 
 	channel->setTopic(newTopic);
 	channel->broadcast(":" + client->getPrefix() + " TOPIC " + channel->getName() + " :" + newTopic + "\r\n");
