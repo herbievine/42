@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:41:54 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 11:13:42 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 11:36:37 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ void quit(Server *server, Client *client, std::vector<std::string> const &args)
 			reason = reason.substr(1);
 		server->disconnectClient(client->getFd(), reason);
 	}
-
-	if (client->getNickname().empty())
-		client->write(":ft_irc.server * QUIT :" + reason + "\r\n");
-	else
-		client->write(":ft_irc.server " + client->getNickname() + " QUIT :" + reason + "\r\n");
+	else 
+	{
+		if (client->getNickname().empty())
+			client->write(":ft_irc.server * QUIT :" + reason + "\r\n");
+		else
+			client->write(":ft_irc.server " + client->getNickname() + " QUIT :" + reason + "\r\n");
+	}
 }

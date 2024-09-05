@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 10:30:13 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 11:30:21 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,9 +281,10 @@ void Server::disconnectClient(int fd, const std::string reason)
 
 	while (it != _channels.end())
 	{
+		it->second->broadcast(":" + client->getPrefix() + " QUIT :" + reason + "\r\n", client);
+		
 		it->second->removeClient(client);
 
-		it->second->broadcast(":" + client->getPrefix() + " QUIT :" + reason + "\r\n", client);
 
 		if (it->second->getClients().size() == 0)
 			_channels.erase(it++);
