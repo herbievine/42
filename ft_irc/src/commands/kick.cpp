@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:02:20 by herbie            #+#    #+#             */
-/*   Updated: 2024/08/26 15:47:35 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 13:01:56 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,9 @@ void kick(Server *server, Client *client, std::vector<std::string> const &args)
 
 	channel->broadcast(":" + client->getPrefix() + " KICK " + name + " " + target->getNickname() + " :" + reason + "\r\n");
 	channel->removeClient(target);
+	
+	if (channel->getClients().size() == 0)
+	{
+		server->deleteChannel(channel);
+	}
 }

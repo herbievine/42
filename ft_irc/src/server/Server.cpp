@@ -6,7 +6,7 @@
 /*   By: jcros <jcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 11:30:21 by jcros            ###   ########.fr       */
+/*   Updated: 2024/09/05 13:04:18 by jcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,6 @@ void Server::disconnectClient(int fd, const std::string reason)
 		it->second->broadcast(":" + client->getPrefix() + " QUIT :" + reason + "\r\n", client);
 		
 		it->second->removeClient(client);
-
 
 		if (it->second->getClients().size() == 0)
 			_channels.erase(it++);
