@@ -6,7 +6,7 @@
 /*   By: juliencros <juliencros@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:22:42 by herbie            #+#    #+#             */
-/*   Updated: 2024/09/05 10:16:58 by juliencros       ###   ########.fr       */
+/*   Updated: 2024/09/05 10:30:13 by juliencros       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,6 @@ void Server::readFromClient(int fd)
 
 						else
 						{
-							std::cout << line << std::endl;
 							client->write(":ft_irc.server 451 * :You have not registered\r\n");
 						}
 					}
