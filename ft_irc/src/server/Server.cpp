@@ -222,8 +222,6 @@ void Server::readFromClient(int fd)
 					int auth;
 				};
 
-				std::cout << "line: " << line << std::endl;
-
 				struct command_handler handlers[] = {
 						{"CAP", &cap, UNAUTHENTICATED},
 						{"INVITE", &invite, REGISTERED},
@@ -307,8 +305,6 @@ void Server::disconnectClient(int fd, const std::string reason)
 
 	_clients.erase(fd);
 	close(fd);
-
-	std::cout << "[" << client->getFd() << "]" << " disconnected" << std::endl;
 
 	delete client;
 }
