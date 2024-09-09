@@ -331,7 +331,10 @@ Client *Server::getClientByNickname(const std::string &nickname)
 
 void Server::deleteChannel(Channel *channel)
 {
-	_channels.erase(channel->getName());
+	std::string name = channel->getName();
+
+	delete channel;
+	_channels.erase(name);
 }
 
 void Server::handleSignal(int signal)
