@@ -1,0 +1,68 @@
+services:
+  postgres:
+    image: postgres:latest
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    env_file:
+      - ./docker/pgadmin.env
+    environment:
+      TZ: "Europe/Paris"
+    logging:
+      driver: none
+    volumes:
+      - ./docker/pgadmin_servers.json:/pgadmin4/servers.json
+    ports:
+      - 5050:80
+    networks:
+      - backend
+    depends_on:
+      - postgres
+
+  backend:
+    build:
+      context: ./docker
+      dockerfile: ./backend.dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - backend
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./docker/backend.env
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./docker
+      dockerfile: ./frontend.dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - ./docker/frontend.env
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+volumes:
+  data:
+
+networks:
+  backend:
