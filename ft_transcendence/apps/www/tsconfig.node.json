@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "vite.config.ts",
+    "plugins/vite-plugin-validate-env.ts",
+    "src/env/env.ts",
+    "src/vite-env.d.ts"
+  ]
+}
