@@ -5,7 +5,7 @@ import { z } from "zod";
 
 export const callbackRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/callback",
+  path: "/auth/callback",
   loader: async () => {
     const code = new URLSearchParams(window.location.search).get("code");
     const state = new URLSearchParams(window.location.search).get("state");
@@ -14,7 +14,7 @@ export const callbackRoute = createRoute({
       throw new Error("No code found");
     }
 
-    const url = new URL(`${import.meta.env.VITE_API_URL}/token`);
+    const url = new URL(`${import.meta.env.VITE_API_URL}/auth/token`);
 
     url.searchParams.append("code", code);
     url.searchParams.append("state", state!);
