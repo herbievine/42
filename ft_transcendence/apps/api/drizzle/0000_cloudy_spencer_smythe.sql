@@ -1,13 +1,14 @@
 CREATE TABLE IF NOT EXISTS "games" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"winner_id" serial NOT NULL,
-	"loser_id" serial NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
+	"winner_id" text NOT NULL,
+	"loser_id" text NOT NULL,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
+	"forty_two_id" integer NOT NULL,
 	"display_name" text NOT NULL,
 	"username" text NOT NULL,
 	"otp_enabled" boolean DEFAULT false,
@@ -18,6 +19,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"otp_auth_url" text,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp,
+	CONSTRAINT "users_forty_two_id_unique" UNIQUE("forty_two_id"),
 	CONSTRAINT "users_username_unique" UNIQUE("username")
 );
 --> statement-breakpoint

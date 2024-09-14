@@ -1,5 +1,5 @@
 {
-  "id": "9b551218-e753-4f97-9c45-f18c31702772",
+  "id": "911adc1e-1295-49c9-aac3-717bd4675abc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,19 +10,19 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
         "winner_id": {
           "name": "winner_id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "loser_id": {
           "name": "loser_id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -78,8 +78,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
+          "notNull": true
+        },
+        "forty_two_id": {
+          "name": "forty_two_id",
+          "type": "integer",
+          "primaryKey": false,
           "notNull": true
         },
         "display_name": {
@@ -150,6 +156,13 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+        "users_forty_two_id_unique": {
+          "name": "users_forty_two_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "forty_two_id"
+          ]
+        },
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,

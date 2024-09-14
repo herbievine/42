@@ -2,23 +2,21 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import auth from "./api/auth";
-import { Bindings } from "./types";
+import { config } from "dotenv";
 
-const app = new Hono<{ Bindings: Bindings }>();
+config({ path: ".env" });
+
+const app = new Hono();
 
 app.use(
   "*",
   cors({
-    origin: "http://locahost:5173",
+    origin: (o) => o,
     credentials: true,
     allowHeaders: ["Authorization", "Content-Type", "X-Requested-With"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   }),
 );
-
-app.options("*", (c) => {
-  return c.text("hi", 204);
-});
 
 app.route("/auth", auth);
 

@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
 
   fortyTwoId: integer("forty_two_id").unique().notNull(),
   displayName: text("display_name").notNull(),
@@ -26,12 +26,12 @@ export const users = pgTable("users", {
 });
 
 export const games = pgTable("games", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
 
-  winnerId: serial("winner_id")
+  winnerId: text("winner_id")
     .references(() => users.id)
     .notNull(),
-  loserId: serial("loser_id")
+  loserId: text("loser_id")
     .references(() => users.id)
     .notNull(),
 
