@@ -26,6 +26,7 @@ export const callbackRoute = createRoute({
       }),
       {
         method: "POST",
+        credentials: undefined,
       },
     );
 
