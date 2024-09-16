@@ -12,10 +12,7 @@ export async function getDatabase() {
 
   await client.connect();
 
-  return {
-    db: drizzle(client),
-    client,
-  };
+  return drizzle(client);
 }
 
 export const connection = new pg.Connection({

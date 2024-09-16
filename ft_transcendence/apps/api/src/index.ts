@@ -2,6 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import auth from "./api/auth";
+import otp from "./api/otp";
 import { config } from "dotenv";
 
 config({ path: ".env" });
@@ -19,6 +20,7 @@ app.use(
 );
 
 app.route("/auth", auth);
+app.route("/otp", otp);
 
 const port = 8787;
 

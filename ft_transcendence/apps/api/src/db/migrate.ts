@@ -1,12 +1,12 @@
 import "dotenv/config";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
-import { getDatabase, connection } from ".";
+import { connection, getDatabase } from ".";
 import { config } from "dotenv";
 
 config({ path: ".env" });
 
 const main = async () => {
-  const { db, client } = await getDatabase();
+  const db = await getDatabase();
 
   try {
     await migrate(db, { migrationsFolder: "drizzle" });
@@ -17,8 +17,7 @@ const main = async () => {
     process.exit(1);
   }
 
-  await connection.end();
-  await client.end();
+  connection.end();
 };
 
 main();

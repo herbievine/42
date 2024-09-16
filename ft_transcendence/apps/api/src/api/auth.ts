@@ -1,21 +1,50 @@
 import { Hono } from "hono";
-import { sign } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
 import { getDatabase } from "../db";
 import { z } from "zod";
 import { fetcher } from "../lib/fetcher";
 import { users } from "../db/schema";
-import { eq } from "drizzle-orm";
+import { eq, getTableColumns } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { getTokenFromContext } from "../utils/get-token-from-context";
 
 const app = new Hono();
 
+app.get("/me", async (c) => {
+  const token = await getTokenFromContext(c);
+
+  if (!token) {
+    return c.json({ error: "Missing or invalid token" }, 400);
+  }
+
+  const { otpSecret, otpAuthUrl, ...select } = getTableColumns(users);
+
+  const db = await getDatabase();
+  const [user] = await db
+    .select(select)
+    .from(users)
+    .where(eq(users.id, token.sub));
+
+  if (!user) {
+    return c.json({ error: "User not found" }, 404);
+  }
+
+  return c.json({
+    ...user,
+    is2faRequired: token.is2faRequired,
+    is2faComplete: token.is2faComplete,
+  });
+});
+
 app.post("/token", async (c) => {
   const code = c.req.query("code");
+
   if (!code) {
     return c.json({ error: "Missing code" }, 400);
   }
 
   const state = c.req.query("state") || "";
+
   if (!state) {
     return c.json({ error: "Missing state" }, 400);
   }
@@ -34,8 +63,6 @@ app.post("/token", async (c) => {
   if (state) {
     searchParams.append("state", state);
   }
-
-  console.log(`${baseUrl}/oauth/token?${searchParams.toString()}`);
 
   const { access_token: token } = await fetcher(
     `${baseUrl}/oauth/token?${searchParams.toString()}`,
@@ -56,18 +83,6 @@ app.post("/token", async (c) => {
     },
   );
 
-  console.log({
-    token,
-    u: `${baseUrl}/v2/me`,
-    ...{
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  });
-
   const me = await fetcher(
     `${baseUrl}/v2/me`,
     z.object({
@@ -87,7 +102,7 @@ app.post("/token", async (c) => {
     },
   );
 
-  const { db, client } = await getDatabase();
+  const db = await getDatabase();
 
   const results = await db
     .select()
@@ -110,11 +125,14 @@ app.post("/token", async (c) => {
     )[0];
   }
 
-  await client.end();
+  const is2faRequired = user.otpEnabled && user.otpVerified;
+  const is2faComplete = is2faRequired ? false : true;
 
   const payload = {
     sub: user.id,
-    token,
+    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24 hours
+    is2faRequired,
+    is2faComplete,
   };
 
   const jwt = await sign(payload, process.env.JWT_SECRET);

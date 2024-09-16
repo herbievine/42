@@ -16,9 +16,7 @@ export const users = pgTable("users", {
 
   otpEnabled: boolean("otp_enabled").default(false),
   otpVerified: boolean("otp_verified").default(false),
-  otpAscii: text("otp_ascii"),
-  otpHex: text("otp_hex"),
-  otpBase64: text("otp_base64"),
+  otpSecret: text("otp_secret"),
   otpAuthUrl: text("otp_auth_url"),
 
   createdAt: timestamp("created_at").defaultNow(),
