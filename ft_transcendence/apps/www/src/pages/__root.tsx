@@ -5,6 +5,11 @@ export const queryClient = new QueryClient();
 
 export const rootRoute = createRootRoute({
   component: RootLayout,
+  beforeLoad: async ({ location }) => {
+    return {
+      location,
+    };
+  },
   notFoundComponent: () => <span>Not Found</span>,
   pendingComponent: () => <span>Loading...</span>,
 });

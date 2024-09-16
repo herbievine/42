@@ -1,17 +1,24 @@
 import { createRoute, redirect } from "@tanstack/react-router";
 import { rootRoute } from "../__root";
+import { z } from "zod";
+
+const loginSearchSchema = z.object({
+  next: z.string().optional(),
+});
 
 export const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
-  loader: async () => {
-    if (localStorage.getItem("token")) {
-      throw redirect({
-        to: "/",
-      });
-    }
+  beforeLoad: async ({ search }) => {
+    return {
+      next: search.next,
+    };
+  },
+  loader: async ({ context }) => {
+    // TODO: Check if user is already logged in and redirect accordingly
   },
   component: LoginPage,
+  validateSearch: loginSearchSchema.parse,
 });
 
 function LoginPage() {

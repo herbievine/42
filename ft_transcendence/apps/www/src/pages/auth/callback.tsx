@@ -2,6 +2,7 @@ import { createRoute, useLoaderData, redirect } from "@tanstack/react-router";
 import { rootRoute } from "../__root";
 import { fetcher } from "../../lib/fetcher";
 import { z } from "zod";
+import { getUser } from "../../api/get-user";
 
 export const callbackRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -26,11 +27,22 @@ export const callbackRoute = createRoute({
       }),
       {
         method: "POST",
-        credentials: undefined,
       },
     );
 
     localStorage.setItem("token", jwt);
+
+    const user = await getUser();
+
+    if (!user) {
+      throw new Error("No user found");
+    }
+
+    if (user.is2faRequired) {
+      return redirect({
+        to: "/verify",
+      });
+    }
 
     throw redirect({
       to: "/",
