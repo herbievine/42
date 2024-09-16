@@ -83,7 +83,6 @@ app.post("/activate", async (c) => {
   const payload = {
     sub: user.id,
     exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24 hours
-    token: token.token,
     is2faRequired: true,
     is2faComplete: true,
   };
@@ -128,7 +127,6 @@ app.post("/verify", async (c) => {
   const payload = {
     sub: user.id,
     exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24 hours
-    token: token.token,
     is2faRequired: true,
     is2faComplete: true,
   };
