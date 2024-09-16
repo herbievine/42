@@ -1,8 +1,8 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import pg from "pg";
+import { Client, Connection } from "pg";
 
 export async function getDatabase() {
-  const client = new pg.Client({
+  const client = new Client({
     host: "127.0.0.1",
     port: 5432,
     user: "postgres",
@@ -15,7 +15,7 @@ export async function getDatabase() {
   return drizzle(client);
 }
 
-export const connection = new pg.Connection({
+export const connection = new Connection({
   host: "127.0.0.1",
   port: 5432,
   user: "postgres",
