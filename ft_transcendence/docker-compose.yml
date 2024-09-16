@@ -13,7 +13,14 @@ services:
     ports:
       - 8787:8787
     restart: unless-stopped
+  www:
+    build:
+      context: apps/www
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    restart: unless-stopped
 
-  # networks:
-  #   net:
-  #     driver: bridge
+networks:
+  net:
+    driver: bridge

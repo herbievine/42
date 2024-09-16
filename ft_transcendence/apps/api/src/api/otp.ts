@@ -160,7 +160,16 @@ app.post("/disable", async (c) => {
     })
     .where(eq(users.id, user.id));
 
-  return c.json({ success: true });
+  const payload = {
+    sub: user.id,
+    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24 hours
+    is2faRequired: false,
+    is2faComplete: false,
+  };
+
+  const jwt = await sign(payload, process.env.JWT_SECRET);
+
+  return c.json({ jwt });
 });
 
 export default app;
