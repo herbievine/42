@@ -39,8 +39,11 @@ function LoginPage() {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center space-y-4">
-      <a className="text-sm font-semibold text-neutral-700" href={loginLink()}>
+    <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
+      <a
+        className="fs-6 fw-semibold text-secondary-emphasis text-decoration-none"
+        href={loginLink()}
+      >
         Login with your 42 account
       </a>
     </div>

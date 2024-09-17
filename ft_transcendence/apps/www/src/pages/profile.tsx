@@ -66,73 +66,77 @@ function ProfilePage() {
   }
 
   return (
-    <div className="flex flex-col space-y-4">
-      <h1>Profile</h1>
-      <pre>{JSON.stringify(me, null, 2)}</pre>
-      {me?.otpVerified ? (
-        <button
-          type="button"
-          onClick={async () => {
-            const { jwt } = await disableOtp();
+    <div className="container-fluid d-flex h-100 justify-content-center align-items-center">
+      <div>
+        <h1 className="mx-auto pt-5">Profile</h1>
+        <pre>{JSON.stringify(me, null, 2)}</pre>
+        <div className="d-flex gap-3">
+          {me?.otpVerified ? (
+            <button
+              type="button"
+              onClick={async () => {
+                const { jwt } = await disableOtp();
 
-            localStorage.setItem("token", jwt);
+                localStorage.setItem("token", jwt);
 
-            queryClient.invalidateQueries(meOptions());
-          }}
-        >
-          Disable OTP
-        </button>
-      ) : (
-        <button
-          type="button"
-          onClick={async () => {
-            await generateOtp();
-          }}
-        >
-          Generate OTP
-        </button>
-      )}
-      {otp && !me.otpVerified && (
-        <div>
-          <QRCode value={otp.otpAuthUrl} />
-          <pre>{JSON.stringify(otp, null, 2)}</pre>
-          <form onSubmit={onSubmit}>
-            <label>
-              Activate code
-              <input
-                type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-              />
-            </label>
-            <button type="submit">Verify</button>
-          </form>
+                queryClient.invalidateQueries(meOptions());
+              }}
+            >
+              Disable OTP
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={async () => {
+                await generateOtp();
+              }}
+            >
+              Generate OTP
+            </button>
+          )}
+          {otp && !me.otpVerified && (
+            <div>
+              <QRCode value={otp.otpAuthUrl} />
+              <pre>{JSON.stringify(otp, null, 2)}</pre>
+              <form onSubmit={onSubmit}>
+                <label>
+                  Activate code
+                  <input
+                    type="text"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                  />
+                </label>
+                <button type="submit">Verify</button>
+              </form>
+            </div>
+          )}
+          <button
+            type="button"
+            onClick={async () => {
+              await deleteUser(me.id);
+
+              navigate({
+                to: "/login",
+              });
+            }}
+          >
+            Delete Account
+          </button>
+          <button
+            type="button"
+            onClick={async () => {
+              localStorage.removeItem("token");
+
+              navigate({
+                to: "/login",
+              });
+            }}
+          >
+            logout
+          </button>
         </div>
-      )}
-      <button
-        type="button"
-        onClick={async () => {
-          await deleteUser(me.id);
-
-          navigate({
-            to: "/login",
-          });
-        }}
-      >
-        Delete Account
-      </button>
-      <button
-        type="button"
-        onClick={async () => {
-          localStorage.removeItem("token");
-
-          navigate({
-            to: "/login",
-          });
-        }}
-      >
-        logout
-      </button>
+      </div>
     </div>
   );
 }

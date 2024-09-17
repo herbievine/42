@@ -27,7 +27,7 @@ export const callbackRoute = createRoute({
       }),
       {
         method: "POST",
-      },
+      }
     );
 
     localStorage.setItem("token", jwt);
@@ -53,8 +53,8 @@ export const callbackRoute = createRoute({
 
 function CallbackPage() {
   return (
-    <div>
-      <h1>Loading...</h1>
+    <div className="spinner-border" role="status">
+      <span className="sr-only">Loading...</span>
     </div>
   );
 }

@@ -9,12 +9,13 @@ type Props = {
       right: number;
     }>
   >;
+  background: string;
 };
 
 const CANVAS_WIDTH = 1000;
 const CANVAS_HEIGHT = 700;
 
-export function Game({ speed, acceleration, setScores }: Props) {
+export function Game({ speed, acceleration, setScores, background }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [leftPaddleY, setLeftPaddleY] = useState(100);
   const [rightPaddleY, setRightPaddleY] = useState(100);
@@ -28,7 +29,7 @@ export function Game({ speed, acceleration, setScores }: Props) {
   const paddleWidth = 10;
   const paddleHeight = 100;
   const ballRadius = 5;
-  const paddleSpeed = 5 * (speed / 5 + 1);
+  const paddleSpeed = 10 * (speed / 5 + 1);
 
   const drawRect = (
     ctx: CanvasRenderingContext2D,
@@ -36,7 +37,7 @@ export function Game({ speed, acceleration, setScores }: Props) {
     y: number,
     width: number,
     height: number,
-    color: string,
+    color: string
   ) => {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height);
@@ -47,7 +48,7 @@ export function Game({ speed, acceleration, setScores }: Props) {
     x: number,
     y: number,
     radius: number,
-    color: string,
+    color: string
   ) => {
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -60,13 +61,13 @@ export function Game({ speed, acceleration, setScores }: Props) {
       setLeftPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
     if (e.key === "s" || e.key === "S")
       setLeftPaddleY((prev) =>
-        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight),
+        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
       );
     if (e.key === "ArrowUp")
       setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
     if (e.key === "ArrowDown")
       setRightPaddleY((prev) =>
-        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight),
+        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
       );
   };
 
@@ -139,7 +140,7 @@ export function Game({ speed, acceleration, setScores }: Props) {
         ctx.stroke();
 
         // Draw background
-        drawRect(ctx, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#000000");
+        drawRect(ctx, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, background);
 
         // Draw paddles
         drawRect(ctx, 20, leftPaddleY, paddleWidth, paddleHeight, "#00FF00");
@@ -149,7 +150,7 @@ export function Game({ speed, acceleration, setScores }: Props) {
           rightPaddleY,
           paddleWidth,
           paddleHeight,
-          "#FF0000",
+          "#FF0000"
         );
 
         // Draw ball

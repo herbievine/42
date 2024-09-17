@@ -11,13 +11,17 @@ export const rootRoute = createRootRoute({
     };
   },
   notFoundComponent: () => <span>Not Found</span>,
-  pendingComponent: () => <span>Loading...</span>,
+  pendingComponent: () => (
+    <div className="vh-100 d-flex justify-content-center align-items-center">
+      <div className="spinner-border " role="status"></div>
+    </div>
+  ),
 });
 
 function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="text-sm md:text-base">
+      <div className="small d-md-block">
         <Outlet />
       </div>
     </QueryClientProvider>

@@ -1,9 +1,20 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 * {
   font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+
+input[type="color"].form-control-color {
+  height: 70px; /* Larger height */
+  width: 120px; /* Larger width */
+  padding: 10px; /* Adjust padding if needed */
+  border-radius: 8px; /* Optional, for rounded corners */
 }

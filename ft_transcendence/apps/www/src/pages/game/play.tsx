@@ -7,6 +7,11 @@ import { useState } from "react";
 const playSearchSchema = z.object({
   speed: z.number().min(1).max(5).optional().default(1),
   acceleration: z.number().min(1).max(5).optional().default(1),
+  background: z
+    .string()
+    .regex(/^#[0-9A-Fa-f]{6}$/g)
+    .optional()
+    .default("#000000"),
 });
 
 export const playRoute = createRoute({
@@ -17,7 +22,7 @@ export const playRoute = createRoute({
 });
 
 function PlayPage() {
-  const { speed, acceleration } = useSearch({
+  const { speed, acceleration, background } = useSearch({
     from: "/play",
   });
   const [scores, setScores] = useState({
@@ -30,7 +35,12 @@ function PlayPage() {
       <h1>
         play {scores.left} - {scores.right}
       </h1>
-      <Game speed={speed} acceleration={acceleration} setScores={setScores} />
+      <Game
+        speed={speed}
+        acceleration={acceleration}
+        setScores={setScores}
+        background={background}
+      />
     </div>
   );
 }

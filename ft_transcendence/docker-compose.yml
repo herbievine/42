@@ -17,8 +17,13 @@ services:
     build:
       context: apps/www
       dockerfile: Dockerfile
+    volumes:
+      - ./apps/www:/app
+      - /app/node_modules
     ports:
       - 5173:5173
+    env_file:
+      - apps/www/.env
     restart: unless-stopped
 
 networks:
