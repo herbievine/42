@@ -2,8 +2,11 @@
 
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1 AS base
+FROM oven/bun:debian AS base
 WORKDIR /usr/src/app
+
+# RUN apt update
+# RUN apt install -y openssl
 
 # install dependencies into temp directory
 # this will cache them and speed up future builds
@@ -32,6 +35,14 @@ FROM base AS release
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/dist dist
 COPY --from=prerelease /usr/src/app/package.json .
+
+# RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 \
+#     -subj "/C=FR/ST=Paris/O=Herbie, Inc./CN=ft_transcendence.com" \
+#     -keyout /etc/ssl/ft_transcendence.key \
+#     -out /etc/ssl/ft_transcendence.cert
+
+# RUN chmod 644 /etc/ssl/ft_transcendence.key
+# RUN chmod 644 /etc/ssl/ft_transcendence.cert
 
 # run the app
 USER bun

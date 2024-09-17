@@ -1,9 +1,5 @@
-import "dotenv/config";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { connection, getDatabase } from ".";
-import { config } from "dotenv";
-
-config({ path: ".env" });
 
 const main = async () => {
   const db = await getDatabase();

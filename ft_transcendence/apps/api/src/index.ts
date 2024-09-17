@@ -3,9 +3,6 @@ import { cors } from "hono/cors";
 import auth from "./api/auth";
 import otp from "./api/otp";
 import users from "./api/users";
-import { config } from "dotenv";
-
-config({ path: ".env" });
 
 const app = new Hono();
 
@@ -26,4 +23,8 @@ app.route("/users", users);
 export default {
   port: 8787,
   fetch: app.fetch,
+  // tls: {
+  //   key: Bun.file("/etc/ssl/ft_transcendence.key"),
+  //   cert: Bun.file("/etc/ssl/ft_transcendence.cert"),
+  // },
 };
