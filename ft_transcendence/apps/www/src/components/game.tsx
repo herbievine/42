@@ -1,5 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 
+// TODO: AI create more random movement
+// TODO: create Random start direction + start in the opposite of the winner
+// TODO: the AIpaddle goes through the walls
+// TODO: add keyboard control for the right paddle (real player)
+
 type Props = {
   speed: number;
   acceleration: number;
@@ -25,11 +30,19 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
     dx: 2,
     dy: 2,
   });
+  const [aiMoveUp, setAiMoveUp] = useState(true);
+  const [aiBallY, setAiBallY] = useState(ball.y);
+  const ballRef = useRef(ball);
+  const [keyPressed, setKeyPressed] = useState({
+    up: false,
+    down: false,
+  });
 
   const paddleWidth = 10;
   const paddleHeight = 100;
-  const ballRadius = 5;
-  const paddleSpeed = 10 * (speed / 5 + 1);
+  const ballRadius = 5; //TODO: make it dynamic for vision friendly9
+  const paddleSpeed = 4 * (speed / 5 + 1);
+  const aiMaxSpeed = 4; // TODO: make it dynamic
 
   const drawRect = (
     ctx: CanvasRenderingContext2D,
@@ -58,17 +71,41 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
 
   const keyDownHandler = (e: KeyboardEvent) => {
     if (e.key === "w" || e.key === "W")
-      setLeftPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
+      setKeyPressed((prev) => ({ ...prev, up: true }));
     if (e.key === "s" || e.key === "S")
-      setLeftPaddleY((prev) =>
-        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
-      );
-    if (e.key === "ArrowUp")
-      setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
-    if (e.key === "ArrowDown")
-      setRightPaddleY((prev) =>
-        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
-      );
+      setKeyPressed((prev) => ({ ...prev, down: true }));
+  };
+
+  const keyUpHandler = (e: KeyboardEvent) => {
+    if (e.key === "w" || e.key === "W")
+      setKeyPressed((prev) => ({ ...prev, up: false }));
+    if (e.key === "s" || e.key === "S")
+      setKeyPressed((prev) => ({ ...prev, down: false }));
+  };
+  // if (e.key === "ArrowUp")
+  //   setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
+  // if (e.key === "ArrowDown")
+  //   setRightPaddleY((prev) =>
+  //     Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
+  //   );
+
+  const predictBallY = (
+    ballX: number,
+    ballY: number,
+    ballDx: number,
+    ballDy: number
+  ) => {
+    // predict y position of the ball when it reaches the right wall
+    let predictedY = ballY + (ballDy * (CANVAS_WIDTH - ballX)) / ballDx;
+
+    // simulate ball bouncing on top and bottom walls
+    while (predictedY < 0 || predictedY > CANVAS_HEIGHT) {
+      if (predictedY < 0) predictedY = -predictedY;
+      if (predictedY > CANVAS_HEIGHT)
+        predictedY = 2 * CANVAS_HEIGHT - predictedY;
+    }
+
+    return predictedY;
   };
 
   const updateBall = () => {
@@ -107,6 +144,20 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
       //   dy = 2;
       // }
 
+      const paddleCenterOffset = paddleHeight / 2;
+
+      // AI paddle movement
+      if (rightPaddleY < aiBallY) {
+        setRightPaddleY((prev) =>
+          Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset)
+        );
+      } else if (rightPaddleY > aiBallY) {
+        setRightPaddleY((prev) =>
+          Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset)
+        );
+      }
+
+      // Ball reset on left or right edge
       if (x - ballRadius < 0) {
         setScores((prev) => ({ ...prev, right: prev.right + 1 }));
         x = CANVAS_WIDTH / 2;
@@ -124,6 +175,36 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
       return { x, y, dx, dy };
     });
   };
+
+  // player paddle movement
+  const updatePlayerPaddle = () => {
+    if (keyPressed.up)
+      setLeftPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
+    if (keyPressed.down)
+      setLeftPaddleY((prev) =>
+        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
+      );
+  };
+
+  // ballRef is used to store the ball state between updates
+  useEffect(() => {
+    ballRef.current = ball;
+  }, [ball]);
+
+  // AI paddle movement prediction and update every second
+  useEffect(() => {
+    const aiUpdateInterval = setInterval(() => {
+      const { x, y, dx, dy } = ballRef.current;
+      const predictedY = predictBallY(x, y, dx, dy);
+
+      setAiBallY(predictedY);
+      setAiMoveUp(Math.random() > 1); // TODO: not working as intended, need to replace by "whenever the moment, sometimes move up, sometimes move down for 0.2sec"
+    }, 1000);
+
+    return () => {
+      clearInterval(aiUpdateInterval);
+    };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -160,16 +241,19 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
 
     const gameLoop = setInterval(() => {
       updateBall();
+      updatePlayerPaddle();
       draw();
     }, 1000 / 60); // 60 FPS
 
     window.addEventListener("keydown", keyDownHandler);
+    window.addEventListener("keyup", keyUpHandler);
 
     return () => {
       clearInterval(gameLoop);
       window.removeEventListener("keydown", keyDownHandler);
+      window.removeEventListener("keyup", keyUpHandler);
     };
-  }, [leftPaddleY, rightPaddleY, ball]);
+  }, [leftPaddleY, rightPaddleY, ball, keyPressed]);
 
   return (
     <div>
