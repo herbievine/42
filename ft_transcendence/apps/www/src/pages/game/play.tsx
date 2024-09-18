@@ -11,6 +11,7 @@ const playSearchSchema = z.object({
   speed: z.number().min(1).max(5).optional().default(1),
   aiSpeed: z.number().min(1).max(5).optional().default(1),
   acceleration: z.number().min(1).max(5).optional().default(1),
+  opponent: z.string().optional().default("ai"),
   background: z
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/g)

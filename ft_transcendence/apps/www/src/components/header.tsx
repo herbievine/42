@@ -3,7 +3,7 @@ import { useSuspenseMe } from "../api/use-me";
 
 export function Header() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary position-fixed container-fluid">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           Pong

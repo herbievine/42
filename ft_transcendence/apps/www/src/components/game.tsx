@@ -12,6 +12,7 @@ type Props = {
   acceleration: number;
   background: string;
   aiSpeed: number;
+  opponent: string;
   onWin: (data: {
     playerScore: number;
     opponentScore: number;
@@ -28,6 +29,7 @@ export function Game({
   background,
   aiSpeed,
   onWin,
+  opponent,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [leftPaddleY, setLeftPaddleY] = useState(100);
@@ -46,7 +48,11 @@ export function Game({
   const [aiMoveUp, setAiMoveUp] = useState(true);
   const [aiBallY, setAiBallY] = useState(ball.y);
   const ballRef = useRef(ball);
-  const [keyPressed, setKeyPressed] = useState({
+  const [keyPaddleLeftPressed, setKeyPaddleLeftPressed] = useState({
+    up: false,
+    down: false,
+  });
+  const [keyPaddleRightPressed, setKeyPaddleRightPressed] = useState({
     up: false,
     down: false,
   });
@@ -89,29 +95,34 @@ export function Game({
 
   const keyDownHandler = (e: KeyboardEvent) => {
     if (pause) {
-      setKeyPressed((prev) => ({ ...prev, up: false, down: false }));
+      setKeyPaddleLeftPressed((prev) => ({ ...prev, up: false, down: false }));
       return;
     }
     if (e.key === "w" || e.key === "W")
-      setKeyPressed((prev) => ({ ...prev, up: true }));
+      setKeyPaddleLeftPressed((prev) => ({ ...prev, up: true }));
     if (e.key === "s" || e.key === "S")
-      setKeyPressed((prev) => ({ ...prev, down: true }));
+      setKeyPaddleLeftPressed((prev) => ({ ...prev, down: true }));
+    if (opponent === "local") {
+      if (e.key === "ArrowUp")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, up: true }));
+      if (e.key === "ArrowDown")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, down: true }));
+    }
   };
 
   const keyUpHandler = (e: KeyboardEvent) => {
     if (pause) return;
     if (e.key === "w" || e.key === "W")
-      setKeyPressed((prev) => ({ ...prev, up: false }));
+      setKeyPaddleLeftPressed((prev) => ({ ...prev, up: false }));
     if (e.key === "s" || e.key === "S")
-      setKeyPressed((prev) => ({ ...prev, down: false }));
+      setKeyPaddleLeftPressed((prev) => ({ ...prev, down: false }));
+    if (opponent === "local") {
+      if (e.key === "ArrowUp")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, up: false }));
+      if (e.key === "ArrowDown")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, down: false }));
+    }
   };
-  // if (e.key === "ArrowUp")
-  //   setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
-  // if (e.key === "ArrowDown")
-  //   setRightPaddleY((prev) =>
-  //     Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
-  //   );
-
   const predictBallY = (
     ballX: number,
     ballY: number,
@@ -170,14 +181,16 @@ export function Game({
       const paddleCenterOffset = paddleHeight / 2;
 
       // AI paddle movement
-      if (rightPaddleY < aiBallY) {
-        setRightPaddleY((prev) =>
-          Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset)
-        );
-      } else if (rightPaddleY > aiBallY) {
-        setRightPaddleY((prev) =>
-          Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset)
-        );
+      if (opponent === "ai") {
+        if (rightPaddleY < aiBallY) {
+          setRightPaddleY((prev) =>
+            Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset)
+          );
+        } else if (rightPaddleY > aiBallY) {
+          setRightPaddleY((prev) =>
+            Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset)
+          );
+        }
       }
 
       // Ball reset on left or right edge
@@ -201,12 +214,20 @@ export function Game({
 
   // player paddle movement
   const updatePlayerPaddle = () => {
-    if (keyPressed.up)
+    if (keyPaddleLeftPressed.up)
       setLeftPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
-    if (keyPressed.down)
+    if (keyPaddleLeftPressed.down)
       setLeftPaddleY((prev) =>
         Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
       );
+    if (opponent === "local") {
+      if (keyPaddleRightPressed.up)
+        setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
+      if (keyPaddleRightPressed.down)
+        setRightPaddleY((prev) =>
+          Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
+        );
+    }
   };
 
   // ballRef is used to store the ball state between updates
@@ -299,10 +320,16 @@ export function Game({
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
     };
-  }, [leftPaddleY, rightPaddleY, ball, keyPressed]);
+  }, [
+    leftPaddleY,
+    rightPaddleY,
+    ball,
+    keyPaddleLeftPressed,
+    keyPaddleRightPressed,
+  ]);
 
   return (
-    <div>
+    <div className="mh-100 pt-10">
       <h1 className="d-flex gap-4">
         play {scores.left} - {scores.right}
         <button className="btn btn-primary" onClick={() => setPause(!pause)}>

@@ -5,11 +5,13 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getUser } from "../api/get-user";
 import { meOptions } from "../api/use-me";
+import { useState } from "react";
 
 const formValuesSchema = z.object({
   speed: z.string().min(1).max(5).optional().default("1"),
   aiSpeed: z.string().min(1).max(5).optional().default("1"),
   acceleration: z.string().min(1).max(5).optional().default("1"),
+  opponent: z.string().optional().default("ai"),
   background: z
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/g)
@@ -70,6 +72,7 @@ function IndexPage() {
       aiSpeed: "1",
     },
   });
+  const [playWithFriend, setPlayWithFriend] = useState(false);
 
   async function onSubmit(data: FormValues) {
     console.log(data);
@@ -80,13 +83,14 @@ function IndexPage() {
         acceleration: +data.acceleration,
         background: data.background,
         aiSpeed: +data.aiSpeed,
+        opponent: data.opponent,
       },
     });
   }
 
   return (
-    <div className="vh-100 d-flex justify-content-center align-items-center text-center">
-      <div className="gap-2 row d-flex justify-content-center align-items-center">
+    <div className="vh-100 w-100 d-flex justify-content-center align-items-center text-center">
+      <div className="gap-2 row d-flex justify-content-center align-items-center w-75">
         <p className="">Play Pong</p>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -154,7 +158,18 @@ function IndexPage() {
             {...register("background")}
             className="form-control form-control-color form-control-lg"
           />
-
+          <button
+            type="button"
+            onClick={() => {
+              setPlayWithFriend((prev) => !prev);
+              clearErrors();
+              reset();
+              register("opponent", { value: playWithFriend ? "ai" : "local" });
+            }}
+            className="btn btn-secondary mt-3"
+          >
+            {playWithFriend ? "Play with a bot" : "Play with a friend"}
+          </button>
           <button type="submit" className="btn btn-primary mt-3">
             Play
           </button>
