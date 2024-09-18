@@ -4,26 +4,39 @@ import { useRef, useEffect, useState } from "react";
 // TODO: create Random start direction + start in the opposite of the winner
 // TODO: the AIpaddle goes through the walls
 // TODO: add keyboard control for the right paddle (real player)
+// TODO: win on 10 points
+// TODO: stop the AI when the game is paused
 
 type Props = {
   speed: number;
   acceleration: number;
-  setScores: React.Dispatch<
-    React.SetStateAction<{
-      left: number;
-      right: number;
-    }>
-  >;
   background: string;
+  aiSpeed: number;
+  onWin: (data: {
+    playerScore: number;
+    opponentScore: number;
+    opponent: "ai" | "local";
+  }) => void;
 };
 
 const CANVAS_WIDTH = 1000;
 const CANVAS_HEIGHT = 700;
 
-export function Game({ speed, acceleration, setScores, background }: Props) {
+export function Game({
+  speed,
+  acceleration,
+  background,
+  aiSpeed,
+  onWin,
+}: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [leftPaddleY, setLeftPaddleY] = useState(100);
   const [rightPaddleY, setRightPaddleY] = useState(100);
+  const [pause, setPause] = useState(false);
+  const [bufferBallSpeed, setBufferBallSpeed] = useState({
+    dx: 2,
+    dy: 2,
+  });
   const [ball, setBall] = useState({
     x: CANVAS_WIDTH / 2,
     y: CANVAS_HEIGHT / 2,
@@ -38,11 +51,16 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
     down: false,
   });
 
+  const [scores, setScores] = useState({
+    left: 0,
+    right: 0,
+  });
+
   const paddleWidth = 10;
   const paddleHeight = 100;
   const ballRadius = 5; //TODO: make it dynamic for vision friendly9
   const paddleSpeed = 4 * (speed / 5 + 1);
-  const aiMaxSpeed = 4; // TODO: make it dynamic
+  const aiMaxSpeed = 4 * (aiSpeed / 5 + 1);
 
   const drawRect = (
     ctx: CanvasRenderingContext2D,
@@ -70,6 +88,10 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
   };
 
   const keyDownHandler = (e: KeyboardEvent) => {
+    if (pause) {
+      setKeyPressed((prev) => ({ ...prev, up: false, down: false }));
+      return;
+    }
     if (e.key === "w" || e.key === "W")
       setKeyPressed((prev) => ({ ...prev, up: true }));
     if (e.key === "s" || e.key === "S")
@@ -77,6 +99,7 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
   };
 
   const keyUpHandler = (e: KeyboardEvent) => {
+    if (pause) return;
     if (e.key === "w" || e.key === "W")
       setKeyPressed((prev) => ({ ...prev, up: false }));
     if (e.key === "s" || e.key === "S")
@@ -162,14 +185,14 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
         setScores((prev) => ({ ...prev, right: prev.right + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
-        dx = 2;
-        dy = 2;
+        dx = -2;
+        dy = Math.random() * 4 - 2;
       } else if (x + ballRadius > CANVAS_WIDTH) {
         setScores((prev) => ({ ...prev, left: prev.left + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = 2;
-        dy = 2;
+        dy = Math.random() * 4 - 2;
       }
 
       return { x, y, dx, dy };
@@ -190,6 +213,29 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
   useEffect(() => {
     ballRef.current = ball;
   }, [ball]);
+
+  useEffect(() => {
+    setBufferBallSpeed({ dx: ball.dx, dy: ball.dy });
+    if (pause) {
+      ball.dx = 0;
+      ball.dy = 0;
+    } else if (!pause) {
+      ball.dx = bufferBallSpeed.dx;
+      ball.dy = bufferBallSpeed.dy;
+    }
+  }, [pause]);
+
+  useEffect(() => {
+    if (scores.left >= 5 || scores.right >= 5) {
+      onWin({
+        playerScore: scores.left,
+        opponentScore: scores.right,
+        opponent: "ai",
+      });
+      setPause(true);
+      setScores({ left: 0, right: 0 });
+    }
+  }, [scores]);
 
   // AI paddle movement prediction and update every second
   useEffect(() => {
@@ -257,6 +303,12 @@ export function Game({ speed, acceleration, setScores, background }: Props) {
 
   return (
     <div>
+      <h1 className="d-flex gap-4">
+        play {scores.left} - {scores.right}
+        <button className="btn btn-primary" onClick={() => setPause(!pause)}>
+          {pause ? "play" : "pause"}
+        </button>
+      </h1>
       <canvas
         ref={canvasRef}
         width={CANVAS_WIDTH}

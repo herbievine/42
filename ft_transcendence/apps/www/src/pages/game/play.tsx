@@ -5,9 +5,11 @@ import { Game } from "../../components/game";
 import { useState } from "react";
 import { getUser } from "../../api/get-user";
 import { meOptions } from "../../api/use-me";
+import { useSaveGame } from "../../api/use-save-game";
 
 const playSearchSchema = z.object({
   speed: z.number().min(1).max(5).optional().default(1),
+  aiSpeed: z.number().min(1).max(5).optional().default(1),
   acceleration: z.number().min(1).max(5).optional().default(1),
   background: z
     .string()
@@ -48,24 +50,21 @@ export const playRoute = createRoute({
 });
 
 function PlayPage() {
-  const { speed, acceleration, background } = useSearch({
+  const search = useSearch({
     from: "/play",
   });
-  const [scores, setScores] = useState({
-    left: 0,
-    right: 0,
-  });
+  const { mutate: saveGame } = useSaveGame();
 
   return (
-    <div>
-      <h1>
-        play {scores.left} - {scores.right}
-      </h1>
+    <div className="container-fluid vh-100  align-">
       <Game
-        speed={speed}
-        acceleration={acceleration}
-        setScores={setScores}
-        background={background}
+        {...search}
+        onWin={async (data) => {
+          console.log(data);
+          saveGame(data);
+
+          // Navigate({})
+        }}
       />
     </div>
   );

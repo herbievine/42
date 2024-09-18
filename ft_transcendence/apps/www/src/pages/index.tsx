@@ -8,6 +8,7 @@ import { meOptions } from "../api/use-me";
 
 const formValuesSchema = z.object({
   speed: z.string().min(1).max(5).optional().default("1"),
+  aiSpeed: z.string().min(1).max(5).optional().default("1"),
   acceleration: z.string().min(1).max(5).optional().default("1"),
   background: z
     .string()
@@ -66,6 +67,7 @@ function IndexPage() {
       speed: "1",
       acceleration: "1",
       background: "#000000",
+      aiSpeed: "1",
     },
   });
 
@@ -77,6 +79,7 @@ function IndexPage() {
         speed: +data.speed,
         acceleration: +data.acceleration,
         background: data.background,
+        aiSpeed: +data.aiSpeed,
       },
     });
   }
@@ -90,7 +93,7 @@ function IndexPage() {
           className="row justify-content-md-center col-10 gap-4"
         >
           <div className="position-relative">
-            <p className="text-start">Choose the ball speed :</p>
+            <p className="text-start">Choose your speed:</p>
             <input
               type="range"
               min={1}
@@ -125,14 +128,29 @@ function IndexPage() {
               <span className="text-muted">5</span>
             </div>
           </div>
-
+          <div className="position-relative">
+            <p className="text-start">Difficulty:</p>
+            <input
+              type="range"
+              min={1}
+              max={5}
+              {...register("aiSpeed")}
+              className="form-range"
+            />
+            <div className="d-flex justify-content-between mt-2 position-relative number-labels">
+              <span className="text-muted">1</span>
+              <span className="text-muted">2</span>
+              <span className="text-muted">3</span>
+              <span className="text-muted">4</span>
+              <span className="text-muted">5</span>
+            </div>
+          </div>
           <label htmlFor="colorInput" className="form-label text-start">
-            Choose a color :
+            Choose a colour:
           </label>
           <input
             type="color"
             id="colorInput"
-            title="Choose your color"
             {...register("background")}
             className="form-control form-control-color form-control-lg"
           />

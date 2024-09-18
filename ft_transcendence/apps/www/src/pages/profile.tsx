@@ -13,6 +13,7 @@ import QRCode from "react-qr-code";
 import { useActivateOtp } from "../api/use-activate-otp";
 import { useState } from "react";
 import { meOptions, useSuspenseMe } from "../api/use-me";
+import { useGames } from "../api/use-games";
 
 export const profileRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -45,11 +46,12 @@ export const profileRoute = createRoute({
 });
 
 function ProfilePage() {
-  const { me } = useSuspenseMe();
   const navigate = useNavigate({
     from: "/profile",
   });
   const [code, setCode] = useState("");
+  const { me } = useSuspenseMe();
+  const { games } = useGames(me.id);
   const { mutateAsync: activateOtp } = useActivateOtp();
   const { mutateAsync: deleteUser } = useDeleteUser();
   const { mutateAsync: generateOtp, data: otp } = useGenerateOtp();
@@ -69,9 +71,9 @@ function ProfilePage() {
     <div className="container-fluid d-flex h-100 justify-content-center align-items-center">
       <div>
         <h1 className="mx-auto pt-5">Profile</h1>
-        <pre>{JSON.stringify(me, null, 2)}</pre>
+        <pre>{JSON.stringify({ ...me, games }, null, 2)}</pre>
         <div className="d-flex gap-3">
-          {me?.otpVerified ? (
+          {me.otpVerified ? (
             <button
               type="button"
               onClick={async () => {
