@@ -33,9 +33,9 @@ app.post("/", async (c) => {
 
   const body = z
     .object({
+      opponent: z.string(),
       playerScore: z.number(),
       opponentScore: z.number(),
-      opponent: z.enum(["ai", "local"]),
     })
     .safeParse(await c.req.json());
 
@@ -44,11 +44,20 @@ app.post("/", async (c) => {
   }
 
   const db = await getDatabase();
+  const [user] = await db
+    .select({
+      id: users.id,
+      displayName: users.displayName,
+    })
+    .from(users)
+    .where(eq(users.id, token.sub));
   const [game] = await db
     .insert(games)
     .values({
       id: id(),
+      player: user.displayName,
       ...body.data,
+      status: "completed",
       userId: token.sub,
     })
     .returning();

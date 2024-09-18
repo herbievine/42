@@ -26,17 +26,36 @@ export const users = pgTable("users", {
     .notNull(),
 });
 
-export const opponentEnum = pgEnum("opponent", ["ai", "local"]);
+export const status = pgEnum("status", ["pending", "completed"]);
 
 export const games = pgTable("games", {
   id: text("id").primaryKey(),
 
+  player: text("player").notNull(),
+  opponent: text("opponent").notNull(),
+  playerScore: integer("player_score"),
+  opponentScore: integer("opponent_score"),
+  status: status("status").default("pending").notNull(),
+
+  userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+  tournamentId: text("tournament_id").references(() => tournaments.id, {
+    onDelete: "cascade",
+  }),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .$onUpdate(() => new Date())
+    .notNull(),
+});
+
+export const tournaments = pgTable("tournaments", {
+  id: text("id").primaryKey(),
+
+  status: status("status").default("pending").notNull(),
+
   userId: text("user_id")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
-  opponent: opponentEnum("opponent").notNull(),
-  playerScore: integer("player_score").notNull(),
-  opponentScore: integer("opponent_score").notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")

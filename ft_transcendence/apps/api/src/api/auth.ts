@@ -112,17 +112,15 @@ app.post("/token", async (c) => {
   let user = results.length > 0 ? results[0] : null;
 
   if (!user) {
-    user = (
-      await db
-        .insert(users)
-        .values({
-          id: id(),
-          fortyTwoId: me.id,
-          displayName: me.displayname,
-          username: me.login,
-        })
-        .returning()
-    )[0];
+    [user] = await db
+      .insert(users)
+      .values({
+        id: id(),
+        fortyTwoId: me.id,
+        displayName: me.displayname,
+        username: me.login,
+      })
+      .returning();
   }
 
   const is2faRequired = user.otpEnabled && user.otpVerified;

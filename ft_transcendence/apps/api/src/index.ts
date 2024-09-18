@@ -4,6 +4,7 @@ import auth from "./api/auth";
 import otp from "./api/otp";
 import users from "./api/users";
 import games from "./api/games";
+import tournaments from "./api/tournaments";
 
 const app = new Hono();
 
@@ -21,6 +22,7 @@ app.route("/auth", auth);
 app.route("/otp", otp);
 app.route("/users", users);
 app.route("/games", games);
+app.route("/tournaments", tournaments);
 
 export default {
   port: 8787,
