@@ -5,6 +5,7 @@ import {
   timestamp,
   boolean,
   integer,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -19,20 +20,26 @@ export const users = pgTable("users", {
   otpSecret: text("otp_secret"),
   otpAuthUrl: text("otp_auth_url"),
 
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
+
+export const opponentEnum = pgEnum("opponent", ["ai", "local"]);
 
 export const games = pgTable("games", {
   id: text("id").primaryKey(),
 
-  winnerId: text("winner_id")
-    .references(() => users.id)
+  userId: text("user_id")
+    .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
-  loserId: text("loser_id")
-    .references(() => users.id)
-    .notNull(),
+  opponent: opponentEnum("opponent").notNull(),
+  playerScore: integer("player_score").notNull(),
+  opponentScore: integer("opponent_score").notNull(),
 
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .$onUpdate(() => new Date())
+    .notNull(),
 });

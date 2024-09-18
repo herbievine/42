@@ -1,69 +1,59 @@
-// import { Hono } from "hono";
-// import { getDatabase } from "../db";
-// import { z } from "zod";
-// import { users } from "../db/schema";
-// import { eq } from "drizzle-orm";
-// import { getTokenFromContext } from "../utils/get-token-from-context";
+import { Hono } from "hono";
+import { getDatabase } from "../db";
+import { z } from "zod";
+import { games, users } from "../db/schema";
+import { eq } from "drizzle-orm";
+import { getTokenFromContext } from "../utils/get-token-from-context";
+import { id } from "../lib/id";
 
-// const app = new Hono();
+const app = new Hono();
 
-// app.get("/", async (c) => {
-//   const token = await getTokenFromContext(c);
+app.get("/:userId", async (c) => {
+  const token = await getTokenFromContext(c);
 
-//   if (!token) {
-//     return c.json({ error: "Missing or invalid token" }, 400);
-//   }
+  if (!token) {
+    return c.json({ error: "Missing or invalid token" }, 400);
+  }
 
-//   const db = await getDatabase();
-//   const [user] = await db
-//     .select({
-//       id: users.id,
-//       displayName: users.displayName,
-//       username: users.username,
-//     })
-//     .from(users)
-//     .where(eq(users.id, c.req.param("id")));
+  const db = await getDatabase();
+  const results = await db
+    .select()
+    .from(games)
+    .where(eq(games.userId, c.req.param("userId")));
 
-//   if (!user) {
-//     return c.json({ error: "User not found" }, 404);
-//   }
+  return c.json(results);
+});
 
-//   return c.json(user);
-// });
+app.post("/", async (c) => {
+  const token = await getTokenFromContext(c);
 
-// app.post("/", async (c) => {
-//   const token = await getTokenFromContext(c);
+  if (!token) {
+    return c.json({ error: "Missing or invalid token" }, 400);
+  }
 
-//   if (!token) {
-//     return c.json({ error: "Missing or invalid token" }, 400);
-//   }
+  const body = z
+    .object({
+      playerScore: z.number(),
+      opponentScore: z.number(),
+      opponent: z.enum(["ai", "local"]),
+    })
+    .safeParse(await c.req.json());
 
-//   const id = c.req.param("id");
+  if (!body.success) {
+    return c.json({ error: "Invalid payload" }, 400);
+  }
 
-//   if (id !== token.sub) {
-//     return c.json({ error: "Not authorized" }, 403);
-//   }
+  const db = await getDatabase();
+  const [game] = await db
+    .insert(games)
+    .values({
+      id: id(),
+      ...body.data,
+      userId: token.sub,
+    })
+    .returning();
 
-//   const body = z
-//     .object({
-//       displayName: z.string().min(3).max(32),
-//     })
-//     .safeParse(await c.req.json());
+  return c.json(game);
+});
 
-//   if (!body.success) {
-//     return c.json({ error: "Invalid payload" }, 400);
-//   }
-
-//   const db = await getDatabase();
-//   const [user] = await db
-//     .update(users)
-//     .set(body.data)
-//     .where(eq(users.id, c.req.param("id")))
-//     .returning({
-//       displayName: users.displayName,
-//     });
-
-//   return c.json(user);
-// });
-
-// export default app;
+export default app;

@@ -22,6 +22,27 @@
       "when": 1726480378977,
       "tag": "0002_loose_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1726649246329,
+      "tag": "0003_mean_the_executioner",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1726649385429,
+      "tag": "0004_wet_mysterio",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1726649775439,
+      "tag": "0005_flawless_iceman",
+      "breakpoints": true
     }
   ]
 }

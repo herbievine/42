@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import auth from "./api/auth";
 import otp from "./api/otp";
 import users from "./api/users";
+import games from "./api/games";
 
 const app = new Hono();
 
@@ -19,6 +20,7 @@ app.use(
 app.route("/auth", auth);
 app.route("/otp", otp);
 app.route("/users", users);
+app.route("/games", games);
 
 export default {
   port: 8787,

@@ -5,8 +5,8 @@ import { z } from "zod";
 import { fetcher } from "../lib/fetcher";
 import { users } from "../db/schema";
 import { eq, getTableColumns } from "drizzle-orm";
-import { nanoid } from "nanoid";
 import { getTokenFromContext } from "../utils/get-token-from-context";
+import { id } from "../lib/id";
 
 const app = new Hono();
 
@@ -116,7 +116,7 @@ app.post("/token", async (c) => {
       await db
         .insert(users)
         .values({
-          id: nanoid(),
+          id: id(),
           fortyTwoId: me.id,
           displayName: me.displayname,
           username: me.login,
