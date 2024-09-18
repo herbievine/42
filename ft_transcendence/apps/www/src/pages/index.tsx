@@ -1,8 +1,10 @@
-import { createRoute, useNavigate } from "@tanstack/react-router";
-import { rootRoute } from "./__root";
+import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { queryClient, rootRoute } from "./__root";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getUser } from "../api/get-user";
+import { meOptions } from "../api/use-me";
 
 const formValuesSchema = z.object({
   speed: z.string().min(1).max(5).optional().default("1"),
@@ -19,6 +21,30 @@ type FormValues = z.infer<typeof formValuesSchema>;
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
+  loader: async ({ location }) => {
+    const user = await getUser();
+    const ensureMeData = queryClient.ensureQueryData(meOptions());
+
+    if (!user) {
+      throw redirect({
+        to: "/login",
+        search: {
+          next: location.pathname,
+        },
+      });
+    }
+
+    if (user && user.is2faRequired && !user.is2faComplete) {
+      throw redirect({
+        to: "/verify",
+        search: {
+          next: location.pathname,
+        },
+      });
+    }
+
+    await ensureMeData;
+  },
   component: IndexPage,
 });
 
