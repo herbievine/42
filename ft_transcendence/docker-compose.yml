@@ -1,18 +1,25 @@
 services:
   postgres:
-    image: postgres:16
+    container_name: postgres
+    image: postgres:13- # TODO: Use the latest version of PostgreSQL 16 but error occurred, SCRAM authentication requires libpq version 10 or above.
     restart: unless-stopped
     env_file:
       - .env
     ports:
       - 5432:5432
-  api:
-    build:
-      context: apps/api
-      dockerfile: Dockerfile
-    ports:
-      - 8787:8787
-    restart: unless-stopped
+    networks:
+      - net
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  # api:
+  #   build:
+  #     context: apps/api
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8787:8787
+  #   restart: unless-stopped
+  #   networks:
+  #     - net
   www:
     build:
       context: apps/www
@@ -25,6 +32,21 @@ services:
     env_file:
       - apps/www/.env
     restart: unless-stopped
+  djangoapp:
+    container_name: djangoapp
+    build:
+      context: apps/djangoproject
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - apps/djangoproject/.env
+    depends_on:
+      - postgres
+    networks:
+      - net
+volumes:
+  pgdata: {}
 
 networks:
   net:
