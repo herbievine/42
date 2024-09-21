@@ -7,7 +7,8 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 RUN apt-get update && apt-get -y upgrade
-RUN apt install -y netcat
+RUN apt install -y netcat gcc
+RUN apt-get install -y libpq-dev python-dev
 
 # Install app dependencies
 COPY requirements.txt .

@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: postgres
-    image: postgres:13- # TODO: Use the latest version of PostgreSQL 16 but error occurred, SCRAM authentication requires libpq version 10 or above.
+    image: postgres:16
     restart: unless-stopped
     env_file:
       - .env
