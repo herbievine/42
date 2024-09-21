@@ -238,7 +238,8 @@ export function Game({
   }, [ball]);
 
   useEffect(() => {
-    setBufferBallSpeed({ dx: ball.dx, dy: ball.dy });
+    if (ball.dx !== 0 || ball.dy !== 0)
+      setBufferBallSpeed({ dx: ball.dx, dy: ball.dy });
     if (pause) {
       ball.dx = 0;
       ball.dy = 0;
