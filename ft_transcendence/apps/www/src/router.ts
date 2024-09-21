@@ -6,6 +6,9 @@ import { callbackRoute } from "./pages/auth/callback";
 import { verifyRoute } from "./pages/auth/verify";
 import { profileRoute } from "./pages/profile";
 import { playRoute } from "./pages/game/play";
+import { tournamentRoute } from "./pages/game/tournament";
+import { tournamentPlayRoute } from "./pages/game/tournament-play";
+import { tournamentStandingRoute } from "./pages/game/standing";
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -14,6 +17,9 @@ const routeTree = rootRoute.addChildren([
   verifyRoute,
   profileRoute,
   playRoute,
+  tournamentRoute,
+  tournamentPlayRoute,
+  tournamentStandingRoute,
 ]);
 
 export const router = createRouter({ routeTree, defaultPreload: "intent" });

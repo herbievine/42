@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { cn } from "../lib/cn";
 
 // TODO: AI create more random movement
 // TODO: create Random start direction + start in the opposite of the winner
@@ -34,7 +35,7 @@ export function Game({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [leftPaddleY, setLeftPaddleY] = useState(100);
   const [rightPaddleY, setRightPaddleY] = useState(100);
-  const [pause, setPause] = useState(false);
+  const [pause, setPause] = useState(true);
   const [bufferBallSpeed, setBufferBallSpeed] = useState({
     dx: 2,
     dy: 2,
@@ -74,7 +75,7 @@ export function Game({
     y: number,
     width: number,
     height: number,
-    color: string
+    color: string,
   ) => {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height);
@@ -85,7 +86,7 @@ export function Game({
     x: number,
     y: number,
     radius: number,
-    color: string
+    color: string,
   ) => {
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -127,7 +128,7 @@ export function Game({
     ballX: number,
     ballY: number,
     ballDx: number,
-    ballDy: number
+    ballDy: number,
   ) => {
     // predict y position of the ball when it reaches the right wall
     let predictedY = ballY + (ballDy * (CANVAS_WIDTH - ballX)) / ballDx;
@@ -184,11 +185,11 @@ export function Game({
       if (opponent === "ai") {
         if (rightPaddleY < aiBallY) {
           setRightPaddleY((prev) =>
-            Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset)
+            Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset),
           );
         } else if (rightPaddleY > aiBallY) {
           setRightPaddleY((prev) =>
-            Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset)
+            Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset),
           );
         }
       }
@@ -196,6 +197,7 @@ export function Game({
       // Ball reset on left or right edge
       if (x - ballRadius < 0) {
         setScores((prev) => ({ ...prev, right: prev.right + 1 }));
+
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = -2;
@@ -218,14 +220,14 @@ export function Game({
       setLeftPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
     if (keyPaddleLeftPressed.down)
       setLeftPaddleY((prev) =>
-        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
+        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight),
       );
     if (opponent === "local") {
       if (keyPaddleRightPressed.up)
         setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
       if (keyPaddleRightPressed.down)
         setRightPaddleY((prev) =>
-          Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
+          Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight),
         );
     }
   };
@@ -298,11 +300,16 @@ export function Game({
           rightPaddleY,
           paddleWidth,
           paddleHeight,
-          "#FF0000"
+          "#FF0000",
         );
 
         // Draw ball
         drawBall(ctx, ball.x, ball.y, ballRadius, "#0000FF");
+
+        // Draw scores
+        ctx.font = "30px Arial";
+        ctx.fillText(scores.left.toString(), CANVAS_WIDTH / 2 - 50, 50);
+        ctx.fillText(scores.right.toString(), CANVAS_WIDTH / 2 + 25, 50);
       }
     };
 
@@ -326,29 +333,30 @@ export function Game({
     ball,
     keyPaddleLeftPressed,
     keyPaddleRightPressed,
+    pause,
   ]);
 
   return (
-    <div className="mh-100 pt-10">
-      <h1 className="d-flex gap-4">
-        play {scores.left} - {scores.right}
-        <button className="btn btn-primary" onClick={() => setPause(!pause)}>
-          {pause ? "play" : "pause"}
-        </button>
-      </h1>
+    <div className="relative origin-top-left w-[1000px] h-[700px]">
+      <button
+        className={cn(
+          "absolute w-[1000px] h-[700px] top-0 left-0 bg-black/50 text-white text-3xl",
+          pause === false && "hidden -z-10",
+        )}
+        onClick={() => {
+          setPause(false);
+          setBall({ x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2, dx: 2, dy: 2 });
+        }}
+      >
+        Start game
+      </button>
       <canvas
         ref={canvasRef}
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
         style={{ border: "1px solid #000" }}
       />
-      <pre>
-        <code>
-          {JSON.stringify({
-            dx: ball.dx,
-          })}
-        </code>
-      </pre>
+      <pre>{JSON.stringify(pause, null, 2)}</pre>
     </div>
   );
 }

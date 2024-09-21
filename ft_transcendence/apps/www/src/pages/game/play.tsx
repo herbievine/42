@@ -4,14 +4,17 @@ import { z } from "zod";
 import { Game } from "../../components/game";
 import { useState } from "react";
 import { getUser } from "../../api/get-user";
-import { meOptions } from "../../api/use-me";
 import { useSaveGame } from "../../api/use-save-game";
+import { useUpdateGame } from "../../api/use-update-game";
+import { meOptions, useSuspenseMe } from "../../api/use-me";
+import { TournamentGames } from "../../components/tournament-games";
+import { useSuspenseTournament, useTournament } from "../../api/use-tournament";
 
 const playSearchSchema = z.object({
   speed: z.number().min(1).max(5).optional().default(1),
   aiSpeed: z.number().min(1).max(5).optional().default(1),
   acceleration: z.number().min(1).max(5).optional().default(1),
-  opponent: z.string().optional().default("ai"),
+  opponent: z.string().optional().default("AI"),
   background: z
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/g)
@@ -22,7 +25,10 @@ const playSearchSchema = z.object({
 export const playRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/play",
-  loader: async ({ location }) => {
+  beforeLoad: ({ search }) => {
+    return { search };
+  },
+  loader: async ({ location, context: { search } }) => {
     const user = await getUser();
     const ensureMeData = queryClient.ensureQueryData(meOptions());
 
@@ -51,22 +57,26 @@ export const playRoute = createRoute({
 });
 
 function PlayPage() {
-  const search = useSearch({
+  const { opponent, ...search } = useSearch({
     from: "/play",
   });
+  const { me } = useSuspenseMe();
   const { mutate: saveGame } = useSaveGame();
 
   return (
-    <div className="container-fluid vh-100  align-">
-      <Game
-        {...search}
-        onWin={async (data) => {
-          console.log(data);
-          saveGame(data);
-
-          // Navigate({})
-        }}
-      />
+    <div className="p-8 flex flex-col space-y-12">
+      <h1 className="text-xl">
+        {me.username} vs {opponent}
+      </h1>
+      <div className="flex space-x-12">
+        <Game
+          {...search}
+          opponent={opponent}
+          onWin={async (data) => {
+            saveGame(data);
+          }}
+        />
+      </div>
     </div>
   );
 }
