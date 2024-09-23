@@ -1,4 +1,7 @@
 distlib==0.3.8
 Django==3.2.5
 djangorestframework==3.12.4
+djangorestframework_simplejwt==5.3.1
 psycopg2==2.9.3
+django-cors-headers==4.4.0
+py-jwt-verifier==0.8.0
