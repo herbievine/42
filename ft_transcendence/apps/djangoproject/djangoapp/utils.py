@@ -22,5 +22,3 @@ def getTokenFromContext(context):
 			'id': user_id,
 			'exp': exp,
 		})
-
-				

@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import users
+from users.models import Users
 from .models import games
 from .models import tournaments
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = users
+        model = Users
         fields = '__all__'
 
 class GamesSerializer(serializers.ModelSerializer):
