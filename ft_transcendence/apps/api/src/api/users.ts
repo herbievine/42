@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { getDatabase } from "../db";
 import { z } from "zod";
-import { users } from "../db/schema";
+import { games, users } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { getTokenFromContext } from "../utils/get-token-from-context";
 
@@ -29,6 +29,22 @@ app.get("/:id", async (c) => {
   }
 
   return c.json(user);
+});
+
+app.get("/:id/games", async (c) => {
+  const token = await getTokenFromContext(c);
+
+  if (!token) {
+    return c.json({ error: "Missing or invalid token" }, 400);
+  }
+
+  const db = await getDatabase();
+  const results = await db
+    .select()
+    .from(games)
+    .where(eq(games.userId, c.req.param("id")));
+
+  return c.json(results);
 });
 
 app.put("/:id", async (c) => {

@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { getDatabase } from "../db";
 import { z } from "zod";
 import { games, tournaments, users } from "../db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { getTokenFromContext } from "../utils/get-token-from-context";
 import { id } from "../lib/id";
 
@@ -29,6 +29,8 @@ app.get("/:id", async (c) => {
     .select()
     .from(games)
     .where(eq(games.tournamentId, tournament.id));
+
+  tournamentGames.sort(({ id: a }, { id: b }) => a.localeCompare(b));
 
   if (tournament.status === "pending") {
     return c.json({
@@ -100,13 +102,14 @@ app.post("/", async (c) => {
     .select({
       id: users.id,
       username: users.username,
+      displayName: users.displayName,
     })
     .from(users)
     .where(eq(users.id, token.sub));
 
   const players = body.data.players;
 
-  if (!players.includes(user.username)) {
+  if (!players.includes(user.username) && !players.includes(user.displayName)) {
     return c.json({ error: "You must be a player in the tournament" }, 400);
   }
 
@@ -142,7 +145,7 @@ app.post("/", async (c) => {
 
   return c.json({
     ...tournament,
-    games: results,
+    games: results.sort(({ id: a }, { id: b }) => a.localeCompare(b)),
   });
 });
 
@@ -193,6 +196,8 @@ app.put("/:gameId", async (c) => {
     .from(games)
     .where(eq(games.tournamentId, updatedGame.tournamentId!));
 
+  results.sort(({ id: a }, { id: b }) => a.localeCompare(b));
+
   if (results.every(({ status }) => status === "completed")) {
     await db
       .update(tournaments)
@@ -200,7 +205,12 @@ app.put("/:gameId", async (c) => {
       .where(eq(tournaments.id, updatedGame.tournamentId!));
   }
 
-  return c.json(updatedGame);
+  const nextGame = results.filter(({ status }) => status === "pending");
+
+  return c.json({
+    ...updatedGame,
+    next: nextGame.length > 0 ? nextGame[0] : null,
+  });
 });
 
 app.get("/:id/standing", async (c) => {

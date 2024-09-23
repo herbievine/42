@@ -68,7 +68,28 @@ function ProfilePage() {
   }
 
   return (
-    <div className="container-fluid d-flex h-100 justify-content-center align-items-center">
+    <div className="mx-auto max-w-5xl py-6 flex flex-col space-y-12">
+      <h1 className="w-full border-b border-neutral-200 font-semibold text-xl">
+        Profile
+      </h1>
+      <div className="flex space-x-6">
+        {me?.image ? (
+          <img src="" alt="" className="w-40 h-40" />
+        ) : (
+          <div className="w-40 h-40 flex justify-center items-center bg-neutral-300">
+            <span>Upload a picture</span>
+          </div>
+        )}
+        <div className="flex flex-col">
+          <span className="text-lg font-semibold">{me.displayName}</span>
+          <span className="font-semibold">
+            Username: <code className="">{me.username}</code>
+          </span>
+        </div>
+      </div>
+      <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
+        Recent games
+      </h2>
       <div>
         <h1 className="mx-auto pt-5">Profile</h1>
         <pre>{JSON.stringify({ ...me, games }, null, 2)}</pre>
