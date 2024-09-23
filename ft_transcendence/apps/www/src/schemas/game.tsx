@@ -7,8 +7,8 @@ export const gameSchema = z.object({
   opponent: z.string(),
   playerScore: z.number().nullable(),
   opponentScore: z.number().nullable(),
-  userId: z.string(),
-  tournamentId: z.string(),
+  userId: z.string().nullable(),
+  tournamentId: z.string().nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });

@@ -104,9 +104,9 @@ export function Game({
     if (e.key === "s" || e.key === "S")
       setKeyPaddleLeftPressed((prev) => ({ ...prev, down: true }));
     if (opponent === "local") {
-      if (e.key === "ArrowUp")
+      if (e.key === "o" || e.key === "O")
         setKeyPaddleRightPressed((prev) => ({ ...prev, up: true }));
-      if (e.key === "ArrowDown")
+      if (e.key === "l" || e.key === "L")
         setKeyPaddleRightPressed((prev) => ({ ...prev, down: true }));
     }
   };
@@ -118,9 +118,9 @@ export function Game({
     if (e.key === "s" || e.key === "S")
       setKeyPaddleLeftPressed((prev) => ({ ...prev, down: false }));
     if (opponent === "local") {
-      if (e.key === "ArrowUp")
+      if (e.key === "o" || e.key === "O")
         setKeyPaddleRightPressed((prev) => ({ ...prev, up: false }));
-      if (e.key === "ArrowDown")
+      if (e.key === "l" || e.key === "L")
         setKeyPaddleRightPressed((prev) => ({ ...prev, down: false }));
     }
   };
@@ -357,7 +357,6 @@ export function Game({
         height={CANVAS_HEIGHT}
         style={{ border: "1px solid #000" }}
       />
-      <pre>{JSON.stringify(pause, null, 2)}</pre>
     </div>
   );
 }

@@ -1,25 +1,23 @@
-import { createRoute, redirect, useSearch } from "@tanstack/react-router";
+import {
+  createRoute,
+  redirect,
+  useNavigate,
+  useSearch,
+} from "@tanstack/react-router";
 import { queryClient, rootRoute } from "../__root";
 import { z } from "zod";
 import { Game } from "../../components/game";
-import { useState } from "react";
 import { getUser } from "../../api/get-user";
 import { useSaveGame } from "../../api/use-save-game";
-import { useUpdateGame } from "../../api/use-update-game";
 import { meOptions, useSuspenseMe } from "../../api/use-me";
-import { TournamentGames } from "../../components/tournament-games";
-import { useSuspenseTournament, useTournament } from "../../api/use-tournament";
+import { useMemo } from "react";
 
 const playSearchSchema = z.object({
-  speed: z.number().min(1).max(5).optional().default(1),
-  aiSpeed: z.number().min(1).max(5).optional().default(1),
-  acceleration: z.number().min(1).max(5).optional().default(1),
-  opponent: z.string().optional().default("AI"),
-  background: z
-    .string()
-    .regex(/^#[0-9A-Fa-f]{6}$/g)
-    .optional()
-    .default("#000000"),
+  speed: z.number().min(1).max(5),
+  aiSpeed: z.number().min(1).max(5),
+  acceleration: z.number().min(1).max(5),
+  opponent: z.string().refine((s) => s as "ai" | "local" | (string & {})),
+  background: z.string().regex(/^#[0-9A-Fa-f]{6}$/g),
 });
 
 export const playRoute = createRoute({
@@ -28,7 +26,7 @@ export const playRoute = createRoute({
   beforeLoad: ({ search }) => {
     return { search };
   },
-  loader: async ({ location, context: { search } }) => {
+  loader: async ({ location }) => {
     const user = await getUser();
     const ensureMeData = queryClient.ensureQueryData(meOptions());
 
@@ -41,7 +39,7 @@ export const playRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
+    if (user?.is2faRequired && !user?.is2faComplete) {
       throw redirect({
         to: "/verify",
         search: {
@@ -60,20 +58,40 @@ function PlayPage() {
   const { opponent, ...search } = useSearch({
     from: "/play",
   });
+  const navigate = useNavigate({
+    from: "/play",
+  });
   const { me } = useSuspenseMe();
-  const { mutate: saveGame } = useSaveGame();
+  const { mutateAsync: saveGame } = useSaveGame();
+
+  const opponentName = useMemo(() => {
+    if (opponent === "ai") {
+      return "AI";
+    }
+
+    if (opponent === "local") {
+      return "Local Player";
+    }
+
+    return opponent;
+  }, [opponent]);
 
   return (
-    <div className="p-8 flex flex-col space-y-12">
+    <div className="p-8 w-full flex flex-col items-center space-y-6">
       <h1 className="text-xl">
-        {me.username} vs {opponent}
+        {me.displayName} vs {opponentName}
       </h1>
       <div className="flex space-x-12">
         <Game
           {...search}
           opponent={opponent}
           onWin={async (data) => {
-            saveGame(data);
+            const { id } = await saveGame(data);
+
+            navigate({
+              to: "/review/$id",
+              params: { id },
+            });
           }}
         />
       </div>
