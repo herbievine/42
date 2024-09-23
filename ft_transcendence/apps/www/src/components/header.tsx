@@ -1,27 +1,48 @@
-import { Link } from "@tanstack/react-router";
-import { useSuspenseMe } from "../api/use-me";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 export function Header() {
+  const navigate = useNavigate({
+    from: undefined,
+  });
+
   return (
     <div className="h-16">
       <nav className="h-16 navbar navbar-expand-lg bg-body-tertiary position-fixed container-fluid">
-        <div className="container-fluid">
+        <div className="mx-auto max-w-5xl container-fluid flex space-x-6 p-0">
           <Link className="navbar-brand" to="/">
             Pong
           </Link>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/profile"
-                >
-                  Profile
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <ul className="flex items-center space-x-8">
+            <li className="nav-item">
+              <Link className="nav-link active" to="/">
+                Play
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active" to="/tournament">
+                Tournament
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active" to="/profile">
+                Profile
+              </Link>
+            </li>
+            <li className="nav-item">
+              <button
+                type="button"
+                onClick={async () => {
+                  localStorage.removeItem("token");
+
+                  navigate({
+                    to: "/login",
+                  });
+                }}
+              >
+                logout
+              </button>
+            </li>
+          </ul>
         </div>
       </nav>
     </div>

@@ -5,21 +5,12 @@ import {
 } from "@tanstack/react-query";
 import { z } from "zod";
 import { fetcher } from "../lib/fetcher";
+import { gameSchema } from "../schemas/game";
 
 async function getGames(userId: string) {
   return fetcher(
     `${import.meta.env.VITE_API_URL}/users/${userId}/games`,
-    z.array(
-      z.object({
-        id: z.string(),
-        userId: z.string(),
-        opponent: z.string(),
-        playerScore: z.number(),
-        opponentScore: z.number(),
-        createdAt: z.coerce.date(),
-        updatedAt: z.coerce.date(),
-      })
-    ),
+    z.array(gameSchema),
     {
       method: "GET",
       headers: {
