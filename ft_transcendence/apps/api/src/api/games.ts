@@ -8,7 +8,7 @@ import { id } from "../lib/id";
 
 const app = new Hono();
 
-app.get("/:userId", async (c) => {
+app.get("/:id", async (c) => {
   const token = await getTokenFromContext(c);
 
   if (!token) {
@@ -16,12 +16,12 @@ app.get("/:userId", async (c) => {
   }
 
   const db = await getDatabase();
-  const results = await db
+  const [game] = await db
     .select()
     .from(games)
-    .where(eq(games.userId, c.req.param("userId")));
+    .where(eq(games.id, c.req.param("id")));
 
-  return c.json(results);
+  return c.json(game);
 });
 
 app.post("/", async (c) => {
