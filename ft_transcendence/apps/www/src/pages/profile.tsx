@@ -80,60 +80,13 @@ function ProfilePage() {
             <span>Upload a picture</span>
           </div>
         )}
-        <div className="flex flex-col">
-          <span className="text-lg font-semibold">{me.displayName}</span>
-          <span className="font-semibold">
-            Username: <code className="">{me.username}</code>
-          </span>
-        </div>
-      </div>
-      <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
-        Recent games
-      </h2>
-      <div>
-        <h1 className="mx-auto pt-5">Profile</h1>
-        <pre>{JSON.stringify({ ...me, games }, null, 2)}</pre>
-        <div className="d-flex gap-3">
-          {me.otpVerified ? (
-            <button
-              type="button"
-              onClick={async () => {
-                const { jwt } = await disableOtp();
-
-                localStorage.setItem("token", jwt);
-
-                queryClient.invalidateQueries(meOptions());
-              }}
-            >
-              Disable OTP
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={async () => {
-                await generateOtp();
-              }}
-            >
-              Generate OTP
-            </button>
-          )}
-          {otp && !me.otpVerified && (
-            <div>
-              <QRCode value={otp.otpAuthUrl} />
-              <pre>{JSON.stringify(otp, null, 2)}</pre>
-              <form onSubmit={onSubmit}>
-                <label>
-                  Activate code
-                  <input
-                    type="text"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                  />
-                </label>
-                <button type="submit">Verify</button>
-              </form>
-            </div>
-          )}
+        <div className="flex flex-col justify-between">
+          <div className="flex flex-col">
+            <span className="text-lg font-semibold">{me.displayName}</span>
+            <span className="font-semibold">
+              Username: <code className="">{me.username}</code>
+            </span>
+          </div>
           <button
             type="button"
             onClick={async () => {
@@ -146,19 +99,25 @@ function ProfilePage() {
           >
             Delete Account
           </button>
-          <button
-            type="button"
-            onClick={async () => {
-              localStorage.removeItem("token");
-
-              navigate({
-                to: "/login",
-              });
-            }}
-          >
-            logout
-          </button>
         </div>
+      </div>
+      <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
+        Recent games
+      </h2>
+      <div>
+        {games?.map((game) => (
+          <div key={game.id} className="w-full flex">
+            <div className="w-full flex flex-col space-y-1">
+              <span>{game.player}</span>
+              <span>{game.opponent}</span>
+            </div>
+            <div className="w-full flex flex-col space-y-1">
+              <span>{game.playerScore}</span>
+              <span>{game.opponentScore}</span>
+            </div>
+            <span>{game.createdAt.toISOString()}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
