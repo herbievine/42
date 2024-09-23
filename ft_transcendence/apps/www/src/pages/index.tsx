@@ -1,6 +1,6 @@
 import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { queryClient, rootRoute } from "./__root";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getUser } from "../api/get-user";
@@ -11,7 +11,10 @@ const formValuesSchema = z.object({
   speed: z.string().min(1).max(5).optional().default("1"),
   aiSpeed: z.string().min(1).max(5).optional().default("1"),
   acceleration: z.string().min(1).max(5).optional().default("1"),
-  opponent: z.string().optional().default("ai"),
+  opponent: z
+    .union([z.literal("ai"), z.literal("local")])
+    .optional()
+    .default("ai"),
   background: z
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/g)
@@ -37,15 +40,6 @@ export const indexRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
     await ensureMeData;
   },
   component: IndexPage,
@@ -59,8 +53,8 @@ function IndexPage() {
     handleSubmit,
     register,
     clearErrors,
+    setValue,
     formState: { errors },
-    reset,
   } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
     mode: "onSubmit",
@@ -70,9 +64,10 @@ function IndexPage() {
       acceleration: "1",
       background: "#000000",
       aiSpeed: "1",
+      opponent: "ai",
     },
   });
-  const [playWithFriend, setPlayWithFriend] = useState(false);
+  const [playWithFriend, setPlayWithFriend] = useState("ai" || "local");
 
   async function onSubmit(data: FormValues) {
     navigate({
@@ -83,7 +78,6 @@ function IndexPage() {
         background: data.background,
         aiSpeed: +data.aiSpeed,
         opponent: data.opponent,
-        tournament: false,
       },
     });
   }
@@ -161,14 +155,15 @@ function IndexPage() {
           <button
             type="button"
             onClick={() => {
-              setPlayWithFriend((prev) => !prev);
+              setPlayWithFriend((prev) => (prev === "ai" ? "local" : "ai"));
               clearErrors();
-              reset();
-              register("opponent", { value: playWithFriend ? "ai" : "local" });
+              const newOpponent = playWithFriend === "ai" ? "local" : "ai";
+              setPlayWithFriend(newOpponent);
+              setValue("opponent", newOpponent);
             }}
             className="btn btn-secondary mt-3"
           >
-            {playWithFriend ? "Play with a bot" : "Play with a friend"}
+            {playWithFriend === "ai" ? "Play with a friend" : "Play with AI"}
           </button>
           <button type="submit" className="btn btn-primary mt-3">
             Play

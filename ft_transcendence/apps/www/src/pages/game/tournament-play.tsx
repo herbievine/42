@@ -37,21 +37,12 @@ export const tournamentPlayRoute = createRoute({
     const user = await getUser();
 
     const ensureTournamentData = queryClient.ensureQueryData(
-      tournamentOptions(params.id),
+      tournamentOptions(params.id)
     );
 
     if (!user) {
       throw redirect({
         to: "/login",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
         search: {
           next: location.pathname,
         },

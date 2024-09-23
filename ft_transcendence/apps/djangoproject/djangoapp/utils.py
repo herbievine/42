@@ -17,14 +17,10 @@ def getTokenFromContext(context):
 
 		user_id = decoded_token['sub']
 		exp = decoded_token['exp']
-		is2faRequired = decoded_token.get('is2faRequired', False)
-		is2faComplete = decoded_token.get('is2faComplete', True)
 
 		return ({
 			'id': user_id,
 			'exp': exp,
-			'is2faRequired': is2faRequired,
-			'is2faComplete': is2faComplete
 		})
 
 				

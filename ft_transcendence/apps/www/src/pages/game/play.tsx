@@ -16,7 +16,7 @@ const playSearchSchema = z.object({
   speed: z.number().min(1).max(5),
   aiSpeed: z.number().min(1).max(5),
   acceleration: z.number().min(1).max(5),
-  opponent: z.string().refine((s) => s as "ai" | "local" | (string & {})),
+  opponent: z.enum(["ai", "local"]),
   background: z.string().regex(/^#[0-9A-Fa-f]{6}$/g),
 });
 
@@ -33,15 +33,6 @@ export const playRoute = createRoute({
     if (!user) {
       throw redirect({
         to: "/login",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
-    if (user?.is2faRequired && !user?.is2faComplete) {
-      throw redirect({
-        to: "/verify",
         search: {
           next: location.pathname,
         },

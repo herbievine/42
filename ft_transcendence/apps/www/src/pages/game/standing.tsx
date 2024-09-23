@@ -29,15 +29,6 @@ export const tournamentStandingRoute = createRoute({
         },
       });
     }
-
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
   },
   component: TournamentStadingPage,
 });

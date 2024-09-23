@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from "react";
 import { cn } from "../lib/cn";
 
 // TODO: AI create more random movement
-// TODO: create Random start direction + start in the opposite of the winner
 // TODO: the AIpaddle goes through the walls
 // TODO: add keyboard control for the right paddle (real player)
 // TODO: win on 10 points
@@ -13,7 +12,7 @@ type Props = {
   acceleration: number;
   background: string;
   aiSpeed: number;
-  opponent: string;
+  opponent: "ai" | "local";
   onWin: (data: {
     playerScore: number;
     opponentScore: number;
@@ -48,6 +47,7 @@ export function Game({
   });
   const [aiMoveUp, setAiMoveUp] = useState(true);
   const [aiBallY, setAiBallY] = useState(ball.y);
+  const [ballReset, setBallReset] = useState(false);
   const ballRef = useRef(ball);
   const [keyPaddleLeftPressed, setKeyPaddleLeftPressed] = useState({
     up: false,
@@ -75,7 +75,7 @@ export function Game({
     y: number,
     width: number,
     height: number,
-    color: string,
+    color: string
   ) => {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height);
@@ -86,7 +86,7 @@ export function Game({
     x: number,
     y: number,
     radius: number,
-    color: string,
+    color: string
   ) => {
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -128,7 +128,7 @@ export function Game({
     ballX: number,
     ballY: number,
     ballDx: number,
-    ballDy: number,
+    ballDy: number
   ) => {
     // predict y position of the ball when it reaches the right wall
     let predictedY = ballY + (ballDy * (CANVAS_WIDTH - ballX)) / ballDx;
@@ -185,24 +185,26 @@ export function Game({
       if (opponent === "ai") {
         if (rightPaddleY < aiBallY) {
           setRightPaddleY((prev) =>
-            Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset),
+            Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset)
           );
         } else if (rightPaddleY > aiBallY) {
           setRightPaddleY((prev) =>
-            Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset),
+            Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset)
           );
         }
       }
 
       // Ball reset on left or right edge
-      if (x - ballRadius < 0) {
-        setScores((prev) => ({ ...prev, right: prev.right + 1 }));
 
+      if (x - ballRadius < 0 && !ballReset) {
+        setScores((prev) => ({ ...prev, right: prev.right + 1 }));
+        setBallReset(true);
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = -2;
         dy = Math.random() * 4 - 2;
-      } else if (x + ballRadius > CANVAS_WIDTH) {
+      } else if (x + ballRadius > CANVAS_WIDTH && !ballReset) {
+        setBallReset(true);
         setScores((prev) => ({ ...prev, left: prev.left + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
@@ -220,14 +222,14 @@ export function Game({
       setLeftPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
     if (keyPaddleLeftPressed.down)
       setLeftPaddleY((prev) =>
-        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight),
+        Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
       );
     if (opponent === "local") {
       if (keyPaddleRightPressed.up)
         setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
       if (keyPaddleRightPressed.down)
         setRightPaddleY((prev) =>
-          Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight),
+          Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
         );
     }
   };
@@ -254,7 +256,7 @@ export function Game({
       onWin({
         playerScore: scores.left,
         opponentScore: scores.right,
-        opponent: "ai",
+        opponent,
       });
       setPause(true);
       setScores({ left: 0, right: 0 });
@@ -301,10 +303,11 @@ export function Game({
           rightPaddleY,
           paddleWidth,
           paddleHeight,
-          "#FF0000",
+          "#FF0000"
         );
 
         // Draw ball
+        console.log(ball.x, ball.y, ballRadius, "#0000FF");
         drawBall(ctx, ball.x, ball.y, ballRadius, "#0000FF");
 
         // Draw scores
@@ -318,6 +321,10 @@ export function Game({
       updateBall();
       updatePlayerPaddle();
       draw();
+      if (ball.x === CANVAS_WIDTH / 2 && ball.y === CANVAS_HEIGHT / 2) {
+        setBallReset(false);
+        console.log("ball reset");
+      }
     }, 1000 / 60); // 60 FPS
 
     window.addEventListener("keydown", keyDownHandler);
@@ -342,7 +349,7 @@ export function Game({
       <button
         className={cn(
           "absolute w-[1000px] h-[700px] top-0 left-0 bg-black/50 text-white text-3xl",
-          pause === false && "hidden -z-10",
+          pause === false && "hidden -z-10"
         )}
         onClick={() => {
           setPause(false);

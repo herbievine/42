@@ -21,8 +21,6 @@ export async function getTokenFromContext(c: Context) {
     .object({
       sub: z.string(),
       exp: z.number(),
-      is2faRequired: z.boolean(),
-      is2faComplete: z.boolean(),
     })
     .safeParse(payload);
 

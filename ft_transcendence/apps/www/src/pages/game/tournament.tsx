@@ -37,15 +37,6 @@ export const tournamentRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
     await ensureMeData;
   },
   component: TournamentPage,

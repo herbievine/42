@@ -90,18 +90,11 @@ class TokenView(APIView):
 								'displayName': user_data['displayname']
 						}
 				)
-			
-
-				# Determine 2FA status
-				is2faRequired = user.otpEnabled and not user.otpVerified
-				is2faComplete = not is2faRequired
 
 				# Create the JWT with custom claims
 				payload = {
 						'sub': str(user.id),
 						'exp': int(time.time()) + 60 * 60 * 24,  # Expire in 24 hours
-						'is2faRequired': is2faRequired,
-						'is2faComplete': is2faComplete,
 				}
 
 				# Generate the base access token for the user
@@ -109,8 +102,6 @@ class TokenView(APIView):
 				
 				# Update token payload with your custom claims
 				custom_token = CustomAccessToken(user.id)  # Use string-based user ID here
-				custom_token['is2faRequired'] = is2faRequired
-				custom_token['is2faComplete'] = is2faComplete
 
 				return Response({
 						'jwt': str(custom_token),
@@ -125,8 +116,6 @@ class UsersView(APIView):
 				try:
 						# Decode the JWT to access its payload
 						user_id = payload['id']
-						is2faRequired = payload['is2faRequired']
-						is2faComplete = payload['is2faComplete']
 
 						# Fetch the user object using the user_id from the token payload
 						user = users.objects.get(id=user_id)
@@ -137,12 +126,8 @@ class UsersView(APIView):
 								'username': user.username,
 								'fortyTwoId': user.fortyTwoId,
 								'displayName': user.displayName,
-								'is2faRequired': is2faRequired,
-								'is2faComplete': is2faComplete,
 								'createdAt': user.createdAt,
 								'updatedAt': user.updatedAt,
-								'otpVerified': user.otpVerified,
-								'otpEnabled': user.otpEnabled,
 						})
 
 				except Exception as e:
