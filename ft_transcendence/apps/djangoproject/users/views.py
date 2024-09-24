@@ -10,6 +10,8 @@ from django.contrib.auth.models import User as AuthUser
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 
+@csrf_exempt
+@login_required
 @require_http_methods(["GET", "PUT", "DELETE"])
 def user(request, id):
 		if request.method == "GET":
@@ -19,6 +21,7 @@ def user(request, id):
 		elif request.method == "DELETE":
 				return delete_user(request, id)
 
+@login_required
 @require_http_methods(["GET"])
 def get_user(request, id):
 		print("get_user")
@@ -36,7 +39,8 @@ def get_user(request, id):
 				"username": user.username,
 		})
 
-# @csrf_exempt
+@csrf_exempt
+@login_required
 @require_http_methods(["PUT"])
 def update_user(request):
 		try:
@@ -64,7 +68,8 @@ def update_user(request):
 		except json.JSONDecodeError:
 				return JsonResponse({"error": "Invalid JSON"}, status=400)
 
-# @csrf_exempt
+@csrf_exempt
+@login_required
 @require_http_methods(["DELETE"])
 def delete_user(request, id):
 		try:
