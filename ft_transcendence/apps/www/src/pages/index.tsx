@@ -26,7 +26,6 @@ export const indexRoute = createRoute({
   path: "/",
   loader: async ({ location }) => {
     const user = await getUser();
-    const ensureMeData = queryClient.ensureQueryData(meOptions());
 
     if (!user) {
       throw redirect({
@@ -37,16 +36,7 @@ export const indexRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
-    await ensureMeData;
+    await queryClient.ensureQueryData(meOptions());
   },
   component: IndexPage,
 });
@@ -89,7 +79,7 @@ function IndexPage() {
   }
 
   return (
-    <div className="vh-100 w-100 d-flex justify-content-center align-items-center text-center">
+    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
       <div className="gap-2 row d-flex justify-content-center align-items-center w-75">
         <p className="">Play Pong</p>
         <form

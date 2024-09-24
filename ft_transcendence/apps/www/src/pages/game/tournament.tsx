@@ -26,7 +26,6 @@ export const tournamentRoute = createRoute({
   path: "/tournament",
   loader: async ({ location }) => {
     const user = await getUser();
-    const ensureMeData = queryClient.ensureQueryData(meOptions());
 
     if (!user) {
       throw redirect({
@@ -37,16 +36,7 @@ export const tournamentRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
-    await ensureMeData;
+    await queryClient.ensureQueryData(meOptions());
   },
   component: TournamentPage,
 });
@@ -88,7 +78,7 @@ function TournamentPage() {
   }
 
   return (
-    <div className="vh-100 d-flex justify-content-center align-items-center text-center">
+    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
       <div className="max-w-3xl w-full gap-2 row d-flex justify-content-center align-items-center">
         <p className="">Start a tournament</p>
         <form

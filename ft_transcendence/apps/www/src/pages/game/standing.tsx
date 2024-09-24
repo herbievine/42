@@ -1,24 +1,16 @@
-import {
-  createRoute,
-  Link,
-  redirect,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
+import { createRoute, Link, redirect, useParams } from "@tanstack/react-router";
 import { queryClient, rootRoute } from "../__root";
-import { z } from "zod";
-import { Game } from "../../components/game";
 import { getUser } from "../../api/get-user";
-import { meOptions, useMe, useSuspenseMe } from "../../api/use-me";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useStartTournament } from "../../api/use-start-tournament";
-import { useTournament } from "../../api/use-tournament";
+import {
+  tournamentOptions,
+  useSuspenseTournament,
+} from "../../api/use-tournament";
+import { GameRow } from "../../components/game-row";
 
 export const tournamentStandingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/tournament/$id/standing",
-  loader: async ({ location }) => {
+  loader: async ({ location, params }) => {
     const user = await getUser();
 
     if (!user) {
@@ -30,14 +22,7 @@ export const tournamentStandingRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
+    await queryClient.ensureQueryData(tournamentOptions(params.id));
   },
   component: TournamentStadingPage,
 });
@@ -46,11 +31,13 @@ function TournamentStadingPage() {
   const { id } = useParams({
     from: "/tournament/$id/standing",
   });
-  const { tournament } = useTournament(id);
+  const { tournament } = useSuspenseTournament(id);
 
   return (
-    <div className="mx-auto w-full max-w-lg mt-12 flex flex-col space-y-6">
-      <h1>Standing</h1>
+    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
+      <h1 className="w-full border-b border-neutral-200 font-semibold text-xl">
+        Standing
+      </h1>
       <div>
         {tournament?.ranking?.map((standing, i) => (
           <div key={standing.player}>
@@ -58,7 +45,12 @@ function TournamentStadingPage() {
           </div>
         ))}
       </div>
-      <Link to="/">Back home</Link>
+      <div className="flex flex-col space-y-4">
+        {tournament.games?.map((game) => <GameRow key={game.id} game={game} />)}
+      </div>
+      <Link className="underline" to="/">
+        Back home
+      </Link>
     </div>
   );
 }

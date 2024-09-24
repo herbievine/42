@@ -1,19 +1,6 @@
-import {
-  createRoute,
-  Link,
-  redirect,
-  useNavigate,
-  useParams,
-} from "@tanstack/react-router";
-import { queryClient, rootRoute } from "../__root";
-import { z } from "zod";
-import { Game } from "../../components/game";
+import { createRoute, Link, redirect, useParams } from "@tanstack/react-router";
+import { rootRoute } from "../__root";
 import { getUser } from "../../api/get-user";
-import { meOptions, useMe, useSuspenseMe } from "../../api/use-me";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useStartTournament } from "../../api/use-start-tournament";
-import { useTournament } from "../../api/use-tournament";
 import { useGame } from "../../api/use-game";
 import { useMemo } from "react";
 
@@ -26,15 +13,6 @@ export const reviewRoute = createRoute({
     if (!user) {
       throw redirect({
         to: "/login",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
-    if (user?.is2faRequired && !user?.is2faComplete) {
-      throw redirect({
-        to: "/verify",
         search: {
           next: location.pathname,
         },
@@ -63,7 +41,7 @@ function ReviewPage() {
   }, [game]);
 
   return (
-    <div className="mx-auto w-full max-w-lg mt-12 flex flex-col items-center space-y-6">
+    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
       <h1 className="w-full border-b !border-neutral-200 font-bold text-xl">
         Game review
       </h1>

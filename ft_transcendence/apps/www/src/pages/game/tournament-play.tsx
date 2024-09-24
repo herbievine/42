@@ -8,16 +8,13 @@ import {
 import { queryClient, rootRoute } from "../__root";
 import { z } from "zod";
 import { Game } from "../../components/game";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { getUser } from "../../api/get-user";
-import { useSaveGame } from "../../api/use-save-game";
 import { useUpdateGame } from "../../api/use-update-game";
-import { meOptions, useSuspenseMe } from "../../api/use-me";
 import { TournamentGames } from "../../components/tournament-games";
 import {
   tournamentOptions,
   useSuspenseTournament,
-  useTournament,
 } from "../../api/use-tournament";
 
 const tournamentPlaySearchSchema = z.object({
@@ -36,10 +33,6 @@ export const tournamentPlayRoute = createRoute({
   loader: async ({ location, params }) => {
     const user = await getUser();
 
-    const ensureTournamentData = queryClient.ensureQueryData(
-      tournamentOptions(params.id),
-    );
-
     if (!user) {
       throw redirect({
         to: "/login",
@@ -49,16 +42,7 @@ export const tournamentPlayRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
-    await ensureTournamentData;
+    await queryClient.ensureQueryData(tournamentOptions(params.id));
   },
   component: TournamentPlayPage,
   validateSearch: tournamentPlaySearchSchema.parse,
@@ -82,7 +66,7 @@ function TournamentPlayPage() {
   }, [tournament, gameId]);
 
   return (
-    <div className="p-8 flex flex-col space-y-6">
+    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
       <h1 className="text-xl">
         {game?.player} vs {game?.opponent}
       </h1>

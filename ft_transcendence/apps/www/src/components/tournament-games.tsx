@@ -29,13 +29,13 @@ export function TournamentGames() {
             )}
           >
             <span className="font-bold">
-              {game.player} vs {game.opponent} (
+              {game.player} vs {game.opponent}
               {game.status === "completed" && (
                 <span className="font-bold">
-                  {game.playerScore} - {game.opponentScore}
+                  {" "}
+                  ({game.playerScore} - {game.opponentScore})
                 </span>
               )}
-              )
             </span>
           </div>
         ))}

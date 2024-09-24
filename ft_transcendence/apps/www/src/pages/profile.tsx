@@ -1,26 +1,29 @@
-import {
-  createRoute,
-  redirect,
-  useLoaderData,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { queryClient, rootRoute } from "./__root";
 import { getUser } from "../api/get-user";
 import { useDeleteUser } from "../api/use-delete-user";
-import { useGenerateOtp } from "../api/use-generate-otp";
-import { useDisableOtp } from "../api/use-disable-otp";
-import QRCode from "react-qr-code";
-import { useActivateOtp } from "../api/use-activate-otp";
-import { useState } from "react";
 import { meOptions, useSuspenseMe } from "../api/use-me";
 import { useGames } from "../api/use-games";
+import { GameRow } from "../components/game-row";
+import dayjs from "dayjs";
+import { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "../lib/cn";
+
+const formValuesSchema = z.object({
+  image: z.string(),
+  displayName: z.string(),
+});
+
+type FormValues = z.infer<typeof formValuesSchema>;
 
 export const profileRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/profile",
   loader: async ({ location }) => {
     const user = await getUser();
-    const ensureMeData = queryClient.ensureQueryData(meOptions());
 
     if (!user) {
       throw redirect({
@@ -31,16 +34,7 @@ export const profileRoute = createRoute({
       });
     }
 
-    if (user && user.is2faRequired && !user.is2faComplete) {
-      throw redirect({
-        to: "/verify",
-        search: {
-          next: location.pathname,
-        },
-      });
-    }
-
-    await ensureMeData;
+    await queryClient.ensureQueryData(meOptions());
   },
   component: ProfilePage,
 });
@@ -49,75 +43,153 @@ function ProfilePage() {
   const navigate = useNavigate({
     from: "/profile",
   });
-  const [code, setCode] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const { me } = useSuspenseMe();
   const { games } = useGames(me.id);
-  const { mutateAsync: activateOtp } = useActivateOtp();
   const { mutateAsync: deleteUser } = useDeleteUser();
-  const { mutateAsync: generateOtp, data: otp } = useGenerateOtp();
-  const { mutateAsync: disableOtp } = useDisableOtp();
+  const {
+    handleSubmit,
+    register,
+    clearErrors,
+    formState: { errors },
+    reset,
+    setValue,
+    watch,
+  } = useForm<FormValues>({
+    resolver: zodResolver(formValuesSchema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      displayName: me.displayName,
+      image: me.image ?? "",
+    },
+  });
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const { jwt } = await activateOtp(code);
-
-    localStorage.setItem("token", jwt);
-
-    queryClient.invalidateQueries(meOptions());
+  function onSubmit(values: FormValues) {
+    console.log(values);
   }
 
   return (
-    <div className="mx-auto max-w-5xl py-6 flex flex-col space-y-12">
-      <h1 className="w-full border-b border-neutral-200 font-semibold text-xl">
-        Profile
-      </h1>
-      <div className="flex space-x-6">
-        {me?.image ? (
-          <img src="" alt="" className="w-40 h-40" />
-        ) : (
-          <div className="w-40 h-40 flex justify-center items-center bg-neutral-300">
-            <span>Upload a picture</span>
-          </div>
-        )}
-        <div className="flex flex-col justify-between">
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold">{me.displayName}</span>
-            <span className="font-semibold">
-              Username: <code className="">{me.username}</code>
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={async () => {
-              await deleteUser(me.id);
-
-              navigate({
-                to: "/login",
-              });
-            }}
-          >
-            Delete Account
-          </button>
-        </div>
+    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
+      <div className="w-full flex justify-between border-b border-neutral-200">
+        <h1 className="font-semibold text-xl">Profile</h1>
+        <button
+          type="button"
+          onClick={async () => {
+            setIsEditing((prev) => !prev);
+          }}
+        >
+          {isEditing ? "Cancel" : "Edit"}
+        </button>
       </div>
+      {isEditing ? (
+        <form className="flex space-x-6" onSubmit={handleSubmit(onSubmit)}>
+          <label
+            className={cn(
+              "w-40 h-40 flex items-center justify-center text-center rounded-lg",
+              !watch("image") && "border-3 border-dashed border-neutral-300",
+            )}
+          >
+            {watch("image") ? (
+              <img
+                src={watch("image")}
+                alt=""
+                className="w-40 h-40 rounded-lg"
+              />
+            ) : (
+              <span>Drag and drop an image</span>
+            )}
+            <input
+              className="hidden"
+              {...register("image")}
+              type="file"
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+
+                if (!file) {
+                  return;
+                }
+
+                const base64: string | ArrayBuffer | null = await new Promise(
+                  (resolve, reject) => {
+                    const reader = new FileReader();
+
+                    reader.readAsDataURL(file);
+
+                    reader.onload = () => {
+                      resolve(reader.result);
+                    };
+
+                    reader.onerror = reject;
+                  },
+                );
+
+                if (base64) {
+                  setValue("image", base64.toString());
+                }
+              }}
+              name="picture"
+            />
+          </label>
+          <div className="flex flex-col items-start justify-between space-y-2">
+            <label className="flex flex-col">
+              <span className="text-xs text-neutral-600">Display name</span>
+              <input
+                className="border border-neutral-300 rounded-lg px-2 py-1"
+                type="text"
+                placeholder="Username"
+                {...register("displayName")}
+              />
+            </label>
+            <button className="font-bold text-green-700 hover:underline">
+              Submit
+            </button>
+          </div>
+        </form>
+      ) : (
+        <div className="flex space-x-6">
+          {me?.image ? (
+            <img src="" alt="" className="w-40 h-40 rounded-lg" />
+          ) : (
+            <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
+              <span>No picture</span>
+            </div>
+          )}
+          <div className="flex flex-col items-start justify-between">
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold">{me.displayName}</span>
+              <span className="font-semibold">
+                Username: <code className="">{me.username}</code>
+              </span>
+            </div>
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">
+                Joined:{" "}
+                <code className="">
+                  {dayjs(me.createdAt).format("MMM D YYYY @ HH:MM")}
+                </code>
+              </span>
+              <button
+                type="button"
+                onClick={async () => {
+                  await deleteUser(me.id);
+
+                  navigate({
+                    to: "/login",
+                  });
+                }}
+              >
+                Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
         Recent games
       </h2>
-      <div>
-        {games?.map((game) => (
-          <div key={game.id} className="w-full flex">
-            <div className="w-full flex flex-col space-y-1">
-              <span>{game.player}</span>
-              <span>{game.opponent}</span>
-            </div>
-            <div className="w-full flex flex-col space-y-1">
-              <span>{game.playerScore}</span>
-              <span>{game.opponentScore}</span>
-            </div>
-            <span>{game.createdAt.toISOString()}</span>
-          </div>
-        ))}
+      <div className="flex flex-col space-y-4">
+        {games?.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
     </div>
   );

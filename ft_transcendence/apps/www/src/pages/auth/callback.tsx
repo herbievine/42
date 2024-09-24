@@ -27,7 +27,7 @@ export const callbackRoute = createRoute({
       }),
       {
         method: "POST",
-      }
+      },
     );
 
     localStorage.setItem("token", jwt);
@@ -36,12 +36,6 @@ export const callbackRoute = createRoute({
 
     if (!user) {
       throw new Error("No user found");
-    }
-
-    if (user.is2faRequired) {
-      return redirect({
-        to: "/verify",
-      });
     }
 
     throw redirect({
