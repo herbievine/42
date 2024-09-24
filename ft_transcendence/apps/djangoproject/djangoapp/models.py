@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Users
+from users.models import users
 import random
 import string
 
@@ -9,11 +9,11 @@ def generate_unique_id():
 class tournaments(models.Model):
 		id = models.AutoField(primary_key=True)
 		status = models.CharField(max_length=250, default="pending")
-		userId = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='userId')
+		userId = models.ForeignKey(users, on_delete=models.CASCADE)
 		createdAt = models.DateTimeField(auto_now_add=True)
 		updatedAt = models.DateTimeField(auto_now=True)
-		winnerId = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='winnerId')
-		loserId = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='loserId')
+		winnerId = models.ForeignKey(users, on_delete=models.CASCADE, related_name='winnerId')
+		loserId = models.ForeignKey(users, on_delete=models.CASCADE, related_name='loserId')
 
 class games(models.Model):
 		id = models.AutoField(primary_key=True)
@@ -22,7 +22,7 @@ class games(models.Model):
 		playerScore = models.IntegerField()
 		opponentScore = models.IntegerField()
 		status = models.CharField(max_length=250, default="pending")
-		userId = models.ForeignKey(Users, on_delete=models.CASCADE)
+		userId = models.ForeignKey(users, on_delete=models.CASCADE)
 		tournamentId = models.ForeignKey(tournaments, on_delete=models.CASCADE)
 		createdAt = models.DateTimeField(auto_now_add=True)
 		updatedAt = models.DateTimeField(auto_now=True)

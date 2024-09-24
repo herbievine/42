@@ -22,7 +22,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin', admin.site.urls),
-    path('user/', include('users.urls')),
+    path('users/', include('users.urls')),
     path('tournaments', include('djangoapp.urls')),
     path('games', include('djangoapp.urls')),
     path('auth/token', TokenView.as_view(), name='auth_token'),

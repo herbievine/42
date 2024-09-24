@@ -1,12 +1,12 @@
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UsersSerializer
+from users.serializers import UsersSerializer
 from rest_framework import status
 from django.conf import settings
 from .models import tournaments
 from .models import games
-from users.models import Users
+from users.models import users
 import requests
 from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ValidationError
@@ -83,7 +83,7 @@ class TokenView(APIView):
 						return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 				# Check if the user exists or create a new one
-				user, created = Users.objects.get_or_create(
+				user, created = users.objects.get_or_create(
 						fortyTwoId=user_data['id'],
 						defaults={
 								'username': user_data['login'],
@@ -118,7 +118,7 @@ class UsersView(APIView):
 						user_id = payload['id']
 
 						# Fetch the user object using the user_id from the token payload
-						user = Users.objects.get(id=user_id)
+						user = users.objects.get(id=user_id)
 
 						# Return the user info as a response
 						return Response({
