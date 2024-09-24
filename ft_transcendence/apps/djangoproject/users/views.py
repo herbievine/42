@@ -11,7 +11,6 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 
 @csrf_exempt
-@login_required
 @require_http_methods(["GET", "PUT", "DELETE"])
 def user(request, id):
 		if request.method == "GET":
@@ -21,7 +20,6 @@ def user(request, id):
 		elif request.method == "DELETE":
 				return delete_user(request, id)
 
-@login_required
 @require_http_methods(["GET"])
 def get_user(request, id):
 		print("get_user")
@@ -40,15 +38,14 @@ def get_user(request, id):
 		})
 
 @csrf_exempt
-@login_required
 @require_http_methods(["PUT"])
-def update_user(request):
+def update_user(request, id):
 		try:
 				token_data = getTokenFromContext(request)
 		except AuthenticationFailed as e:
 				return JsonResponse({"error": str(e)}, status=401)
 
-		if str(request.user.id) != id:
+		if str(token_data['id']) != id:
 				return JsonResponse({"error": "Not authorized"}, status=403)
 
 		try:
@@ -60,16 +57,14 @@ def update_user(request):
 
 				# Use get_object_or_404
 				user = get_object_or_404(users, pk=id)
-
-				user.display_name = display_name
+				user.displayName = display_name
 				user.save()
 
-				return JsonResponse({"displayName": user.display_name})
+				return JsonResponse({"displayName": user.displayName})
 		except json.JSONDecodeError:
 				return JsonResponse({"error": "Invalid JSON"}, status=400)
 
 @csrf_exempt
-@login_required
 @require_http_methods(["DELETE"])
 def delete_user(request, id):
 		try:
@@ -77,7 +72,7 @@ def delete_user(request, id):
 		except AuthenticationFailed as e:
 				return JsonResponse({"error": str(e)}, status=401)
 
-		if str(request.user.id) != id:
+		if str(token_data['id']) != id:
 				return JsonResponse({"error": "Not authorized"}, status=403)
 
 		user = get_object_or_404(users, pk=id)
