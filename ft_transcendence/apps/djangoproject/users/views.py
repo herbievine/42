@@ -24,18 +24,16 @@ def user(request, id):
 
 @require_http_methods(["GET"])
 def get_user(request, id):
-	try:
-		token_data = getTokenFromContext(request)
-	except AuthenticationFailed as e:
-		return JsonResponse({"error": str(e)}, status=401)
-
-	# Use get_object_or_404 to automatically return 404 if the user is not found
-	user = get_object_or_404(users, pk=id)
- 
-		# Serialize the user object
-	serializer = UsersSerializer(user)
-		# Return the serialized data as a JSON response
-	return JsonResponse(serializer.data)
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return JsonResponse({"error": str(e)}, status=401)
+    # Use get_object_or_404 to automatically return 404 if the user is not found
+    user = get_object_or_404(users, pk=id)
+    # Serialize the user objectserializer
+    serializer = UsersSerializer(user)
+    # Return the serialized data as a JSON response
+    return JsonResponse(serializer.data)
 
 @csrf_exempt
 @require_http_methods(["PUT"])

@@ -15,6 +15,6 @@ class games(models.Model):
 		opponentScore = models.IntegerField()
 		status = models.CharField(max_length=250, default="pending")
 		userId = models.ForeignKey(users, on_delete=models.CASCADE)
-		tournamentId = models.ForeignKey(tournaments, on_delete=models.CASCADE, default=None)
+		tournamentId = models.ForeignKey(tournaments, on_delete=models.CASCADE, default=None, null=True, blank=True)
 		createdAt = models.DateTimeField(auto_now_add=True)
 		updatedAt = models.DateTimeField(auto_now=True)
