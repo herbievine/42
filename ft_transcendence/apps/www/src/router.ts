@@ -11,15 +11,15 @@ import { tournamentPlayRoute } from "./pages/game/tournament-play";
 import { tournamentStandingRoute } from "./pages/game/standing";
 
 const routeTree = rootRoute.addChildren([
-	indexRoute,
-	loginRoute,
-	callbackRoute,
-	profileRoute,
-	playRoute,
-	reviewRoute,
-	tournamentRoute,
-	tournamentPlayRoute,
-	tournamentStandingRoute,
+  indexRoute,
+  loginRoute,
+  callbackRoute,
+  profileRoute,
+  playRoute,
+  reviewRoute,
+  tournamentRoute,
+  tournamentPlayRoute,
+  tournamentStandingRoute,
 ]);
 
 export const router = createRouter({ routeTree, defaultPreload: "intent" });

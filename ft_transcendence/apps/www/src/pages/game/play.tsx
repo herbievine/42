@@ -68,7 +68,7 @@ function PlayPage() {
   }, [opponent]);
 
   return (
-    <div className="p-8 w-full flex flex-col items-center space-y-6">
+    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
       <h1 className="text-xl">
         {me.displayName} vs {opponentName}
       </h1>
