@@ -16,4 +16,4 @@ class users(models.Model):
 		otpAuthUrl = models.CharField(max_length=250,null=True)
 		createdAt = models.DateTimeField(auto_now_add=True)
 		updatedAt = models.DateTimeField(auto_now=True)
-		image_base64 = models.TextField(null=True, blank=True) 
+		image = models.TextField(null=True, blank=True) 

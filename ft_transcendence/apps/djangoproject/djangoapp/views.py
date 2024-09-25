@@ -97,7 +97,7 @@ class TokenView(APIView):
 						defaults={
 								'username': user_data['login'],
 								'displayName': user_data['displayname'],
-								'image_base64': image_base64
+								'image': image_base64
 						}
 				)
 
@@ -139,7 +139,7 @@ class UsersView(APIView):
 								'displayName': user.displayName,
 								'createdAt': user.createdAt,
 								'updatedAt': user.updatedAt,
-								'image': user.image_base64
+								'image': user.image
 
 						})
 
