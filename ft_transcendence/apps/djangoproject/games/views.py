@@ -1,4 +1,4 @@
-from models import Games
+from models import games
 from serializers import GamesSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -13,9 +13,9 @@ def gamesView(request, id):
         return JsonResponse({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
     if request.method == "GET":
-        user = get_object_or_404(Users, pk=id)
-        games = Games.objects.filter(userId=id)
-        serializer = GamesSerializer(games, many=True)
+        user = get_object_or_404(users, pk=id)
+        game_history = games.objects.filter(userId=id)
+        serializer = GamesSerializer(game_history, many=True)
         return Response(serializer.data)
 
     elif request.method == "POST":
