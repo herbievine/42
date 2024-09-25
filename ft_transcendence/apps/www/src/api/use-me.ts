@@ -33,6 +33,7 @@ async function getMe() {
       fortyTwoId: z.number(),
       displayName: z.string(),
       username: z.string(),
+      image: z.string().nullable(),
       createdAt: z.coerce.date(),
       updatedAt: z.coerce.date(),
     }),

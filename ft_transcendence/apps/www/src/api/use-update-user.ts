@@ -16,13 +16,11 @@ export function useUpdateUser() {
     }) => {
       const token = localStorage.getItem("token");
 
-      localStorage.setItem("image", data.image || "");
-
       return fetcher(
         `${import.meta.env.VITE_API_URL}/users/${id}`,
         z.object({
           displayName: z.string(),
-          // image: z.string().nullable(),
+          image: z.string().nullable(),
         }),
         {
           method: "PUT",
