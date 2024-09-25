@@ -4,7 +4,7 @@ import random
 import string
 
 def generate_unique_id():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=12))Create your models here.
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=12))
 
 class Games(models.Model):
 		id = models.AutoField(primary_key=True)
