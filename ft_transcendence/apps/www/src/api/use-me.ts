@@ -48,12 +48,12 @@ async function getMe() {
 
   return {
     ...data,
-    image: z
-      .string()
-      .startsWith("data:")
-      .nullable()
-      .catch(null)
-      .parse(localStorage.getItem("image")),
+    image: data.image ?? z
+			.string()
+			.startsWith("data:")
+			.nullable()
+			.catch(null)
+			.parse(localStorage.getItem("image")),
   };
 }
 

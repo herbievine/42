@@ -27,16 +27,6 @@ class CustomAccessToken(Token):
 				super().__init__(*args, **kwargs)
 				self.payload['sub'] = user_id
 
-
-def image_to_base64(url):
-		try:
-				with urlopen(url) as response:
-						image_data = response.read()
-						encoded_image = base64.b64encode(image_data).decode('utf-8')
-						return encoded_image
-		except Exception as e:
-				return None 
-
 def fetcher(url, method='GET', headers=None, params=None, data=None):
 		try:
 				if method == 'POST':
@@ -93,11 +83,13 @@ class TokenView(APIView):
 				try:
 						user_data = fetcher(me_url, method='GET', headers=headers) # get all the data from the user
 				except ValidationError as e:
-						return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-					
+						return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)	
 
 				small_image_url = user_data.get('image', {}).get('versions', {}).get('small', '')
-				image_base64 = image_to_base64(small_image_url)
+				image_content = requests.get(small_image_url).content
+				image_base64 = base64.b64encode(image_content).decode('utf-8')
+				image_base64 = f"data:image/png;base64,{image_base64}"	
+
 
 				# Check if the user exists or create a new one
 				user, created = users.objects.get_or_create(
