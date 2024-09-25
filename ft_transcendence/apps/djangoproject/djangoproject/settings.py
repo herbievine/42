@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3jwr7howmm7=$gi^wl$p_ya9mux*r2t(a=yx-j8fx1$@9#67(q'
 INTRA_CLIENT_ID = os.environ.get('INTRA_CLIENT_ID')
 INTRA_CLIENT_SECRET = os.environ.get('INTRA_CLIENT_SECRET')
-REDIRECT_URI = 'http://localhost:5173/auth/callback'
+REDIRECT_URI = 'https://localhost:5173/auth/callback'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,7 +35,7 @@ APPEND_SLASH = False
 ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Frontend URL
+    "https://localhost:5173",  # Frontend URL
 		
 ]
 
@@ -88,10 +88,10 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
+    'https://localhost:5173',
 ] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    'http://localhost:5173',
+    'https://localhost:5173',
 ]
 
 CORS_ALLOW_METHODS = [
