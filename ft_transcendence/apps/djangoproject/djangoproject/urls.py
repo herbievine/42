@@ -18,15 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from djangoapp.views import TokenView, UsersView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from games.views import gamesView
 
 
 urlpatterns = [
     path('api/admin', admin.site.urls),
+    path('api/users', include('users.urls')),
     path('api/users/', include('users.urls')),
     path('api/tournaments', include('tournaments.urls')),
     path('api/tournaments/', include('tournaments.urls')),
     path('api/games', include('djangoapp.urls')),
+    path('api/games/', include('djangoapp.urls')),
     path('api/auth/token', TokenView.as_view(), name='auth_token'),
     path('api/auth/me', UsersView.as_view(), name='auth_me'),
 ]
-

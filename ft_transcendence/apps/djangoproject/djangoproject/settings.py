@@ -79,12 +79,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djangoapp',
+    "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt',
-    "corsheaders",
+    'djangoapp',
     'users',
-		'tournaments',
+    'tournaments',
+    'games',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +108,6 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'https://localhost:8080',
 ]
-
 CORS_ALLOW_METHODS = [
     'GET',
     'POST',
