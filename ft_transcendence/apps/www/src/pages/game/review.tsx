@@ -42,7 +42,7 @@ function ReviewPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
-      <h1 className="w-full border-b !border-neutral-200 font-bold text-xl">
+      <h1 className="w-full border-b !border-neutral-200 font-semibold text-xl">
         Game review
       </h1>
       <div className="w-full flex flex-col space-y-2">
