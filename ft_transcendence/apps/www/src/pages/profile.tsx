@@ -1,6 +1,7 @@
 import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { queryClient, rootRoute } from "./__root";
 import { getUser } from "../api/get-user";
+import { useUpdateUser } from "../api/use-update-user";
 import { useDeleteUser } from "../api/use-delete-user";
 import { meOptions, useSuspenseMe } from "../api/use-me";
 import { useGames } from "../api/use-games";
@@ -13,8 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "../lib/cn";
 
 const formValuesSchema = z.object({
-  image: z.string(),
   displayName: z.string(),
+  image: z.string(),
 });
 
 type FormValues = z.infer<typeof formValuesSchema>;
@@ -46,16 +47,9 @@ function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const { me } = useSuspenseMe();
   const { games } = useGames(me.id);
+  const { mutateAsync: updateUser } = useUpdateUser();
   const { mutateAsync: deleteUser } = useDeleteUser();
-  const {
-    handleSubmit,
-    register,
-    clearErrors,
-    formState: { errors },
-    reset,
-    setValue,
-    watch,
-  } = useForm<FormValues>({
+  const { handleSubmit, register, setValue, watch } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
     mode: "onSubmit",
     reValidateMode: "onChange",
@@ -66,7 +60,12 @@ function ProfilePage() {
   });
 
   function onSubmit(values: FormValues) {
-    console.log(values);
+    updateUser({
+      id: me.id,
+      ...values,
+    });
+
+    setIsEditing(false);
   }
 
   return (
@@ -90,19 +89,27 @@ function ProfilePage() {
               !watch("image") && "border-3 border-dashed border-neutral-300",
             )}
           >
-            {watch("image") ? (
-              <img
-                src={watch("image")}
-                alt=""
-                className="w-40 h-40 rounded-lg"
-              />
+            {watch("image") !== "" ? (
+              <div className="relative w-40 h-40 rounded-lg group">
+                <div
+                  className="absolute z-10 items-center justify-center left-0 top-0 w-40 h-40 bg-black/50 hidden group-hover:flex rounded-md cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setValue("image", "");
+                  }}
+                >
+                  <span className="z-10 text-white">Remove</span>
+                </div>
+                <img src={watch("image")} className="w-40 h-40 rounded-lg" />
+              </div>
             ) : (
-              <span>Drag and drop an image</span>
+              <span>Upload an image</span>
             )}
             <input
               className="hidden"
               {...register("image")}
               type="file"
+              accept="image/*"
               onChange={async (e) => {
                 const file = e.target.files?.[0];
 
@@ -149,7 +156,7 @@ function ProfilePage() {
       ) : (
         <div className="flex space-x-6">
           {me?.image ? (
-            <img src="" alt="" className="w-40 h-40 rounded-lg" />
+            <img src={me.image} alt="" className="w-40 h-40 rounded-lg" />
           ) : (
             <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
               <span>No picture</span>

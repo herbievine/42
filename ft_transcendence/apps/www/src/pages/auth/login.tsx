@@ -39,13 +39,22 @@ function LoginPage() {
   }
 
   return (
-    <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
+    <div className="mx-auto max-w-xl px-8 py-6 flex flex-col space-y-12">
       <a
-        className="fs-6 fw-semibold text-secondary-emphasis text-decoration-none"
+        className="py-1 px-2 border border-neutral-300 rounded-md font-semibold"
         href={loginLink()}
       >
         Login with your 42 account
       </a>
+      <span className="text-justify text-xs text-neutral-500">
+        By logging in with OAuth 42, you agree to the collection and storage of
+        your OAuth 42 ID for authentication, your display name and username for
+        identification, your profile picture in Base64 format for display
+        purposes, as well as the timestamps for your account creation and last
+        update. You have the right to view, edit, or request the deletion of
+        your personal data in accordance with GDPR. By proceeding, you
+        acknowledge and accept these terms.
+      </span>
     </div>
   );
 }
