@@ -1,5 +1,10 @@
-from models import games
-from serializers import GamesSerializer
+from djangoapp.utils import getTokenFromContext
+from users.models import users
+from .serializers import GamesSerializer
+from .models import games
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,8 +24,8 @@ def gamesView(request, id):
         return Response(serializer.data)
 
     elif request.method == "POST":
-		if str(token_data['id']) != id:
-				return JsonResponse({"error": "Not authorized"}, status=status.HTTP_403_FORBIDDEN)
+        if str(token_data['id']) != id:
+            return JsonResponse({"error": "Not authorized"}, status=status.HTTP_403_FORBIDDEN)
         serializer = GamesSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

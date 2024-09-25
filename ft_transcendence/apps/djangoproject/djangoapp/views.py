@@ -1,19 +1,19 @@
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from users.serializers import UsersSerializer
 from rest_framework import status
-from django.conf import settings
-from .models import games
-from users.models import users
-import requests
 from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import AccessToken, Token
+from django.conf import settings
+from .utils import getTokenFromContext
+from users.models import users
+from users.serializers import UsersSerializer
+import requests
 import time
 from urllib.parse import urlencode
-from rest_framework.exceptions import AuthenticationFailed
-from .utils import getTokenFromContext
+from urllib.request import urlopen
 import base64
 from io import BytesIO
 from urllib.request import urlopen
