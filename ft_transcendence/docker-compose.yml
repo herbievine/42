@@ -11,6 +11,7 @@ services:
       - net
     volumes:
       - pgdata:/var/lib/postgresql/data
+
   # api:
   #   build:
   #     context: apps/api
@@ -20,6 +21,23 @@ services:
   #   restart: unless-stopped
   #   networks:
   #     - net
+
+  nginx:
+    env_file: .env
+    container_name: nginx
+    build:
+      context: ./apps/nginx
+      dockerfile: Dockerfile
+    ports:
+      - 5173:443
+      - 8080:443
+    restart: on-failure
+    networks:
+      - net
+    depends_on:
+      - www
+    #   - logstash
+
   www:
     build:
       context: apps/www
@@ -27,11 +45,16 @@ services:
     volumes:
       - ./apps/www:/app
       - /app/node_modules
-    ports:
-      - 5173:5173
+    # ports:
+    #   - 5173:5173
+    expose:
+      - 5173
     env_file:
       - apps/www/.env
     restart: unless-stopped
+    networks:
+      - net
+
   djangoapp:
     container_name: djangoapp
     build:
