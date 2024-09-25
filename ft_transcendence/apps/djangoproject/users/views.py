@@ -35,6 +35,7 @@ def get_user(request, id):
 				"id": user.id,
 				"displayName": user.displayName,
 				"username": user.username,
+				"image": user.image_base64, #  TODO: not working 
 		})
 
 @csrf_exempt

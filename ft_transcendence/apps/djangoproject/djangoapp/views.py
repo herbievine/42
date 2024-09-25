@@ -15,6 +15,9 @@ import time
 from urllib.parse import urlencode
 from rest_framework.exceptions import AuthenticationFailed
 from .utils import getTokenFromContext
+import base64
+from io import BytesIO
+from urllib.request import urlopen
 
 class CustomAccessToken(Token):
 		token_type = "access"
@@ -23,6 +26,16 @@ class CustomAccessToken(Token):
 		def __init__(self, user_id, *args, **kwargs):
 				super().__init__(*args, **kwargs)
 				self.payload['sub'] = user_id
+
+
+def image_to_base64(url):
+		try:
+				with urlopen(url) as response:
+						image_data = response.read()
+						encoded_image = base64.b64encode(image_data).decode('utf-8')
+						return encoded_image
+		except Exception as e:
+				return None 
 
 def fetcher(url, method='GET', headers=None, params=None, data=None):
 		try:
@@ -78,16 +91,21 @@ class TokenView(APIView):
 				headers = {'Authorization': f'Bearer {access_token}'}
 
 				try:
-						user_data = fetcher(me_url, method='GET', headers=headers)
+						user_data = fetcher(me_url, method='GET', headers=headers) # get all the data from the user
 				except ValidationError as e:
 						return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+					
+
+				small_image_url = user_data.get('image', {}).get('versions', {}).get('small', '')
+				image_base64 = image_to_base64(small_image_url)
 
 				# Check if the user exists or create a new one
 				user, created = users.objects.get_or_create(
 						fortyTwoId=user_data['id'],
 						defaults={
 								'username': user_data['login'],
-								'displayName': user_data['displayname']
+								'displayName': user_data['displayname'],
+								'image_base64': image_base64
 						}
 				)
 
@@ -95,6 +113,7 @@ class TokenView(APIView):
 				payload = {
 						'sub': str(user.id),
 						'exp': int(time.time()) + 60 * 60 * 24,  # Expire in 24 hours
+						'image': image_base64,
 				}
 
 				# Generate the base access token for the user
@@ -128,6 +147,8 @@ class UsersView(APIView):
 								'displayName': user.displayName,
 								'createdAt': user.createdAt,
 								'updatedAt': user.updatedAt,
+								'image': user.image_base64
+
 						})
 
 				except Exception as e:
