@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from users.serializers import UsersSerializer
 from rest_framework import status
 from django.conf import settings
-from .models import tournaments
 from .models import games
 from users.models import users
 import requests
