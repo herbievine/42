@@ -20,8 +20,6 @@ COPY . .
 
 RUN chmod +x /app/django.sh
 
-
-
 # Expose port
 EXPOSE 8000
 

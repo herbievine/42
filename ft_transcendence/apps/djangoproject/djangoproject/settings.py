@@ -13,6 +13,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+import environ
+
+# Initialize django-environ
+env = environ.Env(
+    DEBUG=(bool, False)  # Set DEBUG to False by default
+)
+
+# Reading .env file at the root
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,22 +31,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3jwr7howmm7=$gi^wl$p_ya9mux*r2t(a=yx-j8fx1$@9#67(q'
-INTRA_CLIENT_ID = os.environ.get('INTRA_CLIENT_ID')
-INTRA_CLIENT_SECRET = os.environ.get('INTRA_CLIENT_SECRET')
-REDIRECT_URI = 'https://localhost:5173/auth/callback'
+SECRET_KEY = env('SECRET_KEY')  # Fetches SECRET_KEY from the .env file
+
+# INTRA API configuration
+INTRA_CLIENT_ID = env('INTRA_CLIENT_ID')
+INTRA_CLIENT_SECRET = env('INTRA_CLIENT_SECRET')
+REDIRECT_URI = env('REDIRECT_URI', default='https://localhost:5173/auth/callback')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=False)  # Uses DEBUG variable from .env, defaults to False
+
 
 
 APPEND_SLASH = False
-ALLOWED_HOSTS = ['*']
 
-CORS_ALLOWED_ORIGINS = [
-    "https://localhost:5173",  # Frontend URL
-		
-]
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])  # Fetch allowed hosts
+
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[
+    'http://localhost:5173',  # Frontend URL
+])
 
 
 # Application definition
@@ -85,6 +97,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
+
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
@@ -126,17 +139,28 @@ WSGI_APPLICATION = 'djangoproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#    'default': {
+#       'ENGINE': os.environ.get('DB_DRIVER','django.db.backends.postgresql'),
+# 			'USER': os.environ.get('PG_USER','postgres'),
+# 			'PASSWORD':os.environ.get('PG_PASSWORD','postgres'),
+# 			'NAME': os.environ.get('PG_DB','postgres'),
+# 			'PORT': os.environ.get('PG_PORT','5432'),
+# 			'HOST': os.environ.get('PG_HOST','localhost'),
+#     }
+# }
+
+# Database
 DATABASES = {
-   'default': {
-      'ENGINE': os.environ.get('DB_DRIVER','django.db.backends.postgresql'),
-			'USER': os.environ.get('PG_USER','postgres'),
-			'PASSWORD':os.environ.get('PG_PASSWORD','postgres'),
-			'NAME': os.environ.get('PG_DB','postgres'),
-			'PORT': os.environ.get('PG_PORT','5432'),
-			'HOST': os.environ.get('PG_HOST','localhost'),
+    'default': {
+        'ENGINE': env('DB_DRIVER', default='django.db.backends.postgresql'),
+        'NAME': env('PG_DB'),
+        'USER': env('PG_USER'),
+        'PASSWORD': env('PG_PASSWORD'),
+        'HOST': env('PG_HOST', default='localhost'),
+        'PORT': env('PG_PORT', default='5432'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
