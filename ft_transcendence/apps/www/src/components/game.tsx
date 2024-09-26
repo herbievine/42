@@ -13,7 +13,7 @@ type Props = {
   acceleration: number;
   background: string;
   aiSpeed: number;
-  opponent: string;
+  opponent: "ai" | "local";
   onWin: (data: {
     playerScore: number;
     opponentScore: number;
@@ -254,7 +254,7 @@ export function Game({
       onWin({
         playerScore: scores.left,
         opponentScore: scores.right,
-        opponent: "ai",
+        opponent,
       });
       setPause(true);
       setScores({ left: 0, right: 0 });
