@@ -17,7 +17,7 @@ export function useUpdateUser() {
       const token = localStorage.getItem("token");
 
       return fetcher(
-        `${import.meta.env.VITE_API_URL}/users/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/users/${id}`,
         z.object({
           displayName: z.string(),
           image: z.string().nullable(),

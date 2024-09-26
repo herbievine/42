@@ -10,7 +10,7 @@ export function useStartTournament() {
       const token = localStorage.getItem("token");
 
       return fetcher(
-        `${import.meta.env.VITE_API_URL}/tournaments`,
+        `${import.meta.env.VITE_API_URL}/api/tournaments`,
         z.object({
           id: z.string(),
           status: z.enum(["pending", "completed"]),

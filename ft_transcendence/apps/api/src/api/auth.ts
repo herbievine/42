@@ -50,7 +50,7 @@ app.post("/token", async (c) => {
   }
 
   const baseUrl = "https://api.intra.42.fr";
-  const redirectUri = "https://localhost:5173/auth/callback";
+  const redirectUri = "https://localhost:8080/auth/callback";
 
   const searchParams = new URLSearchParams();
 

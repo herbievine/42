@@ -9,7 +9,7 @@ import { gameSchema } from "../schemas/game";
 
 async function getTournament(id: string) {
   return fetcher(
-    `${import.meta.env.VITE_API_URL}/tournaments/${id}`,
+    `${import.meta.env.VITE_API_URL}/api/tournaments/${id}`,
     z.object({
       id: z.string(),
       status: z.enum(["pending", "completed"]),

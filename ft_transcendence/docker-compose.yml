@@ -22,6 +22,20 @@ services:
   #   networks:
   #     - net
 
+  nginx:
+    env_file: .env
+    container_name: nginx
+    build:
+      context: ./apps/nginx
+      dockerfile: Dockerfile
+    ports:
+      - 8080:443
+    restart: on-failure
+    networks:
+      - net
+    depends_on:
+      - www
+
   www:
     build:
       context: apps/www
@@ -29,8 +43,10 @@ services:
     volumes:
       - ./apps/www:/app
       - /app/node_modules
-    ports:
-      - 5173:5173
+    # ports:
+    #   - 5173:5173
+    expose:
+      - 5173
     env_file:
       - .env
     restart: unless-stopped
@@ -44,12 +60,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    # expose:
+    #   - 8000
     env_file:
       - .env
     depends_on:
       - postgres
     networks:
       - net
+
 volumes:
   pgdata: {}
 

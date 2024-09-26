@@ -9,7 +9,7 @@ import { gameSchema } from "../schemas/game";
 
 async function getGames(userId: string) {
   return fetcher(
-    `${import.meta.env.VITE_API_URL}/users/${userId}/games`,
+    `${import.meta.env.VITE_API_URL}/api/users/${userId}/games`,
     z.array(gameSchema),
     {
       method: "GET",

@@ -7,7 +7,7 @@ import { fetcher } from "../lib/fetcher";
 import { gameSchema } from "../schemas/game";
 
 async function getGame(id: string) {
-  return fetcher(`${import.meta.env.VITE_API_URL}/games/${id}`, gameSchema, {
+  return fetcher(`${import.meta.env.VITE_API_URL}/api/games/${id}`, gameSchema, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

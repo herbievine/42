@@ -8,7 +8,7 @@ export function useDeleteUser() {
     mutationFn: async (id: string) => {
       const token = localStorage.getItem("token");
 
-      return fetcher(`${import.meta.env.VITE_API_URL}/users/${id}`, z.any(), {
+      return fetcher(`${import.meta.env.VITE_API_URL}/api/users/${id}`, z.any(), {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

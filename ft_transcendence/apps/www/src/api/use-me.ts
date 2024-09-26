@@ -8,7 +8,7 @@ import { fetcher } from "../lib/fetcher";
 
 async function getMe() {
   // return fetcher(
-  //   `${import.meta.env.VITE_API_URL}/auth/me`,
+  //   `${import.meta.env.VITE_API_URL}/api/auth/me`,
   //   z.object({
   //     id: z.string(),
   //     fortyTwoId: z.number(),
@@ -27,7 +27,7 @@ async function getMe() {
   // );
 
   const data = await fetcher(
-    `${import.meta.env.VITE_API_URL}/auth/me`,
+    `${import.meta.env.VITE_API_URL}/api/auth/me`,
     z.object({
       id: z.string(),
       fortyTwoId: z.number(),

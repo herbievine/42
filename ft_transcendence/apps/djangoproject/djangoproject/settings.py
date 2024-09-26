@@ -36,7 +36,7 @@ SECRET_KEY = env('SECRET_KEY')  # Fetches SECRET_KEY from the .env file
 # INTRA API configuration
 INTRA_CLIENT_ID = env('INTRA_CLIENT_ID')
 INTRA_CLIENT_SECRET = env('INTRA_CLIENT_SECRET')
-REDIRECT_URI = env('REDIRECT_URI', default='https://localhost:5173/auth/callback')
+REDIRECT_URI = env('REDIRECT_URI', default='https://localhost:8080/auth/callback')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=False)  # Uses DEBUG variable from .env, defaults to False
@@ -68,7 +68,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,  # Use Django's secret key
+    'SIGNING_KEY': SECRET_KEY,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
@@ -102,10 +102,10 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'https://localhost:5173',
+    'https://localhost:8080',
 ] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    'https://localhost:5173',
+    'https://localhost:8080',
 ]
 
 CORS_ALLOW_METHODS = [
@@ -135,21 +135,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangoproject.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# DATABASES = {
-#    'default': {
-#       'ENGINE': os.environ.get('DB_DRIVER','django.db.backends.postgresql'),
-# 			'USER': os.environ.get('PG_USER','postgres'),
-# 			'PASSWORD':os.environ.get('PG_PASSWORD','postgres'),
-# 			'NAME': os.environ.get('PG_DB','postgres'),
-# 			'PORT': os.environ.get('PG_PORT','5432'),
-# 			'HOST': os.environ.get('PG_HOST','localhost'),
-#     }
-# }
 
 # Database
 DATABASES = {
