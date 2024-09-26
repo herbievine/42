@@ -19,6 +19,7 @@ from django.urls import path, include
 from djangoapp.views import TokenView, UsersView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from games.views import gamesView
+#from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
 urlpatterns = [
@@ -31,4 +32,7 @@ urlpatterns = [
     path('api/games/', include('djangoapp.urls')),
     path('api/auth/token', TokenView.as_view(), name='auth_token'),
     path('api/auth/me', UsersView.as_view(), name='auth_me'),
+
+    # path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    # path("api/schema/swagger-ui/",SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
 ]
