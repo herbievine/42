@@ -17,6 +17,7 @@ from .utils import getTokenFromContext
 import base64
 from io import BytesIO
 from urllib.request import urlopen
+from datetime import datetime
 
 class CustomAccessToken(Token):
 		token_type = "access"
@@ -100,10 +101,13 @@ class TokenView(APIView):
 						}
 				)
 
+				last_logged_in = datetime.utcnow().isoformat() + "Z"
+
 				# Create the JWT with custom claims
 				payload = {
 						'sub': str(user.id),
 						'exp': int(time.time()) + 60 * 60 * 24,  # Expire in 24 hours
+						'lastLoggedIn': last_logged_in,
 						'image': image_base64,
 				}
 
@@ -129,6 +133,8 @@ class UsersView(APIView):
 
 						# Fetch the user object using the user_id from the token payload
 						user = users.objects.get(id=user_id)
+						
+						last_logged_in = datetime.utcnow().isoformat() + "Z"
 
 						# Return the user info as a response
 						return Response({
@@ -138,7 +144,9 @@ class UsersView(APIView):
 								'displayName': user.displayName,
 								'createdAt': user.createdAt,
 								'updatedAt': user.updatedAt,
-								'image': user.image
+								'image': user.image,
+								'lastLoggedIn': last_logged_in,
+
 
 						})
 

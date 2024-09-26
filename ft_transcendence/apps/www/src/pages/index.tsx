@@ -52,6 +52,7 @@ function IndexPage() {
     handleSubmit,
     register,
     clearErrors,
+    reset,
     setValue,
     formState: { errors },
   } = useForm<FormValues>({
