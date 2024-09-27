@@ -20,7 +20,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 # from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from authMe.views import TokenView, UsersView
-from users.views import usersView
+from users.views import usersView, friendsView
 from games.views import gamesView
 from tournaments.views import createTournament, getTournamentInfo, getTournament
 
@@ -32,7 +32,9 @@ urlpatterns = [
     path('api/tournaments/<str:id>/standing', getTournamentInfo, name='tournaments'),
     path('api/tournaments/<str:id>', getTournament, name='getTournament'),
     path('api/games', gamesView, name='save_game'),
-    path('api/user/<str:id>/games', gamesView, name='game_history'),
+    path('api/users/<str:id>/games', gamesView, name='game_history'),
+    path('api/users/<str:id>/friends', friendsView, name='get_friends_list'),
+    path('api/users/friends/<str:displayName>', friendsView, name='add_friends'),
     path('api/auth/token', TokenView.as_view(), name='auth_token'),
     path('api/auth/me', UsersView.as_view(), name='auth_me'),
 
