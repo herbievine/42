@@ -9,7 +9,7 @@ import { meOptions, useSuspenseMe } from "../api/use-me";
 import { useGames } from "../api/use-games";
 import { GameRow } from "../components/game-row";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -72,18 +72,41 @@ function ProfilePage() {
     setIsEditing(false);
   }
 
+  const [online, setOnline] = useState(false);
+
+  useEffect(() => {
+    if (me.lastLoggedIn) {
+      if (dayjs().diff(dayjs(me.lastLoggedIn), "minutes") > 1) {
+        setOnline(false);
+      } else if (dayjs().diff(dayjs(me.lastLoggedIn), "minutes") < 1) {
+        setOnline(true);
+      }
+    }
+  });
+
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
-      <div className="w-full flex justify-between border-b border-neutral-200">
-        <h1 className="font-semibold text-xl">Profile</h1>
-        <button
-          type="button"
-          onClick={async () => {
-            setIsEditing((prev) => !prev);
-          }}
-        >
-          {isEditing ? "Cancel" : "Edit"}
-        </button>
+    <div className="mx-auto max-w-5xl px-6 py-6 flex flex-col space-y-12">
+      <div className="">
+        <div className="w-full flex justify-between border-b border-neutral-200">
+          <h1 className="font-semibold text-xl">Profile</h1>
+          <button
+            type="button"
+            onClick={async () => {
+              setIsEditing((prev) => !prev);
+            }}
+          >
+            {isEditing ? "Cancel" : "Edit"}
+          </button>
+        </div>
+        <div className="flex items-center justify-end gap-2 pt-2">
+          <p className="text-sm">{online ? "Online" : "Offline"}</p>
+          <span
+            className={cn(
+              "px-2 py-2 rounded-full",
+              online ? "bg-green-400" : "bg-red-400"
+            )}
+          ></span>
+        </div>
       </div>
       {isEditing ? (
         <form className="flex space-x-6" onSubmit={handleSubmit(onSubmit)}>
