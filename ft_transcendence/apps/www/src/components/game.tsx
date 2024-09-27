@@ -317,21 +317,17 @@ export function Game({
       }
     };
 
-    const gameLoop = setInterval(() => {
+    const gameLoop = requestAnimationFrame(() => {
       updateBall();
       updatePlayerPaddle();
       draw();
-      if (ball.x === CANVAS_WIDTH / 2 && ball.y === CANVAS_HEIGHT / 2) {
-        setBallReset(false);
-        console.log("ball reset");
-      }
-    }, 1000 / 60); // 60 FPS
+    });
 
     window.addEventListener("keydown", keyDownHandler);
     window.addEventListener("keyup", keyUpHandler);
 
     return () => {
-      clearInterval(gameLoop);
+      cancelAnimationFrame(gameLoop);
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
     };

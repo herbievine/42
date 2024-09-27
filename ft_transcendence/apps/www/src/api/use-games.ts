@@ -6,9 +6,10 @@ import {
 import { z } from "zod";
 import { fetcher } from "../lib/fetcher";
 import { gameSchema } from "../schemas/game";
+import dayjs from "dayjs";
 
 async function getGames(userId: string) {
-  return fetcher(
+  const data = fetcher(
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/games`,
     z.array(gameSchema),
     {
@@ -17,7 +18,11 @@ async function getGames(userId: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    }
+    },
+  );
+
+  return data.sort((a, b) =>
+    dayjs(a.createdAt).isAfter(dayjs(b.createdAt)) ? -1 : 1,
   );
 }
 
