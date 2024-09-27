@@ -1,20 +1,20 @@
-from djangoapp.utils import getTokenFromContext
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from .models import users
-import json
 from django.utils.html import escape
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as AuthUser
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
+from auth.utils import getTokenFromContext
+from .models import users
 from .serializers import UsersSerializer
+import json
 
 @csrf_exempt
 @require_http_methods(["GET", "PUT", "DELETE"])
-def user(request, id):
+def usersView(request, id):
 	if request.method == "GET":
 		return get_user(request, id)
 	elif request.method == "PUT":
@@ -35,7 +35,7 @@ def get_user(request, id):
     # Return the serialized data as a JSON response
     return JsonResponse(serializer.data)
 
-@csrf_exempt
+# @csrf_exempt
 @require_http_methods(["PUT"])
 def update_user(request, id):
 	try:
@@ -67,7 +67,7 @@ def update_user(request, id):
 	except json.JSONDecodeError:
 		return JsonResponse({"error": "Invalid JSON"}, status=400)
 
-@csrf_exempt
+# @csrf_exempt
 @require_http_methods(["DELETE"])
 def delete_user(request, id):
 		try:
@@ -82,3 +82,11 @@ def delete_user(request, id):
 		user.delete()
 
 		return JsonResponse({"success": True})
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+def user(request, id):
+	if request.method == "GET":
+		return get_friends_list(request, id)
+	elif request.method == "POST":
+		return add_friends(request, id)

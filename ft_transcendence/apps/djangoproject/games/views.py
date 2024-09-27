@@ -1,7 +1,3 @@
-from djangoapp.utils import getTokenFromContext
-from users.models import users
-from .serializers import GamesSerializer, SaveGameSerializer
-from .models import games
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -10,6 +6,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.renderers import JSONRenderer
+from authMe.utils import getTokenFromContext
+from users.models import users
+from .serializers import GamesSerializer, SaveGameSerializer
+from .models import games
 import json
 
 @csrf_exempt

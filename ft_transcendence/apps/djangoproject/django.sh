@@ -8,7 +8,7 @@ done
 echo "Postgres is up - executing command"
 
 echo "Creating Migrations..."
-python manage.py makemigrations djangoapp users games tournaments
+python manage.py makemigrations authMe users games tournaments
 echo ====================================
 
 echo "Starting Migrations..."

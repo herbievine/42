@@ -19,7 +19,7 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 # from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from djangoapp.views import TokenView, UsersView
+from authMe.views import TokenView, UsersView
 from users.views import usersView
 from games.views import gamesView
 from tournaments.views import createTournament, getTournamentInfo, getTournament

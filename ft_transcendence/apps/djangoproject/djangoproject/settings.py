@@ -82,7 +82,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt',
-    'djangoapp',
+    'authMe',
     'users',
     'tournaments',
     'games',
