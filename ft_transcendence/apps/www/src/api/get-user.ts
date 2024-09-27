@@ -18,6 +18,7 @@ export async function getUser() {
         username: z.string(),
         createdAt: z.coerce.date(),
         updatedAt: z.coerce.date(),
+				lastLoggedIn: z.coerce.date(),
       }),
       {
         method: "GET",

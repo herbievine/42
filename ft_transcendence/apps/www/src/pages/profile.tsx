@@ -1,8 +1,10 @@
 import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { queryClient, rootRoute } from "./__root";
 import { getUser } from "../api/get-user";
+import { useFriends } from "../api/get-friends";
 import { useUpdateUser } from "../api/use-update-user";
 import { useDeleteUser } from "../api/use-delete-user";
+import { useUpdateFriends } from "../api/use-update-friends";
 import { meOptions, useSuspenseMe } from "../api/use-me";
 import { useGames } from "../api/use-games";
 import { GameRow } from "../components/game-row";
@@ -46,8 +48,10 @@ function ProfilePage() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const { me } = useSuspenseMe();
+  const { friends } = useFriends(me.id);
   const { games } = useGames(me.id);
   const { mutateAsync: updateUser } = useUpdateUser();
+  const { mutateAsync: updateFriends } = useUpdateFriends();
   const { mutateAsync: deleteUser } = useDeleteUser();
   const { handleSubmit, register, setValue, watch } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
@@ -86,7 +90,7 @@ function ProfilePage() {
           <label
             className={cn(
               "w-40 h-40 flex items-center justify-center text-center rounded-lg",
-              !watch("image") && "border-3 border-dashed border-neutral-300",
+              !watch("image") && "border-3 border-dashed border-neutral-300"
             )}
           >
             {watch("image") !== "" ? (
@@ -128,7 +132,7 @@ function ProfilePage() {
                     };
 
                     reader.onerror = reject;
-                  },
+                  }
                 );
 
                 if (base64) {
@@ -192,6 +196,47 @@ function ProfilePage() {
           </div>
         </div>
       )}
+      <div className="w-full flex justify-between border-b border-neutral-200">
+        <h1 className="font-semibold text-xl">Friends</h1>
+        <input
+          type="text"
+          placeholder="name or username..."
+          className=" focus:text-black ring-0 focus:ring-0 focus:outline-none w-40 "
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              const value = e.currentTarget.value;
+              if (value) {
+                updateFriends({
+                  id: me.id,
+                  displayName: value,
+                });
+              }
+              e.currentTarget.value = "";
+            }
+          }}
+        />
+      </div>
+      <div>
+        {friends?.map((friend: any) => (
+          <div
+            key={friend.userId}
+            className="flex items-center justify-between"
+          >
+            <div className="flex items-center">
+              {friend.image ? (
+                <img
+                  src={friend.image}
+                  alt=""
+                  className="w-10 h-10 rounded-md"
+                />
+              ) : (
+                <div className="w-10 h-10 bg-neutral-300 rounded-md"></div>
+              )}
+              <span className="ml-2">{friend.displayName}</span>
+            </div>
+          </div>
+        ))}
+      </div>
       <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
         Recent games
       </h2>
