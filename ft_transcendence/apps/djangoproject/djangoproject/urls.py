@@ -16,20 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from djangoapp.views import TokenView, UsersView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from games.views import gamesView
 # from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+from djangoapp.views import TokenView, UsersView
+from users.views import usersView
+from games.views import gamesView
+from tournaments.views import createTournament, getTournamentInfo, getTournament
 
 
 urlpatterns = [
     path('api/admin', admin.site.urls),
-    path('api/users', include('users.urls')),
-    path('api/users/', include('users.urls')),
-    path('api/tournaments', include('tournaments.urls')),
-    path('api/tournaments/', include('tournaments.urls')),
-    path('api/games', include('djangoapp.urls')),
-    path('api/games/', include('djangoapp.urls')),
+    path('api/users/<str:id>', usersView, name='user'),
+    path('api/tournaments', createTournament, name='createTournaments'),
+    path('api/tournaments/<str:id>/standing', getTournamentInfo, name='tournaments'),
+    path('api/tournaments/<str:id>', getTournament, name='getTournament'),
+    path('api/games', gamesView, name='save_game'),
+    path('api/user/<str:id>/games', gamesView, name='game_history'),
     path('api/auth/token', TokenView.as_view(), name='auth_token'),
     path('api/auth/me', UsersView.as_view(), name='auth_me'),
 
