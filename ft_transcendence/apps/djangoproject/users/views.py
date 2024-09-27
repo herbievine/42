@@ -24,16 +24,16 @@ def usersView(request, id):
 
 @require_http_methods(["GET"])
 def get_user(request, id):
-    try:
-        token_data = getTokenFromContext(request)
-    except AuthenticationFailed as e:
-        return JsonResponse({"error": str(e)}, status=401)
-    # Use get_object_or_404 to automatically return 404 if the user is not found
-    user = get_object_or_404(users, pk=id)
-    # Serialize the user objectserializer
-    serializer = UsersSerializer(user)
-    # Return the serialized data as a JSON response
-    return JsonResponse(serializer.data)
+		try:
+				token_data = getTokenFromContext(request)
+		except AuthenticationFailed as e:
+				return JsonResponse({"error": str(e)}, status=401)
+		# Use get_object_or_404 to automatically return 404 if the user is not found
+		user = get_object_or_404(users, pk=id)
+		# Serialize the user objectserializer
+		serializer = UsersSerializer(user)
+		# Return the serialized data as a JSON response
+		return JsonResponse(serializer.data)
 
 @csrf_exempt
 @require_http_methods(["PUT"])
@@ -94,26 +94,34 @@ def friendsView(request, id = '', displayName = '' ):
 @csrf_exempt
 @api_view(["GET"])
 def get_friends_list(request, id):
-    try:
-        token_data = getTokenFromContext(request)
-    except AuthenticationFailed as e:
-        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		print("id: ", id)
+		try:
+				token_data = getTokenFromContext(request)
+		except AuthenticationFailed as e:
+				return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
-    user = get_object_or_404(users, pk=id)
-    serializer = FriendsUserSerializer(user.friends, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+		user = get_object_or_404(users, pk=id)
+		print("userId: ", user.id, " & displayName: ", user.displayName)
+		serializer = FriendsUserSerializer(user.friends, many=True)
+		print("friends: ", serializer.data)
+		return Response(serializer.data, status=status.HTTP_200_OK)
 
 @csrf_exempt
 @api_view(["POST"])
 def add_friends(request, displayName):
-    try:
-        token_data = getTokenFromContext(request)
-    except AuthenticationFailed as e:
-        return JsonResponse({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		try:
+				token_data = getTokenFromContext(request)
+		except AuthenticationFailed as e:
+				return JsonResponse({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		print("displayName: ", displayName)
 
-    user = get_object_or_404(users, pk=token_data['id'])
-    print("userId: ", user.id, " & displayName: ", user.displayName, " want to add ", displayName)
-    friend = get_object_or_404(users, displayName=displayName)
-    print("friendId: ", friend.id, " & displayName: ", friend.displayName)
-    user.friends.add(friend)
-    return Response({"success": True}, status=status.HTTP_201_CREATED)
+		user = get_object_or_404(users, pk=token_data['id'])
+		print("userId: ", user.id, " & displayName: ", user.displayName, " want to add ", displayName)
+		friend = get_object_or_404(users, displayName=displayName)
+		# if user == friend:
+		# 		return Response({"error": "You can't add yourself"}, status=status.HTTP_400_BAD) TODO: uncomment when finished testing
+		if friend in user.friends.all():
+				return Response({"error": "Friend already added"}, status=status.HTTP_400_BAD_REQUEST)
+		print("friendId: ", friend.id, " & displayName: ", friend.displayName)
+		user.friends.add(friend)
+		return Response({"success": True}, status=status.HTTP_201_CREATED)

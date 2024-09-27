@@ -24,7 +24,7 @@ async function getFriends(userId: string) {
 	return data
 }
 
-export function profileOptions(userId: string) {
+export function friendOptions(userId: string) {
 	return queryOptions({
 		queryKey: ["firends", userId],
 		queryFn: () => getFriends(userId),
@@ -33,7 +33,7 @@ export function profileOptions(userId: string) {
 }
 
 export function useFriends(userId: string) {
-	const { data, ...query } = useQuery(profileOptions(userId));
+	const { data, ...query } = useQuery(friendOptions(userId));
 
 	return {
 		friends: data,
@@ -41,8 +41,8 @@ export function useFriends(userId: string) {
 	};
 }
 
-export function useSuspenseProfile(userId: string) {
-	const { data, ...query } = useSuspenseQuery(profileOptions(userId));
+export function useSuspenseFriends(userId: string) {
+	const { data, ...query } = useSuspenseQuery(friendOptions(userId));
 
 	return {
 		friends: data,

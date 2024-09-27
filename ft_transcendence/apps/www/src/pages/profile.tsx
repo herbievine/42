@@ -1,10 +1,17 @@
-import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
+import {
+  createRoute,
+  Link,
+  redirect,
+  useNavigate,
+} from "@tanstack/react-router";
 import { queryClient, rootRoute } from "./__root";
 import { getUser } from "../api/get-user";
 import { useFriends } from "../api/get-friends";
 import { useUpdateUser } from "../api/use-update-user";
 import { useDeleteUser } from "../api/use-delete-user";
 import { useUpdateFriends } from "../api/use-update-friends";
+import { useDeleteFriends } from "../api/use-delete-friends";
+import { friendOptions } from "../api/get-friends";
 import { meOptions, useSuspenseMe } from "../api/use-me";
 import { useGames } from "../api/use-games";
 import { GameRow } from "../components/game-row";
@@ -53,6 +60,7 @@ function ProfilePage() {
   const { mutateAsync: updateUser } = useUpdateUser();
   const { mutateAsync: updateFriends } = useUpdateFriends();
   const { mutateAsync: deleteUser } = useDeleteUser();
+  const { mutateAsync: deleteFriends } = useDeleteFriends();
   const { handleSubmit, register, setValue, watch } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
     mode: "onSubmit",
@@ -235,29 +243,40 @@ function ProfilePage() {
                 });
               }
               e.currentTarget.value = "";
+              queryClient.invalidateQueries(friendOptions(me.id));
             }
           }}
         />
       </div>
-      <div>
+      <div className="grid grid-cols-4 gap-4 justify-items-start ">
         {friends?.map((friend: any) => (
-          <div
-            key={friend.userId}
-            className="flex items-center justify-between"
+          <Link
+            className="flex items-start justify-start flex-row w-56 gap-2"
+            to={`/profile/${friend.id}`}
+            key={friend.id}
           >
-            <div className="flex items-center">
-              {friend.image ? (
-                <img
-                  src={friend.image}
-                  alt=""
-                  className="w-10 h-10 rounded-md"
-                />
-              ) : (
-                <div className="w-10 h-10 bg-neutral-300 rounded-md"></div>
-              )}
-              <span className="ml-2">{friend.displayName}</span>
+            {friend.image ? (
+              <img src={friend.image} alt="" className="w-20 h-20 rounded-md" />
+            ) : (
+              <div className="w-20 h-20 bg-neutral-300 rounded-md"></div>
+            )}
+            <div className="flex flex-col justify-start items-start text-start text-sm">
+              <span className="text-sm text-start">{friend.displayName}</span>
+              <button
+                type="button"
+                className="text-sm text-start hover:underline"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  await deleteFriends(friend.id).then(() => {
+                    queryClient.invalidateQueries(friendOptions(me.id));
+                  });
+                }}
+              >
+                Remove
+              </button>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
@@ -265,7 +284,7 @@ function ProfilePage() {
       </h2>
       <div>
         <h1 className="mx-auto pt-5">Profile</h1>
-        <pre>{JSON.stringify({ ...me, games }, null, 2)}</pre>
+        <pre>{JSON.stringify({ ...me, games, ...friends }, null, 2)}</pre>
         <div className="d-flex gap-3">
           <button
             type="button"

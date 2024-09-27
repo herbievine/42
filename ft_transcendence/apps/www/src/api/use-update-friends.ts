@@ -19,7 +19,7 @@ export function useUpdateFriends() {
 			const token = localStorage.getItem("token");
 
 			return fetcher(
-				`${import.meta.env.VITE_API_URL}/api/users/${id}/friends/${displayName}`,
+				`${import.meta.env.VITE_API_URL}/api/users/friends/${displayName}`,
 				z.object({
 					displayName: z.string(),
 					id: z.string(),

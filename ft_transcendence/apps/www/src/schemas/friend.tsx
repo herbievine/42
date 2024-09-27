@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const friendSchema = z.object({
-  userId: z.string(),
+  id: z.string(),
   displayName: z.string(),
   image: z.string().nullable(),
 });
