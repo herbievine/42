@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import users
-from djangoapp.models import tournaments
+from tournaments.models import tournaments
 import random
 import string
 

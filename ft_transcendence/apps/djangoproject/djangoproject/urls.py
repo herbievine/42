@@ -19,7 +19,7 @@ from django.urls import path, include
 from djangoapp.views import TokenView, UsersView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from games.views import gamesView
-#from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+# from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
 urlpatterns = [

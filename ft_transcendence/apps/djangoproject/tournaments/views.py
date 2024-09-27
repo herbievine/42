@@ -2,15 +2,15 @@ from django.shortcuts import render
 from djangoapp.utils import getTokenFromContext
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from users.models import users
-import json
-from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
+from users.models import users
+from games.models import games
 from .models import tournaments
-from djangoapp.models import games # TODO: change to import from models games
+import json
 import collections
 
 @csrf_exempt
