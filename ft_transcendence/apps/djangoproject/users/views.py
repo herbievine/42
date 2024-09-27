@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import AuthenticationFailed
 from authMe.utils import getTokenFromContext
 from .models import users
-from .serializers import UsersSerializer
+from .serializers import UsersSerializer, FriendsUserSerializer
 import json
 
 @csrf_exempt
@@ -89,22 +89,22 @@ def friendsView(request, id = '', displayName = '' ):
 	if request.method == "GET" and id:
 		return get_friends_list(request, id)
 	elif request.method == "POST" and displayName:
-		return add_friends(request, id)
+		return add_friends(request, displayName)
 
-@require_http_methods(["GET"])
+@csrf_exempt
+@api_view(["GET"])
 def get_friends_list(request, id):
     try:
         token_data = getTokenFromContext(request)
     except AuthenticationFailed as e:
-        return JsonResponse({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
     user = get_object_or_404(users, pk=id)
-    friends = user.friends 
-    serializer = FriendsUserSerializer(friends, many=True)
+    serializer = FriendsUserSerializer(user.friends, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@api_view(["POST"])
 def add_friends(request, displayName):
     try:
         token_data = getTokenFromContext(request)
@@ -112,6 +112,8 @@ def add_friends(request, displayName):
         return JsonResponse({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
     user = get_object_or_404(users, pk=token_data['id'])
+    print("userId: ", user.id, " & displayName: ", user.displayName, " want to add ", displayName)
     friend = get_object_or_404(users, displayName=displayName)
+    print("friendId: ", friend.id, " & displayName: ", friend.displayName)
     user.friends.add(friend)
     return Response({"success": True}, status=status.HTTP_201_CREATED)
