@@ -10,7 +10,7 @@ export async function getUser() {
 
   try {
     const user = await fetcher(
-      `${import.meta.env.VITE_API_URL}/auth/me`,
+      `${import.meta.env.VITE_API_URL}/api/auth/me`,
       z.object({
         id: z.string(),
         fortyTwoId: z.number(),
@@ -18,6 +18,7 @@ export async function getUser() {
         username: z.string(),
         createdAt: z.coerce.date(),
         updatedAt: z.coerce.date(),
+				// lastLoggedIn: z.coerce.date(),
       }),
       {
         method: "GET",

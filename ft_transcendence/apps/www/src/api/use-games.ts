@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 
 async function getGames(userId: string) {
   const data = await fetcher(
-    `${import.meta.env.VITE_API_URL}/users/${userId}/games`,
+    `${import.meta.env.VITE_API_URL}/api/users/${userId}/games`,
     z.array(gameSchema),
     {
       method: "GET",

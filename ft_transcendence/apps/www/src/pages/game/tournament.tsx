@@ -78,8 +78,8 @@ function TournamentPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col items-center space-y-12">
-      <h1 className="w-full border-b !border-neutral-200 font-semibold text-xl">
+    <div className="container py-4 d-flex flex-column align-items-center gap-4">
+      <h1 className="w-100 border-bottom border-secondary fw-semibold fs-4">
         Start a tournament
       </h1>
       <form

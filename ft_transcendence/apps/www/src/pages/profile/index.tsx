@@ -1,20 +1,23 @@
-import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
-import { queryClient, rootRoute } from "./__root";
-import { getUser } from "../api/get-user";
-import { useUpdateUser } from "../api/use-update-user";
-import { useDeleteUser } from "../api/use-delete-user";
-import { meOptions, useSuspenseMe } from "../api/use-me";
-import { useGames } from "../api/use-games";
-import { GameRow } from "../components/game-row";
+import { createRoute, redirect, useNavigate, Link } from "@tanstack/react-router";
+import { queryClient, rootRoute } from "../__root";
+import { getUser } from "../../api/get-user";
+import { useFriends } from "../../api/get-friends";
+import { useUpdateUser } from "../../api/use-update-user";
+import { useDeleteUser } from "../../api/use-delete-user";
+import { useAddFriend } from "../../api/use-add-friend";
+import { useDeleteFriend } from "../../api/use-delete-friend";
+import { meOptions, useSuspenseMe } from "../../api/use-me";
+import { useGames } from "../../api/use-games";
+import { GameRow } from "../../components/game-row";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "../lib/cn";
+import { cn } from "../../lib/cn";
 
 const formValuesSchema = z.object({
-  displayName: z.string(),
+  displayName: z.string().min(3).max(32),
   image: z.string(),
 });
 
@@ -46,9 +49,12 @@ function ProfilePage() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const { me } = useSuspenseMe();
-  const { games } = useGames(me.id);
+  const { friends } = useFriends(me.username);
+  const { games } = useGames(me.username);
   const { mutateAsync: updateUser } = useUpdateUser();
   const { mutateAsync: deleteUser } = useDeleteUser();
+  const { mutateAsync: addFriend } = useAddFriend();
+  const { mutateAsync: deleteFriend } = useDeleteFriend();
   const { handleSubmit, register, setValue, watch } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
     mode: "onSubmit",
@@ -68,25 +74,35 @@ function ProfilePage() {
     setIsEditing(false);
   }
 
+  const online = useMemo(() => {
+    if (me.updatedAt) {
+      return dayjs().isBefore(dayjs(me.updatedAt).add(1, 'minute'))
+    }
+
+    return false
+  }, [me.updatedAt]);
+
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
-      <div className="w-full flex justify-between border-b border-neutral-200">
-        <h1 className="font-semibold text-xl">Profile</h1>
-        <button
-          type="button"
-          onClick={async () => {
-            setIsEditing((prev) => !prev);
-          }}
-        >
-          {isEditing ? "Cancel" : "Edit"}
-        </button>
+    <div className="mx-auto max-w-5xl px-6 py-6 flex flex-col space-y-12">
+      <div className="">
+        <div className="w-full flex justify-between border-b border-neutral-200">
+          <h1 className="font-semibold text-xl">Profile</h1>
+          <button
+            type="button"
+            onClick={async () => {
+              setIsEditing((prev) => !prev);
+            }}
+          >
+            {isEditing ? "Cancel" : "Edit"}
+          </button>
+        </div>
       </div>
       {isEditing ? (
         <form className="flex space-x-6" onSubmit={handleSubmit(onSubmit)}>
           <label
             className={cn(
               "w-40 h-40 flex items-center justify-center text-center rounded-lg",
-              !watch("image") && "border-3 border-dashed border-neutral-300",
+              !watch("image") && "border-3 border-dashed border-neutral-300"
             )}
           >
             {watch("image") !== "" ? (
@@ -128,7 +144,7 @@ function ProfilePage() {
                     };
 
                     reader.onerror = reject;
-                  },
+                  }
                 );
 
                 if (base64) {
@@ -168,6 +184,9 @@ function ProfilePage() {
               <span className="font-semibold">
                 Username: <code className="">{me.username}</code>
               </span>
+              <span className="font-semibold">
+                Status: <code className="">{online ? "online" : "offline"}</code>
+              </span>
             </div>
             <div className="flex flex-col items-start">
               <span className="font-semibold">
@@ -192,6 +211,53 @@ function ProfilePage() {
           </div>
         </div>
       )}
+      <div className="w-full flex justify-between border-b border-neutral-200">
+        <h2 className="font-semibold text-xl">Friends</h2>
+        <input
+          type="text"
+          placeholder="name or username..."
+          className=" focus:text-black ring-0 focus:ring-0 focus:outline-none w-40 "
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              const value = e.currentTarget.value;
+              if (value) {
+                addFriend(value);
+              }
+              e.currentTarget.value = "";
+            }
+          }}
+        />
+      </div>
+      <div>
+        {friends?.map((friend) => (
+          <Link
+            key={friend.id}
+            to={`/profile/${friend.username}`}
+            className="flex items-start justify-start flex-row w-56 gap-2"
+          >
+            {friend.image ? (
+              <img src={friend.image} alt="" className="w-20 h-20 rounded-md" />
+            ) : (
+              <div className="w-20 h-20 bg-neutral-300 rounded-md"></div>
+            )}
+            <div className="flex flex-col justify-start items-start text-start text-sm">
+              <span className="text-sm text-start">{friend.displayName}</span>
+              <button
+                type="button"
+                className="text-sm text-start hover:underline"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  
+                  deleteFriend(friend.username)
+                }}
+              >
+                Remove
+              </button>
+            </div>
+          </Link>
+        ))}
+      </div>
       <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
         Recent games
       </h2>

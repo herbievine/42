@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	CONSTRAINT "users_forty_two_id_unique" UNIQUE("forty_two_id"),
 	CONSTRAINT "users_username_unique" UNIQUE("username")
 );
+CREATE ROLE postgres WITH LOGIN SUPERUSER PASSWORD 'password'
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "games" ADD CONSTRAINT "games_winner_id_users_id_fk" FOREIGN KEY ("winner_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;

@@ -11,7 +11,7 @@ export function TournamentGames() {
 
   const gameIndex = useMemo(
     () => tournament?.games.findIndex((game) => game.id === gameId) as number,
-    [tournament, gameId],
+    [tournament, gameId]
   );
 
   return (
@@ -19,13 +19,14 @@ export function TournamentGames() {
       <div className="w-full flex flex-col space-y-6">
         {tournament?.games.map((game, i) => (
           <div
+            key={game.id}
             className={cn(
               "px-6 py-4 flex flex-col border rounded",
               gameIndex > i
                 ? "!border-green-700 bg-green-700/10"
                 : game.id === gameId
                   ? "!border-amber-700 bg-amber-700/10"
-                  : "border-neutral-300",
+                  : "border-neutral-300"
             )}
           >
             <span className="font-bold">

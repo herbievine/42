@@ -15,7 +15,7 @@ export const callbackRoute = createRoute({
       throw new Error("No code found");
     }
 
-    const url = new URL(`${import.meta.env.VITE_API_URL}/auth/token`);
+    const url = new URL(`${import.meta.env.VITE_API_URL}/api/auth/token`);
 
     url.searchParams.append("code", code);
     url.searchParams.append("state", state!);
@@ -27,7 +27,10 @@ export const callbackRoute = createRoute({
       }),
       {
         method: "POST",
-      },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     localStorage.setItem("token", jwt);

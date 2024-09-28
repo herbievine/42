@@ -16,7 +16,7 @@ const playSearchSchema = z.object({
   speed: z.number().min(1).max(5),
   aiSpeed: z.number().min(1).max(5),
   acceleration: z.number().min(1).max(5),
-  opponent: z.string().refine((s) => s as "ai" | "local" | (string & {})),
+  opponent: z.enum(["ai", "local"]),
   background: z.string().regex(/^#[0-9A-Fa-f]{6}$/g),
 });
 
@@ -68,24 +68,18 @@ function PlayPage() {
   }, [opponent]);
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
-      <h1 className="text-xl">
-        {me.displayName} vs {opponentName}
+    <div className="mx-auto max-w-5xl px-4 py-3 d-flex flex-column gap-4">
+      <h1 className="h5">
+        {me.displayName} vs {opponentName}{" "}
       </h1>
-      <div className="flex space-x-12">
-        <Game
-          {...search}
-          opponent={opponent}
-          onWin={async (data) => {
-            const { id } = await saveGame(data);
-
-            navigate({
-              to: "/review/$id",
-              params: { id },
-            });
-          }}
-        />
-      </div>
+      <Game
+        {...search}
+        opponent={opponent}
+        onWin={async (data) => {
+          const { id } = await saveGame(data);
+          navigate({ to: "/review/$id", params: { id } });
+        }}
+      />
     </div>
   );
 }

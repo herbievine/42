@@ -1,6 +1,6 @@
 import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { queryClient, rootRoute } from "./__root";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getUser } from "../api/get-user";
@@ -11,7 +11,10 @@ const formValuesSchema = z.object({
   speed: z.string().min(1).max(5).optional().default("1"),
   aiSpeed: z.string().min(1).max(5).optional().default("1"),
   acceleration: z.string().min(1).max(5).optional().default("1"),
-  opponent: z.string().optional().default("ai"),
+  opponent: z
+    .union([z.literal("ai"), z.literal("local")])
+    .optional()
+    .default("ai"),
   background: z
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/g)
@@ -49,8 +52,9 @@ function IndexPage() {
     handleSubmit,
     register,
     clearErrors,
-    formState: { errors },
     reset,
+    setValue,
+    formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
     mode: "onSubmit",
@@ -60,9 +64,10 @@ function IndexPage() {
       acceleration: "1",
       background: "#000000",
       aiSpeed: "1",
+      opponent: "ai",
     },
   });
-  const [playWithFriend, setPlayWithFriend] = useState(false);
+  const [playWithFriend, setPlayWithFriend] = useState("ai" || "local");
 
   async function onSubmit(data: FormValues) {
     navigate({
