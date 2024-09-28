@@ -94,6 +94,7 @@ def get_friends(request, username):
     serializer = UsersSerializer(user.friends, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@csrf_exempt
 @require_http_methods(["POST", "DELETE"])
 def friendsView(request, friendname):
     if request.method == "POST":

@@ -13,15 +13,15 @@ import json
 
 @csrf_exempt
 @api_view(["GET", "POST"])
-def gamesView(request, id = ''):
+def gamesView(request, username = ''):
     try:
         token_data = getTokenFromContext(request)
     except AuthenticationFailed as e:
         return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
     if request.method == "GET":
-        user = get_object_or_404(users, pk=id)
-        game_history = games.objects.filter(userId=id)
+        user = get_object_or_404(users, username=username)
+        game_history = games.objects.filter(userId=user.id)
         serializer = GamesSerializer(game_history, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
