@@ -73,10 +73,26 @@ def createTournament(request):
 				# Create all games
 				games.objects.bulk_create(next_games)
 
+				sortedGames = games.objects.filter(tournamentId=tournament.id).order_by('id')
+				
+				newGamesList = [{
+						"id": game.id,
+						"status": game.status,
+						"player": game.player,
+						"opponent": game.opponent,
+						"playerScore": game.playerScore,
+						"opponentScore": game.opponentScore,
+						"userId": game.userId.id,
+						"tournamentId": game.tournamentId.id,
+						"createdAt": game.createdAt,
+						"updatedAt": game.updatedAt,
+				} for game in sortedGames]
+
+
 				# Return the tournament
 				return JsonResponse({
 						"id": tournament.id,
-						"games": games_list,
+						"games": newGamesList,
 						"createdAt": tournament.createdAt,
 						"updatedAt": tournament.updatedAt,
 						"status": tournament.status,

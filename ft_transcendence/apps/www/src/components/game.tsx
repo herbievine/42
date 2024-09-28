@@ -196,15 +196,13 @@ export function Game({
 
       // Ball reset on left or right edge
 
-      if (x - ballRadius < 0 && !ballReset) {
+      if (x - ballRadius < 0) {
         setScores((prev) => ({ ...prev, right: prev.right + 1 }));
-        setBallReset(true);
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = -2;
         dy = Math.random() * 4 - 2;
-      } else if (x + ballRadius > CANVAS_WIDTH && !ballReset) {
-        setBallReset(true);
+      } else if (x + ballRadius > CANVAS_WIDTH) {
         setScores((prev) => ({ ...prev, left: prev.left + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
@@ -307,7 +305,6 @@ export function Game({
         );
 
         // Draw ball
-        console.log(ball.x, ball.y, ballRadius, "#0000FF");
         drawBall(ctx, ball.x, ball.y, ballRadius, "#0000FF");
 
         // Draw scores
