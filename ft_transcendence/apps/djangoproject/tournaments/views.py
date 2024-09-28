@@ -158,7 +158,7 @@ def getTournament(request, id):
 			return Response(serializer.data, status=status.HTTP_200_OK)
 		# Ranking logic
 		elif tournament.status == "completed":
-			tournament_games = games.objects.filter(tournamentId=tournament.id).order_by('id')
+			tournament_games = games.objects.filter(tournamentId=tournament).values()
 			ranking = {}
 			for game in tournament_games:
 				if game['status'] != 'completed' or game['playerScore'] is None or game['opponentScore'] is None:
@@ -171,15 +171,10 @@ def getTournament(request, id):
 					ranking[game['opponent']] += 1
 
 			ranking = sorted([{"player": player, "score": score} for player, score in ranking.items()], key=lambda x: x['score'], reverse=True)
-
+			serializer = TournamentsSerializer(tournament)
 			# Return the tournament + ranking
 			return Response({
-				"id": tournament.id,
-				"games": games_list,
-				"createdAt": tournament.createdAt,
-				"updatedAt": tournament.updatedAt,
-				"status": tournament.status,
-				"userId": tournament.user.id,
+				**serializer.data,
 				"ranking": ranking
 				}, status=status.HTTP_200_OK)
 			
