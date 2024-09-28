@@ -15,6 +15,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "../../lib/cn";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
 const formValuesSchema = z.object({
   displayName: z.string().min(3).max(32),
@@ -170,45 +171,52 @@ function ProfilePage() {
           </div>
         </form>
       ) : (
-        <div className="flex space-x-6">
-          {me?.image ? (
-            <img src={me.image} alt="" className="w-40 h-40 rounded-lg" />
-          ) : (
-            <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
-              <span>No picture</span>
-            </div>
-          )}
-          <div className="flex flex-col items-start justify-between">
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">{me.displayName}</span>
-              <span className="font-semibold">
-                Username: <code className="">{me.username}</code>
-              </span>
-              <span className="font-semibold">
-                Status: <code className="">{online ? "online" : "offline"}</code>
-              </span>
-            </div>
-            <div className="flex flex-col items-start">
-              <span className="font-semibold">
-                Joined:{" "}
-                <code className="">
-                  {dayjs(me.createdAt).format("MMM D YYYY @ HH:MM")}
-                </code>
-              </span>
-              <button
-                type="button"
-                onClick={async () => {
-                  await deleteUser(me.id);
+        <div className="flex items-center justify-between">
+          <div className="flex space-x-6 flex-shrink-0">
+            {me?.image ? (
+              <img src={me.image} alt="" className="w-40 h-40 rounded-lg" />
+            ) : (
+              <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
+                <span>No picture</span>
+              </div>
+            )}
+            <div className="flex flex-col items-start justify-between">
+              <div className="flex flex-col">
+                <span className="text-lg font-semibold">{me.displayName}</span>
+                <span className="font-semibold">
+                  Username: <code className="">{me.username}</code>
+                </span>
+                <span className="font-semibold">
+                  Status: <code className="">{online ? "online" : "offline"}</code>
+                </span>
+              </div>
+              <div className="flex flex-col items-start">
+                <span className="font-semibold">
+                  Joined:{" "}
+                  <code className="">
+                    {dayjs(me.createdAt).format("MMM D YYYY @ HH:MM")}
+                  </code>
+                </span>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await deleteUser(me.id);
 
-                  navigate({
-                    to: "/login",
-                  });
-                }}
-              >
-                Delete Account
-              </button>
+                    navigate({
+                      to: "/login",
+                    });
+                  }}
+                >
+                  Delete Account
+                </button>
+              </div>
             </div>
           </div>
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart width={400} height={400}>
+              <Pie data={games?.stats} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#82ca9d" label />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
       )}
       <div className="w-full flex justify-between border-b border-neutral-200">
@@ -262,7 +270,7 @@ function ProfilePage() {
         Recent games
       </h2>
       <div className="flex flex-col space-y-4">
-        {games?.map((game) => <GameRow key={game.id} game={game} />)}
+        {games?.games.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
     </div>
   );

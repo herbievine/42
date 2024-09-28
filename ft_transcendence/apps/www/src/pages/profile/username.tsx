@@ -87,7 +87,7 @@ function ProfileUsernamePage() {
         Recent games
       </h2>
       <div className="flex flex-col space-y-4">
-        {games?.map((game) => <GameRow key={game.id} game={game} />)}
+        {games?.games.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
     </div>
   );

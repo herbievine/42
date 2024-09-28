@@ -21,9 +21,43 @@ async function getGames(userId: string) {
     },
   );
 
-  return data.sort((a, b) =>
-    dayjs(a.createdAt).isAfter(dayjs(b.createdAt)) ? -1 : 1,
-  );
+  const stats = data.reduce((acc, v) => {
+    const playerScore = v.playerScore ?? 0
+    const opponentScore = v.opponentScore ?? 0
+
+    if (playerScore > opponentScore) {
+      return {
+        ...acc,
+        wins: acc.wins + 1
+      }
+    } else {
+      return {
+        ...acc,
+        losses: acc.losses + 1
+      }
+    }
+  }, {
+    wins: 0,
+    losses: 0
+  })
+
+  console.log(stats)
+
+  return {
+    games: data.sort((a, b) =>
+      dayjs(a.createdAt).isAfter(dayjs(b.createdAt)) ? -1 : 1,
+    ),
+    stats: [
+      {
+        name: "Wins",
+        value: stats.wins
+      },
+      {
+        name: "Losses",
+        value: stats.losses
+      }
+    ]
+  };
 }
 
 export function gamesOptions(userId: string) {

@@ -32,18 +32,18 @@ export function GameRow({ game }: Props) {
         <div
           className={cn(
             "w-4 h-4 flex justify-center items-center rounded-sm",
-            playerScore > opponentScore ? "bg-green-400" : "bg-red-400",
+            playerScore === opponentScore ? "bg-gray-400" : playerScore > opponentScore ? "bg-green-400" : "bg-red-400",
           )}
         >
-          -
+          {playerScore === opponentScore ? "/" : playerScore > opponentScore ? "+" : "-"}
         </div>
         <div
           className={cn(
             "w-4 h-4 flex justify-center items-center rounded-sm",
-            playerScore < opponentScore ? "bg-green-400" : "bg-red-400",
+            playerScore === opponentScore ? "bg-gray-400" : playerScore < opponentScore ? "bg-green-400" : "bg-red-400",
           )}
         >
-          +
+          {playerScore === opponentScore ? "/" : playerScore < opponentScore ? "+" : "-"}
         </div>
       </div>
       <div className="w-full flex flex-col space-y-1">

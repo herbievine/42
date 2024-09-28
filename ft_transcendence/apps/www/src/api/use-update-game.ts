@@ -19,7 +19,7 @@ export function useUpdateGame() {
       return fetcher(
         `${import.meta.env.VITE_API_URL}/api/tournaments/${id}`,
         gameSchema.extend({
-          next: gameSchema.nullable(),
+          next: gameSchema.optional(),
         }),
         {
           method: "PUT",

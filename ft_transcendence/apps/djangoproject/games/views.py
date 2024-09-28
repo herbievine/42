@@ -11,18 +11,30 @@ from .serializers import GamesSerializer, SaveGameSerializer
 from .models import games
 import json
 
-@csrf_exempt
-@api_view(["GET", "POST"])
-def gamesView(request, username = ''):
+@api_view(["GET"])
+def get_games(request, username = ''):
     try:
         token_data = getTokenFromContext(request)
     except AuthenticationFailed as e:
         return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
-    if request.method == "GET":
-        user = get_object_or_404(users, username=username)
-        game_history = games.objects.filter(userId=user.id)
-        serializer = GamesSerializer(game_history, many=True)
+    user = get_object_or_404(users, username=username)
+    game_history = games.objects.filter(userId=user.id)
+    serializer = GamesSerializer(game_history, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@csrf_exempt
+@api_view(["GET", "POST"])
+def gamesView(request, id = ''):
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+
+    if request.method == "GET" and id:
+        # game = games.objects.filter(pk=id)
+        game = get_object_or_404(games, pk=id)
+        serializer = GamesSerializer(game)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == "POST":
@@ -42,4 +54,4 @@ def gamesView(request, username = ''):
         )
         data.save()
         serializer = GamesSerializer(data)
-        return Response({"success": True}, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

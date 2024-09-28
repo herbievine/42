@@ -29,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.52.1",
     "react-qr-code": "^2.0.15",
+    "recharts": "^2.12.7",
     "tailwind-merge": "^2.3.0",
     "ua-parser-js": "^1.0.37",
     "vite-plugin-mkcert": "^1.17.6",

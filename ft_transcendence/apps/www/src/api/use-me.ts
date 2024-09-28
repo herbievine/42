@@ -17,7 +17,6 @@ async function getMe() {
       image: z.string().startsWith("data:").nullable().catch(null),
       createdAt: z.coerce.date(),
       updatedAt: z.coerce.date(),
-			// lastLoggedIn: z.coerce.date(),
     }),
     {
       method: "GET",
