@@ -41,21 +41,21 @@ function ReviewPage() {
   }, [game]);
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
-      <h1 className="w-full border-b !border-neutral-200 font-semibold text-xl">
+    <div className="container py-3 d-flex flex-column gap-3">
+      <h1 className="w-100 border-bottom border-secondary fw-semibold fs-4">
         Game review
       </h1>
-      <div className="w-full flex flex-col space-y-2">
-        <div className="flex items-center justify-between font-semibold">
+      <div className="w-100 d-flex flex-column gap-2">
+        <div className="d-flex justify-content-between fw-semibold">
           <h2>{game?.player}</h2>
           <h2>{opponentName}</h2>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="d-flex justify-content-between">
           <span>{game?.playerScore}</span>
           <span>{game?.opponentScore}</span>
         </div>
       </div>
-      <Link className="pt-12" to="/">
+      <Link className="pt-4" to="/">
         Back home
       </Link>
     </div>

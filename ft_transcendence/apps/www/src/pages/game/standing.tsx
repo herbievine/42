@@ -34,8 +34,8 @@ function TournamentStadingPage() {
   const { tournament } = useSuspenseTournament(id);
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
-      <h1 className="w-full border-b border-neutral-200 font-semibold text-xl">
+    <div className="mx-auto max-w-5xl px-4 py-3 d-flex flex-column gap-4">
+      <h1 className="w-100 border-bottom border-secondary fw-semibold fs-4">
         Standing
       </h1>
       <div>
@@ -45,10 +45,10 @@ function TournamentStadingPage() {
           </div>
         ))}
       </div>
-      <div className="flex flex-col space-y-4">
+      <div className="d-flex flex-column gap-3">
         {tournament.games?.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
-      <Link className="underline" to="/">
+      <Link className="text-decoration-underline" to="/">
         Back home
       </Link>
     </div>

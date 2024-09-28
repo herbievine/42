@@ -66,11 +66,11 @@ function TournamentPlayPage() {
   }, [tournament, gameId]);
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col space-y-12">
-      <h1 className="text-xl">
+    <div className="mx-auto container px-4 py-3 d-flex flex-column gap-4">
+      <h1 className="h5">
         {game?.player} vs {game?.opponent}
       </h1>
-      <div className="flex space-x-12">
+      <div className="d-flex gap-5">
         <Game
           {...search}
           aiSpeed={0}
