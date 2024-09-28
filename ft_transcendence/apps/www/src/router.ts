@@ -4,6 +4,7 @@ import { indexRoute } from "./pages";
 import { loginRoute } from "./pages/auth/login";
 import { callbackRoute } from "./pages/auth/callback";
 import { profileRoute } from "./pages/profile";
+import { usernameRoute } from "./pages/profile/username";
 import { playRoute } from "./pages/game/play";
 import { reviewRoute } from "./pages/game/review";
 import { tournamentRoute } from "./pages/game/tournament";
@@ -15,6 +16,7 @@ const routeTree = rootRoute.addChildren([
   loginRoute,
   callbackRoute,
   profileRoute,
+  usernameRoute,
   playRoute,
   reviewRoute,
   tournamentRoute,

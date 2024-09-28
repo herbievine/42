@@ -1,29 +1,23 @@
-import {
-  createRoute,
-  Link,
-  redirect,
-  useNavigate,
-} from "@tanstack/react-router";
-import { queryClient, rootRoute } from "./__root";
-import { getUser } from "../api/get-user";
-import { useFriends } from "../api/get-friends";
-import { useUpdateUser } from "../api/use-update-user";
-import { useDeleteUser } from "../api/use-delete-user";
-import { useUpdateFriends } from "../api/use-update-friends";
-import { useDeleteFriends } from "../api/use-delete-friends";
-import { friendOptions } from "../api/get-friends";
-import { meOptions, useSuspenseMe } from "../api/use-me";
-import { useGames } from "../api/use-games";
-import { GameRow } from "../components/game-row";
+import { createRoute, redirect, useNavigate, Link } from "@tanstack/react-router";
+import { queryClient, rootRoute } from "../__root";
+import { getUser } from "../../api/get-user";
+import { useFriends } from "../../api/get-friends";
+import { useUpdateUser } from "../../api/use-update-user";
+import { useDeleteUser } from "../../api/use-delete-user";
+import { useAddFriend } from "../../api/use-add-friend";
+import { useDeleteFriend } from "../../api/use-delete-friend";
+import { meOptions, useSuspenseMe } from "../../api/use-me";
+import { useGames } from "../../api/use-games";
+import { GameRow } from "../../components/game-row";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "../lib/cn";
+import { cn } from "../../lib/cn";
 
 const formValuesSchema = z.object({
-  displayName: z.string(),
+  displayName: z.string().min(3).max(32),
   image: z.string(),
 });
 
@@ -55,12 +49,12 @@ function ProfilePage() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const { me } = useSuspenseMe();
-  const { friends } = useFriends(me.id);
-  const { games } = useGames(me.id);
+  const { friends } = useFriends(me.username);
+  const { games } = useGames(me.username);
   const { mutateAsync: updateUser } = useUpdateUser();
-  const { mutateAsync: updateFriends } = useUpdateFriends();
   const { mutateAsync: deleteUser } = useDeleteUser();
-  const { mutateAsync: deleteFriends } = useDeleteFriends();
+  const { mutateAsync: addFriend } = useAddFriend();
+  const { mutateAsync: deleteFriend } = useDeleteFriend();
   const { handleSubmit, register, setValue, watch } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
     mode: "onSubmit",
@@ -80,17 +74,13 @@ function ProfilePage() {
     setIsEditing(false);
   }
 
-  const [online, setOnline] = useState(false);
-
-  useEffect(() => {
-    if (me.lastLoggedIn) {
-      if (dayjs().diff(dayjs(me.lastLoggedIn), "minutes") > 1) {
-        setOnline(false);
-      } else if (dayjs().diff(dayjs(me.lastLoggedIn), "minutes") < 1) {
-        setOnline(true);
-      }
+  const online = useMemo(() => {
+    if (me.updatedAt) {
+      return dayjs().isBefore(dayjs(me.updatedAt).add(1, 'minute'))
     }
-  });
+
+    return false
+  }, [me.updatedAt]);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-6 flex flex-col space-y-12">
@@ -105,15 +95,6 @@ function ProfilePage() {
           >
             {isEditing ? "Cancel" : "Edit"}
           </button>
-        </div>
-        <div className="flex items-center justify-end gap-2 pt-2">
-          <p className="text-sm">{online ? "Online" : "Offline"}</p>
-          <span
-            className={cn(
-              "px-2 py-2 rounded-full",
-              online ? "bg-green-400" : "bg-red-400"
-            )}
-          ></span>
         </div>
       </div>
       {isEditing ? (
@@ -203,6 +184,9 @@ function ProfilePage() {
               <span className="font-semibold">
                 Username: <code className="">{me.username}</code>
               </span>
+              <span className="font-semibold">
+                Status: <code className="">{online ? "online" : "offline"}</code>
+              </span>
             </div>
             <div className="flex flex-col items-start">
               <span className="font-semibold">
@@ -228,7 +212,7 @@ function ProfilePage() {
         </div>
       )}
       <div className="w-full flex justify-between border-b border-neutral-200">
-        <h1 className="font-semibold text-xl">Friends</h1>
+        <h2 className="font-semibold text-xl">Friends</h2>
         <input
           type="text"
           placeholder="name or username..."
@@ -237,23 +221,19 @@ function ProfilePage() {
             if (e.key === "Enter") {
               const value = e.currentTarget.value;
               if (value) {
-                updateFriends({
-                  id: me.id,
-                  displayName: value,
-                });
+                addFriend(value);
               }
               e.currentTarget.value = "";
-              queryClient.invalidateQueries(friendOptions(me.id));
             }
           }}
         />
       </div>
-      <div className="grid grid-cols-4 gap-4 justify-items-start ">
-        {friends?.map((friend: any) => (
+      <div>
+        {friends?.map((friend) => (
           <Link
-            className="flex items-start justify-start flex-row w-56 gap-2"
-            to={`/profile/${friend.id}`}
             key={friend.id}
+            to={`/profile/${friend.username}`}
+            className="flex items-start justify-start flex-row w-56 gap-2"
           >
             {friend.image ? (
               <img src={friend.image} alt="" className="w-20 h-20 rounded-md" />
@@ -268,9 +248,8 @@ function ProfilePage() {
                 onClick={async (e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  await deleteFriends(friend.id).then(() => {
-                    queryClient.invalidateQueries(friendOptions(me.id));
-                  });
+                  
+                  deleteFriend(friend.username)
                 }}
               >
                 Remove
@@ -282,35 +261,8 @@ function ProfilePage() {
       <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
         Recent games
       </h2>
-      <div>
-        <h1 className="mx-auto pt-5">Profile</h1>
-        <pre>{JSON.stringify({ ...me, games, ...friends }, null, 2)}</pre>
-        <div className="d-flex gap-3">
-          <button
-            type="button"
-            onClick={async () => {
-              await deleteUser(me.id);
-
-              navigate({
-                to: "/login",
-              });
-            }}
-          >
-            Delete Account
-          </button>
-          <button
-            type="button"
-            onClick={async () => {
-              localStorage.removeItem("token");
-
-              navigate({
-                to: "/login",
-              });
-            }}
-          >
-            logout
-          </button>
-        </div>
+      <div className="flex flex-col space-y-4">
+        {games?.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
     </div>
   );

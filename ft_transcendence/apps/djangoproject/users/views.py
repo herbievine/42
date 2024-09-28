@@ -9,119 +9,132 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import AuthenticationFailed
 from authMe.utils import getTokenFromContext
 from .models import users
-from .serializers import UsersSerializer, FriendsUserSerializer
+from .serializers import UsersSerializer
 import json
 
 @csrf_exempt
 @require_http_methods(["GET", "PUT", "DELETE"])
-def usersView(request, id):
+def usersView(request, username):
 	if request.method == "GET":
-		return get_user(request, id)
+		return get_user(request, username)
 	elif request.method == "PUT":
-		return update_user(request, id)
+		return update_user(request, username)
 	elif request.method == "DELETE":
-		return delete_user(request, id)
+		return delete_user(request, username)
 
-@require_http_methods(["GET"])
-def get_user(request, id):
-		try:
-				token_data = getTokenFromContext(request)
-		except AuthenticationFailed as e:
-				return JsonResponse({"error": str(e)}, status=401)
-		# Use get_object_or_404 to automatically return 404 if the user is not found
-		user = get_object_or_404(users, pk=id)
-		# Serialize the user objectserializer
-		serializer = UsersSerializer(user)
-		# Return the serialized data as a JSON response
-		return JsonResponse(serializer.data)
-
-@csrf_exempt
-@require_http_methods(["PUT"])
-def update_user(request, id):
-	try:
-		token_data = getTokenFromContext(request)
-	except AuthenticationFailed as e:
-		return JsonResponse({"error": str(e)}, status=401)
-
-	if str(token_data['id']) != id:
-		return JsonResponse({"error": "Not authorized"}, status=403)
-
-	try:
-		body = json.loads(request.body)
-		display_name = body.get("displayName")
-		display_image = body.get("image")
-
-		if not 3 <= len(display_name) <= 32:
-				return JsonResponse({"error": "Invalid payload"}, status=400)
-
-		# Use get_object_or_404
-		user = get_object_or_404(users, pk=id)
-		user.displayName = escape(display_name)
-		user.image = escape(display_image)
-		user.save()
-
-		# Serialize the user object
-		serializer = UsersSerializer(user)
-		# Return the serialized data as a JSON response
-		return JsonResponse(serializer.data)
-	except json.JSONDecodeError:
-		return JsonResponse({"error": "Invalid JSON"}, status=400)
-
-@csrf_exempt
-@require_http_methods(["DELETE"])
-def delete_user(request, id):
-		try:
-				token_data = getTokenFromContext(request)
-		except AuthenticationFailed as e:
-				return JsonResponse({"error": str(e)}, status=401)
-
-		if str(token_data['id']) != id:
-				return JsonResponse({"error": "Not authorized"}, status=403)
-
-		user = get_object_or_404(users, pk=id)
-		user.delete()
-
-		return JsonResponse({"success": True})
-
-@csrf_exempt
-@require_http_methods(["GET", "POST"])
-def friendsView(request, id = '', displayName = '' ):
-	if request.method == "GET" and id:
-		return get_friends_list(request, id)
-	elif request.method == "POST" and displayName:
-		return add_friends(request, displayName)
-
-@csrf_exempt
 @api_view(["GET"])
-def get_friends_list(request, id):
-		print("id: ", id)
-		try:
-				token_data = getTokenFromContext(request)
-		except AuthenticationFailed as e:
-				return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+def get_user(request, username):
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+    # Use get_object_or_404 to automatically return 404 if the user is not found
+    user = get_object_or_404(users, username=username)
+    # Serialize the user objectserializer
+    serializer = UsersSerializer(user)
+    # Return the serialized data as a JSON response
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
-		user = get_object_or_404(users, pk=id)
-		print("userId: ", user.id, " & displayName: ", user.displayName)
-		serializer = FriendsUserSerializer(user.friends, many=True)
-		print("friends: ", serializer.data)
-		return Response(serializer.data, status=status.HTTP_200_OK)
+@csrf_exempt
+@api_view(["PUT"])
+def update_user(request, username):
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+
+    user = get_object_or_404(users, pk=id)
+    if str(token_data['id']) != user.id:
+        return Response({"error": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
+
+    try:
+        body = json.loads(request.body)
+    except json.JSONDecodeError:
+        return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
+
+        display_name = body.get("displayName")
+        display_image = body.get("image")
+        if not 3 <= len(display_name) <= 32:
+            return Response({"error": "Invalid payload"}, status=status.HTTP_400_BAD_REQUEST)
+        # Use get_object_or_404
+        user.displayName = escape(display_name)
+        user.image = escape(display_image)
+        user.save()
+        # Serialize the user object
+        serializer = UsersSerializer(user)
+    # Return the serialized data as a me 'get_object_or_404' is not defJSON response
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+@csrf_exempt
+@api_view(["DELETE"])
+def delete_user(request, username):
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+
+    user = get_object_or_404(users, username=username)
+    if str(token_data['id']) != user.id:
+        return Response({"error": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
+
+    for friend in user.friends:
+        friend.friends.remove(user)
+    user.delete()
+
+    return Response({"success": True})
+
+@api_view(["GET"])
+def get_friends(request, username):
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+
+    user = get_object_or_404(users, username=username)
+    serializer = UsersSerializer(user.friends, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@csrf_exempt
+@require_http_methods(["POST", "DELETE"])
+def friendsView(request, friendname):
+    if request.method == "POST":
+        return add_friend(request, friendname)
+    elif request.method == "DELETE":
+        return remove_friend(request, friendname)
 
 @csrf_exempt
 @api_view(["POST"])
-def add_friends(request, displayName):
-		try:
-				token_data = getTokenFromContext(request)
-		except AuthenticationFailed as e:
-				return JsonResponse({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
-		print("displayName: ", displayName)
+def add_friend(request, friendname):
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
-		user = get_object_or_404(users, pk=token_data['id'])
-		print("userId: ", user.id, " & displayName: ", user.displayName, " want to add ", displayName)
-		friend = get_object_or_404(users, displayName=displayName)
-		# if user == friend:
-		# 		return Response({"error": "You can't add yourself"}, status=status.HTTP_400_BAD) TODO: uncomment when finished testing
-		if friend in user.friends.all():
-				return Response({"error": "Friend already added"}, status=status.HTTP_400_BAD_REQUEST)
-		print("friendId: ", friend.id, " & displayName: ", friend.displayName)
-		user.friends.add(friend)
-		return Response({"success": True}, status=status.HTTP_201_CREATED)
+    user = get_object_or_404(users, pk=token_data['id'])
+    friend = get_object_or_404(users, username=friendname)
+    if user == friend:
+            return Response({"error": "You can't add yourself"}, status=status.HTTP_400_BAD_REQUEST)
+    if friend in user.friends.all():
+            return Response({"error": "Friend already added"}, status=status.HTTP_409_CONFLICT)
+    user.friends.add(friend)
+    friend.friends.add(user)
+    serializer = UsersSerializer(friend)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@csrf_exempt
+@api_view(["DELETE"])
+def remove_friend(request, friendname):
+    try:
+        token_data = getTokenFromContext(request)
+    except AuthenticationFailed as e:
+        return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+
+    user = get_object_or_404(users, pk=token_data['id'])
+    friend = get_object_or_404(users, username=friendname)
+    if user == friend:
+            return Response({"error": "You can't remove yourself"}, status=status.HTTP_400_BAD_REQUEST)
+    if friend not in user.friends.all() or user not in friend.friends.all():
+            return Response({"error": "You cant remove someone not in your friends"}, status=status.HTTP_409_CONFLICT)
+    user.friends.remove(friend)
+    friend.friends.remove(user)
+    return Response(status=status.HTTP_204_NO_CONTENT)

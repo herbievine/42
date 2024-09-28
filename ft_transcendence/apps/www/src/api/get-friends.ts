@@ -8,9 +8,9 @@ import { fetcher } from "../lib/fetcher";
 import { friendSchema } from "../schemas/friend";
 
 
-async function getFriends(userId: string) {
-	const data = fetcher(
-		`${import.meta.env.VITE_API_URL}/api/users/${userId}/friends`,
+async function getFriends(id: string) {
+	return fetcher(
+		`${import.meta.env.VITE_API_URL}/api/users/${id}/friends`,
 		z.array(friendSchema),
 		{
 			method: "GET",
@@ -20,20 +20,18 @@ async function getFriends(userId: string) {
 			},
 		},
 	);
-
-	return data
 }
 
-export function friendOptions(userId: string) {
+export function friendsOptions(id: string) {
 	return queryOptions({
-		queryKey: ["firends", userId],
-		queryFn: () => getFriends(userId),
+		queryKey: ["friends", id],
+		queryFn: () => getFriends(id),
 		staleTime: 10 * 1000,
 	});
 }
 
-export function useFriends(userId: string) {
-	const { data, ...query } = useQuery(friendOptions(userId));
+export function useFriends(id: string) {
+	const { data, ...query } = useQuery(friendsOptions(id));
 
 	return {
 		friends: data,
@@ -41,8 +39,8 @@ export function useFriends(userId: string) {
 	};
 }
 
-export function useSuspenseFriends(userId: string) {
-	const { data, ...query } = useSuspenseQuery(friendOptions(userId));
+export function useSuspenseFriends(id: string) {
+	const { data, ...query } = useSuspenseQuery(friendsOptions(id));
 
 	return {
 		friends: data,
