@@ -15,8 +15,8 @@ app.get("/:id", async (c) => {
     return c.json({ error: "Missing or invalid token" }, 400);
   }
 
-  const db = await getDatabase();
-  const [game] = await db
+  const [game] = await c
+    .get("db")
     .select()
     .from(games)
     .where(eq(games.id, c.req.param("id")));
@@ -44,14 +44,16 @@ app.post("/", async (c) => {
   }
 
   const db = await getDatabase();
-  const [user] = await db
+  const [user] = await c
+    .get("db")
     .select({
       id: users.id,
       displayName: users.displayName,
     })
     .from(users)
     .where(eq(users.id, token.sub));
-  const [game] = await db
+  const [game] = await c
+    .get("db")
     .insert(games)
     .values({
       id: id(),

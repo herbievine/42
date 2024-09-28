@@ -17,23 +17,13 @@ app.get("/me", async (c) => {
     return c.json({ error: "Missing or invalid token" }, 400);
   }
 
-  const { otpSecret, otpAuthUrl, ...select } = getTableColumns(users);
-
-  const db = await getDatabase();
-  const [user] = await db
-    .select(select)
-    .from(users)
-    .where(eq(users.id, token.sub));
+  const [user] = await c.get("db").select().from(users).where(eq(users.id, token.sub));
 
   if (!user) {
     return c.json({ error: "User not found" }, 404);
   }
 
-  return c.json({
-    ...user,
-    is2faRequired: token.is2faRequired,
-    is2faComplete: token.is2faComplete,
-  });
+  return c.json(user);
 });
 
 app.post("/token", async (c) => {
@@ -104,10 +94,7 @@ app.post("/token", async (c) => {
 
   const db = await getDatabase();
 
-  const results = await db
-    .select()
-    .from(users)
-    .where(eq(users.fortyTwoId, me.id));
+  const results = await c.get("db").select().from(users).where(eq(users.fortyTwoId, me.id));
 
   let user = results.length > 0 ? results[0] : null;
 
@@ -123,14 +110,9 @@ app.post("/token", async (c) => {
       .returning();
   }
 
-  const is2faRequired = user.otpEnabled && user.otpVerified;
-  const is2faComplete = is2faRequired ? false : true;
-
   const payload = {
     sub: user.id,
     exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24 hours
-    is2faRequired,
-    is2faComplete,
   };
 
   const jwt = await sign(payload, process.env.JWT_SECRET);

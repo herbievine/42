@@ -64,6 +64,13 @@
       "when": 1726662672949,
       "tag": "0008_premium_doorman",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1727184106564,
+      "tag": "0009_swift_iron_patriot",
+      "breakpoints": true
     }
   ]
 }

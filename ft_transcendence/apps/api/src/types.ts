@@ -1,3 +1,5 @@
+import { NodePgDatabase } from "drizzle-orm/node-postgres";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -11,6 +13,16 @@ declare global {
       JWT_SECRET: string;
     }
   }
+}
+
+declare module "hono" {
+  interface ContextVariableMap {
+    db: NodePgDatabase<Record<string, never>>;
+  }
+}
+
+declare global {
+  var db: NodePgDatabase<Record<string, never>> | undefined;
 }
 
 export {};

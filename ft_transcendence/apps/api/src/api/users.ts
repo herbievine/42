@@ -14,8 +14,8 @@ app.get("/:id", async (c) => {
     return c.json({ error: "Missing or invalid token" }, 400);
   }
 
-  const db = await getDatabase();
-  const [user] = await db
+  const [user] = await c
+    .get("db")
     .select({
       id: users.id,
       displayName: users.displayName,
@@ -38,8 +38,8 @@ app.get("/:id/games", async (c) => {
     return c.json({ error: "Missing or invalid token" }, 400);
   }
 
-  const db = await getDatabase();
-  const results = await db
+  const results = await c
+    .get("db")
     .select()
     .from(games)
     .where(eq(games.userId, c.req.param("id")));
@@ -70,8 +70,8 @@ app.put("/:id", async (c) => {
     return c.json({ error: "Invalid payload" }, 400);
   }
 
-  const db = await getDatabase();
-  const [user] = await db
+  const [user] = await c
+    .get("db")
     .update(users)
     .set(body.data)
     .where(eq(users.id, c.req.param("id")))
@@ -95,9 +95,10 @@ app.delete("/:id", async (c) => {
     return c.json({ error: "Not authorized" }, 403);
   }
 
-  const db = await getDatabase();
-
-  await db.delete(users).where(eq(users.id, c.req.param("id")));
+  await c
+    .get("db")
+    .delete(users)
+    .where(eq(users.id, c.req.param("id")));
 
   return c.json({
     success: true,

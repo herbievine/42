@@ -15,8 +15,8 @@ app.get("/:id", async (c) => {
     return c.json({ error: "Missing or invalid token" }, 400);
   }
 
-  const db = await getDatabase();
-  const [tournament] = await db
+  const [tournament] = await c
+    .get("db")
     .select()
     .from(tournaments)
     .where(eq(tournaments.id, c.req.param("id")));
@@ -25,10 +25,7 @@ app.get("/:id", async (c) => {
     return c.json({ error: "Tournament not found" }, 404);
   }
 
-  const tournamentGames = await db
-    .select()
-    .from(games)
-    .where(eq(games.tournamentId, tournament.id));
+  const tournamentGames = await c.get("db").select().from(games).where(eq(games.tournamentId, tournament.id));
 
   tournamentGames.sort(({ id: a }, { id: b }) => a.localeCompare(b));
 
@@ -41,11 +38,7 @@ app.get("/:id", async (c) => {
 
   const ranking = tournamentGames.reduce(
     (acc, game) => {
-      if (
-        game.status !== "completed" ||
-        game.playerScore === null ||
-        game.opponentScore === null
-      ) {
+      if (game.status !== "completed" || game.playerScore === null || game.opponentScore === null) {
         return acc;
       }
 
@@ -97,8 +90,8 @@ app.post("/", async (c) => {
     return c.json({ error: "Invalid payload" }, 400);
   }
 
-  const db = await getDatabase();
-  const [user] = await db
+  const [user] = await c
+    .get("db")
     .select({
       id: users.id,
       username: users.username,
@@ -113,7 +106,8 @@ app.post("/", async (c) => {
     return c.json({ error: "You must be a player in the tournament" }, 400);
   }
 
-  const [tournament] = await db
+  const [tournament] = await c
+    .get("db")
     .insert(tournaments)
     .values({
       id: id(),
@@ -130,7 +124,8 @@ app.post("/", async (c) => {
     });
   });
 
-  const results = await db
+  const results = await c
+    .get("db")
     .insert(games)
     .values(
       nextGames.map((game) => ({
@@ -158,8 +153,8 @@ app.put("/:gameId", async (c) => {
 
   const gameId = c.req.param("gameId");
 
-  const db = await getDatabase();
-  const [game] = await db
+  const [game] = await c
+    .get("db")
     .select({
       id: games.id,
       userId: games.userId,
@@ -182,7 +177,8 @@ app.put("/:gameId", async (c) => {
     return c.json({ error: "Invalid payload" }, 400);
   }
 
-  const [updatedGame] = await db
+  const [updatedGame] = await c
+    .get("db")
     .update(games)
     .set({
       ...body.data,
@@ -191,15 +187,13 @@ app.put("/:gameId", async (c) => {
     .where(eq(games.id, gameId))
     .returning();
 
-  const results = await db
-    .select()
-    .from(games)
-    .where(eq(games.tournamentId, updatedGame.tournamentId!));
+  const results = await c.get("db").select().from(games).where(eq(games.tournamentId, updatedGame.tournamentId!));
 
   results.sort(({ id: a }, { id: b }) => a.localeCompare(b));
 
   if (results.every(({ status }) => status === "completed")) {
-    await db
+    await c
+      .get("db")
       .update(tournaments)
       .set({ status: "completed" })
       .where(eq(tournaments.id, updatedGame.tournamentId!));
@@ -222,8 +216,8 @@ app.get("/:id/standing", async (c) => {
 
   const id = c.req.param("id");
 
-  const db = await getDatabase();
-  const [tournament] = await db
+  const [tournament] = await c
+    .get("db")
     .select()
     .from(tournaments)
     .where(eq(tournaments.id, id))
