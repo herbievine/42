@@ -36,9 +36,8 @@ urlpatterns = [
     path('api/tournaments/<str:id>', getTournament, name='getTournament'),
     path('api/users/<str:username>', usersView, name='user'),
     path('api/users/<str:username>/games', gamesView, name='game_history'),
-    path('api/users/<str:username>/friends', get_friends, name='get_friends_list'),
-    path('api/users/friends/<str:friendname>', friendsView, name='add_friends'),
-    path('api/users/friends/<str:friendname>', friendsView, name='delete_friends'),
+    path('api/users/<str:username>/friends', get_friends, name='get_friends'),
+    path('api/users/friends/<str:friendname>', friendsView, name='manage_friends'),
 
     # path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     # path("api/schema/swagger-ui/",SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
