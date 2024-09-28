@@ -12,6 +12,6 @@ class users(models.Model):
     displayName = models.CharField(max_length=250)
     image = models.TextField(null=True, blank=True) 
     friends = models.ManyToManyField('users')
-    lastLoggedIn = models.DateTimeField()
+    #lastLoggedIn = models.DateTimeField(auto_now=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)

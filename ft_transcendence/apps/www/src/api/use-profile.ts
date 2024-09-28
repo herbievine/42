@@ -6,9 +6,9 @@ import {
 import { z } from "zod";
 import { fetcher } from "../lib/fetcher";
 
-async function getMe() {
+async function getProfile(username: string) {
   return fetcher(
-    `${import.meta.env.VITE_API_URL}/api/auth/me`,
+    `${import.meta.env.VITE_API_URL}/api/users/${username}`,
     z.object({
       id: z.string(),
       fortyTwoId: z.number(),
@@ -29,28 +29,28 @@ async function getMe() {
   )
 }
 
-export function meOptions() {
+export function profileOptions(username: string) {
 	return queryOptions({
-		queryKey: ["me"],
-		queryFn: () => getMe(),
+		queryKey: ["profile"],
+		queryFn: () => getProfile(username),
 		staleTime: 10 * 1000,
 	});
 }
 
-export function useMe() {
-	const { data, ...query } = useQuery(meOptions());
+export function useProfile(username: string) {
+	const { data, ...query } = useQuery(profileOptions(username));
 
 	return {
-		me: data,
+		profile: data,
 		...query,
 	};
 }
 
-export function useSuspenseMe() {
-	const { data, ...query } = useSuspenseQuery(meOptions());
+export function useSuspenseProfile(username: string) {
+	const { data, ...query } = useSuspenseQuery(profileOptions(username));
 
 	return {
-		me: data,
+		profile: data,
 		...query,
 	};
 }

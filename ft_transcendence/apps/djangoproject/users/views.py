@@ -62,7 +62,7 @@ def update_user(request, username):
         user.save()
         # Serialize the user object
         serializer = UsersSerializer(user)
-    # Return the serialized data as a JSON response
+    # Return the serialized data as a me 'get_object_or_404' is not defJSON response
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 @csrf_exempt

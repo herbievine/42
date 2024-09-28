@@ -1,23 +1,23 @@
 import { createRoute, redirect, useNavigate, Link } from "@tanstack/react-router";
-import { queryClient, rootRoute } from "./__root";
-import { getUser } from "../api/get-user";
-import { useFriends } from "../api/get-friends";
-import { useUpdateUser } from "../api/use-update-user";
-import { useDeleteUser } from "../api/use-delete-user";
-import { useAddFriend } from "../api/use-add-friend";
-import { useDeleteFriend } from "../api/use-delete-friend";
-import { meOptions, useSuspenseMe } from "../api/use-me";
-import { useGames } from "../api/use-games";
-import { GameRow } from "../components/game-row";
+import { queryClient, rootRoute } from "../__root";
+import { getUser } from "../../api/get-user";
+import { useFriends } from "../../api/get-friends";
+import { useUpdateUser } from "../../api/use-update-user";
+import { useDeleteUser } from "../../api/use-delete-user";
+import { useAddFriend } from "../../api/use-add-friend";
+import { useDeleteFriend } from "../../api/use-delete-friend";
+import { meOptions, useSuspenseMe } from "../../api/use-me";
+import { useGames } from "../../api/use-games";
+import { GameRow } from "../../components/game-row";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "../lib/cn";
+import { cn } from "../../lib/cn";
 
 const formValuesSchema = z.object({
-  displayName: z.string(),
+  displayName: z.string().min(3).max(32),
   image: z.string(),
 });
 
@@ -75,12 +75,12 @@ function ProfilePage() {
   }
 
   const online = useMemo(() => {
-    if (me.lastLoggedIn) {
-      return dayjs().diff(dayjs(me.lastLoggedIn), "minutes") < 1
+    if (me.updatedAt) {
+      return dayjs().isBefore(dayjs(me.updatedAt).add(1, 'minute'))
     }
 
     return false
-  }, [me.lastLoggedIn]);
+  }, [me.updatedAt]);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-6 flex flex-col space-y-12">
@@ -231,9 +231,9 @@ function ProfilePage() {
       <div>
         {friends?.map((friend) => (
           <Link
-            className="flex items-start justify-start flex-row w-56 gap-2"
-            to={`/profile/${friend.id}`}
             key={friend.id}
+            to={`/profile/${friend.username}`}
+            className="flex items-start justify-start flex-row w-56 gap-2"
           >
             {friend.image ? (
               <img src={friend.image} alt="" className="w-20 h-20 rounded-md" />

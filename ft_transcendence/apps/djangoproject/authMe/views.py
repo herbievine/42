@@ -7,6 +7,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import AccessToken, Token
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from .utils import getTokenFromContext
 from users.models import users
 from users.serializers import UsersSerializer
@@ -27,23 +28,23 @@ class CustomAccessToken(Token):
         super().__init__(*args, **kwargs)
         self.payload['sub'] = user_id
     
-    def fetcher(url, method='GET', headers=None, params=None, data=None):
-        try:
-            if method == 'POST':
+def fetcher(url, method='GET', headers=None, params=None, data=None):
+    try:
+        if method == 'POST':
                 response = requests.post(url, headers=headers, data=urlencode(data))
-            elif method == 'GET':
+        elif method == 'GET':
                 response = requests.get(url, headers=headers, params=params)
-            else:
-                raise ValueError(f"Unsupported method: {method}")
+        else:
+            raise ValueError(f"Unsupported method: {method}")
 
-            # Validate response status
-            if response.status_code != 200:
-                raise ValidationError(f"Error fetching '{url}': {response.status_code} {response.text}")
+        # Validate response status
+        if response.status_code != 200:
+            raise ValidationError(f"Error fetching '{url}': {response.status_code} {response.text}")
 
-            return response.json()  # Returns the JSON response
+        return response.json()  # Returns the JSON response
 
-        except requests.exceptions.RequestException as e:
-            raise ValidationError(f"An error occurred during the request to {url}: {str(e)}")
+    except requests.exceptions.RequestException as e:
+        raise ValidationError(f"An error occurred during the request to {url}: {str(e)}")
 
 
 class TokenView(APIView):
@@ -96,11 +97,10 @@ class TokenView(APIView):
             defaults={
                 'username': user_data['login'],
                 'displayName': user_data['first_name'],
-                'image': image_base64
+                'image': image_base64,
+                # 'lastLoggedIn': datetime.utcnow().isoformat() + "Z"
             }
         )
-
-        last_logged_in = datetime.utcnow().isoformat() + "Z"
 
         # Create the JWT with custom claims
         payload = {
@@ -124,7 +124,7 @@ class UsersView(APIView):
         except AuthenticationFailed as e:
             return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
-        user = get_object_or_404(users, id=payload['id'])
-        user.last_logged_in = datetime.utcnow().isoformat() + "Z"
+        user = get_object_or_404(users, id=token_data['id'])
+        user.save()
         serializer = UsersSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
