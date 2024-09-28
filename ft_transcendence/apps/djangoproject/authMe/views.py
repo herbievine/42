@@ -96,7 +96,7 @@ class TokenView(APIView):
 						fortyTwoId=user_data['id'],
 						defaults={
 								'username': user_data['login'],
-								'displayName': user_data['displayname'],
+								'displayName': user_data['first_name'],
 								'image': image_base64
 						}
 				)
