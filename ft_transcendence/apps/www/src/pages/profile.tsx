@@ -1,15 +1,16 @@
-import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { createRoute, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { queryClient, rootRoute } from "./__root";
 import { getUser } from "../api/get-user";
 import { useFriends } from "../api/get-friends";
 import { useUpdateUser } from "../api/use-update-user";
 import { useDeleteUser } from "../api/use-delete-user";
-import { useUpdateFriends } from "../api/use-update-friends";
+import { useAddFriend } from "../api/use-add-friend";
+import { useDeleteFriend } from "../api/use-delete-friend";
 import { meOptions, useSuspenseMe } from "../api/use-me";
 import { useGames } from "../api/use-games";
 import { GameRow } from "../components/game-row";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -48,11 +49,12 @@ function ProfilePage() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const { me } = useSuspenseMe();
-  const { friends } = useFriends(me.id);
-  const { games } = useGames(me.id);
+  const { friends } = useFriends(me.username);
+  const { games } = useGames(me.username);
   const { mutateAsync: updateUser } = useUpdateUser();
-  const { mutateAsync: updateFriends } = useUpdateFriends();
   const { mutateAsync: deleteUser } = useDeleteUser();
+  const { mutateAsync: addFriend } = useAddFriend();
+  const { mutateAsync: deleteFriend } = useDeleteFriend();
   const { handleSubmit, register, setValue, watch } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
     mode: "onSubmit",
@@ -72,17 +74,13 @@ function ProfilePage() {
     setIsEditing(false);
   }
 
-  const [online, setOnline] = useState(false);
-
-  useEffect(() => {
+  const online = useMemo(() => {
     if (me.lastLoggedIn) {
-      if (dayjs().diff(dayjs(me.lastLoggedIn), "minutes") > 1) {
-        setOnline(false);
-      } else if (dayjs().diff(dayjs(me.lastLoggedIn), "minutes") < 1) {
-        setOnline(true);
-      }
+      return dayjs().diff(dayjs(me.lastLoggedIn), "minutes") < 1
     }
-  });
+
+    return false
+  }, [me.lastLoggedIn]);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-6 flex flex-col space-y-12">
@@ -97,15 +95,6 @@ function ProfilePage() {
           >
             {isEditing ? "Cancel" : "Edit"}
           </button>
-        </div>
-        <div className="flex items-center justify-end gap-2 pt-2">
-          <p className="text-sm">{online ? "Online" : "Offline"}</p>
-          <span
-            className={cn(
-              "px-2 py-2 rounded-full",
-              online ? "bg-green-400" : "bg-red-400"
-            )}
-          ></span>
         </div>
       </div>
       {isEditing ? (
@@ -195,6 +184,9 @@ function ProfilePage() {
               <span className="font-semibold">
                 Username: <code className="">{me.username}</code>
               </span>
+              <span className="font-semibold">
+                Status: <code className="">{online ? "online" : "offline"}</code>
+              </span>
             </div>
             <div className="flex flex-col items-start">
               <span className="font-semibold">
@@ -220,7 +212,7 @@ function ProfilePage() {
         </div>
       )}
       <div className="w-full flex justify-between border-b border-neutral-200">
-        <h1 className="font-semibold text-xl">Friends</h1>
+        <h2 className="font-semibold text-xl">Friends</h2>
         <input
           type="text"
           placeholder="name or username..."
@@ -229,10 +221,7 @@ function ProfilePage() {
             if (e.key === "Enter") {
               const value = e.currentTarget.value;
               if (value) {
-                updateFriends({
-                  id: me.id,
-                  displayName: value,
-                });
+                addFriend(value);
               }
               e.currentTarget.value = "";
             }
@@ -240,58 +229,40 @@ function ProfilePage() {
         />
       </div>
       <div>
-        {friends?.map((friend: any) => (
-          <div
-            key={friend.userId}
-            className="flex items-center justify-between"
+        {friends?.map((friend) => (
+          <Link
+            className="flex items-start justify-start flex-row w-56 gap-2"
+            to={`/profile/${friend.id}`}
+            key={friend.id}
           >
-            <div className="flex items-center">
-              {friend.image ? (
-                <img
-                  src={friend.image}
-                  alt=""
-                  className="w-10 h-10 rounded-md"
-                />
-              ) : (
-                <div className="w-10 h-10 bg-neutral-300 rounded-md"></div>
-              )}
-              <span className="ml-2">{friend.displayName}</span>
+            {friend.image ? (
+              <img src={friend.image} alt="" className="w-20 h-20 rounded-md" />
+            ) : (
+              <div className="w-20 h-20 bg-neutral-300 rounded-md"></div>
+            )}
+            <div className="flex flex-col justify-start items-start text-start text-sm">
+              <span className="text-sm text-start">{friend.displayName}</span>
+              <button
+                type="button"
+                className="text-sm text-start hover:underline"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  
+                  deleteFriend(friend.username)
+                }}
+              >
+                Remove
+              </button>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
         Recent games
       </h2>
-      <div>
-        <h1 className="mx-auto pt-5">Profile</h1>
-        <pre>{JSON.stringify({ ...me, games }, null, 2)}</pre>
-        <div className="d-flex gap-3">
-          <button
-            type="button"
-            onClick={async () => {
-              await deleteUser(me.id);
-
-              navigate({
-                to: "/login",
-              });
-            }}
-          >
-            Delete Account
-          </button>
-          <button
-            type="button"
-            onClick={async () => {
-              localStorage.removeItem("token");
-
-              navigate({
-                to: "/login",
-              });
-            }}
-          >
-            logout
-          </button>
-        </div>
+      <div className="flex flex-col space-y-4">
+        {games?.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
     </div>
   );
