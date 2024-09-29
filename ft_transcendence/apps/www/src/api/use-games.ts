@@ -20,7 +20,7 @@ async function getGames(userId: string) {
       },
     },
   );
-
+  console.log(data)
   const stats = data.reduce((acc, v) => {
     const playerScore = v.playerScore ?? 0
     const opponentScore = v.opponentScore ?? 0

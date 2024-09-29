@@ -38,31 +38,35 @@ def createTournament(request):
 
 	if len(players) < 3:
 		return Response({"error": "Invalid payload"}, status=status.HTTP_400_BAD_REQUEST)
-				
+	print(players)
+	# Create tournament
+	tournament = tournaments.objects.create(userId=user)			
 	for player in players:
 		count = users.objects.filter(displayName=player).count()
 		if  collections.Counter(players)[player] > 1:
 			return Response({"error": "Invalid payload, duplicate"}, status=status.HTTP_400_BAD_REQUEST)
 		if len(player) < 1 or len(player) > 32:
 			return Response({"error": "Invalid payload, size"}, status=status.HTTP_400_BAD_REQUEST)
-		# Create tournament
-		tournament = tournaments.objects.create(userId=user)			
 		# Create games
-		for i, player in enumerate(players):
-			for opponent in players[i + 1:]:
-				if (user.displayName == player or user.displayName == opponent):
-					userId = user
-				else:
-					userId = None
-				games.objects.create(
-					id=None,
-					tournamentId=tournament,
-					player=player,
-					opponent=opponent,
-					userId=userId,
-					playerScore=0,
-					opponentScore=0,
-				)
+	for i, player in enumerate(players):
+		for opponent in players[i + 1:]:
+			if (user.displayName == player or user.displayName == opponent):
+				userId = user
+			else:
+				userId = None
+			if user.displayName == opponent:
+				opponent = player
+				player = user.displayName
+			print("player:", player,"opponent:", opponent)
+			games.objects.create(
+				id=None,
+				tournamentId=tournament,
+				player=player,
+				opponent=opponent,
+				userId=userId,
+				playerScore=0,
+				opponentScore=0,
+			)
 
 	sortedGames = games.objects.filter(tournamentId=tournament.id).order_by('id')
 	serializer = TournamentsSerializer(tournament)
@@ -216,5 +220,3 @@ def getTournament(request, id):
 			"next": next_game_data.data}, status=status.HTTP_200_OK)
 		
 		return Response(game_data.data, status=status.HTTP_200_OK)
-
-
