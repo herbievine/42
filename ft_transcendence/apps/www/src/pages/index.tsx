@@ -8,17 +8,13 @@ import { meOptions } from "../api/use-me";
 import { useState } from "react";
 
 const formValuesSchema = z.object({
-  speed: z.string().min(1).max(5).optional().default("1"),
-  aiSpeed: z.string().min(1).max(5).optional().default("1"),
-  acceleration: z.string().min(1).max(5).optional().default("1"),
-  opponent: z
-    .union([z.literal("ai"), z.literal("local")])
-    .optional()
-    .default("ai"),
+  speed: z.string().length(1).default("1"),
+  aiSpeed: z.string().length(1).default("1"),
+  acceleration: z.string().length(1).default("1"),
+  opponent: z.enum(["ai", "local"]).default("ai"),
   background: z
     .string()
     .regex(/^#[0-9A-Fa-f]{6}$/g)
-    .optional()
     .default("#000000"),
 });
 
@@ -48,26 +44,19 @@ function IndexPage() {
   const navigate = useNavigate({
     from: "/",
   });
-  const {
-    handleSubmit,
-    register,
-    clearErrors,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(formValuesSchema),
-    mode: "onSubmit",
-    reValidateMode: "onChange",
-    defaultValues: {
-      speed: "1",
-      acceleration: "1",
-      background: "#000000",
-      aiSpeed: "1",
-      opponent: "ai",
-    },
-  });
-  const [playWithFriend, setPlayWithFriend] = useState("ai" || "local");
+  const { handleSubmit, register, setValue, getValues, watch } =
+    useForm<FormValues>({
+      resolver: zodResolver(formValuesSchema),
+      mode: "onSubmit",
+      reValidateMode: "onChange",
+      defaultValues: {
+        speed: "1",
+        acceleration: "1",
+        background: "#000000",
+        aiSpeed: "1",
+        opponent: "ai",
+      },
+    });
 
   async function onSubmit(data: FormValues) {
     navigate({
@@ -156,14 +145,15 @@ function IndexPage() {
         <button
           type="button"
           onClick={() => {
-            setPlayWithFriend((prev) => !prev);
-            clearErrors();
-            reset();
-            register("opponent", { value: playWithFriend ? "ai" : "local" });
+            const opponent = getValues("opponent");
+
+            setValue("opponent", opponent === "ai" ? "local" : "ai");
           }}
           className="btn btn-secondary mt-3"
         >
-          {playWithFriend ? "Play with a bot" : "Play with a friend"}
+          {watch("opponent") === "ai"
+            ? "Play with a bot"
+            : "Play with a friend"}
         </button>
         <button type="submit" className="btn btn-primary mt-3">
           Play

@@ -6,6 +6,7 @@ import { profileOptions, useSuspenseProfile } from "../../api/use-profile";
 import { GameRow } from "../../components/game-row";
 import dayjs from "dayjs";
 import { useMemo } from "react";
+import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 export const usernameRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -23,9 +24,9 @@ export const usernameRoute = createRoute({
     }
 
     if (user.username === params.username) {
-        throw redirect({
-            to: "/profile",
-        });
+      throw redirect({
+        to: "/profile",
+      });
     }
 
     await queryClient.ensureQueryData(profileOptions(params.username));
@@ -42,10 +43,10 @@ function ProfileUsernamePage() {
 
   const online = useMemo(() => {
     if (profile.updatedAt) {
-      return dayjs().isBefore(dayjs(profile.updatedAt).add(1, 'minute'))
+      return dayjs().isBefore(dayjs(profile.updatedAt).add(1, "minute"));
     }
 
-    return false
+    return false;
   }, [profile.updatedAt]);
 
   return (
@@ -55,32 +56,56 @@ function ProfileUsernamePage() {
           <h1 className="font-semibold text-xl">Profile</h1>
         </div>
       </div>
-      <div className="flex space-x-6">
-        {profile?.image ? (
-          <img src={profile.image} alt="" className="w-40 h-40 rounded-lg" />
-        ) : (
-          <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
-            <span>No picture</span>
+      <div className="flex items-center justify-between">
+        <div className="flex space-x-6 flex-shrink-0">
+          {profile?.image ? (
+            <img src={profile.image} alt="" className="w-40 h-40 rounded-lg" />
+          ) : (
+            <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
+              <span>No picture</span>
+            </div>
+          )}
+          <div className="flex flex-col items-start justify-between">
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold">
+                {profile.displayName}
+              </span>
+              <span className="font-semibold">
+                Username: <code className="">{profile.username}</code>
+              </span>
+              <span className="font-semibold">
+                Status:{" "}
+                <code className="">{online ? "online" : "offline"}</code>
+              </span>
+            </div>
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">
+                Joined:{" "}
+                <code className="">
+                  {dayjs(profile.createdAt).format("MMM D YYYY @ HH:MM")}
+                </code>
+              </span>
+            </div>
           </div>
-        )}
-        <div className="flex flex-col items-start justify-between">
-          <div className="flex flex-col">
-            <span className="text-lg font-semibold">{profile.displayName}</span>
-            <span className="font-semibold">
-              Username: <code className="">{profile.username}</code>
-            </span>
-            <span className="font-semibold">
-              Status: <code className="">{online ? "online" : "offline"}</code>
-            </span>
-          </div>
-          <div className="flex flex-col items-start">
-            <span className="font-semibold">
-              Joined:{" "}
-              <code className="">
-                {dayjs(profile.createdAt).format("MMM D YYYY @ HH:MM")}
-              </code>
-            </span>
-          </div>
+        </div>
+        <div className="flex-shrink-0 w-40 h-40">
+          <ResponsiveContainer>
+            <PieChart width={400} height={400}>
+              <Pie
+                data={games?.stats}
+                dataKey="value"
+                cx="50%"
+                cy="50%"
+                outerRadius={60}
+              >
+                {games?.stats.map((entry) => (
+                  <Cell
+                    fill={entry.name === "Losses" ? "#f87171" : "#4ade80"}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
         </div>
       </div>
       <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">

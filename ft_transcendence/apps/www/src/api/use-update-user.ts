@@ -7,17 +7,17 @@ export function useUpdateUser() {
   return useMutation({
     mutationKey: ["update-user"],
     mutationFn: async ({
-      id,
+      username,
       ...data
     }: {
-      id: string;
+      username: string;
       displayName: string;
       image: string | null;
     }) => {
       const token = localStorage.getItem("token");
 
       return fetcher(
-        `${import.meta.env.VITE_API_URL}/api/users/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/users/${username}`,
         z.object({
           displayName: z.string(),
           image: z.string().nullable(),

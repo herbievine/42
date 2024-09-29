@@ -1,4 +1,9 @@
-import { createRoute, redirect, useNavigate, Link } from "@tanstack/react-router";
+import {
+  createRoute,
+  redirect,
+  useNavigate,
+  Link,
+} from "@tanstack/react-router";
 import { queryClient, rootRoute } from "../__root";
 import { getUser } from "../../api/get-user";
 import { useFriends } from "../../api/get-friends";
@@ -15,7 +20,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "../../lib/cn";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 
 const formValuesSchema = z.object({
   displayName: z.string().min(3).max(32),
@@ -68,7 +73,7 @@ function ProfilePage() {
 
   function onSubmit(values: FormValues) {
     updateUser({
-      id: me.id,
+      username: me.username,
       ...values,
     });
 
@@ -77,10 +82,10 @@ function ProfilePage() {
 
   const online = useMemo(() => {
     if (me.updatedAt) {
-      return dayjs().isBefore(dayjs(me.updatedAt).add(1, 'minute'))
+      return dayjs().isBefore(dayjs(me.updatedAt).add(1, "minute"));
     }
 
-    return false
+    return false;
   }, [me.updatedAt]);
 
   return (
@@ -103,7 +108,7 @@ function ProfilePage() {
           <label
             className={cn(
               "w-40 h-40 flex items-center justify-center text-center rounded-lg",
-              !watch("image") && "border-3 border-dashed border-neutral-300"
+              !watch("image") && "border-3 border-dashed border-neutral-300",
             )}
           >
             {watch("image") !== "" ? (
@@ -145,7 +150,7 @@ function ProfilePage() {
                     };
 
                     reader.onerror = reject;
-                  }
+                  },
                 );
 
                 if (base64) {
@@ -187,7 +192,8 @@ function ProfilePage() {
                   Username: <code className="">{me.username}</code>
                 </span>
                 <span className="font-semibold">
-                  Status: <code className="">{online ? "online" : "offline"}</code>
+                  Status:{" "}
+                  <code className="">{online ? "online" : "offline"}</code>
                 </span>
               </div>
               <div className="flex flex-col items-start">
@@ -200,7 +206,7 @@ function ProfilePage() {
                 <button
                   type="button"
                   onClick={async () => {
-                    await deleteUser(me.id);
+                    await deleteUser(me.username);
 
                     navigate({
                       to: "/login",
@@ -212,11 +218,25 @@ function ProfilePage() {
               </div>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart width={400} height={400}>
-              <Pie data={games?.stats} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#82ca9d" label />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="flex-shrink-0 w-40 h-40">
+            <ResponsiveContainer>
+              <PieChart width={400} height={400}>
+                <Pie
+                  data={games?.stats}
+                  dataKey="value"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={60}
+                >
+                  {games?.stats.map((entry) => (
+                    <Cell
+                      fill={entry.name === "Losses" ? "#f87171" : "#4ade80"}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       )}
       <div className="w-full flex justify-between border-b border-neutral-200">
@@ -256,8 +276,8 @@ function ProfilePage() {
                 onClick={async (e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  
-                  deleteFriend(friend.username)
+
+                  deleteFriend(friend.username);
                 }}
               >
                 Remove

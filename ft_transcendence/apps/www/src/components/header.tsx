@@ -30,6 +30,7 @@ export function Header() {
             </li>
             <li className="nav-item">
               <button
+                className="text-red-500"
                 type="button"
                 onClick={async () => {
                   localStorage.removeItem("token");
@@ -39,7 +40,7 @@ export function Header() {
                   });
                 }}
               >
-                logout
+                Logout
               </button>
             </li>
           </ul>
