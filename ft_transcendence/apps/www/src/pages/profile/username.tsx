@@ -8,6 +8,12 @@ import dayjs from "dayjs";
 import { useMemo } from "react";
 import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
+const colors = {
+  Wins: "#4ade80",
+  Losses: "#f87171",
+  Draws: "#9ca3af",
+};
+
 export const usernameRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/profile/$username",
@@ -106,7 +112,8 @@ function ProfileUsernamePage() {
               >
                 {games?.stats.map((entry) => (
                   <Cell
-                    fill={entry.name === "Losses" ? "#f87171" : "#4ade80"}
+                    key={entry.name}
+                    fill={colors[entry.name as "Wins" | "Losses" | "Draws"]}
                   />
                 ))}
               </Pie>

@@ -15,12 +15,18 @@ import { meOptions, useSuspenseMe } from "../../api/use-me";
 import { useGames } from "../../api/use-games";
 import { GameRow } from "../../components/game-row";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "../../lib/cn";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+
+const colors = {
+  Wins: "#4ade80",
+  Losses: "#f87171",
+  Draws: "#9ca3af",
+};
 
 const formValuesSchema = z.object({
   displayName: z.string().min(3).max(32),
@@ -237,7 +243,8 @@ function ProfilePage() {
                 >
                   {games?.stats.map((entry) => (
                     <Cell
-                      fill={entry.name === "Losses" ? "#f87171" : "#4ade80"}
+                      key={entry.name}
+                      fill={colors[entry.name as "Wins" | "Losses" | "Draws"]}
                     />
                   ))}
                 </Pie>
