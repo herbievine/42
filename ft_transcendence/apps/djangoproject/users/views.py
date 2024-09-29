@@ -43,7 +43,7 @@ def update_user(request, username):
     except AuthenticationFailed as e:
         return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 
-    user = get_object_or_404(users, pk=id)
+    user = get_object_or_404(users, username=username)
     if str(token_data['id']) != user.id:
         return Response({"error": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
 
@@ -52,18 +52,18 @@ def update_user(request, username):
     except json.JSONDecodeError:
         return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
 
-        display_name = body.get("displayName")
-        display_image = body.get("image")
-        if not 3 <= len(display_name) <= 32:
-            return Response({"error": "Invalid payload"}, status=status.HTTP_400_BAD_REQUEST)
-        # Use get_object_or_404
-        user.displayName = escape(display_name)
-        user.image = escape(display_image)
-        user.save()
-        # Serialize the user object
-        serializer = UsersSerializer(user)
+    display_name = body.get("displayName")
+    display_image = body.get("image")
+    if not 3 <= len(display_name) <= 32:
+        return Response({"error": "Invalid payload"}, status=status.HTTP_400_BAD_REQUEST)
+    # Use get_object_or_404
+    user.displayName = escape(display_name)
+    user.image = escape(display_image)
+    user.save()
+    # Serialize the user object
+    serializer = UsersSerializer(user)
     # Return the serialized data as a me 'get_object_or_404' is not defJSON response
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @csrf_exempt
 @api_view(["DELETE"])
@@ -77,9 +77,12 @@ def delete_user(request, username):
     if str(token_data['id']) != user.id:
         return Response({"error": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
 
-    for friend in user.friends:
-        friend.friends.remove(user)
-    user.delete()
+    try:
+        user.friends.clear()
+        user.delete()
+    except Exception as e:
+        return Response({"error": f"Error deleting user: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
     return Response({"success": True})
 
