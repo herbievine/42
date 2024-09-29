@@ -72,8 +72,8 @@ function IndexPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-6 flex flex-col items-center space-y-12">
-      <h1 className="w-full border-b !border-neutral-200 font-semibold text-xl">
+    <div className="mx-auto max-w-5xl px-8 py-6 flex d-flex flex-column align-items-center gap-4">
+      <h1 className="w-100 border-bottom !border-neutral-200 fw-semibold h5">
         Play Pong
       </h1>
       <form

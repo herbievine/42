@@ -15,24 +15,24 @@ export function TournamentGames() {
   );
 
   return (
-    <div className="w-full">
-      <div className="w-full flex flex-col space-y-6">
+    <div className="w-100">
+      <div className="w-100 d-flex flex-column gap-4">
         {tournament?.games.map((game, i) => (
           <div
             key={game.id}
             className={cn(
-              "px-6 py-4 flex flex-col border rounded",
+              "p-4 d-flex flex-column border rounded",
               gameIndex > i
-                ? "!border-green-700 bg-green-700/10"
+                ? "border-success bg-success bg-opacity-10"
                 : game.id === gameId
-                  ? "!border-amber-700 bg-amber-700/10"
-                  : "border-neutral-300"
+                  ? "border-warning bg-warning bg-opacity-10"
+                  : "border-secondary"
             )}
           >
-            <span className="font-bold">
+            <span className="font-weight-bold">
               {game.player} vs {game.opponent}
               {game.status === "completed" && (
-                <span className="font-bold">
+                <span className="font-weight-bold">
                   {" "}
                   ({game.playerScore} - {game.opponentScore})
                 </span>

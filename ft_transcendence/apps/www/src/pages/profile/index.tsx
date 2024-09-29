@@ -89,10 +89,10 @@ function ProfilePage() {
   }, [me.updatedAt]);
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-6 flex flex-col space-y-12">
+    <div className="mx-auto container px-5 py-4 d-flex flex-column gap-4">
       <div className="">
-        <div className="w-full flex justify-between border-b border-neutral-200">
-          <h1 className="font-semibold text-xl">Profile</h1>
+        <div className="w-100 d-flex justify-content-between border-bottom border-secondary">
+          <h1 className="fw-semibold fs-4">Profile</h1>
           <button
             type="button"
             onClick={async () => {
@@ -104,31 +104,31 @@ function ProfilePage() {
         </div>
       </div>
       {isEditing ? (
-        <form className="flex space-x-6" onSubmit={handleSubmit(onSubmit)}>
+        <form className="d-flex gap-3" onSubmit={handleSubmit(onSubmit)}>
           <label
             className={cn(
               "w-40 h-40 flex items-center justify-center text-center rounded-lg",
-              !watch("image") && "border-3 border-dashed border-neutral-300",
+              !watch("image") && "border-3 border-dashed border-neutral-300"
             )}
           >
             {watch("image") !== "" ? (
-              <div className="relative w-40 h-40 rounded-lg group">
+              <div className="position-relative rounded-lg">
                 <div
-                  className="absolute z-10 items-center justify-center left-0 top-0 w-40 h-40 bg-black/50 hidden group-hover:flex rounded-md cursor-pointer"
+                  className="position-absolute top-0 start-0 w-100 h-100 d-none align-items-center justify-content-center bg-black bg-opacity-50 group-hover:d-flex rounded cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
                     setValue("image", "");
                   }}
                 >
-                  <span className="z-10 text-white">Remove</span>
+                  <span className="text-white">Remove</span>
                 </div>
-                <img src={watch("image")} className="w-40 h-40 rounded-lg" />
+                <img src={watch("image")} className="w-100 h-100 rounded-lg" />
               </div>
             ) : (
               <span>Upload an image</span>
             )}
             <input
-              className="hidden"
+              className="d-none"
               {...register("image")}
               type="file"
               accept="image/*"
@@ -150,54 +150,61 @@ function ProfilePage() {
                     };
 
                     reader.onerror = reject;
-                  },
+                  }
                 );
 
                 if (base64) {
                   setValue("image", base64.toString());
                 }
               }}
-              name="picture"
             />
           </label>
-          <div className="flex flex-col items-start justify-between space-y-2">
-            <label className="flex flex-col">
-              <span className="text-xs text-neutral-600">Display name</span>
+          <div className="d-flex flex-column gap-2">
+            <label className="d-flex flex-column">
+              <span className="small text-muted">Display name</span>
               <input
-                className="border border-neutral-300 rounded-lg px-2 py-1"
+                className="form-control"
                 type="text"
                 placeholder="Username"
                 {...register("displayName")}
               />
             </label>
-            <button className="font-bold text-green-700 hover:underline">
+            <button className="fw-bold text-success text-decoration-underline">
               Submit
             </button>
           </div>
         </form>
       ) : (
-        <div className="flex items-center justify-between">
-          <div className="flex space-x-6 flex-shrink-0">
+        <div className="d-flex justify-content-between">
+          <div className="d-flex gap-4 flex flex-shrink-0">
             {me?.image ? (
-              <img src={me.image} alt="" className="w-40 h-40 rounded-lg" />
+              <img
+                src={me.image}
+                alt=""
+                className="rounded"
+                style={{ width: "160px", height: "160px" }}
+              />
             ) : (
-              <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
+              <div
+                className="rounded bg-secondary d-flex justify-content-center align-items-center"
+                style={{ width: "160px", height: "160px" }}
+              >
                 <span>No picture</span>
               </div>
             )}
-            <div className="flex flex-col items-start justify-between">
-              <div className="flex flex-col">
-                <span className="text-lg font-semibold">{me.displayName}</span>
-                <span className="font-semibold">
+            <div className="d-flex flex-column align-items-start justify-content-between">
+              <div className="d-flex flex-column">
+                <span className="h6 fw-semibold">{me.displayName}</span>
+                <span className="fw-semibold">
                   Username: <code className="">{me.username}</code>
                 </span>
-                <span className="font-semibold">
+                <span className="fw-semibold">
                   Status:{" "}
                   <code className="">{online ? "online" : "offline"}</code>
                 </span>
               </div>
-              <div className="flex flex-col items-start">
-                <span className="font-semibold">
+              <div className="d-flex flex-column align-items-start">
+                <span className="fw-semibold">
                   Joined:{" "}
                   <code className="">
                     {dayjs(me.createdAt).format("MMM D YYYY @ HH:MM")}
@@ -239,44 +246,49 @@ function ProfilePage() {
           </div>
         </div>
       )}
-      <div className="w-full flex justify-between border-b border-neutral-200">
-        <h2 className="font-semibold text-xl">Friends</h2>
+      <div className="w-100 d-flex justify-content-between border-bottom border-neutral-200">
+        <h2 className="fw-semibold fs-4">Friends</h2>
         <input
           type="text"
-          placeholder="name or username..."
-          className=" focus:text-black ring-0 focus:ring-0 focus:outline-none w-40 "
+          placeholder="username..."
+          className=" w-25 ring-0 focus:outline-none"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               const value = e.currentTarget.value;
-              if (value) {
-                addFriend(value);
-              }
+              if (value) addFriend(value);
               e.currentTarget.value = "";
             }
           }}
         />
       </div>
-      <div>
+      <div className="grid grid-cols-3 w-full gap-3">
         {friends?.map((friend) => (
           <Link
             key={friend.id}
             to={`/profile/${friend.username}`}
-            className="flex items-start justify-start flex-row w-56 gap-2"
+            className="d-flex gap-2 aling-items-center"
           >
             {friend.image ? (
-              <img src={friend.image} alt="" className="w-20 h-20 rounded-md" />
+              <img
+                src={friend.image}
+                alt=""
+                className="rounded-md "
+                style={{ width: "80px", height: "80px" }}
+              />
             ) : (
-              <div className="w-20 h-20 bg-neutral-300 rounded-md"></div>
+              <div
+                className="bg-secondary rounded-md "
+                style={{ width: "80px", height: "80px" }}
+              ></div>
             )}
-            <div className="flex flex-col justify-start items-start text-start text-sm">
-              <span className="text-sm text-start">{friend.displayName}</span>
+            <div className="d-flex flex-column text-start">
+              <span className="small">{friend.displayName}</span>
               <button
                 type="button"
-                className="text-sm text-start hover:underline"
+                className="small text-decoration-underline"
                 onClick={async (e) => {
                   e.stopPropagation();
                   e.preventDefault();
-
                   deleteFriend(friend.username);
                 }}
               >
@@ -286,10 +298,10 @@ function ProfilePage() {
           </Link>
         ))}
       </div>
-      <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
+      <h2 className="w-100 border-bottom border-neutral-200 fw-semibold fs-4">
         Recent games
       </h2>
-      <div className="flex flex-col space-y-4">
+      <div className="d-flex row gap-4">
         {games?.games.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
     </div>

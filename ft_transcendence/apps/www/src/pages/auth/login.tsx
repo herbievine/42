@@ -30,7 +30,7 @@ function LoginPage() {
     url.searchParams.append("client_id", import.meta.env.VITE_INTRA_CLIENT_ID);
     url.searchParams.append(
       "redirect_uri",
-      `${import.meta.env.VITE_BASE_URL}/auth/callback`,
+      `${import.meta.env.VITE_BASE_URL}/auth/callback`
     );
     url.searchParams.append("state", state);
     url.searchParams.append("response_type", "code");
@@ -39,14 +39,14 @@ function LoginPage() {
   }
 
   return (
-    <div className="mx-auto max-w-xl px-8 py-6 flex flex-col space-y-12">
+    <div className="container mx-auto max-w-xl p-4 d-flex flex-column gap-4">
       <a
-        className="py-1 px-2 border border-neutral-300 rounded-md font-semibold"
+        className="py-1 px-2 border border-secondary rounded font-weight-semibold"
         href={loginLink()}
       >
         Login with your 42 account
       </a>
-      <span className="text-justify text-xs text-neutral-500">
+      <span className="text-justify small text-muted">
         By logging in with OAuth 42, you agree to the collection and storage of
         your OAuth 42 ID for authentication, your display name and username for
         identification, your profile picture in Base64 format for display
