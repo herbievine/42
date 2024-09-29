@@ -38,7 +38,6 @@ def createTournament(request):
 
 	if len(players) < 3:
 		return Response({"error": "Invalid payload"}, status=status.HTTP_400_BAD_REQUEST)
-	print(players)
 	# Create tournament
 	tournament = tournaments.objects.create(userId=user)			
 	for player in players:
@@ -57,7 +56,6 @@ def createTournament(request):
 			if user.displayName == opponent:
 				opponent = player
 				player = user.displayName
-			print("player:", player,"opponent:", opponent)
 			games.objects.create(
 				id=None,
 				tournamentId=tournament,

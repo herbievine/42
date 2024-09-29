@@ -8,6 +8,12 @@ import dayjs from "dayjs";
 import { useMemo } from "react";
 import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
+const colors = {
+  Wins: "#4ade80",
+  Losses: "#f87171",
+  Draws: "#9ca3af",
+};
+
 export const usernameRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/profile/$username",
@@ -50,36 +56,42 @@ function ProfileUsernamePage() {
   }, [profile.updatedAt]);
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-6 flex flex-col space-y-12">
+    <div className="mx-auto container px-5 py-4 d-flex flex-column gap-4">
       <div className="">
-        <div className="w-full flex justify-between border-b border-neutral-200">
-          <h1 className="font-semibold text-xl">Profile</h1>
+        <div className="w-100 d-flex justify-content-between border-bottom border-secondary">
+          <h1 className="fw-semibold fs-4">Profile</h1>
         </div>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex space-x-6 flex-shrink-0">
+      <div className="d-flex justify-content-between">
+        <div className="d-flex gap-4 flex flex-shrink-0">
           {profile?.image ? (
-            <img src={profile.image} alt="" className="w-40 h-40 rounded-lg" />
+            <img
+              src={profile.image}
+              alt=""
+              className="rounded"
+              style={{ width: "160px", height: "160px" }}
+            />
           ) : (
-            <div className="w-40 h-40 flex justify-center items-center bg-neutral-300 rounded-lg">
+            <div
+              className="rounded bg-secondary d-flex justify-content-center align-items-center"
+              style={{ width: "160px", height: "160px" }}
+            >
               <span>No picture</span>
             </div>
           )}
-          <div className="flex flex-col items-start justify-between">
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">
-                {profile.displayName}
-              </span>
-              <span className="font-semibold">
+          <div className="d-flex flex-column align-items-start justify-content-between">
+            <div className="d-flex flex-column">
+              <span className="h6 fw-semibold">{profile.displayName}</span>
+              <span className="fw-semibold">
                 Username: <code className="">{profile.username}</code>
               </span>
-              <span className="font-semibold">
+              <span className="fw-semibold">
                 Status:{" "}
                 <code className="">{online ? "online" : "offline"}</code>
               </span>
             </div>
-            <div className="flex flex-col items-start">
-              <span className="font-semibold">
+            <div className="d-flex flex-column align-items-start">
+              <span className="fw-semibold">
                 Joined:{" "}
                 <code className="">
                   {dayjs(profile.createdAt).format("MMM D YYYY @ HH:MM")}
@@ -100,7 +112,8 @@ function ProfileUsernamePage() {
               >
                 {games?.stats.map((entry) => (
                   <Cell
-                    fill={entry.name === "Losses" ? "#f87171" : "#4ade80"}
+                    key={entry.name}
+                    fill={colors[entry.name as "Wins" | "Losses" | "Draws"]}
                   />
                 ))}
               </Pie>
@@ -108,10 +121,10 @@ function ProfileUsernamePage() {
           </ResponsiveContainer>
         </div>
       </div>
-      <h2 className="w-full border-b border-neutral-200 font-semibold text-xl">
+      <h2 className="w-100 border-bottom border-neutral-200 fw-semibold fs-4">
         Recent games
       </h2>
-      <div className="flex flex-col space-y-4">
+      <div className="d-flex row gap-4">
         {games?.games.map((game) => <GameRow key={game.id} game={game} />)}
       </div>
     </div>

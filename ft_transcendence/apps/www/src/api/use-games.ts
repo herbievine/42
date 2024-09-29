@@ -20,28 +20,35 @@ async function getGames(userId: string) {
       },
     },
   );
-  console.log(data)
-  const stats = data.reduce((acc, v) => {
-    const playerScore = v.playerScore ?? 0
-    const opponentScore = v.opponentScore ?? 0
 
-    if (playerScore > opponentScore) {
-      return {
-        ...acc,
-        wins: acc.wins + 1
-      }
-    } else {
-      return {
-        ...acc,
-        losses: acc.losses + 1
-      }
-    }
-  }, {
-    wins: 0,
-    losses: 0
-  })
+  const stats = data.reduce(
+    (acc, v) => {
+      const playerScore = v.playerScore ?? 0;
+      const opponentScore = v.opponentScore ?? 0;
 
-  console.log(stats)
+      if (playerScore === opponentScore) {
+        return {
+          ...acc,
+          draws: acc.draws + 1,
+        };
+      } else if (playerScore > opponentScore) {
+        return {
+          ...acc,
+          wins: acc.wins + 1,
+        };
+      } else {
+        return {
+          ...acc,
+          losses: acc.losses + 1,
+        };
+      }
+    },
+    {
+      wins: 0,
+      losses: 0,
+      draws: 0,
+    },
+  );
 
   return {
     games: data.sort((a, b) =>
@@ -50,13 +57,17 @@ async function getGames(userId: string) {
     stats: [
       {
         name: "Wins",
-        value: stats.wins
+        value: stats.wins,
       },
       {
         name: "Losses",
-        value: stats.losses
-      }
-    ]
+        value: stats.losses,
+      },
+      {
+        name: "Draws",
+        value: stats.draws,
+      },
+    ],
   };
 }
 
