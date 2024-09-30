@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { Game } from "../schemas/game";
 import { cn } from "../lib/cn";
 import { useMemo } from "react";
+import { Link } from "@tanstack/react-router";
 
 type Props = {
   game: Game;
@@ -27,23 +28,43 @@ export function GameRow({ game }: Props) {
   );
 
   return (
-    <div className="w-full flex space-x-2 items-center">
+    <Link
+      to="/review/$id"
+      params={{ id: game.id }}
+      className="w-full flex space-x-2 items-center"
+    >
       <div className="flex flex-col space-y-2 flex-shrink">
         <div
           className={cn(
             "w-4 h-4 flex justify-center items-center rounded-sm",
-            playerScore === opponentScore ? "bg-gray-400" : playerScore > opponentScore ? "bg-green-400" : "bg-red-400",
+            playerScore === opponentScore
+              ? "bg-gray-400"
+              : playerScore > opponentScore
+                ? "bg-green-400"
+                : "bg-red-400",
           )}
         >
-          {playerScore === opponentScore ? "/" : playerScore > opponentScore ? "+" : "-"}
+          {playerScore === opponentScore
+            ? "/"
+            : playerScore > opponentScore
+              ? "+"
+              : "-"}
         </div>
         <div
           className={cn(
             "w-4 h-4 flex justify-center items-center rounded-sm",
-            playerScore === opponentScore ? "bg-gray-400" : playerScore < opponentScore ? "bg-green-400" : "bg-red-400",
+            playerScore === opponentScore
+              ? "bg-gray-400"
+              : playerScore < opponentScore
+                ? "bg-green-400"
+                : "bg-red-400",
           )}
         >
-          {playerScore === opponentScore ? "/" : playerScore < opponentScore ? "+" : "-"}
+          {playerScore === opponentScore
+            ? "/"
+            : playerScore < opponentScore
+              ? "+"
+              : "-"}
         </div>
       </div>
       <div className="w-full flex flex-col space-y-1">
@@ -57,6 +78,6 @@ export function GameRow({ game }: Props) {
       <span className="whitespace-nowrap">
         {dayjs(game.createdAt).format("MMM D, YYYY")}
       </span>
-    </div>
+    </Link>
   );
 }

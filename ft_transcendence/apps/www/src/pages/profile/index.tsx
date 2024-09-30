@@ -114,21 +114,21 @@ function ProfilePage() {
           <label
             className={cn(
               "w-40 h-40 flex items-center justify-center text-center rounded-lg",
-              !watch("image") && "border-3 border-dashed border-neutral-300"
+              !watch("image") && "border-3 border-dashed border-neutral-300",
             )}
           >
             {watch("image") !== "" ? (
-              <div className="position-relative rounded-lg">
+              <div className="relative w-40 h-40 rounded-lg group">
                 <div
-                  className="position-absolute top-0 start-0 w-100 h-100 d-none align-items-center justify-content-center bg-black bg-opacity-50 group-hover:d-flex rounded cursor-pointer"
+                  className="absolute z-10 items-center justify-center left-0 top-0 w-40 h-40 bg-black/50 hidden group-hover:flex rounded-md cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
                     setValue("image", "");
                   }}
                 >
-                  <span className="text-white">Remove</span>
+                  <span className="z-10 text-white">Remove</span>
                 </div>
-                <img src={watch("image")} className="w-100 h-100 rounded-lg" />
+                <img src={watch("image")} className="w-40 h-40 rounded-lg" />
               </div>
             ) : (
               <span>Upload an image</span>
@@ -156,7 +156,7 @@ function ProfilePage() {
                     };
 
                     reader.onerror = reject;
-                  }
+                  },
                 );
 
                 if (base64) {
