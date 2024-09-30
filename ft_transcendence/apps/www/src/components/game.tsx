@@ -35,10 +35,6 @@ export function Game({
   const [leftPaddleY, setLeftPaddleY] = useState(100);
   const [rightPaddleY, setRightPaddleY] = useState(100);
   const [pause, setPause] = useState(true);
-  const [bufferBallSpeed, setBufferBallSpeed] = useState({
-    dx: 2,
-    dy: 2,
-  });
   const [ball, setBall] = useState({
     x: CANVAS_WIDTH / 2,
     y: CANVAS_HEIGHT / 2,
@@ -48,6 +44,7 @@ export function Game({
   const [aiMoveUp, setAiMoveUp] = useState(true);
   const [aiBallY, setAiBallY] = useState(ball.y);
   const [ballReset, setBallReset] = useState(false);
+  const [predictedY, setPredictedY] = useState(0);
   const ballRef = useRef(ball);
   const [keyPaddleLeftPressed, setKeyPaddleLeftPressed] = useState({
     up: false,
@@ -108,6 +105,11 @@ export function Game({
         setKeyPaddleRightPressed((prev) => ({ ...prev, up: true }));
       if (e.key === "l" || e.key === "L")
         setKeyPaddleRightPressed((prev) => ({ ...prev, down: true }));
+    } else if (opponent === "ai") {
+      if (e.code === "F16")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, up: true }));
+      if (e.code === "F17")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, down: true }));
     }
   };
 
@@ -122,8 +124,61 @@ export function Game({
         setKeyPaddleRightPressed((prev) => ({ ...prev, up: false }));
       if (e.key === "l" || e.key === "L")
         setKeyPaddleRightPressed((prev) => ({ ...prev, down: false }));
+    } else if (opponent === "ai") {
+      if (e.code === "F16")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, up: false }));
+      if (e.code === "F17")
+        setKeyPaddleRightPressed((prev) => ({ ...prev, down: false }));
     }
   };
+
+  // Function to trigger F16 key press programmatically
+  const triggerF16KeyPress = () => {
+    const event = new KeyboardEvent("keydown", {
+      code: "F16",
+      key: "F16",
+      keyCode: 127,
+      bubbles: true,
+      cancelable: true,
+    });
+    window.dispatchEvent(event);
+
+    // Release after timeToReachY
+  };
+
+  const triggerF16KeyRelease = () => {
+    const event = new KeyboardEvent("keyup", {
+      code: "F16",
+      key: "F16",
+      keyCode: 127,
+      bubbles: true,
+      cancelable: true,
+    });
+    window.dispatchEvent(event);
+  };
+
+  const triggerF17KeyPress = () => {
+    const event = new KeyboardEvent("keydown", {
+      code: "F17",
+      key: "F17",
+      keyCode: 128,
+      bubbles: true,
+      cancelable: true,
+    });
+    window.dispatchEvent(event);
+  };
+
+  const triggerF17KeyRelease = () => {
+    const event = new KeyboardEvent("keyup", {
+      code: "F17",
+      key: "F17",
+      keyCode: 128,
+      bubbles: true,
+      cancelable: true,
+    });
+    window.dispatchEvent(event);
+  };
+
   const predictBallY = (
     ballX: number,
     ballY: number,
@@ -172,42 +227,19 @@ export function Game({
       }
 
       // Ball reset on left or right edge
-      // if (x - ballRadius < 0 || x + ballRadius > CANVAS_WIDTH) {
-      //   x = CANVAS_WIDTH / 2;
-      //   y = CANVAS_HEIGHT / 2;
-      //   dx = 2;
-      //   dy = 2;
-      // }
-
-      const paddleCenterOffset = paddleHeight / 2;
-
-      // AI paddle movement
-      if (opponent === "ai") {
-        if (rightPaddleY < aiBallY) {
-          setRightPaddleY((prev) =>
-            Math.min(prev + aiMaxSpeed, aiBallY - paddleCenterOffset)
-          );
-        } else if (rightPaddleY > aiBallY) {
-          setRightPaddleY((prev) =>
-            Math.max(prev - aiMaxSpeed, aiBallY - paddleCenterOffset)
-          );
-        }
-      }
-
-      // Ball reset on left or right edge
 
       if (x - ballRadius < 0) {
         setScores((prev) => ({ ...prev, right: prev.right + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = -2;
-        dy = Math.random() * 4 - 2;
+        dy = -2;
       } else if (x + ballRadius > CANVAS_WIDTH) {
         setScores((prev) => ({ ...prev, left: prev.left + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = 2;
-        dy = Math.random() * 4 - 2;
+        dy = 2;
       }
 
       return { x, y, dx, dy };
@@ -222,7 +254,15 @@ export function Game({
       setLeftPaddleY((prev) =>
         Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
       );
+
     if (opponent === "local") {
+      if (keyPaddleRightPressed.up)
+        setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
+      if (keyPaddleRightPressed.down)
+        setRightPaddleY((prev) =>
+          Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
+        );
+    } else if (opponent === "ai") {
       if (keyPaddleRightPressed.up)
         setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
       if (keyPaddleRightPressed.down)
@@ -233,21 +273,7 @@ export function Game({
   };
 
   // ballRef is used to store the ball state between updates
-  useEffect(() => {
-    ballRef.current = ball;
-  }, [ball]);
-
-  useEffect(() => {
-    if (ball.dx !== 0 || ball.dy !== 0)
-      setBufferBallSpeed({ dx: ball.dx, dy: ball.dy });
-    if (pause) {
-      ball.dx = 0;
-      ball.dy = 0;
-    } else if (!pause) {
-      ball.dx = bufferBallSpeed.dx;
-      ball.dy = bufferBallSpeed.dy;
-    }
-  }, [pause]);
+  // useEffect(() => {}, [ball]);
 
   useEffect(() => {
     if (scores.left >= 5 || scores.right >= 5) {
@@ -261,24 +287,63 @@ export function Game({
     }
   }, [scores]);
 
-  // AI paddle movement prediction and update every second
   useEffect(() => {
+    // Interval to update predicted ball position every 1000ms (once per second)
     const aiUpdateInterval = setInterval(() => {
       const { x, y, dx, dy } = ballRef.current;
-      const predictedY = predictBallY(x, y, dx, dy);
-
-      setAiBallY(predictedY);
-      setAiMoveUp(Math.random() > 1); // TODO: not working as intended, need to replace by "whenever the moment, sometimes move up, sometimes move down for 0.2sec"
+      const predicted = predictBallY(x, y, dx, dy);
+      setPredictedY(predicted); // Update predicted Y position
     }, 1000);
 
+    // Function to handle paddle movement based on prediction
+    const moveAiPaddle = requestAnimationFrame(() => {
+      // const paddleOffset = paddleHeight / 2;
+      let distance = predictedY - (rightPaddleY + paddleHeight / 2); // Calculate distance
+
+      if (distance > 0 && rightPaddleY + 100 >= CANVAS_HEIGHT) {
+        distance = 0;
+      } else if (distance < 0 && rightPaddleY <= 0) {
+        distance = 0;
+      }
+
+      const direction = distance > 0 ? "down" : "up"; // Determine direction
+      const tolerance = 5;
+
+      // If the paddle is above the predicted Y and should move down
+      if (Math.abs(distance) > tolerance) {
+        if (direction === "up" && !keyPaddleRightPressed.up) {
+          triggerF16KeyPress();
+        } else if (direction === "down" && !keyPaddleRightPressed.down) {
+          triggerF17KeyPress();
+        }
+      }
+
+      if (
+        (Math.abs(distance) >= 0 && Math.abs(distance) <= tolerance) ||
+        (Math.abs(distance) <= 0 && Math.abs(distance) >= tolerance)
+      ) {
+        if (keyPaddleRightPressed.up) {
+          triggerF16KeyRelease();
+        }
+        if (keyPaddleRightPressed.down) {
+          triggerF17KeyRelease();
+        }
+      }
+    });
+
+    // Continuous movement check based on current state
+
     return () => {
-      clearInterval(aiUpdateInterval);
+      clearInterval(aiUpdateInterval); // Clean up ball prediction interval
+      cancelAnimationFrame(moveAiPaddle); // Clean up paddle movement interval
     };
-  }, []);
+  }, [rightPaddleY, predictedY, keyPaddleRightPressed]); // Update when paddle or predicted Y changes
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
+
+    ballRef.current = ball;
 
     const draw = () => {
       if (ctx) {
@@ -315,6 +380,7 @@ export function Game({
     };
 
     const gameLoop = requestAnimationFrame(() => {
+      if (pause) return;
       updateBall();
       updatePlayerPaddle();
       draw();
@@ -346,7 +412,12 @@ export function Game({
         )}
         onClick={() => {
           setPause(false);
-          setBall({ x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2, dx: 2, dy: 2 });
+          setBall({
+            x: CANVAS_WIDTH / 2,
+            y: CANVAS_HEIGHT / 2,
+            dx: 2,
+            dy: -1.4,
+          });
         }}
       >
         Start game
