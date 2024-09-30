@@ -78,8 +78,11 @@ function TournamentPlayPage() {
           onWin={async (data) => {
             const res = await updateGame({
               id: gameId,
+              opponent: game!.opponent,
               playerScore: data.playerScore,
               opponentScore: data.opponentScore,
+              playerExchanges: data.playerExchanges,
+              opponentExchanges: data.opponentExchanges,
             });
 
             if (res.next) {

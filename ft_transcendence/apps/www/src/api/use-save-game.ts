@@ -3,33 +3,33 @@ import { z } from "zod";
 import { fetcher } from "../lib/fetcher";
 
 type Payload = {
-	opponent: string,
-	playerScore: number,
-	opponentScore: number,
-}
+  opponent: string;
+  playerScore: number;
+  opponentScore: number;
+  playerExchanges: number;
+  opponentExchanges: number;
+};
 
 export function useSaveGame() {
-	return useMutation({
-		mutationKey: ["save-game"],
-		mutationFn: async (data: Payload) => {
-			const token = localStorage.getItem("token");
+  return useMutation({
+    mutationKey: ["save-game"],
+    mutationFn: async (data: Payload) => {
+      const token = localStorage.getItem("token");
 
-			return fetcher(
-				`${import.meta.env.VITE_API_URL}/api/games`,
-				z.object(
-					{
-						id: z.string(),
-					},
-				),
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify(data),
-				},
-			);
-		},
-	});
+      return fetcher(
+        `${import.meta.env.VITE_API_URL}/api/games`,
+        z.object({
+          id: z.string(),
+        }),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        },
+      );
+    },
+  });
 }

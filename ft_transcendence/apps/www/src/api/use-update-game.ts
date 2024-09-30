@@ -11,8 +11,11 @@ export function useUpdateGame() {
       ...data
     }: {
       id: string;
+      opponent: string;
       playerScore: number;
       opponentScore: number;
+      playerExchanges: number;
+      opponentExchanges: number;
     }) => {
       const token = localStorage.getItem("token");
 

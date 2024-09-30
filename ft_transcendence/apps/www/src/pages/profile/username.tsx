@@ -100,25 +100,28 @@ function ProfileUsernamePage() {
             </div>
           </div>
         </div>
-        <div className="flex-shrink-0 w-40 h-40">
-          <ResponsiveContainer>
-            <PieChart width={400} height={400}>
-              <Pie
-                data={games?.stats}
-                dataKey="value"
-                cx="50%"
-                cy="50%"
-                outerRadius={60}
-              >
-                {games?.stats.map((entry) => (
-                  <Cell
-                    key={entry.name}
-                    fill={colors[entry.name as "Wins" | "Losses" | "Draws"]}
-                  />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
+        <div className="flex flex-col items-end">
+          <span>Wins/Losses</span>
+          <div className="flex-shrink-0 w-40 h-40">
+            <ResponsiveContainer>
+              <PieChart width={400} height={400}>
+                <Pie
+                  data={games?.stats}
+                  dataKey="value"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={60}
+                >
+                  {games?.stats.map((entry) => (
+                    <Cell
+                      key={entry.name}
+                      fill={colors[entry.name as "Wins" | "Losses" | "Draws"]}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
       <h2 className="w-100 border-bottom border-neutral-200 fw-semibold fs-4">
