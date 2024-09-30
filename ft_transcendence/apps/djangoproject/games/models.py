@@ -13,6 +13,8 @@ class games(models.Model):
 	opponent = models.CharField(max_length=250)
 	playerScore = models.IntegerField()
 	opponentScore = models.IntegerField()
+	playerExchanges = models.IntegerField()
+	opponentExchanges = models.IntegerField()
 	status = models.CharField(max_length=250, default="pending")
 	userId = models.ForeignKey(users, on_delete=models.CASCADE, default=None, null=True, blank=True)
 	tournamentId = models.ForeignKey(tournaments, on_delete=models.CASCADE, default=None, null=True, blank=True)

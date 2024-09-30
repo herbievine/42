@@ -9,4 +9,4 @@ class GamesSerializer(serializers.ModelSerializer):
 class SaveGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = games
-        fields = ['opponent', 'playerScore', 'opponentScore']
+        fields = ['opponent', 'playerScore', 'opponentScore', 'playerExchanges', 'opponentExchanges']

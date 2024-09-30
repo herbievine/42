@@ -12,7 +12,7 @@ from rest_framework import status
 from authMe.utils import getTokenFromContext
 from users.models import users
 from games.models import games
-from games.serializers import GamesSerializer
+from games.serializers import GamesSerializer, SaveGameSerializer
 from .models import tournaments
 from .serializers import TournamentsSerializer
 import json
@@ -64,6 +64,8 @@ def createTournament(request):
 				userId=userId,
 				playerScore=0,
 				opponentScore=0,
+				playerExchanges=0,
+				opponentExchanges=0,
 			)
 
 	sortedGames = games.objects.filter(tournamentId=tournament.id).order_by('id')
@@ -116,10 +118,10 @@ def getTournamentInfo(request, id):
 		ranking = sorted([{"player": player, "score": score} for player, score in ranking.items()], key=lambda x: x['score'], reverse=True)
 
 		# Return the tournament + ranking
-		return Response({"tournament": tournament, "games": tournament_games, "ranking": ranking})
+		return Response({"tournament": tournament, "games": tournament_games, "ranking": ranking}, status=status.HTTP_200_OK)
 
 	# Return the tournament
-	return Response({"tournament": tournament, "games": tournament_games})
+	return Response({"tournament": tournament, "games": tournament_games}, status=status.HTTP_200_OK)
 
 
 
@@ -187,23 +189,27 @@ def getTournament(request, id):
 			return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		# Get the tournament
 		game = get_object_or_404(games, pk=id)
-		try:
-			#get the request body
-			body = json.loads(request.body)
-		except json.JSONDecodeError:
-			return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
+		body = SaveGameSerializer(data=request.body)
+		if (not body.is_valid()):
+			return Response(body.errors, status=status.HTTP_400_BAD_REQUEST)
+		# try:
+		# 	#get the request body
+		# 	body = json.loads(request.body)
+		# except json.JSONDecodeError:
+		# 	return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
 
 		#update the game
-		game.playerScore = body.get('playerScore')
-		game.opponentScore = body.get('opponentScore')
+		# game.playerScore = body.get('playerScore')
+		# game.opponentScore = body.get('opponentScore')
+		# game.playerExchanges = body.get('playerExchanges')
+		# game.opponentExchanges = body.get('opponentExchanges')
 		game.status = 'completed'
+		game_data = GamesSerializer(game, body.data)
 		game.save()
-		game_data = GamesSerializer(game)
 
 		# Check if all games in the tournament are completed
 		game_filtered = games.objects.filter(tournamentId=game.tournamentId)
 		if all(g.status == 'completed' for g in game_filtered):
-			print("tournament finish updating tournament status")
 			tournament = game.tournamentId
 			tournament.status = 'completed'
 			tournament.save()
