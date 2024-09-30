@@ -31,12 +31,12 @@ export function GameRow({ game }: Props) {
     <Link
       to="/review/$id"
       params={{ id: game.id }}
-      className="w-full flex space-x-2 items-center"
+      className="w-100 d-flex align-items-center"
     >
-      <div className="flex flex-col space-y-2 flex-shrink">
+      <div className="d-flex flex-column space-y-1 flex-shrink-0 me-2">
         <div
           className={cn(
-            "w-4 h-4 flex justify-center items-center rounded-sm",
+            "d-flex justify-content-center w-4 h-4 align-items-center rounded",
             playerScore === opponentScore
               ? "bg-gray-400"
               : playerScore > opponentScore
@@ -52,7 +52,7 @@ export function GameRow({ game }: Props) {
         </div>
         <div
           className={cn(
-            "w-4 h-4 flex justify-center items-center rounded-sm",
+            "d-flex justify-content-center w-4 h-4 align-items-center rounded",
             playerScore === opponentScore
               ? "bg-gray-400"
               : playerScore < opponentScore
@@ -67,15 +67,15 @@ export function GameRow({ game }: Props) {
               : "-"}
         </div>
       </div>
-      <div className="w-full flex flex-col space-y-1">
+      <div className="w-100 d-flex flex-column">
         <span>{game.player}</span>
         <span>{opponentName}</span>
       </div>
-      <div className="w-full flex flex-col space-y-1">
+      <div className="w-100 d-flex flex-column">
         <span>{game.playerScore}</span>
         <span>{game.opponentScore}</span>
       </div>
-      <span className="whitespace-nowrap">
+      <span className="text-nowrap">
         {dayjs(game.createdAt).format("MMM D, YYYY")}
       </span>
     </Link>
