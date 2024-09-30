@@ -14,9 +14,11 @@ type Props = {
   aiSpeed: number;
   opponent: "ai" | "local";
   onWin: (data: {
+    opponent: "ai" | "local";
     playerScore: number;
     opponentScore: number;
-    opponent: "ai" | "local";
+    playerExchanges: number;
+    opponentExchanges: number;
   }) => void;
 };
 
@@ -35,6 +37,8 @@ export function Game({
   const [leftPaddleY, setLeftPaddleY] = useState(100);
   const [rightPaddleY, setRightPaddleY] = useState(100);
   const [pause, setPause] = useState(true);
+  const [opponentExchanges, setOpponentExchanges] = useState(0);
+  const [playerExchanges, setPlayerExchanges] = useState(0);
   const [ball, setBall] = useState({
     x: CANVAS_WIDTH / 2,
     y: CANVAS_HEIGHT / 2,
@@ -220,6 +224,12 @@ export function Game({
           y > rightPaddleY &&
           y < rightPaddleY + paddleHeight)
       ) {
+        if (dx < 0) {
+          setPlayerExchanges((prev) => prev + 1);
+        } else {
+          setOpponentExchanges((prev) => prev + 1);
+        }
+
         dx = -dx;
 
         dx = Math.sign(dx) * Math.min(Math.abs(dx) + acceleration / 10, 10);
@@ -278,9 +288,11 @@ export function Game({
   useEffect(() => {
     if (scores.left >= 5 || scores.right >= 5) {
       onWin({
+        opponent,
         playerScore: scores.left,
         opponentScore: scores.right,
-        opponent,
+        playerExchanges,
+        opponentExchanges,
       });
       setPause(true);
       setScores({ left: 0, right: 0 });
