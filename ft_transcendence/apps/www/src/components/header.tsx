@@ -7,7 +7,7 @@ export function Header() {
 
   return (
     <div className="h-16">
-      <nav className="h-16 navbar navbar-expand-lg bg-body-tertiary position-fixed container-fluid">
+      <nav className="h-16 navbar navbar-expand-lg bg-body-tertiary position-fixed container-fluid z-50">
         <div className="mx-auto max-w-5xl container-fluid flex space-x-6 py-0 px-8">
           <Link className="navbar-brand" to="/">
             Pong
