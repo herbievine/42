@@ -31,10 +31,16 @@ export function useUpdateGame() {
         },
       );
     },
-    onSuccess: ({ tournamentId }) => {
+    onSuccess: ({ tournamentId, userId }) => {
       queryClient.invalidateQueries({
         queryKey: ["tournament", tournamentId],
       });
+
+      if (userId) {
+        queryClient.invalidateQueries({
+          queryKey: ["user-games", userId],
+        });
+      }
     },
   });
 }
