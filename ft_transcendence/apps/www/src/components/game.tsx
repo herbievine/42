@@ -67,7 +67,7 @@ export function Game({
   const paddleWidth = 10;
   const paddleHeight = 100;
   const ballRadius = 5; //TODO: make it dynamic for vision friendly9
-  const paddleSpeed = 4 * (speed / 5 + 1);
+  const paddleSpeed = 4 * (1 / 5 + 1);
   const aiMaxSpeed = 4 * (aiSpeed / 5 + 1);
 
   const drawRect = (
@@ -242,14 +242,14 @@ export function Game({
         setScores((prev) => ({ ...prev, right: prev.right + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
-        dx = -2;
-        dy = -2;
+        dx = (speed / 5 + 1) * -1;
+        dy = (speed / 5 + 1) * -1;
       } else if (x + ballRadius > CANVAS_WIDTH) {
         setScores((prev) => ({ ...prev, left: prev.left + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
-        dx = 2;
-        dy = 2;
+        dx = speed / 5 + 1;
+        dy = speed / 5 + 1;
       }
 
       return { x, y, dx, dy };
@@ -274,10 +274,10 @@ export function Game({
         );
     } else if (opponent === "ai") {
       if (keyPaddleRightPressed.up)
-        setRightPaddleY((prev) => Math.max(prev - paddleSpeed, 0));
+        setRightPaddleY((prev) => Math.max(prev - aiMaxSpeed, 0));
       if (keyPaddleRightPressed.down)
         setRightPaddleY((prev) =>
-          Math.min(prev + paddleSpeed, CANVAS_HEIGHT - paddleHeight)
+          Math.min(prev + aiMaxSpeed, CANVAS_HEIGHT - paddleHeight)
         );
     }
   };
@@ -428,7 +428,7 @@ export function Game({
             x: CANVAS_WIDTH / 2,
             y: CANVAS_HEIGHT / 2,
             dx: 2,
-            dy: -1.4,
+            dy: 2,
           });
         }}
       >

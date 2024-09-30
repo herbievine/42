@@ -81,7 +81,7 @@ function IndexPage() {
         className="row justify-content-md-center col-10 gap-4"
       >
         <div className="position-relative">
-          <p className="text-start">Choose your speed:</p>
+          <p className="text-start">Choose the ball speed:</p>
           <input
             type="range"
             min={1}
@@ -100,7 +100,7 @@ function IndexPage() {
           </div>
         </div>
         <div className="position-relative">
-          <p className="text-start">Choose the ball acceleration :</p>
+          <p className="text-start">Choose the ball acceleration:</p>
           <input
             type="range"
             min={1}
