@@ -68,6 +68,17 @@ function ReviewPage() {
               <code className="">{game.opponentExchanges}</code>
             </span>
           </div>
+          {game.tournamentId ? (
+            <div className="d-flex flex-column">
+              <Link
+                className="fw-semibold"
+                to="/tournament/$id/standing"
+                params={{ id: game.tournamentId }}
+              >
+                This game was part of a tournament
+              </Link>
+            </div>
+          ) : null}
         </div>
         <div className="flex flex-col items-end">
           <span>Exchanges: Player/Opponent</span>
