@@ -189,22 +189,18 @@ def getTournament(request, id):
 			return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		# Get the tournament
 		game = get_object_or_404(games, pk=id)
-		body = SaveGameSerializer(data=request.body)
+		body = SaveGameSerializer(data=request.data)
 		if (not body.is_valid()):
 			return Response(body.errors, status=status.HTTP_400_BAD_REQUEST)
-		# try:
-		# 	#get the request body
-		# 	body = json.loads(request.body)
-		# except json.JSONDecodeError:
-		# 	return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
 
 		#update the game
-		# game.playerScore = body.get('playerScore')
-		# game.opponentScore = body.get('opponentScore')
-		# game.playerExchanges = body.get('playerExchanges')
-		# game.opponentExchanges = body.get('opponentExchanges')
+		game.playerScore = body.data.get('playerScore')
+		game.opponentScore = body.data.get('opponentScore')
+		if body.data.get('playerExchanges'):
+				game.playerExchanges = body.data.get('playerExchanges')
+		if body.data.get('opponentExchanges'):
+				game.opponentExchanges = body.data.get('opponentExchanges')
 		game.status = 'completed'
-		game_data = GamesSerializer(game, body.data)
 		game.save()
 
 		# Check if all games in the tournament are completed
@@ -214,13 +210,12 @@ def getTournament(request, id):
 			tournament.status = 'completed'
 			tournament.save()
 
-
+		game_result = GamesSerializer(game)
 		next_game = game_filtered.filter(status='pending').order_by('id').first()
 		if next_game:
 			next_game_data = GamesSerializer(next_game)
-
 			return Response({
-			**game_data.data,
-			"next": next_game_data.data}, status=status.HTTP_200_OK)
+			**game_result.data,
+			"next":next_game_data.data}, status=status.HTTP_200_OK)
 		
-		return Response(game_data.data, status=status.HTTP_200_OK)
+		return Response(game_result.data, status=status.HTTP_200_OK)
