@@ -1,12 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { cn } from "../lib/cn";
 
-// TODO: AI create more random movement
-// TODO: the AIpaddle goes through the walls
-// TODO: add keyboard control for the right paddle (real player)
-// TODO: win on 10 points
-// TODO: stop the AI when the game is paused
-
 type Props = {
   speed: number;
   acceleration: number;
@@ -215,6 +209,22 @@ export function Game({
         dy = -dy;
       }
 
+      if (x - ballRadius < 0) {
+        setScores((prev) => ({ ...prev, right: prev.right + 1 }));
+        x = CANVAS_WIDTH / 2;
+        y = CANVAS_HEIGHT / 2;
+        dx = 2 * (speed / 5 + 1) * -1;
+        const randomYFactor = Math.random() * 2 - 1;
+        dy = 2 * (speed / 5 + 1) * randomYFactor;
+      } else if (x + ballRadius > CANVAS_WIDTH) {
+        setScores((prev) => ({ ...prev, left: prev.left + 1 }));
+        x = CANVAS_WIDTH / 2;
+        y = CANVAS_HEIGHT / 2;
+        dx = speed / 5 + 1;
+        const randomYFactor = Math.random() * 2 - 1; // Random number between -0.5 and 0.5
+        dy = (speed / 5 + 1) * 2 * randomYFactor;
+      }
+
       // Ball collision with paddles
       if (
         (x - ballRadius < paddleWidth + 20 &&
@@ -237,22 +247,6 @@ export function Game({
       }
 
       // Ball reset on left or right edge
-
-      if (x - ballRadius < 0) {
-        setScores((prev) => ({ ...prev, right: prev.right + 1 }));
-        x = CANVAS_WIDTH / 2;
-        y = CANVAS_HEIGHT / 2;
-        dx = (speed / 5 + 1) * -1;
-        const randomYFactor = (Math.random() * 2 - 1) * 0.5; // Random number between -0.5 and 0.5
-        dy = (speed / 5 + 1) * randomYFactor;
-      } else if (x + ballRadius > CANVAS_WIDTH) {
-        setScores((prev) => ({ ...prev, left: prev.left + 1 }));
-        x = CANVAS_WIDTH / 2;
-        y = CANVAS_HEIGHT / 2;
-        dx = speed / 5 + 1;
-        const randomYFactor = (Math.random() * 2 - 1) * 0.5; // Random number between -0.5 and 0.5
-        dy = (speed / 5 + 1) * randomYFactor;
-      }
 
       return { x, y, dx, dy };
     });
@@ -448,7 +442,7 @@ export function Game({
             x: CANVAS_WIDTH / 2,
             y: CANVAS_HEIGHT / 2,
             dx: 2,
-            dy: 2,
+            dy: 2 * (Math.random() * 2 - 1),
           });
         }}
       >
