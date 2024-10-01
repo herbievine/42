@@ -7,11 +7,11 @@ import "./index.css";
 const rootElement = document.getElementById("root");
 
 if (rootElement && !rootElement.innerHTML) {
-	const root = ReactDOM.createRoot(rootElement);
+  const root = ReactDOM.createRoot(rootElement);
 
-	root.render(
-		<StrictMode>
-			<RouterProvider router={router} />
-		</StrictMode>,
-	);
+  root.render(
+    // <StrictMode>
+    <RouterProvider router={router} />,
+    // </StrictMode>,
+  );
 }
