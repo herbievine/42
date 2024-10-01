@@ -372,14 +372,32 @@ export function Game({
         // Draw background
         drawRect(ctx, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, background);
 
-        // Draw paddles
-        drawRect(ctx, 20, leftPaddleY, paddleWidth, paddleHeight, "#00FF00");
+        // Draw paddle 1px border
+        drawRect(ctx, 20, leftPaddleY, paddleWidth, paddleHeight, "#000");
         drawRect(
           ctx,
           CANVAS_WIDTH - paddleWidth - 20,
           rightPaddleY,
           paddleWidth,
           paddleHeight,
+          "#000"
+        );
+
+        // Draw paddles
+        drawRect(
+          ctx,
+          21,
+          leftPaddleY + 1,
+          paddleWidth - 2,
+          paddleHeight - 2,
+          "#00FF00"
+        );
+        drawRect(
+          ctx,
+          CANVAS_WIDTH - paddleWidth - 19,
+          rightPaddleY + 1,
+          paddleWidth - 2,
+          paddleHeight - 2,
           "#FF0000"
         );
 
