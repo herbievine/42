@@ -1,1 +1,0 @@
-ALTER TABLE "users" RENAME COLUMN "otp_base64" TO "otp_secret";
