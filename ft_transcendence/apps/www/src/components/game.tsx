@@ -213,16 +213,14 @@ export function Game({
         setScores((prev) => ({ ...prev, right: prev.right + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
-        dx = 2 * (speed / 5 + 1) * -1;
-        const randomYFactor = Math.random() * 2 - 1;
-        dy = 2 * (speed / 5 + 1) * randomYFactor;
+        dx = -2;
+        dy = -2 * (Math.random() * 2 - 1);
       } else if (x + ballRadius > CANVAS_WIDTH) {
         setScores((prev) => ({ ...prev, left: prev.left + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
-        dx = speed / 5 + 1;
-        const randomYFactor = Math.random() * 2 - 1; // Random number between -0.5 and 0.5
-        dy = (speed / 5 + 1) * 2 * randomYFactor;
+        dx = 2;
+        dy = 2 * (Math.random() * 2 - 1);
       }
 
       // Ball collision with paddles
