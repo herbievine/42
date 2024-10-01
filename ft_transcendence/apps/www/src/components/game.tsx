@@ -243,13 +243,15 @@ export function Game({
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = (speed / 5 + 1) * -1;
-        dy = (speed / 5 + 1) * -1;
+        const randomYFactor = (Math.random() * 2 - 1) * 0.5; // Random number between -0.5 and 0.5
+        dy = (speed / 5 + 1) * randomYFactor;
       } else if (x + ballRadius > CANVAS_WIDTH) {
         setScores((prev) => ({ ...prev, left: prev.left + 1 }));
         x = CANVAS_WIDTH / 2;
         y = CANVAS_HEIGHT / 2;
         dx = speed / 5 + 1;
-        dy = speed / 5 + 1;
+        const randomYFactor = (Math.random() * 2 - 1) * 0.5; // Random number between -0.5 and 0.5
+        dy = (speed / 5 + 1) * randomYFactor;
       }
 
       return { x, y, dx, dy };
