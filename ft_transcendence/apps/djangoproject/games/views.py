@@ -20,7 +20,6 @@ def get_games(request, username = ''):
 
     user = get_object_or_404(users, username=username)
     game_history = games.objects.filter(userId=user.id)
-    print(game_history)
     serializer = GamesSerializer(game_history, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
