@@ -1,68 +1,77 @@
 services:
   postgres:
-    image: postgres:latest
+    container_name: postgres
+    image: postgres:16
+    restart: unless-stopped
     env_file:
       - .env
-    restart: unless-stopped
-    volumes:
-      - data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     networks:
-      - backend
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    restart: unless-stopped
-    env_file:
-      - ./docker/pgadmin.env
-    environment:
-      TZ: "Europe/Paris"
-    logging:
-      driver: none
+      - net
     volumes:
-      - ./docker/pgadmin_servers.json:/pgadmin4/servers.json
+      - pgdata:/var/lib/postgresql/data
+
+  # api:
+  #   build:
+  #     context: apps/api
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8787:8787
+  #   restart: unless-stopped
+  #   networks:
+  #     - net
+
+  nginx:
+    env_file: .env
+    container_name: nginx
+    build:
+      context: ./apps/nginx
+      dockerfile: Dockerfile
     ports:
-      - 5050:80
+      - 8080:443
+    restart: on-failure
     networks:
-      - backend
+      - net
+    depends_on:
+      - www
+
+  www:
+    build:
+      context: apps/www
+      dockerfile: Dockerfile
+    volumes:
+      - ./apps/www:/app
+      - /app/node_modules
+    # ports:
+    #   - 5173:5173
+    expose:
+      - 5173
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - net
+
+  djangoapp:
+    container_name: djangoapp
+    build:
+      context: apps/djangoproject
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    # expose:
+    #   - 8000
+    env_file:
+      - .env
     depends_on:
       - postgres
-
-  backend:
-    build:
-      context: ./docker
-      dockerfile: ./backend.dockerfile
-    ports:
-      - 3000:3000
     networks:
-      - backend
-    volumes:
-      - ./backend:/app
-    env_file:
-      - ./docker/backend.env
-    restart: unless-stopped
-    depends_on:
-      - postgres
-
-  frontend:
-    build:
-      context: ./docker
-      dockerfile: ./frontend.dockerfile
-    ports:
-      - 8080:8080
-    networks:
-      - backend
-    volumes:
-      - ./frontend:/app
-    env_file:
-      - ./docker/frontend.env
-    restart: unless-stopped
-    depends_on:
-      - backend
+      - net
 
 volumes:
-  data:
+  pgdata: {}
 
 networks:
-  backend:
+  net:
+    driver: bridge
