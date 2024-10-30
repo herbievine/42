@@ -20,6 +20,8 @@ all my projects for 42paris.
 - cpp08: 100
 - cpp09: 100
 - cub3d: 100
-- inception: TBD
+- inception: 100
+- ft_irc: 100
+- ft_transcendence: 100
 
 using [42 cli](https://github.com/herbievine/42-cli) for ci/cd
