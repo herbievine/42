@@ -1,5 +1,8 @@
 from load_image import ft_load
 
+# enable full print in console:
+# np.set_printoptions(threshold=np.inf)
+
 
 def main():
     """Load landscape.jpg and print its shape and pixel content."""
