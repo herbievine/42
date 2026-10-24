@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# own test tooling: not submitted, not graded
+tests/
+pytest.ini
+.flake8
+SUBJECT.md
+
+# the subject's testers are part of the hand-in (root ignore has **/*test*)
+!**/tester.py
